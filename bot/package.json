@@ -10,6 +10,9 @@
     "w": "yarn watch"
   },
   "dependencies": {
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "discord-api-types": "^0.25.2",
+    "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
     "log4js": "^6.3.0",
     "ts-node": "^10.4.0",
