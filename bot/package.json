@@ -1,0 +1,23 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "author": "Ryan Page",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "watch": "tsnd src/index.ts",
+    "w": "yarn watch"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "log4js": "^6.3.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.4",
+    "ts-node-dev": "^1.1.8",
+    "tslib": "^2.3.1"
+  }
+}

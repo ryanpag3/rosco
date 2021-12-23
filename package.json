@@ -1,0 +1,12 @@
+{
+  "name": "guac-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ryanpag3/guac-bot.git",
+  "author": "Ryan Page <ryanapage@gmail.com>",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^17.0.4"
+  }
+}
