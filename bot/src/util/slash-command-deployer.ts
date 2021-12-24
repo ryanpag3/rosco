@@ -1,14 +1,17 @@
 import logger from './logger';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
+import COMMANDS from '../commands';
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN as string);
 
-// TODO
-const commands = [{
-    name: 'bing',
-    description: 'What are you going to tell Joe Byron?'
-}]
+const keys = Object.keys(COMMANDS);
+const mappedCommands = keys.map((c: any) => {
+    return {
+        name: COMMANDS[c].name,
+        description: COMMANDS[c].description
+    }
+});
 
 export async function deploy() {
     logger.debug(`deploying slash commands`);
@@ -18,7 +21,7 @@ export async function deploy() {
             await rest.put(
                 Routes.applicationGuildCommands(process.env.DISCORD_APPLICATION_ID as string, process.env.TEST_GUILD_ID as string),
                 {
-                    body: commands
+                    body: mappedCommands
                 }
             );
         } else {
@@ -26,7 +29,7 @@ export async function deploy() {
             await rest.put(
                 Routes.applicationCommands(process.env.DISCORD_APPLICATION_ID as string),
                 {
-                    body: commands
+                    body: mappedCommands
                 }
             );
         }
