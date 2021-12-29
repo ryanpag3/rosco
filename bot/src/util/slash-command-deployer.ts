@@ -1,6 +1,7 @@
 import logger from './logger';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
+import { delay } from 'bluebird';
 import COMMANDS from '../commands';
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN as string);
@@ -15,7 +16,7 @@ const mappedCommands = keys.map((c: any) => {
 
 export async function deploy() {
     logger.debug(`deploying slash commands`);
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             if (process.env.NODE_ENV !== 'production') {
                 // register with test server
@@ -24,8 +25,7 @@ export async function deploy() {
                     {
                         body: mappedCommands
                     }
-                ).then(() => resolve(undefined))
-                 .catch((e) => reject(e));
+                );
             } else {
                 // register globally in production
                 rest.put(
@@ -33,10 +33,10 @@ export async function deploy() {
                     {
                         body: mappedCommands
                     }
-                ).then(() => resolve(undefined))
-                 .catch((e) => reject(e));
+                );
             }
             logger.debug(`slash commands registered`);
+            resolve(undefined);
         } catch (e) {
             logger.error(`Failed to deploy slash commands.`, e);
             throw e;
