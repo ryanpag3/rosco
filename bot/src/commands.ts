@@ -6,15 +6,16 @@ const filenames = fs.readdirSync(path.join(__dirname, './commands')).filter(f =>
 let COMMANDS: any = {};
 try {
     filenames.forEach((f) => {
-        logger.info(f);
         const module = require(path.join(__dirname, `./commands/${f}`)).default;
-        logger.info(`${module.name}`);
         COMMANDS[module.name] = module;
+        logger.debug(`loaded ${module.name}`);
     });
-
 } catch (e) {
     logger.error(e);
     throw e;
 }
+
+if (JSON.stringify(COMMANDS) === '{}')
+    throw new Error('Commands not properly initialized. Exiting...');
 
 export default COMMANDS;
