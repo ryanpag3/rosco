@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import logger from './util/logger';
 
-const filenames = fs.readdirSync(path.join(__dirname, './commands')).filter(f => f.endsWith('.ts'));
+const filenames = fs.readdirSync(path.join(__dirname, './commands')).filter(f => f.endsWith('.ts') && !f.endsWith('.test.ts'));
 let COMMANDS: any = {};
 try {
     filenames.forEach((f) => {
