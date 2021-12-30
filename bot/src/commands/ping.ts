@@ -1,4 +1,5 @@
 import { Command } from '../../types/command';
+import BotError from '../util/bot-error';
 
 const Ping: Command = {
     name: 'ping',
@@ -7,9 +8,13 @@ const Ping: Command = {
     handler: async (interaction) => {
         const msg = await interaction.channel?.send('Checking latency...');
         if (!msg)
-            throw new Error(`Could not check latency.`);
+            throw new BotError(`Could not check latency.`);
         await msg?.delete();
-        await interaction.reply(`Server latency is ${msg?.createdTimestamp - interaction.createdTimestamp}ms.`);
+        await interaction.channel?.send({ embeds: [
+            {
+                description: `Server latency is ${msg?.createdTimestamp - interaction.createdTimestamp}ms.`
+            }
+        ]});
     }
 };
 
