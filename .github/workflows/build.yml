@@ -45,6 +45,8 @@ jobs:
         with:
           node-version: '16'
       - name: Run Tests
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           yarn install
           yarn migrate
