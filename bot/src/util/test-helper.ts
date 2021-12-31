@@ -24,6 +24,9 @@ export function createTestInteraction(commandName: string): CommandInteraction {
             return new Promise((res, rej) => {
                 return res(options as any);
             });
+        },
+        user: {
+            id: makeid(18)
         }
     } as CommandInteraction;
 }
@@ -31,3 +34,14 @@ export function createTestInteraction(commandName: string): CommandInteraction {
 export const getApiResult = (apiSpy: any): Promise<any> => {
     return apiSpy.mock.results[0].value
 };
+
+function makeid(length: number) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   return result;
+}
