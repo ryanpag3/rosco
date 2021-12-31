@@ -7,6 +7,22 @@ on:
 
 jobs:
   build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: setup nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - name: build bot
+        run: |
+          yarn install
+          npx tsc
+        working-directory: ./bot
+  run-tests:
+    name: Run Tests
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -30,5 +46,5 @@ jobs:
       - name: build bot
         run: |
           yarn install
-          npx tsc
+          yarn jest
         working-directory: ./bot
