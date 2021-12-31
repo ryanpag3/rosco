@@ -50,7 +50,7 @@ jobs:
           yarn jest
         working-directory: ./bot
   build-docker:
-    need: run-tests
+    needs: run-tests
     name: Build Docker
     runs-on: ubuntu-latest
     steps:
