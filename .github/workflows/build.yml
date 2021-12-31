@@ -44,7 +44,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '16'
-      - name: build bot
+      - name: Run Tests
         run: |
           yarn install
           yarn jest
