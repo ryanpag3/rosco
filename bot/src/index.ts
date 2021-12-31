@@ -2,8 +2,20 @@ require('dotenv').config();
 import { Client, Intents } from 'discord.js';
 import logger from './util/logger';
 import setup from './setup';
+import { delay } from 'bluebird';
 
-const client = new Client({ intents: [ Intents.FLAGS.GUILDS ]});
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+
+process.on('SIGTERM', async () => {
+    try {
+        logger.info('shutdown received...');
+        client.destroy();
+        process.exit(0);
+    } catch (e) {
+        logger.error(e);
+        process.exit(1);
+    }
+});
 
 async function main() {
     try {
@@ -16,6 +28,8 @@ async function main() {
         logger.error(e);
     }
 }
+
+
 
 main();
 
