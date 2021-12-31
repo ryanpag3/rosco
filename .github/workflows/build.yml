@@ -22,6 +22,7 @@ jobs:
           npx tsc
         working-directory: ./bot
   run-tests:
+    needs: build
     name: Run Tests
     runs-on: ubuntu-latest
     services:
