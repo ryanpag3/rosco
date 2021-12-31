@@ -9,5 +9,6 @@ export default async function (client: Client) {
 
     // setup events
     client.on('ready', () => onReady());
+    // @ts-ignore
     client.on('interactionCreate', async interaction => onInteractionCreate(interaction));
 }
