@@ -11,8 +11,19 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  discordId String   @unique @db.VarChar(32)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String           @id @default(uuid())
+  discordId      String           @unique @db.VarChar(32)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  CommandHistory CommandHistory[]
+}
+
+model CommandHistory {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
+  userId      String
+  commandName String
+  commandRaw  String
 }

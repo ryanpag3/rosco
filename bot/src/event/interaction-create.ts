@@ -3,15 +3,21 @@ import COMMANDS from '../commands';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
 import * as UserService from '../service/user';
+import * as CommandHistory from '../util/command-history';
 
 export default async function(interaction: Interaction, isTestCase: boolean = false) {
     try {
         if (!interaction.isCommand())
             return;
 
-        logger.debug(`command [${interaction.commandName}] issued.`);
 
-        await UserService.createIfNotExist(interaction.user.id);
+        const user = await UserService.createIfNotExist(interaction.user.id);
+
+        await CommandHistory.addToHistory(user.id, interaction.commandName, JSON.stringify(interaction.toJSON(), (key, value) =>
+        typeof value === 'bigint'
+            ? value.toString()
+            : value, 4
+        ));
 
         const { handler } = COMMANDS[interaction.commandName];
 
