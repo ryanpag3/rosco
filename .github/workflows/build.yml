@@ -1,0 +1,33 @@
+name: Build & Run Tests
+
+on:
+  push:
+    branches:
+      - */*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: test_guacbot_db
+          POSTGRES_PASSWORD: adminadmin
+      redis:
+        image: redis:latest
+        ports:
+          - 6379:6379
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: setup nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: 'lts/*'
+      - name: build bot
+        run: |
+          npx tsc
+        working-directory: ./bot
