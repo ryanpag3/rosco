@@ -26,7 +26,7 @@ jobs:
       - name: setup nodejs
         uses: actions/setup-node@v1
         with:
-          node-version: 'lts'
+          node-version: 'lts/16'
       - name: build bot
         run: |
           npx tsc
