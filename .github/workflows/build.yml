@@ -29,5 +29,6 @@ jobs:
           node-version: '16'
       - name: build bot
         run: |
+          yarn install
           npx tsc
         working-directory: ./bot
