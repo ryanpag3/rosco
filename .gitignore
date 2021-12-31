@@ -1,4 +1,5 @@
 out
 node_modules
-bot/.env
+.env
+.env.test
 yarn-error.log
