@@ -1,4 +1,5 @@
 import { CommandInteraction, InteractionReplyOptions, MessageOptions, MessagePayload } from 'discord.js';
+import logger from './logger';
 
 // add fields as necessary
 export function createTestInteraction(commandName: string): CommandInteraction {
@@ -6,18 +7,17 @@ export function createTestInteraction(commandName: string): CommandInteraction {
         commandName,
         isCommand: () => true,
         channel: {
-            send: (options: string | MessagePayload | MessageOptions) => {
-                return new Promise((res, rej) => {
-                    return res({
+            send: async (options: string | MessagePayload | MessageOptions) => {
+                    return {
                         // @ts-ignore
                         options,
+                        delete: async () => true as any,
                         send: () => {
                             return {
                                 delete: () => true
                             }
                         }
-                    });
-                });
+                    } as any;
             }
         },
         reply: (options: string | InteractionReplyOptions | MessagePayload) => {

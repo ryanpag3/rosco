@@ -1,5 +1,6 @@
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
+import logger from '../util/logger';
 
 const Ping: Command = {
     name: 'ping',

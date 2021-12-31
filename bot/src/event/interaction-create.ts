@@ -3,10 +3,12 @@ import COMMANDS from '../commands';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
 
-export default async function(interaction: Interaction) {
+export default async function(interaction: Interaction, isTestCase: boolean = false) {
     try {
         if (!interaction.isCommand())
             return;
+
+        logger.debug(`command [${interaction.commandName}] issued.`);
 
         const { handler } = COMMANDS[interaction.commandName];
 
@@ -18,23 +20,28 @@ export default async function(interaction: Interaction) {
     } catch (e) {
         logger.error(`An error occured while receiving interaction.`, e);
 
-        if (!(e instanceof BotError))
-            return interaction.channel?.send({
+        if (!(e instanceof BotError)) {
+            interaction.channel?.send({
                 embeds: [
                     {
                         description: `An internal server error occured. Please contact bot administrator.`
                     }
                 ]
             });
+        } else {
+            interaction.channel?.send({
+                embeds: [
+                    {
+                        title: `:stop_sign: An error occured.`,
+                        description: `${e.message}`
+                    }
+                ]
+            });
+        }
 
-        return await interaction.channel?.send({
-            embeds: [
-                {
-                    title: `:stop_sign: An error occured.`,
-                    description: `${e.message}`
-                }
-            ]
-        })
+
+        if (isTestCase)
+            throw e;
     }
 
 }
