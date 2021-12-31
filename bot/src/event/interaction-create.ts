@@ -2,6 +2,7 @@ import { Interaction } from 'discord.js';
 import COMMANDS from '../commands';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
+import * as UserService from '../service/user';
 
 export default async function(interaction: Interaction, isTestCase: boolean = false) {
     try {
@@ -9,6 +10,8 @@ export default async function(interaction: Interaction, isTestCase: boolean = fa
             return;
 
         logger.debug(`command [${interaction.commandName}] issued.`);
+
+        await UserService.createIfNotExist(interaction.user.id);
 
         const { handler } = COMMANDS[interaction.commandName];
 
