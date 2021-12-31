@@ -47,6 +47,7 @@ jobs:
       - name: Run Tests
         run: |
           yarn install
+          yarn migrate
           yarn jest
         working-directory: ./bot
   build-docker:
