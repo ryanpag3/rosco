@@ -2,11 +2,7 @@ import { Prisma, User } from '@prisma/client';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
-
-enum ScoreType {
-    SERVER = 'SERVER',
-    CHANNEL = 'CHANNEL'
-};
+import ScoreType from '../util/score-type';
 
 const ScoreCreate: Command = {
     name: 'create',

@@ -49,4 +49,5 @@ model Score {
   User        User       @relation(references: [id], onDelete: Cascade, fields: [userId])
 
   @@unique([name, serverId])
+  @@unique([name])
 }
