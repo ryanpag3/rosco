@@ -18,3 +18,23 @@ export const create = async (data: Prisma.ScoreCreateInput) => {
         }
     }
 }
+
+export const update = async (name: string, data: Prisma.ScoreUpdateInput) => {
+    try {
+        return prisma.score.update({
+            where: {
+                name
+            },
+            data
+        });
+    } catch (e) {
+        if (!(e instanceof Prisma.PrismaClientKnownRequestError)) {
+            throw e;
+        } else {
+            if (e.code === 'P2002') {
+                throw new BotError(`Cannot rename. Bot exists in this server with that new-name value.`);
+            }
+            throw e;
+        }
+    }
+}
