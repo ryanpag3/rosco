@@ -2,6 +2,7 @@ import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import ScoreCreate from './score-create.sub';
+import ScoreDelete from './score-delete.sub';
 import ScoreUpdate from './score-update.sub';
 
 const Score: Command = {
@@ -69,6 +70,19 @@ const Score: Command = {
                     type: ApplicationCommandOptionType.Integer
                 }
             ]
+        },
+        {
+            name: 'delete',
+            description: 'Delete a score.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the score you want to delete.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
         }
     ],
     handler: async (interaction, user) => {
@@ -78,6 +92,8 @@ const Score: Command = {
                 return ScoreCreate.handler(interaction, user);
             case 'update':
                 return ScoreUpdate.handler(interaction, user);
+            case 'delete':
+                return ScoreDelete.handler(interaction, user);
             default:
                 throw new BotError(`Invalid subcommand provided.`);
         }
