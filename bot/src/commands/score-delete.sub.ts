@@ -14,8 +14,12 @@ const ScoreDelete: Command = {
 
         const score = await prisma.score.findUnique({
             where: {
-                // @ts-ignore
-                name
+                name_serverId: {
+                    // @ts-ignore
+                    name,
+                    // @ts-ignore
+                    serverId: interaction.guild?.id
+                }
             }
         });
 

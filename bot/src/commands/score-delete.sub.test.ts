@@ -8,13 +8,15 @@ it('should delete a score', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    });
+    }, '1');
 
     await onCommandReceived(int);
 
     int = createTestInteraction('score', 'delete', {
         name: 'test'
-    });
+    }, '1');
+
+    await onCommandReceived(int);
 
     const found = await ScoreService.getUnique({
         name_serverId: {
@@ -25,4 +27,8 @@ it('should delete a score', async () => {
     });
 
     expect(found).toBeNull();
+});
+
+it('should throw an error if a score doesnt exist to delete.', async () => {
+
 })
