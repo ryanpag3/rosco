@@ -5,7 +5,7 @@ import logger from '../util/logger';
 import * as UserService from '../service/user';
 import * as CommandHistory from '../util/command-history';
 
-export default async function(interaction: Interaction, isTestCase: boolean = false) {
+export default async function(interaction: Interaction) {
     try {
         if (!interaction.isCommand())
             return;
@@ -49,7 +49,7 @@ export default async function(interaction: Interaction, isTestCase: boolean = fa
         }
 
 
-        if (isTestCase)
+        if (process.env.NODE_ENV === 'test')
             throw e;
     }
 

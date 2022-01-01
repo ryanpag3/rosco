@@ -2,13 +2,14 @@ import { CommandInteraction, InteractionReplyOptions, MessageOptions, MessagePay
 import logger from './logger';
 
 // add fields as necessary
-export function createTestInteraction(commandName: string, subcommandName?: string): CommandInteraction {
+export function createTestInteraction(commandName: string, subcommandName?: string, options?: any): CommandInteraction {
     return {
         commandName,
         isCommand: () => true,
         // @ts-ignore
         toJSON: () => {},
         channel: {
+            id: makeid(18),
             send: async (options: string | MessagePayload | MessageOptions) => {
                     return {
                         options: {
@@ -31,6 +32,17 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
             });
         },
         user: {
+            id: makeid(18)
+        },
+        options: {
+            ...options,
+            // @ts-ignore
+            getString: (key: string) => options[key],
+            // @ts-ignore
+            getInteger: (key: string) => Number.parseInt(options[key]),
+            getSubcommand: () => subcommandName
+        },
+        guild: {
             id: makeid(18)
         }
     } as CommandInteraction;
