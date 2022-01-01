@@ -13,7 +13,7 @@ export default async function(interaction: CommandInteraction) {
 
         const user = await UserService.createIfNotExist(interaction.user.id);
 
-        await CommandHistory.addToHistory(user.id, interaction.commandName, JSON.stringify(interaction.toJSON(), (key, value) =>
+        await CommandHistory.addToHistory(user.id, interaction, JSON.stringify(interaction.toJSON(), (key, value) =>
         typeof value === 'bigint'
             ? value.toString()
             : value, 4

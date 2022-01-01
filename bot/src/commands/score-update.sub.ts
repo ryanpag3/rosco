@@ -1,8 +1,7 @@
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
-import logger from '../util/logger';
 import prisma from '../util/prisma';
-import ScoreType from '../util/score-type';
+import * as ScoreService from '../service/score';
 
 const ScoreUpdate: Command = {
     name: 'update',
@@ -30,14 +29,7 @@ const ScoreUpdate: Command = {
         // @ts-ignore
         const updateData = buildUpdateObject(newName, description, type, amount);
 
-        await prisma.score.update({
-            where: {
-                // @ts-ignore
-                name: name
-            },
-            // @ts-ignore
-            data: updateData
-        });
+        await ScoreService.update(name as string, updateData);
 
         const fields: {
             name: string;

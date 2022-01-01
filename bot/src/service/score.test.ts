@@ -76,7 +76,7 @@ it('should throw an error if updating a score to an existing name', async () => 
         userId: u.id
     });
 
-    expect(s.id).not.toBeUndefined();
+    expect(ss.id).not.toBeUndefined();
 
     await expect(ScoreService.update(s.name, {
         name: 'testing2'
