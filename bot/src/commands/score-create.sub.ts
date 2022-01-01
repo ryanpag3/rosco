@@ -3,6 +3,7 @@ import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
 import ScoreType from '../util/score-type';
+import * as ScoreService from '../service/score';
 
 const ScoreCreate: Command = {
     name: 'create',
@@ -25,28 +26,16 @@ const ScoreCreate: Command = {
         if (!interaction.channel || !interaction.guild)
             throw new Error(`Invalid interaction found.`);
 
-        try {
-            await prisma.score.create({
-                data: {
-                    name,
-                    description,
-                    // @ts-ignore
-                    type,
-                    amount,
-                    serverId: interaction.guild?.id,
-                    channelId: interaction.channel?.id,
-                    userId: user.id
-                }
-            });
-        } catch (e) {
-            if (!(e instanceof Prisma.PrismaClientKnownRequestError)) {
-                throw e;
-            } else {
-                if (e.code === 'P2002') {
-                    throw new BotError(`A score already exists in this server with that name.`);
-                }
-            }
-        }
+        await ScoreService.create({
+            name,
+            description,
+            // @ts-ignore
+            type,
+            amount,
+            serverId: interaction.guild?.id,
+            channelId: interaction.channel?.id,
+            userId: user.id
+        });
 
         await interaction.reply({
             embeds: [
