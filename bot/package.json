@@ -8,7 +8,7 @@
   "scripts": {
     "watch": "tsnd src/index.ts",
     "w": "yarn watch",
-    "jest": "jest",
+    "jest": "NODE_ENV=test jest",
     "migrate": "npx prisma migrate dev"
   },
   "dependencies": {

@@ -2,7 +2,6 @@ import { createTestInteraction } from '../util/test-helper'
 import onCommandReceived from '../event/interaction-create';
 import prisma from '../util/prisma';
 
-
 it('should create a valid server score', async () => {
     const int = createTestInteraction('score', 'create', {
         name: 'test',
@@ -89,5 +88,5 @@ it('should throw an error if an invalid type is provided', async () => {
     });
     
     await expect(onCommandReceived(int)).rejects.toThrowError();
-})
+});
 
