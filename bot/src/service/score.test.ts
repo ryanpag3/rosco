@@ -110,3 +110,55 @@ it('should return null when a record does not exist', async () => {
 
     expect(found).toBeNull();
 });
+
+it('should delete the score', async () => {
+    const u = await UserService.createIfNotExist('abcd');
+
+    const s = await ScoreService.create({
+        name: 'testing',
+        serverId: 'abcd',
+        channelId: 'abcd',
+        // @ts-ignore
+        userId: u.id
+    });
+
+    expect(s.id).not.toBeUndefined();
+    
+    await ScoreService.del({
+        name: 'testing',
+        serverId: 'abcd'
+    });
+
+    const itsHere = await ScoreService.getUnique({
+        name_serverId: {
+            name: s.name,
+            serverId: s.serverId
+        }
+    });
+
+    expect(itsHere).toBeNull();
+});
+
+it('should do nothing if no valid scores are available to delete', async () => {
+    const u = await UserService.createIfNotExist('abcd');
+
+    const s = await ScoreService.create({
+        name: 'testing',
+        serverId: 'abcd',
+        channelId: 'abcd',
+        // @ts-ignore
+        userId: u.id
+    });
+
+    expect(s.id).not.toBeUndefined();
+
+    await ScoreService.del({
+        name: 'iwinagainlewstherin'
+    });
+
+    const found = await ScoreService.getUnique({
+        id: s.id
+    });
+
+    expect(found).not.toBeNull();
+});
