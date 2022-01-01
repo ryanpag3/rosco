@@ -4,7 +4,7 @@ const Bing: Command = {
     name: 'bing',
     description: 'Joe Byron?',
     examples: `\`/bing\``,
-    handler: async (interaction) => {
+    handler: async (interaction, user) => {
         return interaction.reply('bong');
     }
 };

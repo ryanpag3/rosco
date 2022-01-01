@@ -3,6 +3,7 @@ import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { delay } from 'bluebird';
 import COMMANDS from '../commands';
+import { SlashCommandBuilder } from '@discordjs/builders';
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN as string);
 
@@ -10,7 +11,8 @@ const keys = Object.keys(COMMANDS);
 const mappedCommands = keys.map((c: any) => {
     return {
         name: COMMANDS[c].name,
-        description: COMMANDS[c].description
+        description: COMMANDS[c].description,
+        options: COMMANDS[c].options
     }
 });
 

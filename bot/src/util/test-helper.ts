@@ -6,6 +6,8 @@ export function createTestInteraction(commandName: string): CommandInteraction {
     return {
         commandName,
         isCommand: () => true,
+        // @ts-ignore
+        toJSON: () => JSON.stringify(this as any),
         channel: {
             send: async (options: string | MessagePayload | MessageOptions) => {
                     return {

@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["extendedIndexes"]
 }
 
 datasource db {
@@ -16,6 +17,7 @@ model User {
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   CommandHistory CommandHistory[]
+  Scores         Score[]
 }
 
 model CommandHistory {
@@ -26,4 +28,25 @@ model CommandHistory {
   userId      String
   commandName String
   commandRaw  String
+}
+
+enum ScoreTypes {
+  SERVER
+  CHANNEL
+}
+
+model Score {
+  id          String     @id @default(uuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  type        ScoreTypes @default(SERVER)
+  name        String
+  description String?
+  amount      Int        @default(0)
+  serverId    String
+  channelId   String
+  userId      String
+  User        User       @relation(references: [id], onDelete: Cascade, fields: [userId])
+
+  @@unique([name, serverId])
 }

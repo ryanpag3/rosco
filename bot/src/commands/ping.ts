@@ -1,3 +1,4 @@
+import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
@@ -6,7 +7,9 @@ const Ping: Command = {
     name: 'ping',
     description: 'Ping the bot and get the latency.',
     examples: '`/ping`',
-    handler: async (interaction) => {
+    handler: async (interaction, user) => {
+        logger.info(interaction.options.getSubcommand())
+
         const msg = await interaction.channel?.send('Checking latency...');
         if (!msg)
             throw new BotError(`Could not check latency.`);

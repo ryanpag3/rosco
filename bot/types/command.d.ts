@@ -1,8 +1,11 @@
-import { CommandInteraction } from 'discord.js';
+import { ApplicationCommandOption, CommandInteraction } from 'discord.js';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { User } from '@prisma/client';
 
 export interface Command {
     name: string;
     description: string;
     examples: string;
-    handler: (interaction: CommandInteraction) => void;
+    options?: any;
+    handler: (interaction: CommandInteraction, user: User) => void;
 }

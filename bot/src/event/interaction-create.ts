@@ -25,7 +25,7 @@ export default async function(interaction: Interaction, isTestCase: boolean = fa
             return interaction.reply('command not found.');
         }
 
-        await handler(interaction);
+        await handler(interaction, user);
     } catch (e) {
         logger.error(`An error occured while receiving interaction.`, e);
 
