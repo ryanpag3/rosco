@@ -48,7 +48,7 @@ it('should update a score', async () => {
 
     expect(s.id).not.toBeUndefined();
 
-    const updated = await ScoreService.update(s.name, {
+    const updated = await ScoreService.update(s.name, 'abcd', {
         description: 'new'
     });
 
@@ -78,7 +78,7 @@ it('should throw an error if updating a score to an existing name', async () => 
 
     expect(ss.id).not.toBeUndefined();
 
-    await expect(ScoreService.update(s.name, {
+    await expect(ScoreService.update(s.name, 'abcd', {
         name: 'testing2'
     })).rejects.toThrow();
 });
@@ -97,15 +97,21 @@ it('should get a score record', async () => {
     expect(s.id).not.toBeUndefined();
 
     const found = await ScoreService.getUnique({
-        name: s.name
+        name_serverId: {
+                name: s.name,
+                serverId: s.serverId
+        }
     });
 
-    expect(found?.id).toBe(s.id);
+expect(found?.id).toBe(s.id);
 });
 
 it('should return null when a record does not exist', async () => {
     const found = await ScoreService.getUnique({
-        name: 'abc'
+        name_serverId: {
+            name: 'abc',
+            serverId: 'abc'
+        }
     });
 
     expect(found).toBeNull();
@@ -123,7 +129,7 @@ it('should delete the score', async () => {
     });
 
     expect(s.id).not.toBeUndefined();
-    
+
     await ScoreService.del({
         name: 'testing',
         serverId: 'abcd'

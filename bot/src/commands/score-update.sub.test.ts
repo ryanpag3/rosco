@@ -12,15 +12,23 @@ it('should update a valid score', async () => {
 
     await onCommandReceived(int);
 
+    const serverId = int.guild?.id;
+
     int = createTestInteraction('score', 'update', {
         name: 'test',
         description: 'new'
     });
 
+    // @ts-ignore
+    int.guild.id = serverId;
+
     await onCommandReceived(int);
 
     const score = await ScoreService.getUnique({
-        name: 'test'
+        name_serverId: {
+            name: 'test',
+            serverId: int.guild?.id as string
+        }
     });
 
     expect(score?.description).toBe('new');

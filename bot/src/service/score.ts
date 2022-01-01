@@ -19,11 +19,14 @@ export const create = async (data: Prisma.ScoreCreateInput) => {
     }
 }
 
-export const update = async (name: string, data: Prisma.ScoreUpdateInput) => {
+export const update = async (name: string, serverId: string, data: Prisma.ScoreUpdateInput) => {
     try {
         return prisma.score.update({
             where: {
-                name
+                name_serverId: {
+                    name,
+                    serverId
+                }
             },
             data
         });

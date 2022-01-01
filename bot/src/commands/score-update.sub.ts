@@ -17,8 +17,10 @@ const ScoreUpdate: Command = {
 
         const score = await prisma.score.findUnique({
             where: {
-                // @ts-ignore
-                name
+                name_serverId: {
+                    name: name as string,
+                    serverId: interaction.guild?.id as string
+                }
             }
         });
 
@@ -28,7 +30,8 @@ const ScoreUpdate: Command = {
         // @ts-ignore
         const updateData = buildUpdateObject(newName, description, amount);
 
-        await ScoreService.update(name as string, updateData);
+        // @ts-ignore
+        await ScoreService.update(name, interaction.guild?.id, updateData);
 
         const fields: {
             name: string;
