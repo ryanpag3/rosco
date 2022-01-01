@@ -5,7 +5,7 @@ import prisma from '../util/prisma';
 it('should reply with bong when called', async () => {
     const int = createTestInteraction('bing');
     const spy = jest.spyOn(int, 'reply');
-    await onCommandReceived(int, true);
+    await onCommandReceived(int);
     expect(spy).toHaveBeenCalled();
     expect(await getApiResult(spy)).toBe('bong');
 });
@@ -13,7 +13,7 @@ it('should reply with bong when called', async () => {
 it('should initialize the user to the database', async () => {
     const int = createTestInteraction('bing');
     const spy = jest.spyOn(int, 'reply');
-    await onCommandReceived(int, true);
+    await onCommandReceived(int);
     expect(spy).toHaveBeenCalled();
     expect(await getApiResult(spy)).toBe('bong');
     const user = await prisma.user.findUnique({

@@ -3,5 +3,5 @@ import onCommandReceived from '../event/interaction-create';
 
 it('should ping the bot', async () => {
     let int = createTestInteraction('ping');
-    await onCommandReceived(int, true);
+    await onCommandReceived(int);
 })
