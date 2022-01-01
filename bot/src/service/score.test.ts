@@ -81,4 +81,32 @@ it('should throw an error if updating a score to an existing name', async () => 
     await expect(ScoreService.update(s.name, {
         name: 'testing2'
     })).rejects.toThrow();
-})
+});
+
+it('should get a score record', async () => {
+    const u = await UserService.createIfNotExist('abcd');
+
+    const s = await ScoreService.create({
+        name: 'testing',
+        serverId: 'abcd',
+        channelId: 'abcd',
+        // @ts-ignore
+        userId: u.id
+    });
+
+    expect(s.id).not.toBeUndefined();
+
+    const found = await ScoreService.getUnique({
+        name: s.name
+    });
+
+    expect(found?.id).toBe(s.id);
+});
+
+it('should return null when a record does not exist', async () => {
+    const found = await ScoreService.getUnique({
+        name: 'abc'
+    });
+
+    expect(found).toBeNull();
+});
