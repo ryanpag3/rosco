@@ -1,11 +1,11 @@
-import { Interaction } from 'discord.js';
+import { CommandInteraction, Interaction } from 'discord.js';
 import COMMANDS from '../commands';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
 import * as UserService from '../service/user';
 import * as CommandHistory from '../util/command-history';
 
-export default async function(interaction: Interaction) {
+export default async function(interaction: CommandInteraction) {
     try {
         if (!interaction.isCommand())
             return;
@@ -29,25 +29,26 @@ export default async function(interaction: Interaction) {
     } catch (e) {
         logger.error(`An error occured while receiving interaction.`, e);
 
+        const extraInfo = `\n\n_Need help?_\n - Run \`/help ${interaction.commandName}\` \n - [Join the support server](https://discord.gg/KwJUfbt5Wv)`;
+
         if (!(e instanceof BotError)) {
-            interaction.channel?.send({
+            interaction.reply({
                 embeds: [
                     {
-                        description: `An internal server error occured. Please contact bot administrator.`
+                        description: `An internal server error occured. Please contact bot administrator.${extraInfo}`
                     }
                 ]
             });
         } else {
-            interaction.channel?.send({
+            interaction.reply({
                 embeds: [
                     {
-                        title: `:stop_sign: An error occured.`,
-                        description: `${e.message}`
+                        title: `:cry: Whoops, an error occured.`,
+                        description: `${e.message}${extraInfo}`
                     }
                 ]
             });
         }
-
 
         if (process.env.NODE_ENV === 'test')
             throw e;
