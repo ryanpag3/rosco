@@ -9,7 +9,7 @@ const ScoreUpdate: Command = {
     examples: ``,
     // options are handled in score.ts since this is a subcommand
     options: {},
-    handler: async (interaction, user) => {
+    handler: async (interaction, _user) => {
         const name = interaction.options.getString('name');
         const newName = interaction.options.getString('new-name');
         const description = interaction.options.getString('description');

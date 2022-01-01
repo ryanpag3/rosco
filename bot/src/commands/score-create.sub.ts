@@ -1,7 +1,5 @@
-import { Prisma, User } from '@prisma/client';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
-import prisma from '../util/prisma';
 import * as ScoreService from '../service/score';
 
 const ScoreCreate: Command = {
@@ -10,7 +8,7 @@ const ScoreCreate: Command = {
     examples: ``,
     // options for this subcommand are located in score.ts
     options: {},
-    handler: async (interaction, user: User) => {
+    handler: async (interaction, user) => {
         const name = interaction.options.getString('name');
         const description = interaction.options.getString('description');
         const amount = interaction.options.getInteger('amount') || 0;
