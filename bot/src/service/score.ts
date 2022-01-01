@@ -38,3 +38,13 @@ export const update = async (name: string, data: Prisma.ScoreUpdateInput) => {
         }
     }
 }
+
+export const getUnique = async (args: {
+    id?: string;
+    name?: string;
+    serverId?: string;
+}) => {
+    return prisma.score.findUnique({
+        where: args
+    });
+}
