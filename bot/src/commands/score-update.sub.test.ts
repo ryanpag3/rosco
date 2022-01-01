@@ -7,8 +7,7 @@ it('should update a valid score', async () => {
     let int = createTestInteraction('score', 'create', {
         name: 'test',
         description: 'description',
-        amount: 1,
-        type: 'SERVER'
+        amount: 1
     });
 
     await onCommandReceived(int);
@@ -31,8 +30,7 @@ it('should throw an error if a score is updated to be named after an existing sc
     let int = createTestInteraction('score', 'create', {
         name: 'test',
         description: 'description',
-        amount: 1,
-        type: 'SERVER'
+        amount: 1
     });
 
     await onCommandReceived(int);
@@ -40,8 +38,7 @@ it('should throw an error if a score is updated to be named after an existing sc
     int = createTestInteraction('score', 'create', {
         name: 'test2',
         description: 'description',
-        amount: 1,
-        type: 'SERVER'
+        amount: 1
     });
 
     await onCommandReceived(int);

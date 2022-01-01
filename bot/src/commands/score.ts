@@ -39,7 +39,7 @@ const Score: Command = {
         },
         {
             name: 'update',
-            description: 'Update a score.',
+            description: 'Update an existing score.',
             type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
@@ -50,22 +50,22 @@ const Score: Command = {
                 },
                 {
                     name: 'new-name',
-                    description: 'The new name you want to update the score with.',
+                    description: 'Replace the existing name with this one.',
                     type: ApplicationCommandOptionType.String,
                 },
                 {
                     name: 'description',
-                    description: 'An optional description.',
+                    description: 'Replace the existing description with this one.',
                     type: ApplicationCommandOptionType.String
                 },
                 {
                     name: 'type',
-                    description: 'Choose the type of score. Valid options are "SERVER" or "CHANNEL".',
+                    description: 'Replace the existing type with this one.',
                     type: ApplicationCommandOptionType.String
                 },
                 {
                     name: 'amount',
-                    description: 'Set the starting amount of the score.',
+                    description: 'Update the score amount.',
                     type: ApplicationCommandOptionType.Integer
                 }
             ]

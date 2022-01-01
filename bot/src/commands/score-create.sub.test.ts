@@ -6,8 +6,7 @@ it('should create a valid server score', async () => {
     const int = createTestInteraction('score', 'create', {
         name: 'test',
         description: 'description',
-        amount: 1,
-        type: 'SERVER'
+        amount: 1
     });
     
     await onCommandReceived(int);
@@ -31,8 +30,7 @@ it('should throw an error if two scores in the same server have the same name', 
     const int = createTestInteraction('score', 'create', {
         name: 'test',
         description: 'description',
-        amount: 1,
-        type: 'SERVER'
+        amount: 1
     });
     
     await onCommandReceived(int);
@@ -58,8 +56,7 @@ it('should create a valid channel score', async () => {
     const int = createTestInteraction('score', 'create', {
         name: 'test',
         description: 'description',
-        amount: 1,
-        type: 'CHANNEL'
+        amount: 1
     });
     
     await onCommandReceived(int);
@@ -77,16 +74,5 @@ it('should create a valid channel score', async () => {
 
     expect(score).not.toBeNull();
     expect(score).not.toBeUndefined();
-});
-
-it('should throw an error if an invalid type is provided', async () => {
-    const int = createTestInteraction('score', 'create', {
-        name: 'test',
-        description: 'description',
-        amount: 1,
-        type: 'IWINAGAINLEWSTHERIN'
-    });
-    
-    await expect(onCommandReceived(int)).rejects.toThrowError();
 });
 

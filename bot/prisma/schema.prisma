@@ -30,16 +30,10 @@ model CommandHistory {
   commandRaw  String?
 }
 
-enum ScoreTypes {
-  SERVER
-  CHANNEL
-}
-
 model Score {
   id          String     @id @default(uuid())
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  type        ScoreTypes @default(SERVER)
   name        String
   description String?
   amount      Int        @default(0)
