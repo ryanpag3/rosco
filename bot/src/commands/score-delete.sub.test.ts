@@ -30,5 +30,9 @@ it('should delete a score', async () => {
 });
 
 it('should throw an error if a score doesnt exist to delete.', async () => {
+    const int = createTestInteraction('score', 'delete', {
+        name: 'test'
+    }, '1');
 
+    expect(onCommandReceived(int)).rejects.toThrow();
 })
