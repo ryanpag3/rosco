@@ -8,8 +8,6 @@ const Ping: Command = {
     description: 'Ping the bot and get the latency.',
     examples: '`/ping`',
     handler: async (interaction, user) => {
-        logger.info(interaction.options.getSubcommand())
-
         const msg = await interaction.channel?.send('Checking latency...');
         if (!msg)
             throw new BotError(`Could not check latency.`);

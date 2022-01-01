@@ -2,17 +2,20 @@ import { CommandInteraction, InteractionReplyOptions, MessageOptions, MessagePay
 import logger from './logger';
 
 // add fields as necessary
-export function createTestInteraction(commandName: string): CommandInteraction {
+export function createTestInteraction(commandName: string, subcommandName?: string): CommandInteraction {
     return {
         commandName,
         isCommand: () => true,
         // @ts-ignore
-        toJSON: () => JSON.stringify(this as any),
+        toJSON: () => {},
         channel: {
             send: async (options: string | MessagePayload | MessageOptions) => {
                     return {
-                        // @ts-ignore
-                        options,
+                        options: {
+                            // @ts-ignore
+                            ...options,
+                            getSubCommand: () => subcommandName
+                        },
                         delete: async () => true as any,
                         send: () => {
                             return {

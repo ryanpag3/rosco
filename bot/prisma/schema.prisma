@@ -24,10 +24,10 @@ model CommandHistory {
   id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
+  User        User?     @relation(references: [id], onDelete: Cascade, fields: [userId])
   userId      String
   commandName String
-  commandRaw  String
+  commandRaw  String?
 }
 
 enum ScoreTypes {
