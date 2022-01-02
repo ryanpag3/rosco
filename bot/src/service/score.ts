@@ -48,6 +48,14 @@ export const findUnique = async (args: Prisma.ScoreWhereUniqueInput) => {
     });
 }
 
+export const findMany = async (args: Prisma.ScoreWhereInput, take?: number, offset?: number) => {
+    return prisma.score.findMany({
+        where: args,
+        take,
+        skip: offset
+    });
+}
+
 export const del = async (where: Prisma.ScoreWhereInput) => {
     return prisma.score.deleteMany({
         where

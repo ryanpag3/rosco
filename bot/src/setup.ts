@@ -1,3 +1,4 @@
+import 'chartjs-plugin-datalabels';
 import { Client } from 'discord.js';
 import * as CommandDeployer from './util/slash-command-deployer';
 import onReady from './event/ready';
