@@ -50,7 +50,7 @@ const ScoreUpdate: Command = {
         await interaction.reply({
             embeds: [
                 {
-                    title: `:compass: Your score has been updated.`,
+                    title: `:compass: Score has been updated.`,
                     description: `**${newName || score.name}** has been updated with the following changes`,
                     fields: fields
                 }
