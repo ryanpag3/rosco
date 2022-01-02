@@ -29,11 +29,6 @@ const Score: Command = {
                     type: ApplicationCommandOptionType.String
                 },
                 {
-                    name: 'type',
-                    description: 'Choose the type of score. Valid options are "SERVER" or "CHANNEL".',
-                    type: ApplicationCommandOptionType.String
-                },
-                {
                     name: 'amount',
                     description: 'Set the starting amount of the score.',
                     type: ApplicationCommandOptionType.Integer
@@ -59,11 +54,6 @@ const Score: Command = {
                 {
                     name: 'description',
                     description: 'Replace the existing description with this one.',
-                    type: ApplicationCommandOptionType.String
-                },
-                {
-                    name: 'type',
-                    description: 'Replace the existing type with this one.',
                     type: ApplicationCommandOptionType.String
                 },
                 {

@@ -38,11 +38,6 @@ const ScoreUpdate: Command = {
             value: string;
         }[] = [];
 
-        fields.push({
-            name: 'name',
-            value: newName || score.name
-        });
-
         Object.keys(updateData).map((k: string) => {
             if (!updateData[k] || k === 'name')
                 return;
@@ -55,7 +50,8 @@ const ScoreUpdate: Command = {
         await interaction.reply({
             embeds: [
                 {
-                    title: `:up: Your score [**${name}**] has been updated.`,
+                    title: `:compass: Your score has been updated.`,
+                    description: `**${newName || score.name}** has been updated with the following changes`,
                     fields: fields
                 }
             ]
