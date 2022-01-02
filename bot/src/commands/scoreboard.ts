@@ -30,6 +30,85 @@ const Scoreboard: Command = {
                     type: ApplicationCommandOptionType.String
                 }
             ]
+        },
+        {
+            name: 'delete',
+            description: 'Delete a scoreboard.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the scoreboard to delete.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
+        },
+        {
+            name: 'update',
+            description: 'Update an existing scoreboard.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The current name of the scoreboard you want to update.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'new-name',
+                    description: 'Replace the existing name with this one.',
+                    type: ApplicationCommandOptionType.String,
+                },
+                {
+                    name: 'description',
+                    description: 'Replace the existing description with this one.',
+                    type: ApplicationCommandOptionType.String
+                },
+                {
+                    name: 'scores',
+                    description: 'Replace the existing scores with these.',
+                    type: ApplicationCommandOptionType.String
+                }
+            ]
+        },
+        {
+            name: 'add-score',
+            description: 'Add a score to a scoreboard.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the scoreboard to add to.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'score-name',
+                    description: 'The name of your score to add.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
+        },
+        {
+            name: 'remove-score',
+            description: 'Remove a score to a scoreboard.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the scoreboard to remove from.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'score-name',
+                    description: 'The name of your score to remove.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
         }
     ],
     handler: async (interaction, user) => {
