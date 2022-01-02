@@ -14,6 +14,7 @@ const ScoreList: Command = {
         const amount = interaction.options.getInteger('amount') || 10;
         const page = interaction.options.getInteger('page') || 1;
         const filter = interaction.options.getString('filter');
+        const includeRaw = interaction.options.getBoolean('include-raw') || false;
 
         const scores = await prisma.score.findMany({
             where: {
@@ -99,7 +100,7 @@ const ScoreList: Command = {
         await interaction.reply({
             embeds: [
                 {
-                    description: `Get details on a particular score with \`/score info <name>\``
+                    description: `Get details on a particular score with \`/score info <name>\`\n\n${includeRaw ? scores.map((s) => `${s.amount} - ${s.name}`).join('\n') : null}`
                 }
             ],
             files: [ attachment ]

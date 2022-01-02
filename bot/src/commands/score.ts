@@ -142,6 +142,11 @@ const Score: Command = {
                     name: 'filter',
                     description: 'Provide a pattern to filter score names on.',
                     type: ApplicationCommandOptionType.String
+                },
+                {
+                    name: 'include-raw',
+                    description: 'Includes a raw print out of the score data in the description.',
+                    type: ApplicationCommandOptionType.Boolean
                 }
             ]
         }
