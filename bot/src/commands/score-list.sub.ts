@@ -1,6 +1,7 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { Command } from '../../types/command';
+import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 const ScoreList: Command = {
@@ -12,10 +13,14 @@ const ScoreList: Command = {
     handler: async (interaction, user) => {
         const amount = interaction.options.getInteger('amount') || 10;
         const page = interaction.options.getInteger('page') || 1;
+        const filter = interaction.options.getString('filter');
 
         const scores = await prisma.score.findMany({
             where: {
-                serverId: interaction.guild?.id
+                serverId: interaction.guild?.id,
+                name: {
+                    contains: filter || undefined
+                }
             },
             take: amount,
             skip: amount * (page-1),
@@ -24,8 +29,8 @@ const ScoreList: Command = {
             }
         });
 
-        const height = 75 * scores.length;
-        const width = 1200;
+        const height = 35 * scores.length + 125;
+        const width = 1000;
         const backgroundColor = '#dbdbdb';
         const chartJsNodeCanvas = new ChartJSNodeCanvas({ width, height, backgroundColour: backgroundColor });
         const stream = chartJsNodeCanvas.renderToStream({
@@ -55,18 +60,21 @@ const ScoreList: Command = {
                             color: '#333333',
                             font: {
                                 family: 'Roboto',
-                                size: 18,
-                                // weight: 'bold'
+                                size: 18
                             }
                         }
                     },
                     xAxis: {
                         ticks: {
                             color: '#949494',
+                            maxTicksLimit: 20,
                             font: {
                                 family: 'Roboto',
                                 size: 16,
                                 weight: 'bold'
+                            },
+                            callback: (value, index, values) => {
+                                return commarize(value as number, 1000);
                             }
                         }
                     }
@@ -103,5 +111,25 @@ function truncateWithEllipses(text: string, max: number)
 {
     return text.substr(0,max-1)+(text.length>max?'...':''); 
 }
+
+function commarize(num: number, min?: number) {
+    min = min || 1e3;
+    // Alter numbers larger than 1k
+    if (num >= min) {
+      var units = ["k", "M", "B", "T"];
+  
+      var order = Math.floor(Math.log(num) / Math.log(1000));
+  
+      var unitname = units[(order - 1)];
+      var num = Math.floor(num / 1000 ** order);
+  
+      // output number remainder + unitname
+      return num + unitname
+    }
+  
+    // return formatted original number
+    return num.toLocaleString()
+  }
+  
 
 export default ScoreList;

@@ -137,6 +137,11 @@ const Score: Command = {
                     name: 'page',
                     description: 'Which page to display. Default is 1.',
                     type: ApplicationCommandOptionType.Integer
+                },
+                {
+                    name: 'filter',
+                    description: 'Provide a pattern to filter score names on.',
+                    type: ApplicationCommandOptionType.String
                 }
             ]
         }
