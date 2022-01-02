@@ -86,11 +86,12 @@ const ScoreList: Command = {
                 }
             },
         });
+
         const attachment = new MessageAttachment(stream);
         await interaction.reply({
             embeds: [
                 {
-                    description: `Get details on a particular score with \`/score details <name>\``
+                    description: `Get details on a particular score with \`/score info <name>\``
                 }
             ],
             files: [ attachment ]

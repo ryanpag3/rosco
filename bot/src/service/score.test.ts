@@ -9,7 +9,8 @@ it('should create a score', async () => {
         serverId: 'abcd',
         channelId: 'abcd',
         // @ts-ignore
-        userId: u.id
+        userId: u.id,
+        color: '#0'
     });
 
     expect(s.id).not.toBeUndefined();
@@ -23,7 +24,8 @@ it('should throw a BotError if a score already exists in the server', async () =
         serverId: 'abcd',
         channelId: 'abcd',
         // @ts-ignore
-        userId: u.id
+        userId: u.id,
+        color: '#0'
     });
 
     await expect(ScoreService.create({
@@ -31,7 +33,8 @@ it('should throw a BotError if a score already exists in the server', async () =
         serverId: 'abcd',
         channelId: 'abcd',
         // @ts-ignore
-        userId: u.id
+        userId: u.id,
+        color: '#0'
     })).rejects.toThrow();
 });
 
@@ -43,7 +46,8 @@ it('should update a score', async () => {
         serverId: 'abcd',
         channelId: 'abcd',
         // @ts-ignore
-        userId: u.id
+        userId: u.id,
+        color: '#0'
     });
 
     expect(s.id).not.toBeUndefined();
@@ -63,7 +67,8 @@ it('should throw an error if updating a score to an existing name', async () => 
         serverId: 'abcd',
         channelId: 'abcd',
         // @ts-ignore
-        userId: u.id
+        userId: u.id,
+        color: '#0'
     });
 
     expect(s.id).not.toBeUndefined();
@@ -73,7 +78,8 @@ it('should throw an error if updating a score to an existing name', async () => 
         serverId: 'abcd',
         channelId: 'abcd',
         // @ts-ignore
-        userId: u.id
+        userId: u.id,
+        color: '#0'
     });
 
     expect(ss.id).not.toBeUndefined();
@@ -91,7 +97,8 @@ it('should get a score record', async () => {
         serverId: 'abcd',
         channelId: 'abcd',
         // @ts-ignore
-        userId: u.id
+        userId: u.id,
+        color: '#0'
     });
 
     expect(s.id).not.toBeUndefined();
@@ -125,7 +132,8 @@ it('should delete the score', async () => {
         serverId: 'abcd',
         channelId: 'abcd',
         // @ts-ignore
-        userId: u.id
+        userId: u.id,
+        color: '#0'
     });
 
     expect(s.id).not.toBeUndefined();
@@ -153,7 +161,8 @@ it('should do nothing if no valid scores are available to delete', async () => {
         serverId: 'abcd',
         channelId: 'abcd',
         // @ts-ignore
-        userId: u.id
+        userId: u.id,
+        color: '#0'
     });
 
     expect(s.id).not.toBeUndefined();
