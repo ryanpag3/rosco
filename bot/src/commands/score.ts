@@ -3,6 +3,7 @@ import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import ScoreCreate from './score-create.sub';
 import ScoreDelete from './score-delete.sub';
+import ScoreUp from './score-up.sub';
 import ScoreUpdate from './score-update.sub';
 
 const Score: Command = {
@@ -83,6 +84,42 @@ const Score: Command = {
                     required: true
                 }
             ]
+        },
+        {
+            name: 'up',
+            description: 'Increase score count.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the score you want to increae.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'amount',
+                    description: 'The amount you want to increase. Defaults to 1.',
+                    type: ApplicationCommandOptionType.Integer
+                }
+            ]
+        },
+        {
+            name: 'down',
+            description: 'Decrease score count.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the score you want to decrease.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'amount',
+                    description: 'The amount you want to decrease. Defaults to 1.',
+                    type: ApplicationCommandOptionType.Integer
+                }
+            ]
         }
     ],
     handler: async (interaction, user) => {
@@ -94,6 +131,8 @@ const Score: Command = {
                 return ScoreUpdate.handler(interaction, user);
             case 'delete':
                 return ScoreDelete.handler(interaction, user);
+            case 'up':
+                return ScoreUp.handler(interaction, user);
             default:
                 throw new BotError(`Invalid subcommand provided.`);
         }
