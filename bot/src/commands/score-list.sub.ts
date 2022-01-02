@@ -100,7 +100,7 @@ const ScoreList: Command = {
         await interaction.reply({
             embeds: [
                 {
-                    description: `Get details on a particular score with \`/score info <name>\`\n\n${includeRaw ? scores.map((s) => `${s.amount} - ${s.name}`).join('\n') : null}`
+                    description: `Get details on a particular score with \`/score info <name>\`\n\n${includeRaw ? scores.map((s) => `${s.amount} - ${s.name}`).join('\n') : ''}`
                 }
             ],
             files: [ attachment ]

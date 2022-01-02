@@ -32,31 +32,33 @@ model CommandHistory {
 }
 
 model Score {
-  id           String      @id @default(uuid())
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  name         String
-  description  String?
-  color        String
-  amount       Int         @default(0)
-  serverId     String
-  channelId    String
-  userId       String
-  User         User        @relation(references: [id], onDelete: Cascade, fields: [userId])
-  scoreboardId String?
-  Scoreboard   Scoreboard? @relation(references: [id], fields: [scoreboardId])
+  id          String       @id @default(uuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  name        String
+  description String?
+  color       String
+  amount      Int          @default(0)
+  serverId    String
+  channelId   String
+  userId      String
+  User        User         @relation(references: [id], onDelete: Cascade, fields: [userId])
+  Scoreboards Scoreboard[]
 
   @@unique([name, serverId])
 }
 
 model Scoreboard {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-  serverId  String
-  channelId String
-  userId    String
-  User      User     @relation(references: [id], onDelete: Cascade, fields: [userId])
-  Scores    Score[]
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  description String?
+  serverId    String
+  channelId   String
+  userId      String
+  User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
+  Scores      Score[]
+
+  @@unique([name, serverId])
 }

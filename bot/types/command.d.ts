@@ -4,8 +4,8 @@ import { User } from '@prisma/client';
 
 export interface Command {
     name: string;
-    description: string;
-    examples: string;
+    description?: string;
+    examples?: string;
     options?: any;
     handler: (interaction: CommandInteraction, user: User) => void;
 }

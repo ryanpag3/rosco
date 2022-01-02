@@ -18,6 +18,9 @@ const ScoreCreate: Command = {
         if (!name)
             throw new BotError(`Name is a required field.`);
 
+        if (name.includes(','))
+            throw new BotError(`Name contains invalid characters. [,]`)
+
         if (!interaction.channel || !interaction.guild)
             throw new Error(`Invalid interaction found.`);
 
