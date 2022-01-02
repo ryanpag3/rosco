@@ -11,7 +11,7 @@ const ScoreDown: Command = {
         const name = interaction.options.getString('name');
         const amount = interaction.options.getInteger('amount') || 1;
 
-        const score = await ScoreService.getUnique({
+        const score = await ScoreService.findUnique({
             name_serverId: {
                 name: name as string,
                 serverId: interaction.guild?.id as string

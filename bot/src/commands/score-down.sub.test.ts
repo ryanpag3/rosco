@@ -16,7 +16,7 @@ it('should decrease the score count', async () => {
 
     await onCommandReceived(int);
 
-    const score = await ScoreService.getUnique({
+    const score = await ScoreService.findUnique({
         name_serverId: {
             name: 'test',
             serverId: int.guild?.id as string
@@ -41,7 +41,7 @@ it('should decrease the score count by the designated amount', async () => {
 
     await onCommandReceived(int);
 
-    const score = await ScoreService.getUnique({
+    const score = await ScoreService.findUnique({
         name_serverId: {
             name: 'test',
             serverId: int.guild?.id as string

@@ -18,7 +18,7 @@ it('should delete a score', async () => {
 
     await onCommandReceived(int);
 
-    const found = await ScoreService.getUnique({
+    const found = await ScoreService.findUnique({
         name_serverId: {
             name: 'test',
             // @ts-ignore

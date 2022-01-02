@@ -24,7 +24,7 @@ it('should update a valid score', async () => {
 
     await onCommandReceived(int);
 
-    const score = await ScoreService.getUnique({
+    const score = await ScoreService.findUnique({
         name_serverId: {
             name: 'test',
             serverId: int.guild?.id as string

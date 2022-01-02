@@ -42,7 +42,7 @@ export const update = async (name: string, serverId: string, data: Prisma.ScoreU
     }
 }
 
-export const getUnique = async (args: Prisma.ScoreWhereUniqueInput) => {
+export const findUnique = async (args: Prisma.ScoreWhereUniqueInput) => {
     return prisma.score.findUnique({
         where: args
     });
