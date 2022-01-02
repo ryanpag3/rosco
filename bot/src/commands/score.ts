@@ -4,6 +4,7 @@ import BotError from '../util/bot-error';
 import ScoreCreate from './score-create.sub';
 import ScoreDelete from './score-delete.sub';
 import ScoreDown from './score-down.sub';
+import ScoreList from './score-list.sub';
 import ScoreUp from './score-up.sub';
 import ScoreUpdate from './score-update.sub';
 
@@ -111,6 +112,23 @@ const Score: Command = {
                     type: ApplicationCommandOptionType.Integer
                 }
             ]
+        },
+        {
+            name: 'list',
+            description: 'List out all of the scores.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'amount',
+                    description: 'The amount of scores to return. Default is 10.',
+                    type: ApplicationCommandOptionType.Integer
+                },
+                {
+                    name: 'page',
+                    description: 'Which page to display. Default is 1.',
+                    type: ApplicationCommandOptionType.Integer
+                }
+            ]
         }
     ],
     handler: async (interaction, user) => {
@@ -126,6 +144,8 @@ const Score: Command = {
                 return ScoreUp.handler(interaction, user);
             case 'down':
                 return ScoreDown.handler(interaction, user);
+            case 'list':
+                return ScoreList.handler(interaction, user);
             default:
                 throw new BotError(`Invalid subcommand provided.`);
         }

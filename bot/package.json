@@ -17,6 +17,8 @@
     "@discordjs/rest": "^0.2.0-canary.0",
     "@prisma/client": "3.7.0",
     "bluebird": "^3.7.2",
+    "chart.js": "^3.7.0",
+    "chartjs-node-canvas": "^4.1.5",
     "discord-api-types": "^0.25.2",
     "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
