@@ -3,6 +3,7 @@ import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import ScoreCreate from './score-create.sub';
 import ScoreDelete from './score-delete.sub';
+import ScoreDown from './score-down.sub';
 import ScoreUp from './score-up.sub';
 import ScoreUpdate from './score-update.sub';
 
@@ -133,6 +134,8 @@ const Score: Command = {
                 return ScoreDelete.handler(interaction, user);
             case 'up':
                 return ScoreUp.handler(interaction, user);
+            case 'down':
+                return ScoreDown.handler(interaction, user);
             default:
                 throw new BotError(`Invalid subcommand provided.`);
         }
