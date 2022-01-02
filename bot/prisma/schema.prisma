@@ -18,30 +18,45 @@ model User {
   updatedAt      DateTime         @updatedAt
   CommandHistory CommandHistory[]
   Scores         Score[]
+  Scoreboards    Scoreboard[]
 }
 
 model CommandHistory {
   id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  User        User?     @relation(references: [id], onDelete: Cascade, fields: [userId])
+  User        User?    @relation(references: [id], onDelete: Cascade, fields: [userId])
   userId      String
   commandName String
   commandRaw  String?
 }
 
 model Score {
-  id          String     @id @default(uuid())
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  name        String
-  description String?
-  color       String
-  amount      Int        @default(0)
-  serverId    String
-  channelId   String
-  userId      String
-  User        User       @relation(references: [id], onDelete: Cascade, fields: [userId])
+  id           String      @id @default(uuid())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  name         String
+  description  String?
+  color        String
+  amount       Int         @default(0)
+  serverId     String
+  channelId    String
+  userId       String
+  User         User        @relation(references: [id], onDelete: Cascade, fields: [userId])
+  scoreboardId String?
+  Scoreboard   Scoreboard? @relation(references: [id], fields: [scoreboardId])
 
   @@unique([name, serverId])
+}
+
+model Scoreboard {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  serverId  String
+  channelId String
+  userId    String
+  User      User     @relation(references: [id], onDelete: Cascade, fields: [userId])
+  Scores    Score[]
 }
