@@ -36,6 +36,7 @@ model Score {
   updatedAt   DateTime   @updatedAt
   name        String
   description String?
+  color       String
   amount      Int        @default(0)
   serverId    String
   channelId   String

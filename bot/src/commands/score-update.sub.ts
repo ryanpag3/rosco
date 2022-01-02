@@ -14,6 +14,7 @@ const ScoreUpdate: Command = {
         const newName = interaction.options.getString('new-name');
         const description = interaction.options.getString('description');
         const amount = interaction.options.getInteger('amount');
+        const color = interaction.options.getString('color');
 
         const score = await prisma.score.findUnique({
             where: {
@@ -28,7 +29,7 @@ const ScoreUpdate: Command = {
             throw new BotError(`Cannot find score with name **${name}**.`);
 
         // @ts-ignore
-        const updateData = buildUpdateObject(newName, description, amount);
+        const updateData = buildUpdateObject(newName, description, amount, color);
 
         // @ts-ignore
         await ScoreService.update(name, interaction.guild?.id, updateData);
@@ -60,7 +61,7 @@ const ScoreUpdate: Command = {
 
 };
 
-const buildUpdateObject = (name: string, description: string, amount: number) => {
+const buildUpdateObject = (name: string, description: string, amount: number, color: string) => {
     let obj: any = {};
     if (name)
         obj['name'] = name;
@@ -70,6 +71,9 @@ const buildUpdateObject = (name: string, description: string, amount: number) =>
 
     if (amount)
         obj['amount'] = amount;
+
+    if (color)
+        obj['color'] = color;
 
     return obj;
 }

@@ -1,6 +1,7 @@
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import * as ScoreService from '../service/score';
+import randomColor from 'randomcolor';
 
 const ScoreCreate: Command = {
     name: 'create',
@@ -12,6 +13,7 @@ const ScoreCreate: Command = {
         const name = interaction.options.getString('name');
         const description = interaction.options.getString('description');
         const amount = interaction.options.getInteger('amount') || 0;
+        const color = interaction.options.getString('color') || randomColor();
 
         if (!name)
             throw new BotError(`Name is a required field.`);
@@ -25,6 +27,7 @@ const ScoreCreate: Command = {
             amount,
             serverId: interaction.guild?.id,
             channelId: interaction.channel?.id,
+            color,
             // @ts-ignore
             userId: user.id
         });
@@ -32,8 +35,8 @@ const ScoreCreate: Command = {
         await interaction.reply({
             embeds: [
                 {
-                    title: `:boom: A new score, **${name}** has been created. :boom:`,
-                    description: `You can now update your score by running \`/score update\`.`,
+                    title: `:boom: A new score has been created.`,
+                    description: `Here are the details`,
                     fields: [
                         {
                             name: 'name',
@@ -46,6 +49,10 @@ const ScoreCreate: Command = {
                         {
                             name: 'amount',
                             value: amount.toString()
+                        },
+                        {
+                            name: 'color',
+                            value: color
                         }
                     ]
                 }

@@ -33,6 +33,11 @@ const Score: Command = {
                     name: 'amount',
                     description: 'Set the starting amount of the score.',
                     type: ApplicationCommandOptionType.Integer
+                },
+                {
+                    name: 'color',
+                    description: 'Set the color of the bar when displayed via `/score list`.',
+                    type: ApplicationCommandOptionType.String
                 }
             ]
         },
@@ -61,6 +66,11 @@ const Score: Command = {
                     name: 'amount',
                     description: 'Update the score amount.',
                     type: ApplicationCommandOptionType.Integer
+                },
+                {
+                    name: 'color',
+                    description: 'Update the color of the bar when displayed via `/score list`.',
+                    type: ApplicationCommandOptionType.String
                 }
             ]
         },
