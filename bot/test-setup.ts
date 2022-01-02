@@ -13,7 +13,7 @@ beforeAll(async () => {
 afterEach(async () => {
     // @ts-ignore
     for (const { tablename } of await prisma.$queryRaw`SELECT tablename FROM pg_tables WHERE schemaname='public'`) {
-        if (tablename !== '_prisma_migrations') {
+        if (tablename !== '_prisma_migrations' && !tablename.startsWith('_')) {
             // @ts-ignore
             await prisma[camelize(tablename)].deleteMany({where: {}});
             logger.trace(`truncated ${tablename}`);
