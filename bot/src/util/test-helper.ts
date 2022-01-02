@@ -40,7 +40,8 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
             getString: (key: string) => options[key],
             // @ts-ignore
             getInteger: (key: string) => Number.parseInt(options[key]),
-            getSubcommand: () => subcommandName
+            getSubcommand: () => subcommandName,
+            getBoolean: (key: string) => options[key]?.toString() === 'true'
         },
         guild: {
             id: serverId || makeid(18)
