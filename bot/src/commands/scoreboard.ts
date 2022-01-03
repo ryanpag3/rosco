@@ -3,6 +3,7 @@ import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import ScoreboardCreate from './scoreboard-create.sub';
 import ScoreboardScoreAdd from './scoreboard-score-add.sub';
+import ScoreboardScoreRemove from './scoreboard-score-remove.sub';
 
 const Scoreboard: Command = {
     name: 'scoreboard',
@@ -119,6 +120,8 @@ const Scoreboard: Command = {
                 return ScoreboardCreate.handler(interaction, user);
             case 'add-score':
                 return ScoreboardScoreAdd.handler(interaction, user);
+            case 'remove-score':
+                return ScoreboardScoreRemove.handler(interaction, user);
             default:
                 throw new BotError(`Invalid scoreboard subcommand issued.`);
         }

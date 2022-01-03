@@ -3,13 +3,30 @@ import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
 
-const ScoreboardScoreAdd: Command = {
-    name: 'score-add',
+const ScoreboardScoreRemove: Command = {
+    name: 'score-remove',
     handler: async (interaction, user) => {
         const name = interaction.options.getString('name') as string;
         const scoreName = interaction.options.getString('score-name') as string;
 
         try {
+            const scoreboard = await prisma.scoreboard.findUnique({
+                where: {
+                    name_serverId: {
+                        name,
+                        serverId: interaction.guild?.id as string
+                    }
+                },
+                include: {
+                    Scores: true
+                }
+            });
+
+            const includesScore = scoreboard?.Scores.filter((s) => s.name === scoreName).length === 1;
+
+            if (!includesScore)
+                throw new BotError(`Score is not assigned to that scoreboard.`);
+
             await prisma.scoreboard.update({
                 where: {
                     name_serverId: {
@@ -19,7 +36,7 @@ const ScoreboardScoreAdd: Command = {
                 },
                 data: {
                     Scores: {
-                        set: [{
+                        disconnect: [{
                             name_serverId: {
                                 name: scoreName,
                                 serverId: interaction.guild?.id as string
@@ -31,8 +48,8 @@ const ScoreboardScoreAdd: Command = {
 
             return interaction.reply({
                 embeds: [{
-                    title: `:hearts: Score has been added to scoreboard.`,
-                    description: `Score **${scoreName}** has been added to scoreboard **${name}**.`
+                    title: `:hearts: Score has been removed from scoreboard.`,
+                    description: `Score **${scoreName}** has been removed from scoreboard **${name}**.`
                 }]
             });
         } catch (e) {
@@ -45,4 +62,4 @@ const ScoreboardScoreAdd: Command = {
     }
 };
 
-export default ScoreboardScoreAdd;
+export default ScoreboardScoreRemove;
