@@ -4,6 +4,7 @@ import BotError from '../util/bot-error';
 import logger from '../util/logger';
 import * as UserService from '../service/user';
 import * as CommandHistory from '../util/command-history';
+import { userHasPermission } from '../service/permission';
 
 export default async function(interaction: CommandInteraction) {
     try {
@@ -12,6 +13,17 @@ export default async function(interaction: CommandInteraction) {
 
 
         const user = await UserService.createIfNotExist(interaction.user.id);
+
+        if (!await userHasPermission(interaction, user)) {
+            return interaction.reply({
+                embeds: [
+                    {
+                        title: `:lock: Permission denied.`,
+                        description: `You do not have permission to run that command.`
+                    }
+                ]
+            })
+        }
 
         await CommandHistory.addToHistory(user.id, interaction, JSON.stringify(interaction.toJSON(), (key, value) =>
         typeof value === 'bigint'
