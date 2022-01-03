@@ -2,6 +2,7 @@ import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import PermissionSet from './permission-set.sub';
+import PermissionUnset from './permission-unset.sub';
 
 const Permission: Command = {
     id: '14dbd126-b0ad-459d-8cdb-bf609a61267f',
@@ -60,7 +61,7 @@ const Permission: Command = {
             case 'set':
                 return PermissionSet.handler(interaction, user);
             case 'unset':
-                return;
+                return PermissionUnset.handler(interaction, user);
             case 'set-all':
                 return;
             default:
