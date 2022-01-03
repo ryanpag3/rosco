@@ -134,6 +134,11 @@ const Score: Command = {
                     type: ApplicationCommandOptionType.Integer
                 },
                 {
+                    name: 'scoreboard',
+                    description: 'List only the scores contained in this scoreboard.',
+                    type: ApplicationCommandOptionType.String
+                },
+                {
                     name: 'page',
                     description: 'Which page to display. Default is 1.',
                     type: ApplicationCommandOptionType.Integer

@@ -19,7 +19,7 @@ const ScoreboardScoreAdd: Command = {
                 },
                 data: {
                     Scores: {
-                        set: [{
+                        connect: [{
                             name_serverId: {
                                 name: scoreName,
                                 serverId: interaction.guild?.id as string

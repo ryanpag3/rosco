@@ -15,13 +15,28 @@ const ScoreList: Command = {
         const page = interaction.options.getInteger('page') || 1;
         const filter = interaction.options.getString('filter');
         const includeRaw = interaction.options.getBoolean('include-raw') || false;
+        const scoreboard = interaction.options.getString('scoreboard') || undefined;
+
+        let Scoreboards = {};
+
+        if (scoreboard)
+            Scoreboards = {
+                // I want a list of scores that at least one belongs to the scoreboard.
+                some: {
+                    name: scoreboard
+                }
+            }
 
         const scores = await prisma.score.findMany({
+            include: {
+                Scoreboards: true
+            },
             where: {
                 serverId: interaction.guild?.id,
                 name: {
                     contains: filter || undefined
-                }
+                },
+                Scoreboards
             },
             take: amount,
             skip: amount * (page-1),
@@ -83,7 +98,7 @@ const ScoreList: Command = {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Scores',
+                        text: scoreboard || 'Scores',
                         font: {
                             family: 'Roboto',
                             size: 24
