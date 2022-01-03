@@ -8,6 +8,7 @@ import ScoreboardScoreRemove from './scoreboard-score-remove.sub';
 import ScoreboardUpdate from './scoreboard-update.sub';
 
 const Scoreboard: Command = {
+    id: `d60c799e-19e0-4d59-9145-7354027e8da4`,
     name: 'scoreboard',
     description: 'Run various commands for scoreboards.',
     examples: ``,

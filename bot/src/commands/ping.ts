@@ -2,6 +2,7 @@ import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 
 const Ping: Command = {
+    id: 'e2afcc98-a6a1-4222-8478-6a08e4c0ddf6',
     name: 'ping',
     description: 'Ping the bot and get the latency.',
     examples: '`/ping`',

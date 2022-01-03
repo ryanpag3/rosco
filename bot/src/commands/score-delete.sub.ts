@@ -4,6 +4,7 @@ import prisma from '../util/prisma';
 import * as ScoreService from '../service/score';
 
 const ScoreDelete: Command = {
+    id: 'ec73f689-6a62-4c19-8a5f-73131e876526',
     name: 'delete',
     description: 'Delete a score.',
     examples: ``,

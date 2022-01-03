@@ -5,6 +5,7 @@ import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 const ScoreList: Command = {
+    id: '502ab15e-a961-497a-a5be-282ebcda4c5a',
     name: 'list',
     description: 'List out current scores.',
     examples: ``,

@@ -3,6 +3,7 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { User } from '@prisma/client';
 
 export interface Command {
+    id: string;
     name: string;
     description?: string;
     examples?: string;

@@ -4,6 +4,7 @@ import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
 
 const ScoreboardScoreRemove: Command = {
+    id: 'd21f0939-021b-4787-85d9-f226fa26166a',
     name: 'score-remove',
     handler: async (interaction, user) => {
         const name = interaction.options.getString('name') as string;

@@ -4,6 +4,7 @@ import * as ScoreService from '../service/score';
 import randomColor from 'randomcolor';
 
 const ScoreCreate: Command = {
+    id: 'd770504e-08e7-487b-af3c-e610fcc289f1',
     name: 'create',
     description: 'Create a score.',
     examples: ``,

@@ -5,6 +5,7 @@ import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 const ScoreboardDelete: Command = {
+    id: '1adb16b7-d904-47bb-b4e3-5ac93b2cc491',
     name: 'delete',
     handler: async (interaction, user) => {
         const name = interaction.options.getString('name');

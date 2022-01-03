@@ -9,6 +9,7 @@ import ScoreUp from './score-up.sub';
 import ScoreUpdate from './score-update.sub';
 
 const Score: Command = {
+    id: 'c9f67e01-1072-40ce-ac90-1f0a17f55815',
     name: 'score',
     description: 'Perform an action on a score.',
     examples: ``,

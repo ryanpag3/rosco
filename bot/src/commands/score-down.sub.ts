@@ -3,6 +3,7 @@ import BotError from '../util/bot-error';
 import * as ScoreService from '../service/score';
 
 const ScoreDown: Command = {
+    id: '948891de-4ff5-461f-9382-ce5e141277c0',
     name: 'down',
     description: 'Decrease score amounts.',
     examples: ``,

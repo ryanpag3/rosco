@@ -4,6 +4,7 @@ import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
 
 const ScoreboardUpdate: Command = {
+    id: 'babcf50b-c183-4b0e-b3ee-23640251459e',
     name: 'update',
     handler: async (interaction, user) => {
         const name = interaction.options.getString('name') as string;
