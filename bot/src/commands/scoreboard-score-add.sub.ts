@@ -39,9 +39,6 @@ const ScoreboardScoreAdd: Command = {
             if (e instanceof PrismaClientKnownRequestError) {
                 if (e.code === 'P2025')
                     throw new BotError(`A score was not found in the scores list. Please verify score exists.`);
-
-                if (e.code === 'P2002')
-                    throw new BotError(`A scoreboard already exists with that name on this server.`);
             }
             throw e;
         }
