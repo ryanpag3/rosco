@@ -34,6 +34,12 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
         user: {
             id: makeid(18)
         },
+        member: {
+            id: makeid(18),
+            permissions: {
+                has: (str: string) => true
+            }
+        },
         options: {
             ...options,
             // @ts-ignore

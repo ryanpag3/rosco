@@ -3,6 +3,7 @@ import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import PermissionSetAll from './permission-set-all.sub';
 import PermissionSet from './permission-set.sub';
+import PermissionUnsetAll from './permission-unset-all.sub';
 import PermissionUnset from './permission-unset.sub';
 
 const Permission: Command = {
@@ -60,6 +61,11 @@ const Permission: Command = {
                     required: true
                 }
             ]
+        },
+        {
+            name: 'unset-all',
+            description: 'Unset all permissions to require a role.',
+            type: ApplicationCommandOptionType.Subcommand
         }
     ],
     handler: async (interaction, user) => {
@@ -71,6 +77,8 @@ const Permission: Command = {
                 return PermissionUnset.handler(interaction, user);
             case 'set-all':
                 return PermissionSetAll.handler(interaction, user);
+            case 'unset-all':
+                return PermissionUnsetAll.handler(interaction, user);
             default:
                 throw new BotError(`Invalid subcommand issued to /permission`);
         }

@@ -15,13 +15,16 @@ export const userHasPermission = async (interaction: CommandInteraction, user: U
         const subcommand = interaction.options.getSubcommand(false);
         const fullCommand = `${commandName}${subcommand ? ` ${subcommand}` : ''}`;
         const module = commands[fullCommand];
-        
+
         const permissions = await prisma.permission.findMany({
             where: {
                 commandId: module.id,
                 serverId: interaction.guild?.id as string
             }
         });
+
+        if (permissions.length === 0)
+            return true;
 
         for (const permission of permissions) {
             // @ts-ignore
