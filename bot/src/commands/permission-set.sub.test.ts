@@ -16,9 +16,10 @@ it('should set the permission', async () => {
 
     const permission = await prisma.permission.findUnique({
         where: {
-            commandId_serverId: {
+            roleId_commandId_serverId: {
                 commandId: COMMANDS['ping'].id,
-                serverId: int.guild?.id as string
+                serverId: int.guild?.id as string,
+                roleId: '1'
             }
         }
     });

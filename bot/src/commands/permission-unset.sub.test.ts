@@ -16,9 +16,10 @@ it('should unset the permission', async () => {
 
     let permission = await prisma.permission.findUnique({
         where: {
-            commandId_serverId: {
+            roleId_commandId_serverId: {
                 commandId: COMMANDS['ping'].id,
-                serverId: int.guild?.id as string
+                serverId: int.guild?.id as string,
+                roleId: '1'
             }
         }
     });
@@ -26,16 +27,20 @@ it('should unset the permission', async () => {
     expect(permission).not.toBeNull();
 
     int = createTestInteraction('permission', 'unset', {
-        command: 'ping'
+        command: 'ping',
+        role: {
+            id: '1'
+        }
     }, '1');
 
     await onCommandReceived(int);
 
     permission = await prisma.permission.findUnique({
         where: {
-            commandId_serverId: {
+            roleId_commandId_serverId: {
                 commandId: COMMANDS['ping'].id,
-                serverId: int.guild?.id as string
+                serverId: int.guild?.id as string,
+                roleId: '1'
             }
         }
     });
