@@ -5,6 +5,7 @@ import ScoreboardCreate from './scoreboard-create.sub';
 import ScoreboardDelete from './scoreboard-delete.sub';
 import ScoreboardScoreAdd from './scoreboard-score-add.sub';
 import ScoreboardScoreRemove from './scoreboard-score-remove.sub';
+import ScoreboardUpdate from './scoreboard-update.sub';
 
 const Scoreboard: Command = {
     name: 'scoreboard',
@@ -67,11 +68,6 @@ const Scoreboard: Command = {
                     name: 'description',
                     description: 'Replace the existing description with this one.',
                     type: ApplicationCommandOptionType.String
-                },
-                {
-                    name: 'scores',
-                    description: 'Replace the existing scores with these.',
-                    type: ApplicationCommandOptionType.String
                 }
             ]
         },
@@ -121,6 +117,8 @@ const Scoreboard: Command = {
                 return ScoreboardCreate.handler(interaction, user);
             case 'delete':
                 return ScoreboardDelete.handler(interaction, user);
+            case 'update':
+                return ScoreboardUpdate.handler(interaction, user);
             case 'add-score':
                 return ScoreboardScoreAdd.handler(interaction, user);
             case 'remove-score':
