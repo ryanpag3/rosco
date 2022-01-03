@@ -12,6 +12,9 @@ const PermissionSet: Command = {
         const role = interaction.options.getRole('role', true);
 
         try {
+            if (!Commands[command])
+                throw new BotError(`\`/${command}\` does not exist.`);
+
             await prisma.permission.create({
                 data: {
                     commandId: Commands[command].id,
@@ -25,10 +28,10 @@ const PermissionSet: Command = {
                 embeds: [
                     {
                         title: `:police_car: Permission has been set.`,
-                        description: `\`/${command}\` now requires **${role.name}**`
+                        description: `The command \`/${command}\` now requires role **${role.name}** in this server.`
                     }
                 ]
-            })
+            });
         } catch (e) {
             if (!(e instanceof Prisma.PrismaClientKnownRequestError)) {
                 throw e;

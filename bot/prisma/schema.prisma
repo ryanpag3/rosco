@@ -29,8 +29,9 @@ model Permission {
   commandId String
   roleId    String
   serverId  String
-  userId    String
-  User      User     @relation(references: [id], fields: [userId])
+  // In theory, a user could be deleted but we want to persist the Permission record.
+  userId    String?
+  User      User?     @relation(references: [id], onDelete: SetNull ,fields: [userId])
 
   @@unique([commandId, serverId])
 }

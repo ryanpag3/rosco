@@ -38,6 +38,7 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
             ...options,
             // @ts-ignore
             getString: (key: string) => options[key],
+            getRole: (key: string) => options[key],
             // @ts-ignore
             getInteger: (key: string) => Number.parseInt(options[key]),
             getSubcommand: () => subcommandName,
