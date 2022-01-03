@@ -19,6 +19,20 @@ model User {
   CommandHistory CommandHistory[]
   Scores         Score[]
   Scoreboards    Scoreboard[]
+  Permission     Permission[]
+}
+
+model Permission {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  commandId String
+  roleId    String
+  serverId  String
+  userId    String
+  User      User     @relation(references: [id], fields: [userId])
+
+  @@unique([commandId, serverId])
 }
 
 model CommandHistory {
