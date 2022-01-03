@@ -6,7 +6,7 @@ import prisma from '../util/prisma';
 
 const ScoreList: Command = {
     id: '502ab15e-a961-497a-a5be-282ebcda4c5a',
-    name: 'list',
+    name: 'score list',
     description: 'List out current scores.',
     examples: ``,
     // this is manages in score.ts because it is a subcommand

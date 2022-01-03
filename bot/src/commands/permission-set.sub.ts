@@ -5,8 +5,8 @@ import BotError from '../util/bot-error';
 import { Prisma } from '@prisma/client';
 
 const PermissionSet: Command = {
-    id: '4e876254-dda4-4da0-9a61-bf3a9a67c3a1',
-    name: 'set',
+    id: '5587e040-7897-4874-ab8e-2eff98b9618b',
+    name: 'permission set',
     handler: async (interaction, user) => {
         const command = cleanCommand(interaction.options.getString('command', true));
         const role = interaction.options.getRole('role', true);

@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
+import PermissionSetAll from './permission-set-all.sub';
 import PermissionSet from './permission-set.sub';
 import PermissionUnset from './permission-unset.sub';
 
@@ -49,7 +50,7 @@ const Permission: Command = {
                 {
                     name: 'role',
                     description: 'The role to assign all permissions to.',
-                    type: ApplicationCommandOptionType.String,
+                    type: ApplicationCommandOptionType.Role,
                     required: true
                 }
             ]
@@ -63,7 +64,7 @@ const Permission: Command = {
             case 'unset':
                 return PermissionUnset.handler(interaction, user);
             case 'set-all':
-                return;
+                return PermissionSetAll.handler(interaction, user);
             default:
                 throw new BotError(`Invalid subcommand issued to /permission`);
         }

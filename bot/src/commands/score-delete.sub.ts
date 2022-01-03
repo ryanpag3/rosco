@@ -5,7 +5,7 @@ import * as ScoreService from '../service/score';
 
 const ScoreDelete: Command = {
     id: 'ec73f689-6a62-4c19-8a5f-73131e876526',
-    name: 'delete',
+    name: 'score delete',
     description: 'Delete a score.',
     examples: ``,
     // options are handled in score.ts since this is a subcommand

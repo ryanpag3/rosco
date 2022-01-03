@@ -4,7 +4,7 @@ import BotError from '../util/bot-error';
 
 const ScoreUp: Command = {
     id: '2f216d6c-e47d-43d5-8a25-c4ab8d95bfa0',
-    name: 'up',
+    name: 'score up',
     description: 'Increase score amounts.',
     examples: ``,
     // options are handled in score.ts since this is a subcommand

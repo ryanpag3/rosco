@@ -6,7 +6,7 @@ import { Prisma } from '@prisma/client';
 
 const PermissionUnset: Command = {
     id: '4e876254-dda4-4da0-9a61-bf3a9a67c3a1',
-    name: 'set',
+    name: 'permission unset',
     handler: async (interaction, user) => {
         const command = cleanCommand(interaction.options.getString('command', true));
 

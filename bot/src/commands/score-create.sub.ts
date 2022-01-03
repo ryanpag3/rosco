@@ -5,7 +5,7 @@ import randomColor from 'randomcolor';
 
 const ScoreCreate: Command = {
     id: 'd770504e-08e7-487b-af3c-e610fcc289f1',
-    name: 'create',
+    name: 'score create',
     description: 'Create a score.',
     examples: ``,
     // options for this subcommand are located in score.ts

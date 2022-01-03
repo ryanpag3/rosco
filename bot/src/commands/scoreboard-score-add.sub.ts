@@ -5,7 +5,7 @@ import prisma from '../util/prisma';
 
 const ScoreboardScoreAdd: Command = {
     id: '87fa9d22-90fc-4b29-8638-df711ad8c5bb',
-    name: 'score-add',
+    name: 'scoreboard score-add',
     handler: async (interaction, user) => {
         const name = interaction.options.getString('name') as string;
         const scoreName = interaction.options.getString('score-name') as string;

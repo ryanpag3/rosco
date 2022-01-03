@@ -5,7 +5,7 @@ import * as ScoreService from '../service/score';
 
 const ScoreUpdate: Command = {
     id: '85826091-2e7e-484c-94c3-7d5da87d1166',
-    name: 'update',
+    name: 'score update',
     description: 'Update a score.',
     examples: ``,
     // options are handled in score.ts since this is a subcommand
