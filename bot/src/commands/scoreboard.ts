@@ -2,6 +2,7 @@ import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import ScoreboardCreate from './scoreboard-create.sub';
+import ScoreboardScoreAdd from './scoreboard-score-add.sub';
 
 const Scoreboard: Command = {
     name: 'scoreboard',
@@ -116,6 +117,8 @@ const Scoreboard: Command = {
         switch(subcommand) {
             case 'create':
                 return ScoreboardCreate.handler(interaction, user);
+            case 'add-score':
+                return ScoreboardScoreAdd.handler(interaction, user);
             default:
                 throw new BotError(`Invalid scoreboard subcommand issued.`);
         }
