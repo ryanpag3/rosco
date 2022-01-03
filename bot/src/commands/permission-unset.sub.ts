@@ -9,6 +9,7 @@ const PermissionUnset: Command = {
     name: 'permission unset',
     handler: async (interaction, user) => {
         const command = cleanCommand(interaction.options.getString('command', true));
+        const role = interaction.options.getRole('role', true);
 
         try {
             if (!Commands[command])
@@ -16,9 +17,10 @@ const PermissionUnset: Command = {
 
             const permission = await prisma.permission.findUnique({
                 where: {
-                    commandId_serverId: {
+                    roleId_commandId_serverId: {
                         commandId: Commands[command].id,
                         serverId: interaction.guild?.id as string,
+                        roleId: role.id
                     } 
                 }
             });
@@ -28,9 +30,10 @@ const PermissionUnset: Command = {
 
             await prisma.permission.delete({
                 where: {
-                    commandId_serverId: {
+                    roleId_commandId_serverId: {
                         commandId: Commands[command].id,
                         serverId: interaction.guild?.id as string,
+                        roleId: role.id
                     }
                 }
             });
@@ -39,7 +42,7 @@ const PermissionUnset: Command = {
                 embeds: [
                     {
                         title: `:flamingo: Permission has been unset.`,
-                        description: `The command \`/${command}\` now does not require a role to run.`
+                        description: `The command \`/${command}\` now does not require the role **${role.name}** to run.`
                     }
                 ]
             });

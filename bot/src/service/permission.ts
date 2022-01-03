@@ -14,20 +14,22 @@ export const userHasPermission = async (interaction: CommandInteraction, user: U
         const { commandName } = interaction;
         const subcommand = interaction.options.getSubcommand(false);
         const fullCommand = `${commandName}${subcommand ? ` ${subcommand}` : ''}`;
-        logger.debug(fullCommand);
         const module = commands[fullCommand];
-
-        const permission = await prisma.permission.findUnique({
+        
+        const permissions = await prisma.permission.findMany({
             where: {
-                commandId_serverId: {
-                    commandId: module.id,
-                    serverId: interaction.guild?.id as string
-                }
+                commandId: module.id,
+                serverId: interaction.guild?.id as string
             }
         });
 
-        // @ts-ignore
-        return interaction.member.roles.cache.has(permission.roleId);
+        for (const permission of permissions) {
+            // @ts-ignore
+            if (interaction.member.roles.cache.has(permission.roleId))
+                return true;
+        }
+
+        return false;
     } catch (e) {
         throw e;
     }

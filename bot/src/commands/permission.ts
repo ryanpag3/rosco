@@ -39,6 +39,12 @@ const Permission: Command = {
                     description: 'The command to remove the permission from.',
                     type: ApplicationCommandOptionType.String,
                     required: true
+                },
+                {
+                    name: 'role',
+                    description: 'The role to unset for the command.',
+                    type: ApplicationCommandOptionType.Role,
+                    required: true
                 }
             ]
         },
