@@ -27,6 +27,52 @@ it('should set the permission', async () => {
     expect(permission).not.toBeNull();
 });
 
+it('should allow multiple permissions on the same command', async () => {
+    let int = createTestInteraction('permission', 'set', {
+        command: 'ping',
+        role: {
+            id: '1',
+            name: 'test'
+        }
+    }, '1');
+
+    await onCommandReceived(int);
+
+    let permission = await prisma.permission.findUnique({
+        where: {
+            roleId_commandId_serverId: {
+                commandId: COMMANDS['ping'].id,
+                serverId: int.guild?.id as string,
+                roleId: '1'
+            }
+        }
+    });
+
+    expect(permission).not.toBeNull();
+
+    int = createTestInteraction('permission', 'set', {
+        command: 'ping',
+        role: {
+            id: '2',
+            name: 'test'
+        }
+    }, '1');
+
+    await onCommandReceived(int);
+
+    permission = await prisma.permission.findUnique({
+        where: {
+            roleId_commandId_serverId: {
+                commandId: COMMANDS['ping'].id,
+                serverId: int.guild?.id as string,
+                roleId: '2'
+            }
+        }
+    });
+
+    expect(permission).not.toBeNull();
+});
+
 it('should throw an error if a command does not exist', async () => {
     const int = createTestInteraction('permission', 'set', {
         command: 'iwinagainlewtherin',
