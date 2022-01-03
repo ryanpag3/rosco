@@ -28,3 +28,13 @@ it('should update a scoreboard', async () => {
 
     expect(scoreboard).not.toBeNull();
 });
+
+it('should throw an error if the scoreboard does not exist to update', async () => {
+    const int = createTestInteraction('scoreboard', 'update', {
+        name: 'test',
+        'new-name': 'test2',
+        description: 'aaa'
+    }, '1');
+
+    await expect(onCommandReceived(int)).rejects.toThrow();
+})
