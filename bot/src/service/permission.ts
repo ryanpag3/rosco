@@ -1,12 +1,13 @@
 import { User } from '@prisma/client';
 import { CommandInteraction } from 'discord.js';
 import commands from '../util/command-subcommand-map';
+import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 export const userHasPermission = async (interaction: CommandInteraction, user: User) => {
     try {
         // @ts-ignore
-        if (interaction.member.permissions.has('ADMINISTRATOR') && !process.env.ADMIN_BYPASS) {
+        if (interaction.member.permissions.has('ADMINISTRATOR') && !process.env.DISABLE_ADMIN_BYPASS) {
             return true;
         }
 
@@ -27,8 +28,11 @@ export const userHasPermission = async (interaction: CommandInteraction, user: U
 
         for (const permission of permissions) {
             // @ts-ignore
-            if (interaction.member.roles.cache.has(permission.roleId))
+            if (await interaction.member.roles.cache.has(permission.roleId)) {
+                logger.debug(`permission found`);
                 return true;
+            }
+        
         }
 
         return false;

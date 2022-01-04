@@ -5,7 +5,7 @@ import prisma from '../util/prisma';
 
 const ScoreboardScoreRemove: Command = {
     id: 'd21f0939-021b-4787-85d9-f226fa26166a',
-    name: 'scoreboard score-remove',
+    name: 'scoreboard remove-score',
     handler: async (interaction, user) => {
         const name = interaction.options.getString('name') as string;
         const scoreName = interaction.options.getString('score-name') as string;

@@ -1,8 +1,8 @@
 import { Command } from '../../types/command';
 import prisma from '../util/prisma';
-import Commands from '../commands';
 import BotError from '../util/bot-error';
 import { Prisma } from '@prisma/client';
+import commands from '../util/command-subcommand-map';
 
 const PermissionSet: Command = {
     id: '5587e040-7897-4874-ab8e-2eff98b9618b',
@@ -12,12 +12,12 @@ const PermissionSet: Command = {
         const role = interaction.options.getRole('role', true);
 
         try {
-            if (!Commands[command])
+            if (!commands[command])
                 throw new BotError(`\`/${command}\` does not exist.`);
 
             await prisma.permission.create({
                 data: {
-                    commandId: Commands[command].id,
+                    commandId: commands[command].id,
                     roleId: role.id,
                     serverId: interaction.guild?.id as string,
                     userId: user.id

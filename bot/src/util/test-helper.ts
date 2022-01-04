@@ -32,12 +32,18 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
             });
         },
         user: {
-            id: makeid(18)
+            id: makeid(18),
+            tag: 'test-user'
         },
         member: {
             id: makeid(18),
             permissions: {
                 has: (str: string) => true
+            },
+            roles: {
+                cache: {
+                    has: (key: string) => true
+                }
             }
         },
         options: {

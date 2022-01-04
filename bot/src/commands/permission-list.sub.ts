@@ -4,7 +4,7 @@ import prisma from '../util/prisma';
 
 const PermissionList: Command = {
     id: '7d4c9938-cbe8-4e06-94e9-8a67da846102',
-    name: 'list',
+    name: 'permission list',
     handler: async (interaction, user) => {
         const permissions = await prisma.permission.findMany({
             where: {
