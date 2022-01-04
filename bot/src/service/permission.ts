@@ -1,7 +1,6 @@
 import { User } from '@prisma/client';
 import { CommandInteraction } from 'discord.js';
 import commands from '../util/command-subcommand-map';
-import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 export const userHasPermission = async (interaction: CommandInteraction, user: User) => {
