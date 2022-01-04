@@ -3,6 +3,7 @@ import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
 import * as UserService from '../service/user';
+import * as KeywordCache from '../service/keyword-cache';
 
 const KeywordCreate: Command = {
     id: '6ec5e902-f482-48a5-879e-7427b8ba5a20',
@@ -45,7 +46,7 @@ const KeywordCreate: Command = {
         }
 
         try {
-            await prisma.keyword.create({
+            const keywordRecord = await prisma.keyword.create({
                 data: {
                     keyword,
                     scoreId: score.id,
@@ -56,6 +57,8 @@ const KeywordCreate: Command = {
                     userId: inDbUser?.id
                 }
             });
+
+            await KeywordCache.cacheKeyword(keywordRecord);
 
             return interaction.reply({
                 embeds: [
