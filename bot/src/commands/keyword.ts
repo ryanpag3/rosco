@@ -2,6 +2,7 @@ import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import KeywordCreate from './keyword-create.sub';
+import KeywordDelete from './keyword-delete.sub';
 
 const Keyword: Command = {
     id: '29f9209f-794e-4352-908f-074078f34990',
@@ -92,7 +93,7 @@ const Keyword: Command = {
             case 'create':
                 return KeywordCreate.handler(interaction, user);
             case 'delete':
-                return;
+                return KeywordDelete.handler(interaction, user);
             case 'list':
                 return;
             default:
