@@ -1,4 +1,4 @@
-import { CommandInteraction, Interaction } from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import COMMANDS from '../commands';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
@@ -10,7 +10,6 @@ export default async function(interaction: CommandInteraction) {
     try {
         if (!interaction.isCommand())
             return;
-
 
         const user = await UserService.createIfNotExist(interaction.user.id);
 
@@ -25,11 +24,7 @@ export default async function(interaction: CommandInteraction) {
             })
         }
 
-        await CommandHistory.addToHistory(user.id, interaction, JSON.stringify(interaction.toJSON(), (key, value) =>
-        typeof value === 'bigint'
-            ? value.toString()
-            : value, 4
-        ));
+        await CommandHistory.addToHistory(user.id, interaction, JSON.stringify(interaction.toJSON(), (key, value) => typeof value === 'bigint' ? value.toString() : value, 4));
 
         const { handler } = COMMANDS[interaction.commandName];
 

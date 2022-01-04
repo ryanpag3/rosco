@@ -13,3 +13,8 @@ services:
       POSTGRES_PASSWORD: adminadmin
       POSTGRES_USER: guac-bot
       POSTGRES_DB: guac_bot_db 
+  redis:
+    image: redis:latest
+    container_name: guac-bot-redis
+    ports:
+      - 6379:6379
