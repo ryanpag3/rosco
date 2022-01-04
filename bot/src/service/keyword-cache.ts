@@ -59,26 +59,27 @@ export const getValidKeywords = (content: string, serverId: string) => {
 export const cacheKeyword = async (keyword: Keyword) => {
     logger.trace(`caching keyword ${keyword.id}`);
     const res = await redis.set(buildId(keyword.id), JSON.stringify(keyword));
-    buildKeywordValues(true)
-        .then(() => logger.trace('keyword map rebuilt'));
+    await buildKeywordValues(true);
     return res;
 }
 
 export const deleteCachedKeyword = async (keywordId: string) => {
     logger.trace(`deleting cached keyword ${keywordId}`);
     const res = await redis.del(buildId(keywordId));
-    buildKeywordValues(true)
-        .then(() => logger.trace('keyword map rebuilt'));
+    await buildKeywordValues(true);
     return res;
 }
 
 export const getKeyword = async (keywordId: string) => {
     logger.trace(`getting cached keyword ${keywordId}`);
+    keywordId = buildId(keywordId);
     await buildKeywordValues(true);
     return redis.get(keywordId);
 }
 
-const buildId = (keywordId: string) => {
+export const buildId = (keywordId: string) => {
+    if (keywordId.startsWith(`keyword.`))
+        return keywordId;
     return `keyword.${keywordId}`;
 }
 

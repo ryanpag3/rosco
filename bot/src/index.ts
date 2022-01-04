@@ -2,6 +2,7 @@ require('dotenv').config();
 import { Client, Intents } from 'discord.js';
 import logger from './util/logger';
 import setup from './setup';
+import redis from './util/redis';
 
 const client = new Client({ intents: [ Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES ] });
 

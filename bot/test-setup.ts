@@ -5,6 +5,7 @@ import execa from 'execa';
 import './src/util/command-subcommand-map';
 import logger from './src/util/logger';
 import prisma from './src/util/prisma';
+import redis from './src/util/redis';
 
 beforeAll(async () => {
     const stdout = await execa.command('prisma migrate deploy');
@@ -22,6 +23,8 @@ afterEach(async () => {
     }
     await prisma.$disconnect();
 });
+
+afterAll(() => redis.quit());
 
 function camelize(str: string) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
