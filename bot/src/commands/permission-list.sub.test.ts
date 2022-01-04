@@ -1,4 +1,3 @@
-import * as ScoreService from '../service/score';
 import { createTestInteraction } from '../util/test-helper'
 import onCommandReceived from '../event/interaction-create';
 
