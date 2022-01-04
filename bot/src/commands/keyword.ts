@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
+import BotError from '../util/bot-error';
 
 const Keyword: Command = {
     id: '29f9209f-794e-4352-908f-074078f34990',
@@ -26,7 +27,7 @@ const Keyword: Command = {
                 },
                 {
                     name: 'action',
-                    description: 'Which action to take on the score when keyword is found. Valid options are "up" or "down".',
+                    description: 'Which action to take on the score when keyword is found. Valid options are "UP" or "DOWN".',
                     type: ApplicationCommandOptionType.String
                 },
                 {
@@ -84,7 +85,18 @@ const Keyword: Command = {
         }
     ],
     handler: async (interaction, user) => {
-
+        const commandName = interaction.options.getSubcommand();
+        
+        switch(commandName) {
+            case 'create':
+                return;
+            case 'delete':
+                return;
+            case 'list':
+                return;
+            default:
+                throw new BotError(`Invalid keyword subcommand provided.`);
+        }
     }
 };
 

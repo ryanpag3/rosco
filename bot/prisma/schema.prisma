@@ -20,6 +20,7 @@ model User {
   Scores         Score[]
   Scoreboards    Scoreboard[]
   Permission     Permission[]
+  Keyword        Keyword[]
 }
 
 model Permission {
@@ -31,7 +32,7 @@ model Permission {
   serverId  String
   // In theory, a user could be deleted but we want to persist the Permission record.
   userId    String?
-  User      User?     @relation(references: [id], onDelete: SetNull ,fields: [userId])
+  User      User?    @relation(references: [id], onDelete: SetNull, fields: [userId])
 
   @@unique([roleId, commandId, serverId])
 }
@@ -60,6 +61,7 @@ model Score {
   User        User         @relation(references: [id], onDelete: Cascade, fields: [userId])
   Scoreboards Scoreboard[]
 
+  Keyword Keyword[]
   @@unique([name, serverId])
 }
 
@@ -76,4 +78,26 @@ model Scoreboard {
   Scores      Score[]
 
   @@unique([name, serverId])
+}
+
+enum KeywordAction {
+  UP
+  DOWN
+}
+
+model Keyword {
+  id        String        @id @default(uuid())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  keyword   String
+  scoreId   String
+  Score     Score         @relation(fields: [scoreId], references: [id])
+  action    KeywordAction @default(UP)
+  amount    Int           @default(1)
+  serverId  String
+  channelId String?
+  userId    String?
+  User      User?         @relation(fields: [userId], references: [id])
+
+  @@unique([keyword, scoreId, serverId])
 }
