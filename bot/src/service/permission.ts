@@ -16,6 +16,9 @@ export const userHasPermission = async (interaction: CommandInteraction, user: U
         const fullCommand = `${commandName}${subcommand ? ` ${subcommand}` : ''}`;
         const module = commands[fullCommand];
 
+        if (!module)
+            throw new Error(`Corrupted command schema detected. Verify your command names! Command ${fullCommand}`);
+
         const permissions = await prisma.permission.findMany({
             where: {
                 commandId: module.id,

@@ -54,7 +54,9 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
             // @ts-ignore
             getInteger: (key: string) => Number.parseInt(options[key]),
             getSubcommand: () => subcommandName,
-            getBoolean: (key: string) => options[key]?.toString() === 'true'
+            getBoolean: (key: string) => options[key]?.toString() === 'true',
+            getUser: (key: string) => options[key],
+            getChannel: (key: string) => options[key]
         },
         guild: {
             id: serverId || makeid(18)

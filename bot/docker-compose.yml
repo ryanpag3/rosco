@@ -4,3 +4,12 @@ services:
     image: ryanpage/guac-bot:latest
     env_file:
       - ./.env
+  db:
+    image: postgres:latest
+    container_name: guac-bot-db
+    ports: 
+    - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: adminadmin
+      POSTGRES_USER: guac-bot
+      POSTGRES_DB: guac_bot_db 

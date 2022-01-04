@@ -91,7 +91,7 @@ model Keyword {
   updatedAt DateTime      @updatedAt
   keyword   String
   scoreId   String
-  Score     Score         @relation(fields: [scoreId], references: [id])
+  Score     Score         @relation(fields: [scoreId], references: [id], onDelete: Cascade)
   action    KeywordAction @default(UP)
   amount    Int           @default(1)
   serverId  String
