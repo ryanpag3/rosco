@@ -7,9 +7,12 @@ import * as CommandDeployer from './util/slash-command-deployer';
 import onReady from './event/ready';
 import onInteractionCreate from './event/interaction-create';
 import onMessageReceived from './event/message';
-import { buildKeywordValues } from './service/keyword-cache';
+import { baselineKeywordCacheToDatabase, buildKeywordValues } from './service/keyword-cache';
 
 export default async function (client: Client) {
+
+    // baseline cache against database
+    await baselineKeywordCacheToDatabase();
 
     // build keyword cache
     await buildKeywordValues();

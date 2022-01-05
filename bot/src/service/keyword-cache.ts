@@ -1,6 +1,7 @@
 import { Keyword } from '@prisma/client';
 import { Message } from 'discord.js';
 import logger from '../util/logger';
+import prisma from '../util/prisma';
 import redis from '../util/redis';
 
 let KEYWORD_VALUES: any;
@@ -39,12 +40,58 @@ export const buildKeywordValues = async (bypassCooldown: boolean = false) => {
     setTimeout(() => isOnCooldown = false, Number.parseInt(process.env.KEYWORD_CACHE_COOLDOWN || '10000'));
 }
 
+export const baselineKeywordCacheToDatabase = async () => {
+    for await (const key of redis.scanIterator({
+        TYPE: 'string',
+        MATCH: 'keyword.*'
+    })) {
+        await redis.del(key);
+    }
+
+    const keywords = await prisma.keyword.findMany({
+        where: {}
+    });
+
+    for (const [i, keyword] of keywords.entries()) {
+        // make sure to trigger cache refresh on last iteration
+        await cacheKeyword(keyword, i === keywords.length-1);
+    }
+}
+
 export const doesKeywordsExist = (fullMessage: string) => {
     if (!KEYWORD_VALUES)
         throw new Error(`Cannot validate if keyword exists. Keywords cache not initialized!`);
     return Object.values(KEYWORDS).some((parsed: any) => {
-        return fullMessage.includes(parsed.keyword);
+        return isValidKeyword(parsed, fullMessage);
     });
+}
+
+const isValidKeyword = (keyword: Keyword, content: string) => {
+    return (isValidStartsWith(keyword, content) 
+    || isValidEndsWith(keyword, content)) 
+    || content.includes(keyword.keyword);
+}
+
+const isValidStartsWith = (keyword: Keyword, content: string) => {
+    let validStartsWith = false;
+        
+    if (keyword.keyword.endsWith('*')) {
+        const subst = keyword.keyword.slice(0, -1);
+        validStartsWith = content.startsWith(subst);
+    }
+
+    return validStartsWith;
+}
+
+const isValidEndsWith = (keyword: Keyword, content: string) => {
+    let validEndsWith = false;
+        
+    if (keyword.keyword.startsWith('*')) {
+        const subst = keyword.keyword.substring(1);
+        validEndsWith = content.startsWith(subst);
+    }
+
+    return validEndsWith;
 }
 
 export const getValidKeywords = (content: string, serverId: string) => {
@@ -52,14 +99,14 @@ export const getValidKeywords = (content: string, serverId: string) => {
         throw new Error(`Cannot validate if keyword exists. Keywords cache not initialized!`);
 
     return Object.values(KEYWORDS).filter((parsed: any) => {
-        return content.includes(parsed.keyword) && parsed.serverId === serverId;
+        return isValidKeyword(parsed, content);
     }) as any;
 }
 
-export const cacheKeyword = async (keyword: Keyword) => {
+export const cacheKeyword = async (keyword: Keyword, bypassCache: boolean = true) => {
     logger.trace(`caching keyword ${keyword.id}`);
     const res = await redis.set(buildId(keyword.id), JSON.stringify(keyword));
-    await buildKeywordValues(true);
+    await buildKeywordValues(bypassCache);
     return res;
 }
 
