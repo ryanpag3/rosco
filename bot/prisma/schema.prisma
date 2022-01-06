@@ -21,6 +21,7 @@ model User {
   Scoreboards    Scoreboard[]
   Permission     Permission[]
   Keyword        Keyword[]
+  Stopwatch      Stopwatch[]
 }
 
 model Permission {
@@ -100,4 +101,17 @@ model Keyword {
   User      User?         @relation(fields: [userId], references: [id])
 
   @@unique([keyword, scoreId, serverId])
+}
+
+model Stopwatch {
+  id        String    @id @default(uuid())
+  serverId  String
+  channelId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  name      String
+  startedAt DateTime?
+  stoppedAt DateTime?
+  userId    String
+  User      User      @relation(fields: [userId], references: [id])
 }
