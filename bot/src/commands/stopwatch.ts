@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../types/command';
+import StopwatchCreate from './stopwatch-create.sub';
 
 const Stopwatch: Command = {
     id: '93181fbc-4e4b-478e-90a6-3e0985046ac8',
@@ -31,7 +32,7 @@ const Stopwatch: Command = {
 
         switch(subcommand){
             case 'create':
-                return  
+                return StopwatchCreate.handler(interaction, user); 
         }
     }
 }
