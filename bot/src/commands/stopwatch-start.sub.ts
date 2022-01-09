@@ -1,6 +1,7 @@
-import { DateTime, Interval } from 'luxon';
+import { DateTime, Duration, Interval } from 'luxon';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
+import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 const StopwatchStart: Command = {
@@ -38,7 +39,10 @@ const StopwatchStart: Command = {
                     }
                 });
             } else {
-                // stopwatch was previously paused so we just remove stoppedAt
+                // stopwatch was previously paused so we need to do some extra work
+                const duration = Interval.fromDateTimes(DateTime.fromJSDate(stopwatch.startedAt), DateTime.fromJSDate(stopwatch.stoppedAt as Date)).toDuration();
+                const calculatedStartedAt = DateTime.now().minus(duration.toMillis());
+
                 stopwatch = await prisma.stopwatch.update({
                     where: {
                         name_serverId: {
@@ -47,6 +51,7 @@ const StopwatchStart: Command = {
                         }
                     }, 
                     data: {
+                        startedAt: calculatedStartedAt.toJSDate(),
                         stoppedAt: null
                     }
                 });

@@ -4,6 +4,7 @@ import { Command } from '../../types/command';
 import StopwatchCreate from './stopwatch-create.sub';
 import StopwatchDelete from './stopwatch-delete.sub';
 import StopwatchStart from './stopwatch-start.sub';
+import StopwatchStop from './stopwatch-stop.sub';
 
 const Stopwatch: Command = {
     id: '93181fbc-4e4b-478e-90a6-3e0985046ac8',
@@ -90,7 +91,7 @@ const Stopwatch: Command = {
             case `start`:
                 return StopwatchStart.handler(interaction, user); 
             case `stop`:
-                return;
+                return StopwatchStop.handler(interaction, user);
             case `reset`:
                 return;
             case `delete`:
