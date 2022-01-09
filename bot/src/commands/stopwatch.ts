@@ -2,6 +2,7 @@ import { ApplicationCommandOptionType } from 'discord-api-types';
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../types/command';
 import StopwatchCreate from './stopwatch-create.sub';
+import StopwatchDelete from './stopwatch-delete.sub';
 import StopwatchStart from './stopwatch-start.sub';
 
 const Stopwatch: Command = {
@@ -30,6 +31,7 @@ const Stopwatch: Command = {
         {
             name: 'delete',
             description: 'Delete a stopwatch.',
+            type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
                     name: 'name',
@@ -92,7 +94,7 @@ const Stopwatch: Command = {
             case `reset`:
                 return;
             case `delete`:
-                return;
+                return StopwatchDelete.handler(interaction, user);
         }
     }
 }

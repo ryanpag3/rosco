@@ -22,7 +22,7 @@ export async function deploy() {
         try {
             if (process.env.NODE_ENV !== 'production') {
                 // register with test server
-                rest.put(
+                await rest.put(
                     Routes.applicationGuildCommands(process.env.DISCORD_APPLICATION_ID as string, process.env.TEST_GUILD_ID as string),
                     {
                         body: mappedCommands
@@ -30,7 +30,7 @@ export async function deploy() {
                 );
             } else {
                 // register globally in production
-                rest.put(
+                await rest.put(
                     Routes.applicationCommands(process.env.DISCORD_APPLICATION_ID as string),
                     {
                         body: mappedCommands
