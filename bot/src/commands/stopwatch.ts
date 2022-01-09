@@ -28,6 +28,18 @@ const Stopwatch: Command = {
             ]
         },
         {
+            name: 'delete',
+            description: 'Delete a stopwatch.',
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the stopwatch you want to delete.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
+        },
+        {
             name: 'start',
             description: 'Start an existing stopwatch.',
             type: ApplicationCommandOptionType.Subcommand,
@@ -39,6 +51,32 @@ const Stopwatch: Command = {
                      required: true
                  }
             ]
+        },
+        {
+            name: 'stop',
+            description: 'Stop an existing stopwatch.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the stopwatch you want to stop.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
+        },
+        {
+            name: 'reset',
+            description: 'Reset a stopwatch to 00:00:00',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the stopwatch you want to stop.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
         }
     ],
     handler: async (interaction, user) => {
@@ -49,6 +87,12 @@ const Stopwatch: Command = {
                 return StopwatchCreate.handler(interaction, user);
             case `start`:
                 return StopwatchStart.handler(interaction, user); 
+            case `stop`:
+                return;
+            case `reset`:
+                return;
+            case `delete`:
+                return;
         }
     }
 }
