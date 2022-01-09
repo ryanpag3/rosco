@@ -112,6 +112,8 @@ model Stopwatch {
   name      String
   startedAt DateTime?
   stoppedAt DateTime?
-  userId    String
-  User      User      @relation(fields: [userId], references: [id])
+  userId    String?
+  User      User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  @@unique([name, serverId])
 }

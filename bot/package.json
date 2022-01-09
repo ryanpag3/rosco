@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "watch": "tsnd src/index.ts",
+    "watch": "nodemon src/index.ts",
     "w": "yarn watch",
     "jest": "NODE_ENV=test jest --runInBand --coverage --forceExit",
     "j": "NODE_ENV=test jest --runInBand --forceExit",
@@ -24,6 +24,7 @@
     "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
     "log4js": "^6.3.0",
+    "luxon": "^2.3.0",
     "prisma": "^3.7.0",
     "randomcolor": "^0.6.2",
     "redis": "^4.0.1",
@@ -33,12 +34,13 @@
   "devDependencies": {
     "@types/bluebird": "^3.5.36",
     "@types/jest": "^27.0.3",
+    "@types/luxon": "^2.0.8",
     "@types/node": "^17.0.4",
     "@types/randomcolor": "^0.5.6",
     "execa": "^5.1.1",
     "jest": "^27.4.5",
+    "nodemon": "^2.0.15",
     "ts-jest": "^27.1.2",
-    "ts-node-dev": "^1.1.8",
     "tslib": "^2.3.1"
   }
 }

@@ -2,6 +2,7 @@ import { ApplicationCommandOptionType } from 'discord-api-types';
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../types/command';
 import StopwatchCreate from './stopwatch-create.sub';
+import StopwatchStart from './stopwatch-start.sub';
 
 const Stopwatch: Command = {
     id: '93181fbc-4e4b-478e-90a6-3e0985046ac8',
@@ -25,6 +26,19 @@ const Stopwatch: Command = {
                     type: ApplicationCommandOptionType.Boolean
                 }
             ]
+        },
+        {
+            name: 'start',
+            description: 'Start an existing stopwatch.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                 {
+                     name: 'name',
+                     description: 'The name of the stopwatch you want to start.',
+                     type: ApplicationCommandOptionType.String,
+                     required: true
+                 }
+            ]
         }
     ],
     handler: async (interaction, user) => {
@@ -32,7 +46,9 @@ const Stopwatch: Command = {
 
         switch(subcommand){
             case 'create':
-                return StopwatchCreate.handler(interaction, user); 
+                return StopwatchCreate.handler(interaction, user);
+            case `start`:
+                return StopwatchStart.handler(interaction, user); 
         }
     }
 }

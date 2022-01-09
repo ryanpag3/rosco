@@ -8,7 +8,10 @@ const StopwatchCreate: Command = {
     name: 'stopwatch create',
     handler: async (interaction, user) => {
         const name = interaction.options.getString('name', true);
-        const startOnCreate = interaction.options.getBoolean('start-on-create') || true;
+        let startOnCreate = interaction.options.getBoolean('start-on-create');
+
+        if (startOnCreate === null)
+            startOnCreate = true;
 
         try {
             const res = await prisma.stopwatch.create({

@@ -12,7 +12,7 @@ beforeAll(async () => {
     logger.trace(stdout);
 }, 10000);
 
-afterEach(async () => {
+beforeEach(async () => {
     // @ts-ignore
     for (const { tablename } of await prisma.$queryRaw`SELECT tablename FROM pg_tables WHERE schemaname='public'`) {
         if (tablename !== '_prisma_migrations' && !tablename.startsWith('_')) {

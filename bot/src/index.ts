@@ -17,6 +17,11 @@ process.on('SIGTERM', async () => {
     }
 });
 
+process.on('uncaughtException', (error) => {
+    // make sure the process exits if we hit a compilation error, so ts-node-dev can restart on next change
+    if(error.message.includes('Compilation error in') || error.message.includes('Unable to compile')) process.exit(0);
+});
+
 async function main() {
     try {
         logger.debug('setting up bot');
