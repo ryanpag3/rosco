@@ -3,6 +3,7 @@ import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../types/command';
 import StopwatchCreate from './stopwatch-create.sub';
 import StopwatchDelete from './stopwatch-delete.sub';
+import StopwatchReset from './stopwatch-reset.sub';
 import StopwatchStart from './stopwatch-start.sub';
 import StopwatchStop from './stopwatch-stop.sub';
 
@@ -93,7 +94,7 @@ const Stopwatch: Command = {
             case `stop`:
                 return StopwatchStop.handler(interaction, user);
             case `reset`:
-                return;
+                return StopwatchReset.handler(interaction, user);
             case `delete`:
                 return StopwatchDelete.handler(interaction, user);
         }
