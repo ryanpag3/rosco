@@ -5,7 +5,7 @@ import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 const StopwatchInfo: Command = {
-    id: `31c1c151-5a12-4b31-8cd0-1f094e688524`,
+    id: `b12adfe8-bdb8-4e63-9f70-8d1a27e0c6ee`,
     name: `stopwatch info`,
     handler: async (interaction, user) => {
         const name = interaction.options.getString(`name`, true);
