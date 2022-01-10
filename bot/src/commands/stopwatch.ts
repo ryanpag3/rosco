@@ -3,6 +3,7 @@ import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../types/command';
 import StopwatchCreate from './stopwatch-create.sub';
 import StopwatchDelete from './stopwatch-delete.sub';
+import StopwatchInfo from './stopwatch-info.sub';
 import StopwatchReset from './stopwatch-reset.sub';
 import StopwatchStart from './stopwatch-start.sub';
 import StopwatchStop from './stopwatch-stop.sub';
@@ -76,7 +77,20 @@ const Stopwatch: Command = {
             options: [
                 {
                     name: 'name',
-                    description: 'The name of the stopwatch you want to stop.',
+                    description: 'The name of the stopwatch you want to reset.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
+        },
+        {
+            name: 'info',
+            description: 'Get info on a stopwatch.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the stopwatch you want to view.',
                     type: ApplicationCommandOptionType.String,
                     required: true
                 }
@@ -97,6 +111,8 @@ const Stopwatch: Command = {
                 return StopwatchReset.handler(interaction, user);
             case `delete`:
                 return StopwatchDelete.handler(interaction, user);
+            case 'info':
+                return StopwatchInfo.handler(interaction, user);
         }
     }
 }
