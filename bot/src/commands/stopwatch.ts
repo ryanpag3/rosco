@@ -4,6 +4,7 @@ import { Command } from '../../types/command';
 import StopwatchCreate from './stopwatch-create.sub';
 import StopwatchDelete from './stopwatch-delete.sub';
 import StopwatchInfo from './stopwatch-info.sub';
+import StopwatchList from './stopwatch-list.sub';
 import StopwatchReset from './stopwatch-reset.sub';
 import StopwatchStart from './stopwatch-start.sub';
 import StopwatchStop from './stopwatch-stop.sub';
@@ -95,7 +96,12 @@ const Stopwatch: Command = {
                     required: true
                 }
             ]
-        }
+        },
+        {
+            name: 'list',
+            description: 'List all the stopwatches.',
+            type: ApplicationCommandOptionType.Subcommand
+        },
     ],
     handler: async (interaction, user) => {
         const subcommand = interaction.options.getSubcommand();
@@ -113,6 +119,8 @@ const Stopwatch: Command = {
                 return StopwatchDelete.handler(interaction, user);
             case 'info':
                 return StopwatchInfo.handler(interaction, user);
+            case 'list':
+                return StopwatchList.handler(interaction, user);
         }
     }
 }

@@ -1,8 +1,7 @@
-import { DateTime, Duration, Interval } from 'luxon';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
-import logger from '../util/logger';
 import prisma from '../util/prisma';
+import { getDuration } from '../util/stopwatch';
 
 const StopwatchInfo: Command = {
     id: `b12adfe8-bdb8-4e63-9f70-8d1a27e0c6ee`,
@@ -34,9 +33,7 @@ const StopwatchInfo: Command = {
                             },
                             {
                                 name: 'duration',
-                                value: `${!stopwatch.startedAt && !stopwatch.stoppedAt ? '00:00:00' : Interval.fromDateTimes(DateTime.fromJSDate(stopwatch.startedAt as Date), 
-                                            stopwatch.stoppedAt ? DateTime.fromJSDate(stopwatch.stoppedAt) : DateTime.now()).toDuration().toFormat('hh:mm:ss')} (hh:mm:ss)`
-                            }
+                                value: `${getDuration(stopwatch)}`                            }
                         ]
                     }
                 ]
