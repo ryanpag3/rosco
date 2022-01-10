@@ -23,3 +23,12 @@ it('should list out the scores', async () => {
     // @ts-ignore
     expect(spy.mock.calls[0][0].embeds.length).toBe(1);
 });
+
+
+it('should throw an error if the stopwatch does not exist', async () => {
+    const int = createTestInteraction('stopwatch', 'info', {
+        name: 'test'
+    }, '1');
+    
+    await expect(onCommandReceived(int)).rejects.toThrow();
+});
