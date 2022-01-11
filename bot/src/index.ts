@@ -4,7 +4,21 @@ import logger from './util/logger';
 import setup from './setup';
 import redis from './util/redis';
 
-const client = new Client({ intents: [ Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES ] });
+const client = new Client({ intents: [ 
+    Intents.FLAGS.GUILDS, 
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_BANS,
+    Intents.FLAGS.GUILD_WEBHOOKS,
+    Intents.FLAGS.GUILD_INVITES,
+    Intents.FLAGS.GUILD_VOICE_STATES,
+    Intents.FLAGS.GUILD_PRESENCES,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+    Intents.FLAGS.GUILD_MESSAGE_TYPING,
+    Intents.FLAGS.DIRECT_MESSAGES,
+    Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+    Intents.FLAGS.DIRECT_MESSAGE_TYPING
+] });
 
 process.on('SIGTERM', async () => {
     try {
@@ -27,7 +41,7 @@ async function main() {
         logger.debug('setting up bot');
         await setup(client);
         logger.debug('logging into Discord')
-        client.login(process.env.DISCORD_TOKEN);
+        await client.login(process.env.DISCORD_TOKEN);
     } catch (e) {
         logger.error(e);
     }
