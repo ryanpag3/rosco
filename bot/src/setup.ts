@@ -9,26 +9,24 @@ import onInteractionCreate from './event/interaction-create';
 import onMessageReceived from './event/message';
 import { baselineKeywordCacheToDatabase, buildKeywordValues } from './service/keyword-cache';
 import logger from './util/logger';
+import { onGuildCreate } from './event/guild-create';
 
 export default async function (client: Client) {
-    logger.debug('baselining keyword cache');
     // baseline cache against database
     await baselineKeywordCacheToDatabase();
 
-    logger.debug('building keyword cache');
     // build keyword cache
     await buildKeywordValues();
     
-    logger.debug('deploying slash commands')
     // deploy slash commands
     await CommandDeployer.deploy();
 
     // setup events
     client.on('ready', () => onReady());
-    // @ts-ignore
-    client.on('interactionCreate', async interaction => grantCurrencyWrapper('interactionCreate', onInteractionCreate, interaction));
 
-    client.on('interaction', (interaction) => logger.warn(interaction));
+    client.on('guildCreate', async (guild) => onGuildCreate(guild));
+
+    client.on('interactionCreate', async interaction => grantCurrencyWrapper('interactionCreate', onInteractionCreate, interaction));
 
     client.on('messageCreate', (message: Message) => grantCurrencyWrapper('messageCreate', onMessageReceived, message));
 

@@ -3,6 +3,7 @@ import COMMANDS from '../commands';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
 import * as UserService from '../service/user';
+import * as ServerService from '../service/server';
 import * as CommandHistory from '../util/command-history';
 import { userHasPermission } from '../service/permission';
 
@@ -10,6 +11,8 @@ export default async function(interaction: CommandInteraction) {
     try {
         if (!interaction.isCommand())
             return;
+
+        await ServerService.initializeServer(interaction.guild?.id as string);
 
         const user = await UserService.createIfNotExist(interaction.user.id);
 
