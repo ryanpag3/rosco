@@ -12,7 +12,7 @@ export default async function(interaction: CommandInteraction) {
         if (!interaction.isCommand())
             return;
 
-        await ServerService.initializeServer(interaction.guild?.id as string);
+        await ServerService.initializeServer(interaction.guild);
 
         const user = await UserService.createIfNotExist(interaction.user.id);
 
