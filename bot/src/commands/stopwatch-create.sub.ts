@@ -33,7 +33,6 @@ const StopwatchCreate: Command = {
                     }
                 });
             }
-
             return interaction.reply({
                 embeds: [
                     {

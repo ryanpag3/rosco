@@ -1,5 +1,4 @@
 import { Keyword } from '@prisma/client';
-import { Message } from 'discord.js';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 import redis from '../util/redis';
@@ -31,7 +30,7 @@ export const buildKeywordValues = async (bypassCooldown: boolean = false) => {
         logger.trace(`adding "${keyword.keyword}" to keyword cache.`);
         let i = 0;
         KEYWORDS[keyword?.id + i] = keyword;
-        KEYWORD_VALUES.push(keyword.keyword);   
+        KEYWORD_VALUES.push(keyword.keyword);
     }
 
     logger.debug(`rebuilt keyword cache with ${KEYWORD_VALUES.length} entries.`);
@@ -41,10 +40,9 @@ export const buildKeywordValues = async (bypassCooldown: boolean = false) => {
 }
 
 export const baselineKeywordCacheToDatabase = async () => {
-    for await (const key of redis.scanIterator({
-        TYPE: 'string',
-        MATCH: 'keyword.*'
-    })) {
+    const keys = await redis.keys('keyword.*')
+
+    for await (const key of keys) {
         await redis.del(key);
     }
 
@@ -54,7 +52,7 @@ export const baselineKeywordCacheToDatabase = async () => {
 
     for (const [i, keyword] of keywords.entries()) {
         // make sure to trigger cache refresh on last iteration
-        await cacheKeyword(keyword, i === keywords.length-1);
+        await cacheKeyword(keyword, i === keywords.length - 1);
     }
 }
 
@@ -67,14 +65,14 @@ export const doesKeywordsExist = (fullMessage: string) => {
 }
 
 const isValidKeyword = (keyword: Keyword, content: string) => {
-    return (isValidStartsWith(keyword, content) 
-    || isValidEndsWith(keyword, content)) 
-    || content.includes(keyword.keyword);
+    return (isValidStartsWith(keyword, content)
+        || isValidEndsWith(keyword, content))
+        || content.includes(keyword.keyword);
 }
 
 const isValidStartsWith = (keyword: Keyword, content: string) => {
     let validStartsWith = false;
-        
+
     if (keyword.keyword.endsWith('*')) {
         const subst = keyword.keyword.slice(0, -1);
         validStartsWith = content.startsWith(subst);
@@ -85,7 +83,7 @@ const isValidStartsWith = (keyword: Keyword, content: string) => {
 
 const isValidEndsWith = (keyword: Keyword, content: string) => {
     let validEndsWith = false;
-        
+
     if (keyword.keyword.startsWith('*')) {
         const subst = keyword.keyword.substring(1);
         validEndsWith = content.startsWith(subst);

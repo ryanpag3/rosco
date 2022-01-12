@@ -11,21 +11,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Server {
+  id                 String               @id @default(uuid())
+  discordId          String               @unique @db.VarChar(32)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  currencyCount      Int                  @default(0)
+  CurrencyHistoryLog CurrencyHistoryLog[]
+}
+
 model User {
-  id             String           @id @default(uuid())
-  discordId      String           @unique @db.VarChar(32)
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  // server currency
-  seedCount      Int              @default(0)
-  // global currency
-  coreCount      Int              @default(0)
-  CommandHistory CommandHistory[]
-  Scores         Score[]
-  Scoreboards    Scoreboard[]
-  Permission     Permission[]
-  Keyword        Keyword[]
-  Stopwatch      Stopwatch[]
+  id                        String               @id @default(uuid())
+  discordId                 String               @unique @db.VarChar(32)
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime             @updatedAt
+  serverCurrencyCount       Int                  @default(0)
+  botCurrencyCount          Int                  @default(0)
+  CommandHistory            CommandHistory[]
+  Scores                    Score[]
+  Scoreboards               Scoreboard[]
+  Permission                Permission[]
+  Keyword                   Keyword[]
+  Stopwatch                 Stopwatch[]
+  SendCurrencyHistoryLog    CurrencyHistoryLog[] @relation("Sender")
+  ReceiveCurrencyHistoryLog CurrencyHistoryLog[] @relation("Receiver")
+}
+
+model CurrencyHistoryLog {
+  id         String @id @default(uuid())
+  Server     Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId   String
+  Sender     User   @relation(name: "Sender", fields: [senderId], references: [id])
+  senderId   String
+  Receiver   User?  @relation(name: "Receiver", fields: [receiverId], references: [id])
+  receiverId String
 }
 
 model Permission {
@@ -117,7 +136,7 @@ model Stopwatch {
   startedAt DateTime?
   stoppedAt DateTime?
   userId    String?
-  User      User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
-  
+  User      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
   @@unique([name, serverId])
 }
