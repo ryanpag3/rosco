@@ -16,6 +16,10 @@ model User {
   discordId      String           @unique @db.VarChar(32)
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
+  // server currency
+  seedCount      Int              @default(0)
+  // global currency
+  coreCount      Int              @default(0)
   CommandHistory CommandHistory[]
   Scores         Score[]
   Scoreboards    Scoreboard[]
