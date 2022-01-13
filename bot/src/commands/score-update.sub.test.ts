@@ -8,7 +8,7 @@ it('should update a valid score', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    });
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -17,7 +17,7 @@ it('should update a valid score', async () => {
     int = createTestInteraction('score', 'update', {
         name: 'test',
         description: 'new'
-    });
+    }, '1', '1', '1');
 
     // @ts-ignore
     int.guild.id = serverId;
@@ -39,7 +39,7 @@ it('should throw an error if a score is updated to be named after an existing sc
         name: 'test',
         description: 'description',
         amount: 1
-    });
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -47,14 +47,14 @@ it('should throw an error if a score is updated to be named after an existing sc
         name: 'test2',
         description: 'description',
         amount: 1
-    });
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
     int = createTestInteraction('score', 'update', {
         name: 'test',
         'new-name': 'test2'
-    });
+    }, '1', '1', '1');
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 });
