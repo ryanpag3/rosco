@@ -2,19 +2,38 @@ import { CommandInteraction } from 'discord.js';
 import COMMANDS from '../commands';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
-import * as UserService from '../service/user';
 import * as ServerService from '../service/server';
 import * as CommandHistory from '../util/command-history';
 import { userHasPermission } from '../service/permission';
+import prisma from '../util/prisma';
+import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
 
 export default async function(interaction: CommandInteraction) {
     try {
         if (!interaction.isCommand())
             return;
+    
+        await handleCurrencyEvent(CurrencyAction.COMMAND, interaction);
 
-        await ServerService.initializeServer(interaction.guild);
+        const server = await ServerService.initializeServer(interaction.guild);
 
-        const user = await UserService.createIfNotExist(interaction.user.id);
+        const user = await prisma.user.upsert({
+            where: {
+                discordId: interaction.user?.id
+            },
+            update: {},
+            create: {
+                discordId: interaction.user?.id,
+                UserServer: {
+                    create: [
+                        {
+                            currencyCount: 0,
+                            serverId: server?.id as string
+                        }
+                    ]
+                }
+            }
+        });
 
         if (!await userHasPermission(interaction, user)) {
             return interaction.reply({

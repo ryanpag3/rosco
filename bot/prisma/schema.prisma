@@ -47,6 +47,8 @@ model UserServer {
   userId        String
   serverId      String
   currencyCount Int    @default(0)
+
+  @@unique([userId, serverId])
 }
 
 // keep in sync with currency.ts
@@ -80,8 +82,10 @@ model CurrencyHistoryLog {
   currencyRuleId String?
   Sender         User?         @relation(name: "Sender", fields: [senderId], references: [id])
   senderId       String?
-  Receiver       User?         @relation(name: "Receiver", fields: [receiverId], references: [id])
-  receiverId     String?
+  Receiver       User         @relation(name: "Receiver", fields: [receiverId], references: [id])
+  receiverId     String
+  reaction       String?
+  messageId      String?
 }
 
 model Permission {

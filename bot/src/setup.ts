@@ -11,6 +11,7 @@ import { baselineKeywordCacheToDatabase, buildKeywordValues } from './service/ke
 import logger from './util/logger';
 import { onGuildCreate } from './event/guild-create';
 import { CurrencyAction, handleCurrencyEvent } from './service/currency';
+import { onMessageActionAdd } from './event/message-reaction-add';
 
 export default async function (client: Client) {
     // baseline cache against database
@@ -22,27 +23,15 @@ export default async function (client: Client) {
     // deploy slash commands
     await CommandDeployer.deploy();
 
-    // setup events
     client.on('ready', () => onReady());
 
-    client.on('guildCreate', async (guild) => {
-        return onGuildCreate(guild)
-    });
+    client.on('guildCreate', async (guild) => onGuildCreate(guild));
 
-    client.on('interactionCreate', async interaction => { 
-        await handleCurrencyEvent(CurrencyAction.COMMAND, interaction);
-        return onInteractionCreate(interaction as CommandInteraction<CacheType>) 
-    });
+    client.on('interactionCreate', async interaction => onInteractionCreate(interaction as CommandInteraction<CacheType>));
 
-    client.on('messageCreate', async (message: Message) => {
-        await handleCurrencyEvent(CurrencyAction.MESSAGE, message);
-        return onMessageReceived(message)
-    });
+    client.on('messageCreate', async (message: Message) => onMessageReceived(message));
 
-    client.on('messageReactionAdd', async (reaction) => {
-        await handleCurrencyEvent(CurrencyAction.REACTION, reaction.message, reaction);
-        logger.info('reaction added');
-    });
+    client.on('messageReactionAdd', async (reaction) => onMessageActionAdd(reaction));
     
     client.on('messageReactionRemove', (reaction) => logger.info('reaction removed'));
 }

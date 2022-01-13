@@ -1,15 +1,38 @@
 import { Keyword } from '@prisma/client';
 import { Message } from 'discord.js';
+import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
 import { buildKeywordValues, doesKeywordsExist, getValidKeywords } from '../service/keyword-cache';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
+import * as ServerService from '../service/server';
 
 const onMessageReceived = async (message: Message) => {
     if (message.type === 'APPLICATION_COMMAND')
         return;
 
-    await handleKeywords(message);
+    const server = await ServerService.initializeServer(message.guild);
 
+    await prisma.user.upsert({
+        where: {
+            discordId: message?.member?.user?.id as string
+        },
+        update: {},
+        create: {
+            discordId: message?.member?.user?.id as string,
+            UserServer: {
+                create: [
+                    {
+                        currencyCount: 0,
+                        serverId: server?.id as string
+                    }
+                ]
+            }
+        }
+    });
+
+    await handleCurrencyEvent(CurrencyAction.MESSAGE, message);
+
+    await handleKeywords(message);
 };
 
 const handleKeywords = async (message: Message) => {

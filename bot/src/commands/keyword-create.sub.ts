@@ -2,7 +2,6 @@ import { KeywordAction, Prisma } from '@prisma/client';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
-import * as UserService from '../service/user';
 import * as KeywordCache from '../service/keyword-cache';
 
 const KeywordCreate: Command = {
@@ -39,10 +38,6 @@ const KeywordCreate: Command = {
                     discordId: user.id
                 }
             });
-
-            if (!inDbUser) {
-                inDbUser = await UserService.createIfNotExist(user.id);
-            }
         }
 
         try {

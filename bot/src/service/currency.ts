@@ -46,28 +46,29 @@ export const handleCurrencyEvent = async (
     
     const currencyRules = await prisma.currencyRule.findMany({
         where: {
+            action,
             Server: {
                 discordId: guild?.id
             }
         }
     });
 
-    logger.info(currencyRules);
-
     const promises = [];
     for (const currencyRule of currencyRules) {
         // @ts-ignore
-        logger.info(member?.roles.cache.has(currencyRule.roleId));
-        // @ts-ignore
         if (member?.roles.cache.has(currencyRule.roleId))
-            await runEvent(currencyRule, guild, member as GuildMember)
+            logger.debug(`granting ${member.user.id} ${currencyRule.amount}`);
+            promises.push(runEvent(currencyRule, guild, member as GuildMember, reaction))
     }
+
+    return Promise.all(promises);
 }
 
 export const runEvent = async (
     currencyRule: PrismaCurrencyRule, 
     guild: Guild|null, 
-    member: GuildMember) => {
+    member: GuildMember,
+    reaction?: MessageReaction|PartialMessageReaction) => {
         const user = await prisma.user.findUnique({
             where: {
                 discordId: member.id
@@ -77,23 +78,35 @@ export const runEvent = async (
         const server = await prisma.server.findUnique({
             where: {
                 discordId: guild?.id
+            },
+            include: {
+                UserServer: {
+                    where: {
+                        userId: user?.id
+                    }
+                }
             }
         });
 
-        await prisma.user.update({
+        await prisma.userServer.update({
             where: {
-                discordId: member.id
+                userId_serverId: {
+                    userId: user?.id as string,
+                    serverId: server?.id as string
+                }
             },
             data: {
-                serverCurrencyCount: (user?.serverCurrencyCount || 0) + currencyRule.amount
+                currencyCount: (server?.UserServer[0].currencyCount || 0) + currencyRule.amount
             }
-        });
+        })       
 
         await prisma.currencyHistoryLog.create({
             data: {
                 serverId: server?.id as any,
                 delta: currencyRule.amount,
-                currencyRuleId: currencyRule.id
+                currencyRuleId: currencyRule.id,
+                receiverId: user?.id as string,
+                reaction: reaction?.emoji.name
             }
         });
 }
