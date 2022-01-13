@@ -1,7 +1,7 @@
 import 'chartjs-plugin-datalabels';
 import './util/command-subcommand-map';
 
-import { Client, Message } from 'discord.js';
+import { CacheType, Client, CommandInteraction, Message } from 'discord.js';
 // prevent race condition
 import * as CommandDeployer from './util/slash-command-deployer';
 import onReady from './event/ready';
@@ -10,6 +10,7 @@ import onMessageReceived from './event/message';
 import { baselineKeywordCacheToDatabase, buildKeywordValues } from './service/keyword-cache';
 import logger from './util/logger';
 import { onGuildCreate } from './event/guild-create';
+import { CurrencyAction, handleCurrencyEvent } from './service/currency';
 
 export default async function (client: Client) {
     // baseline cache against database
@@ -24,18 +25,24 @@ export default async function (client: Client) {
     // setup events
     client.on('ready', () => onReady());
 
-    client.on('guildCreate', async (guild) => onGuildCreate(guild));
+    client.on('guildCreate', async (guild) => {
+        return onGuildCreate(guild)
+    });
 
-    client.on('interactionCreate', async interaction => grantCurrencyWrapper('interactionCreate', onInteractionCreate, interaction));
+    client.on('interactionCreate', async interaction => { 
+        await handleCurrencyEvent(CurrencyAction.COMMAND, interaction);
+        return onInteractionCreate(interaction as CommandInteraction<CacheType>) 
+    });
 
-    client.on('messageCreate', (message: Message) => grantCurrencyWrapper('messageCreate', onMessageReceived, message));
+    client.on('messageCreate', async (message: Message) => {
+        await handleCurrencyEvent(CurrencyAction.MESSAGE, message);
+        return onMessageReceived(message)
+    });
 
-    client.on('messageReactionAdd', (reaction) => logger.info(reaction));
+    client.on('messageReactionAdd', async (reaction) => {
+        await handleCurrencyEvent(CurrencyAction.REACTION, reaction.message, reaction);
+        logger.info('reaction added');
+    });
     
-    client.on('messageReactionRemove', (reaction) => logger.info(reaction));
-}
-
-const grantCurrencyWrapper = async (event: string, callback: any, passObj?: any) => {
-    
-    return callback(passObj) 
+    client.on('messageReactionRemove', (reaction) => logger.info('reaction removed'));
 }

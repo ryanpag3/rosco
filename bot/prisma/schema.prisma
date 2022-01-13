@@ -19,6 +19,7 @@ model Server {
   currencyCount      Int                  @default(0)
   CurrencyHistoryLog CurrencyHistoryLog[]
   CurrencyRule       CurrencyRule[]
+  UserServer         UserServer[]
 }
 
 model User {
@@ -26,7 +27,6 @@ model User {
   discordId                 String               @unique @db.VarChar(32)
   createdAt                 DateTime             @default(now())
   updatedAt                 DateTime             @updatedAt
-  serverCurrencyCount       Int                  @default(0)
   botCurrencyCount          Int                  @default(0)
   CommandHistory            CommandHistory[]
   Scores                    Score[]
@@ -37,6 +37,16 @@ model User {
   SendCurrencyHistoryLog    CurrencyHistoryLog[] @relation("Sender")
   ReceiveCurrencyHistoryLog CurrencyHistoryLog[] @relation("Receiver")
   CurrencyRule              CurrencyRule[]
+  UserServer                UserServer[]
+}
+
+model UserServer {
+  id            String @id @default(uuid())
+  User          User   @relation(fields: [userId], references: [id])
+  Server        Server @relation(fields: [serverId], references: [id])
+  userId        String
+  serverId      String
+  currencyCount Int    @default(0)
 }
 
 // keep in sync with currency.ts
@@ -47,24 +57,31 @@ enum CurrencyAction {
 }
 
 model CurrencyRule {
-  id       String  @id @default(uuid())
-  roleId   String
-  amount   Int
-  action   CurrencyAction
-  serverId String
-  Server   Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  userId   String?
-  User     User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  id                 String               @id @default(uuid())
+  roleId             String
+  amount             Int
+  action             CurrencyAction
+  serverId           String
+  Server             Server               @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  userId             String?
+  User               User?                @relation(fields: [userId], references: [id], onDelete: SetNull)
+  CurrencyHistoryLog CurrencyHistoryLog[]
 }
 
 model CurrencyHistoryLog {
-  id         String @id @default(uuid())
-  Server     Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  serverId   String
-  Sender     User   @relation(name: "Sender", fields: [senderId], references: [id])
-  senderId   String
-  Receiver   User?  @relation(name: "Receiver", fields: [receiverId], references: [id])
-  receiverId String
+  id             String        @id @default(uuid())
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  Server         Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId       String
+  delta          Int
+  // if currency rule is set, transaction is income
+  currencyRule   CurrencyRule? @relation(fields: [currencyRuleId], references: [id])
+  currencyRuleId String?
+  Sender         User?         @relation(name: "Sender", fields: [senderId], references: [id])
+  senderId       String?
+  Receiver       User?         @relation(name: "Receiver", fields: [receiverId], references: [id])
+  receiverId     String?
 }
 
 model Permission {
