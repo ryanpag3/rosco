@@ -6,7 +6,7 @@ it('should create a stopwatch and start it', async () => {
     let int = createTestInteraction('stopwatch', 'create', {
         name: 'test',
         'start-on-create': true
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -27,7 +27,7 @@ it('should create a stopwatch and not start it', async () => {
     let int = createTestInteraction('stopwatch', 'create', {
         name: 'test',
         'start-on-create': false
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -48,13 +48,13 @@ it('should create a stopwatch and not start it', async () => {
 it('should throw an error if the stopwatch already exists.', async () => {
     let int = createTestInteraction('stopwatch', 'create', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
     int = createTestInteraction('stopwatch', 'create', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 });

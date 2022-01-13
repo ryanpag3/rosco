@@ -11,7 +11,7 @@ it('should list out the scores', async () => {
 
     await onCommandReceived(int);
 
-    int = createTestInteraction('permission', 'list', {}, '1');
+    int = createTestInteraction('permission', 'list', {}, '1', '1', '1');
 
     const spy = jest.spyOn(int, 'reply');
     

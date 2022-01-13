@@ -2,7 +2,9 @@ import { CommandInteraction, InteractionReplyOptions, MessageOptions, MessagePay
 import logger from './logger';
 
 // add fields as necessary
-export function createTestInteraction(commandName: string, subcommandName?: string, options?: any, serverId?: string, channelId?: string): CommandInteraction {
+export function createTestInteraction(commandName: string, subcommandName?: string, options?: any, serverId?: string, channelId?: string, staticUserId?: string): CommandInteraction {
+    const userId = staticUserId || makeid(18);
+    
     return {
         commandName,
         isCommand: () => true,
@@ -32,11 +34,14 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
             });
         },
         user: {
-            id: makeid(18),
+            id: userId,
             tag: 'test-user'
         },
         member: {
-            id: makeid(18),
+            id: userId,
+            user: {
+                id: userId
+            },
             permissions: {
                 has: (str: string) => true
             },
@@ -59,7 +64,16 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
             getChannel: (key: string) => options[key]
         },
         guild: {
-            id: serverId || makeid(18)
+            id: serverId || makeid(18),
+            roles: {
+                cache: {
+                    find: (role: any) => {
+                        return {
+                            id: makeid(18)
+                        }
+                    }
+                }
+            }
         }
     } as CommandInteraction;
 }

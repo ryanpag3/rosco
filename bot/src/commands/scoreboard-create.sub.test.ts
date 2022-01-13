@@ -24,7 +24,7 @@ it('should create a scoreboard', async () => {
 it('should throw an error if a scoreboard already exists with that name', async () => {
     let int = createTestInteraction('scoreboard', 'create', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -36,14 +36,14 @@ it('should populate scores that exist', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 
     int = createTestInteraction('scoreboard', 'create', {
         name: 'test',
         scores: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 });
@@ -52,7 +52,7 @@ it('should throw an error if a score doesnt exist in the scores option', async (
     const int = createTestInteraction('scoreboard', 'create', {
         name: 'test',
         scores: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 })

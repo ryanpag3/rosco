@@ -5,8 +5,9 @@ import logger from '../util/logger';
 import * as ServerService from '../service/server';
 import * as CommandHistory from '../util/command-history';
 import { userHasPermission } from '../service/permission';
-import prisma from '../util/prisma';
+import * as UserService from '../service/user';
 import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
+import { Server } from '@prisma/client';
 
 export default async function(interaction: CommandInteraction) {
     try {
@@ -17,23 +18,7 @@ export default async function(interaction: CommandInteraction) {
 
         const server = await ServerService.initializeServer(interaction.guild);
 
-        const user = await prisma.user.upsert({
-            where: {
-                discordId: interaction.user?.id
-            },
-            update: {},
-            create: {
-                discordId: interaction.user?.id,
-                UserServer: {
-                    create: [
-                        {
-                            currencyCount: 0,
-                            serverId: server?.id as string
-                        }
-                    ]
-                }
-            }
-        });
+        const user = await UserService.initUser(interaction.member as any, server as Server); 
 
         if (!await userHasPermission(interaction, user)) {
             return interaction.reply({

@@ -6,18 +6,18 @@ it('should list out the scores', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 
     int = createTestInteraction('keyword', 'create', {
         'score-name': 'test',
         keyword: 'iwinagainlewstherin'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
-    int = createTestInteraction('keyword', 'list', {}, '1');
+    int = createTestInteraction('keyword', 'list', {}, '1', '1', '1');
 
     const spy = jest.spyOn(int, 'reply');
     
@@ -34,27 +34,27 @@ it('should list out the scores that match keyword', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 
     int = createTestInteraction('keyword', 'create', {
         'score-name': 'test',
         keyword: 'iwinagainlewstherin'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
     int = createTestInteraction('keyword', 'create', {
         'score-name': 'test',
         keyword: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
     int = createTestInteraction('keyword', 'list', {
         keyword: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     const spy = jest.spyOn(int, 'reply');
     
@@ -75,7 +75,7 @@ it('should list out the scores that match score name', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 
@@ -83,20 +83,20 @@ it('should list out the scores that match score name', async () => {
         name: 'aaa',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 
     int = createTestInteraction('keyword', 'create', {
         'score-name': 'test',
         keyword: 'iwinagainlewstherin'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
     int = createTestInteraction('keyword', 'list', {
         'score-name': 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     const spy = jest.spyOn(int, 'reply');
     

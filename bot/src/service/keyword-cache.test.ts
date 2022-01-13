@@ -9,7 +9,7 @@ it('should save a keyword to the cache', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 
@@ -35,7 +35,7 @@ it('should get a cached keyword', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 
@@ -67,7 +67,7 @@ it('should delete a keyword from the cache', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 
@@ -95,7 +95,7 @@ it('should return true if keyword does exist', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 

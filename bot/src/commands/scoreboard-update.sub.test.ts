@@ -5,7 +5,7 @@ import prisma from '../util/prisma';
 it('should update a scoreboard', async () => {
     let int = createTestInteraction('scoreboard', 'create', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -13,7 +13,7 @@ it('should update a scoreboard', async () => {
         name: 'test',
         'new-name': 'test2',
         description: 'aaa'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -34,7 +34,7 @@ it('should throw an error if the scoreboard does not exist to update', async () 
         name: 'test',
         'new-name': 'test2',
         description: 'aaa'
-    }, '1');
+    }, '1', '1', '1');
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 })

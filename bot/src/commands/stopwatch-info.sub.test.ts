@@ -5,14 +5,14 @@ import onCommandReceived from '../event/interaction-create';
 it('should list out the scores', async () => {
     let int = createTestInteraction('stopwatch', 'create', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     
     await onCommandReceived(int);
 
     int = createTestInteraction('stopwatch', 'info', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     const spy = jest.spyOn(int, 'reply');
     
@@ -28,7 +28,7 @@ it('should list out the scores', async () => {
 it('should throw an error if the stopwatch does not exist', async () => {
     const int = createTestInteraction('stopwatch', 'info', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
     
     await expect(onCommandReceived(int)).rejects.toThrow();
 });

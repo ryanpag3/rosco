@@ -10,7 +10,7 @@ it('should unset the permission', async () => {
             id: '1',
             name: 'test'
         }
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -31,7 +31,7 @@ it('should unset the permission', async () => {
         role: {
             id: '1'
         }
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -63,7 +63,7 @@ it('should throw an error if the permission doesnt exists', async () => {
             id: '1',
             name: 'test'
         }
-    }, '1');
+    }, '1', '1', '1');
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 });

@@ -42,8 +42,8 @@ model User {
 
 model UserServer {
   id            String @id @default(uuid())
-  User          User   @relation(fields: [userId], references: [id])
-  Server        Server @relation(fields: [serverId], references: [id])
+  User          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Server        Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
   userId        String
   serverId      String
   currencyCount Int    @default(0)
@@ -82,7 +82,7 @@ model CurrencyHistoryLog {
   currencyRuleId String?
   Sender         User?         @relation(name: "Sender", fields: [senderId], references: [id])
   senderId       String?
-  Receiver       User         @relation(name: "Receiver", fields: [receiverId], references: [id])
+  Receiver       User         @relation(name: "Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
   receiverId     String
   reaction       String?
   messageId      String?

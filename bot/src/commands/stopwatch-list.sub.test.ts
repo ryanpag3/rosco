@@ -5,11 +5,11 @@ it('should list out the scores', async () => {
     let int = createTestInteraction('stopwatch', 'create', {
         name: 'test',
         'start-on-create': true
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
-    int = createTestInteraction('stopwatch', 'list', {}, '1');
+    int = createTestInteraction('stopwatch', 'list', {}, '1', '1', '1');
 
     const spy = jest.spyOn(int, 'reply');
     

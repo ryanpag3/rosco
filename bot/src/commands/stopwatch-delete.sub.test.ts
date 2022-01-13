@@ -5,13 +5,13 @@ import prisma from '../util/prisma';
 it('should delete a stopwatch', async () => {
     let int = createTestInteraction('stopwatch', 'create', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
     int = createTestInteraction('stopwatch', 'delete', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -30,7 +30,7 @@ it('should delete a stopwatch', async () => {
 it('should throw an error if a stopwatch does not exist to delete', async () => {
     const int = createTestInteraction('stopwatch', 'delete', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 });

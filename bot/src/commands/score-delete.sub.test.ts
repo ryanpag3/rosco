@@ -8,13 +8,13 @@ it('should delete a score', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
     int = createTestInteraction('score', 'delete', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -32,7 +32,7 @@ it('should delete a score', async () => {
 it('should throw an error if a score doesnt exist to delete.', async () => {
     const int = createTestInteraction('score', 'delete', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     expect(onCommandReceived(int)).rejects.toThrow();
 })

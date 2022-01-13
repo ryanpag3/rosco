@@ -75,6 +75,9 @@ export const runEvent = async (
             }
         });
 
+        if (!user)
+            throw new Error('Cannot find user to adjust currency.');
+
         const server = await prisma.server.findUnique({
             where: {
                 discordId: guild?.id

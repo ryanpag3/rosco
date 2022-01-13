@@ -7,7 +7,7 @@ it('should list out the scores', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
 
     
     await onCommandReceived(int);
@@ -16,11 +16,11 @@ it('should list out the scores', async () => {
         name: 'test2',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 
-    int = createTestInteraction('score', 'list', {}, '1');
+    int = createTestInteraction('score', 'list', {}, '1', '1', '1');
 
     const spy = jest.spyOn(int, 'reply');
     

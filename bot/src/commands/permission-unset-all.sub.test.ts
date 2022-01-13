@@ -9,7 +9,7 @@ it('should set all permissions', async () => {
             id: '1',
             name: 'test'
         }
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -26,7 +26,7 @@ it('should set all permissions', async () => {
             id: '1',
             name: 'test'
         }
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 

@@ -7,14 +7,14 @@ it('should delete the keyword', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
     
     await onCommandReceived(int);
 
     int = createTestInteraction('keyword', 'create', {
         'score-name': 'test',
         keyword: 'iwinagainlewstherin'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -27,7 +27,7 @@ it('should delete the keyword', async () => {
     int = createTestInteraction('keyword', 'delete', {
         'score-name': 'test',
         keyword: 'iwinagainlewstherin'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -42,7 +42,7 @@ it('should thrown an error if the score does not exist', async () => {
     const int = createTestInteraction('keyword', 'delete', {
         'score-name': 'test',
         keyword: 'iwinagainlewstherin'
-    }, '1');
+    }, '1', '1', '1');
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 });

@@ -5,7 +5,7 @@ import prisma from '../util/prisma';
 it('should remove a score to a valid scoreboard', async () => {
     let int = createTestInteraction('scoreboard', 'create', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -13,14 +13,14 @@ it('should remove a score to a valid scoreboard', async () => {
         name: 'test-score',
         description: 'description',
         amount: 1
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
     int = createTestInteraction('scoreboard', 'add-score', {
         name: 'test',
         'score-name': 'test-score'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -41,7 +41,7 @@ it('should remove a score to a valid scoreboard', async () => {
     int = createTestInteraction('scoreboard', 'remove-score', {
         name: 'test',
         'score-name': 'test-score'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -63,14 +63,14 @@ it('should remove a score to a valid scoreboard', async () => {
 it('should throw an error if the score does not exist to remove', async () => {
     let int = createTestInteraction('scoreboard', 'create', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
     int = createTestInteraction('scoreboard', 'remove-score', {
         name: 'test',
         'score-name': 'test-score'
-    }, '1');
+    }, '1', '1', '1');
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 });

@@ -6,14 +6,14 @@ it('should stop a created timer.', async () => {
    let int = createTestInteraction('stopwatch', 'create', {
         name: 'test',
         'start-on-create': true
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
     
    int = createTestInteraction('stopwatch', 'stop', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
 
@@ -33,7 +33,7 @@ it('should stop a created timer.', async () => {
 it('should throw an error if the stopwatch does not exist.', async () => {
     let int = createTestInteraction('stopwatch', 'stop', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 });
@@ -43,13 +43,13 @@ it('it should throw an error if a created stopwatch has not been started before 
    let int = createTestInteraction('stopwatch', 'create', {
         name: 'test',
         'start-on-create': false
-    }, '1');
+    }, '1', '1', '1');
 
     await onCommandReceived(int);
     
     int = createTestInteraction('stopwatch', 'stop', {
         name: 'test'
-    }, '1');
+    }, '1', '1', '1');
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 
