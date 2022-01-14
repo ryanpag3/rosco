@@ -32,6 +32,6 @@ export default async function (client: Client) {
 
     client.on('messageReactionAdd', async (reaction, user) => onMessageActionAdd(reaction, user));
     
-    client.on('messageReactionRemove', (reaction, user) => onMessageReactionRemove(reaction, user));
+    client.on('messageReactionRemove', async (reaction, user) => onMessageReactionRemove(reaction, user));
 
 }
