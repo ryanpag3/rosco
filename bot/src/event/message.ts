@@ -11,6 +11,9 @@ const onMessageReceived = async (message: Message) => {
     if (message.type === 'APPLICATION_COMMAND')
         return;
 
+    if (message.member?.user.bot)
+        return;
+
     const server = await ServerService.initializeServer(message.guild);
 
     await UserService.initUser(message.member as any, server as Server);

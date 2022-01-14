@@ -16,6 +16,11 @@ const Currency: Command = {
                     name: 'channel',
                     description: 'If set, we will log all currency events to this channel.',
                     type: ApplicationCommandOptionType.Channel
+                },
+                {
+                    name: 'active',
+                    description: 'Toggle logging functionality.',
+                    type: ApplicationCommandOptionType.Boolean
                 }
             ]
         }

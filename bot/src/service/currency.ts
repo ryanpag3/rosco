@@ -1,5 +1,5 @@
 import { CurrencyRule as PrismaCurrencyRule, Prisma } from '@prisma/client';
-import { CacheType, Guild, GuildMember, Interaction, Message, MessageReaction, PartialMessage, PartialMessageReaction, PartialUser, User as DiscordUser } from 'discord.js'
+import { CacheType, Guild, GuildMember, Interaction, Message, MessageReaction, PartialMessage, PartialMessageReaction, PartialUser, TextChannel, User as DiscordUser } from 'discord.js'
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 
@@ -56,6 +56,8 @@ export const handleCurrencyEvent = async (
 
         const promises = [];
         for (const currencyRule of currencyRules) {
+            if (member?.user.bot)
+                continue;
             // @ts-ignore
             if (member?.roles.cache.has(currencyRule.roleId))
                 logger.debug(`granting ${member.user.id} ${currencyRule.amount}`);
@@ -74,9 +76,9 @@ export const runEvent = async (
     member: GuildMember,
     reaction?: MessageReaction | PartialMessageReaction,
     discordUser?: DiscordUser | PartialUser) => {
-    
+
     const discordId = discordUser ? discordUser.id : member.id;
-    
+
     const user = await prisma.user.findUnique({
         where: {
             discordId
@@ -121,6 +123,20 @@ export const runEvent = async (
             messageId: reaction?.message.id
         }
     });
+
+    if (server?.currencyHistoryChannelId && server.currencyHistoryChannelActive) {
+        await (guild?.channels.cache.get(server?.currencyHistoryChannelId) as TextChannel).send({
+            embeds: [
+                {
+                    description: `${member.user.tag} earned ${currencyRule.amount} seed(s) for ${currencyRule.action} with role ${guild?.roles.cache.get(currencyRule.roleId)}`
+                }
+            ],
+            allowedMentions: {
+                roles: [],
+                users: []
+            }
+        })
+    }
 }
 
 export const undoMessageReactionIncome = async (reaction: MessageReaction | PartialMessageReaction, discordUser: DiscordUser | PartialUser) => {
@@ -131,7 +147,7 @@ export const undoMessageReactionIncome = async (reaction: MessageReaction | Part
             },
             rejectOnNotFound: true
         });
-        
+
         const log = await prisma.currencyHistoryLog.findUnique({
             where: {
                 receiverId_reaction_messageId: {
@@ -141,7 +157,8 @@ export const undoMessageReactionIncome = async (reaction: MessageReaction | Part
                 }
             },
             include: {
-                currencyRule: true
+                currencyRule: true,
+                Server: true
             },
             rejectOnNotFound: true
         });
@@ -159,6 +176,22 @@ export const undoMessageReactionIncome = async (reaction: MessageReaction | Part
                 }
             }
         });
+
+
+
+        if (log.Server?.currencyHistoryChannelId && log.Server.currencyHistoryChannelActive) {
+            await (reaction.client.channels.cache.get(log.Server?.currencyHistoryChannelId) as TextChannel).send({
+                embeds: [
+                    {
+                        description: `${discordUser.tag} lost ${log.currencyRule?.amount} seeds for removing a reaction.`
+                    }
+                ],
+                allowedMentions: {
+                    roles: [],
+                    users: []
+                }
+            })
+        }
 
         logger.debug(`Reversed amount earned [${log.currencyRule?.amount}] by ${user.id} for reaction message.`)
 
