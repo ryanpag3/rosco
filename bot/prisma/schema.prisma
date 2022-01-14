@@ -12,14 +12,16 @@ datasource db {
 }
 
 model Server {
-  id                 String               @id @default(uuid())
-  discordId          String               @unique @db.VarChar(32)
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  currencyCount      Int                  @default(0)
-  CurrencyHistoryLog CurrencyHistoryLog[]
-  CurrencyRule       CurrencyRule[]
-  UserServer         UserServer[]
+  id                           String               @id @default(uuid())
+  discordId                    String               @unique @db.VarChar(32)
+  createdAt                    DateTime             @default(now())
+  updatedAt                    DateTime             @updatedAt
+  currencyHistoryChannelId     String?
+  currencyHistoryChannelActive Boolean?             @default(true)
+  currencyCount                Int                  @default(0)
+  CurrencyHistoryLog           CurrencyHistoryLog[]
+  CurrencyRule                 CurrencyRule[]
+  UserServer                   UserServer[]
 }
 
 model User {
@@ -82,7 +84,7 @@ model CurrencyHistoryLog {
   currencyRuleId String?
   Sender         User?         @relation(name: "Sender", fields: [senderId], references: [id])
   senderId       String?
-  Receiver       User         @relation(name: "Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  Receiver       User          @relation(name: "Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
   receiverId     String
   reaction       String?
   messageId      String?
