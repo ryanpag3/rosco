@@ -8,10 +8,9 @@ import onReady from './event/ready';
 import onInteractionCreate from './event/interaction-create';
 import onMessageReceived from './event/message';
 import { baselineKeywordCacheToDatabase, buildKeywordValues } from './service/keyword-cache';
-import logger from './util/logger';
 import { onGuildCreate } from './event/guild-create';
-import { CurrencyAction, handleCurrencyEvent } from './service/currency';
 import { onMessageActionAdd } from './event/message-reaction-add';
+import { onMessageReactionRemove } from './event/message-reaction-remove';
 
 export default async function (client: Client) {
     // baseline cache against database
@@ -31,7 +30,8 @@ export default async function (client: Client) {
 
     client.on('messageCreate', async (message: Message) => onMessageReceived(message));
 
-    client.on('messageReactionAdd', async (reaction) => onMessageActionAdd(reaction));
+    client.on('messageReactionAdd', async (reaction, user) => onMessageActionAdd(reaction, user));
     
-    client.on('messageReactionRemove', (reaction) => logger.info('reaction removed'));
+    client.on('messageReactionRemove', (reaction, user) => onMessageReactionRemove(reaction, user));
+
 }

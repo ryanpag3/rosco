@@ -86,6 +86,9 @@ model CurrencyHistoryLog {
   receiverId     String
   reaction       String?
   messageId      String?
+
+  // a user can only react with an emoji once on a message
+  @@unique([receiverId, reaction, messageId])
 }
 
 model Permission {
