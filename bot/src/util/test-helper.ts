@@ -3,7 +3,7 @@ import logger from './logger';
 
 // add fields as necessary
 export function createTestInteraction(commandName: string, subcommandName?: string, options?: any, serverId?: string, channelId?: string, staticUserId?: string): CommandInteraction {
-    const userId = staticUserId || makeid(18);
+    const userId = staticUserId || '1';
     
     return {
         commandName,
@@ -11,7 +11,7 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
         // @ts-ignore
         toJSON: () => {},
         channel: {
-            id: channelId || makeid(18),
+            id: channelId || '1',
             send: async (options: string | MessagePayload | MessageOptions) => {
                     return {
                         options: {
@@ -54,26 +54,31 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
         options: {
             ...options,
             // @ts-ignore
-            getString: (key: string) => options[key],
-            getRole: (key: string) => options[key],
+            getString: (key: string) => options ? options[key] : null,
+            getRole: (key: string) => options ? options[key] : null,
             // @ts-ignore
             getInteger: (key: string) => Number.parseInt(options[key]),
             getSubcommand: () => subcommandName,
-            getBoolean: (key: string) => options[key]?.toString() === 'true',
-            getUser: (key: string) => options[key],
-            getChannel: (key: string) => options[key]
+            getBoolean: (key: string) => options ? options[key]?.toString() === 'true' : null,
+            getUser: (key: string) => options ? options[key] : null,
+            getChannel: (key: string) => options ? options[key] : null
         },
         guild: {
-            id: serverId || makeid(18),
+            id: serverId || '1',
             roles: {
+                fetch: (role: any) => {
+                    return {
+                        id: '1'
+                    }
+                },
                 cache: {
                     find: (role: any) => {
                         return {
-                            id: makeid(18)
+                            id: '1'
                         }
                     }
                 }
-            }
+            } as any
         }
     } as CommandInteraction;
 }
@@ -81,14 +86,3 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
 export const getApiResult = (apiSpy: any): Promise<any> => {
     return apiSpy.mock.results[0].value
 };
-
-function makeid(length: number) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * 
- charactersLength));
-   }
-   return result;
-}
