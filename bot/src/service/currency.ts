@@ -1,5 +1,6 @@
 import { CurrencyRule as PrismaCurrencyRule, Prisma } from '@prisma/client';
 import { CacheType, Guild, GuildMember, Interaction, Message, MessageReaction, PartialMessage, PartialMessageReaction, PartialUser, TextChannel, User as DiscordUser } from 'discord.js'
+import Currency from '../commands/currency';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 
@@ -88,44 +89,83 @@ export const runEvent = async (
     if (!user)
         throw new Error('Cannot find user to adjust currency.');
 
+    const userServerProfile = await updateCurrencyAmount(guild?.id as string, user.id, currencyRule);
+
+    await saveInHistory(
+        userServerProfile.serverId,
+        currencyRule.amount,
+        currencyRule.id,
+        user?.id as string,
+        reaction?.emoji.name as string,
+        reaction?.message.id 
+    );
+
+    await announce(
+        userServerProfile.Server?.currencyHistoryChannelId as string,
+        userServerProfile.Server?.currencyHistoryChannelActive as boolean,
+        guild as Guild,
+        member,
+        currencyRule
+    );
+}
+
+const updateCurrencyAmount = async (serverDiscordId: string, userId: string, currencyRule: PrismaCurrencyRule) => {
     const server = await prisma.server.findUnique({
         where: {
-            discordId: guild?.id
+            discordId: serverDiscordId
         },
         include: {
             UserServer: {
                 where: {
-                    userId: user?.id
+                    userId: userId
                 }
             }
         }
     });
 
-    await prisma.userServer.update({
+    if (!server)
+        throw new Error(`Server was not properly initialized before updating currency amount. id ${serverDiscordId}`);
+
+    return await prisma.userServer.update({
         where: {
             userId_serverId: {
-                userId: user?.id as string,
+                userId: userId,
                 serverId: server?.id as string
             }
         },
         data: {
             currencyCount: (server?.UserServer[0].currencyCount || 0) + currencyRule.amount
+        },
+        include: {
+            Server: true
         }
     });
+}
 
+const saveInHistory = async (
+    serverId: string, delta: number, currencyRuleId: string, 
+    receiverId: string, reaction?: string, messageId?: string) => {
     await prisma.currencyHistoryLog.create({
         data: {
-            serverId: server?.id as any,
-            delta: currencyRule.amount,
-            currencyRuleId: currencyRule.id,
-            receiverId: user?.id as string,
-            reaction: reaction?.emoji.name,
-            messageId: reaction?.message.id
+            serverId,
+            delta,
+            currencyRuleId,
+            receiverId,
+            reaction,
+            messageId
         }
     });
+}
 
-    if (server?.currencyHistoryChannelId && server.currencyHistoryChannelActive) {
-        await (guild?.channels.cache.get(server?.currencyHistoryChannelId) as TextChannel).send({
+const announce = async (
+    currencyHistoryChannelId: string,
+    currencyHistoryChannelActive: boolean,
+    guild: Guild,
+    member: GuildMember,
+    currencyRule: PrismaCurrencyRule
+) => {
+    if (currencyHistoryChannelId && currencyHistoryChannelActive) {
+        await (guild?.channels.cache.get(currencyHistoryChannelId) as TextChannel).send({
             embeds: [
                 {
                     description: `${member.user.tag} earned ${currencyRule.amount} seed(s) for ${currencyRule.action} with role ${guild?.roles.cache.get(currencyRule.roleId)}`
@@ -137,7 +177,7 @@ export const runEvent = async (
             }
         })
     }
-}
+};
 
 export const undoMessageReactionIncome = async (reaction: MessageReaction | PartialMessageReaction, discordUser: DiscordUser | PartialUser) => {
     try {
