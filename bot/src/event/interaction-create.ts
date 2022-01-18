@@ -9,13 +9,11 @@ import * as UserService from '../service/user';
 import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
 import { Server } from '@prisma/client';
 
-export default async function(interaction: CommandInteraction) {
+const onInteractionCreate = async (interaction: CommandInteraction) => {
     try {
         if (!interaction.isCommand())
             return;
     
-        await handleCurrencyEvent(CurrencyAction.COMMAND, interaction);
-
         const server = await ServerService.initializeServer(interaction.guild);
 
         const user = await UserService.initUser(interaction.member as any, server as Server); 
@@ -30,6 +28,8 @@ export default async function(interaction: CommandInteraction) {
                 ]
             })
         }
+
+        await handleCurrencyEvent(CurrencyAction.COMMAND, interaction);
 
         await CommandHistory.addToHistory(user.id, interaction, JSON.stringify(interaction.toJSON(), (key, value) => typeof value === 'bigint' ? value.toString() : value, 4));
 
@@ -69,3 +69,5 @@ export default async function(interaction: CommandInteraction) {
     }
 
 }
+
+export default onInteractionCreate;

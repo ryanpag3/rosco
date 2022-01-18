@@ -3,6 +3,7 @@ require('dotenv').config({
 });
 import execa from 'execa';
 import './src/util/command-subcommand-map';
+import { baselineKeywordCacheToDatabase, buildKeywordValues } from './src/service/keyword-cache';
 import logger from './src/util/logger';
 import prisma from './src/util/prisma';
 import redis from './src/util/redis';
@@ -10,6 +11,9 @@ import redis from './src/util/redis';
 beforeAll(async () => {
     const stdout = await execa.command('prisma migrate deploy');
     logger.trace(stdout);
+
+    await baselineKeywordCacheToDatabase();
+    await buildKeywordValues();
 }, 10000);
 
 beforeEach(async () => {

@@ -1,4 +1,4 @@
-import { CommandInteraction, InteractionReplyOptions, MessageOptions, MessagePayload } from 'discord.js';
+import { CommandInteraction, InteractionReplyOptions, Message, MessageOptions, MessagePayload, MessageReaction, User } from 'discord.js';
 import logger from './logger';
 
 // add fields as necessary
@@ -57,7 +57,7 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
             getString: (key: string) => options ? options[key] : null,
             getRole: (key: string) => options ? options[key] : null,
             // @ts-ignore
-            getInteger: (key: string) => Number.parseInt(options[key]),
+            getInteger: (key: string) => Number.parseInt(options ? options[key] : undefined),
             getSubcommand: () => subcommandName,
             getBoolean: (key: string) => options ? options[key]?.toString() === 'true' : null,
             getUser: (key: string) => options ? options[key] : null,
@@ -86,3 +86,59 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
 export const getApiResult = (apiSpy: any): Promise<any> => {
     return apiSpy.mock.results[0].value
 };
+
+
+export const createTestMessage = (content: string, guildId?: string, userId?: string) => {
+    const id = '1';
+    return {
+        id,
+        content,
+        member: {
+            id: userId || id,
+            user: {
+                id: userId || id
+            },
+            permissions: {
+                has: (str: string) => true
+            },
+            roles: {
+                cache: {
+                    has: (key: string) => true
+                }
+            }
+        },
+        guild: {
+            id: guildId || id,
+            roles: {
+                fetch: (role: any) => {
+                    return {
+                        id: '1'
+                    }
+                },
+                cache: {
+                    find: (role: any) => {
+                        return {
+                            id: '1'
+                        }
+                    }
+                }
+            } as any
+        },
+
+    } as Message<boolean>
+}
+
+export const createTestReaction = (emoji: string) => {
+    return {
+        message: createTestMessage(emoji),
+        emoji: {
+            name: emoji
+        }
+    } as MessageReaction
+}
+
+export const createTestUser = (userId?: string) => {
+    return { 
+        id: userId || '1'
+    } as User;
+}

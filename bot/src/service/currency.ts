@@ -1,6 +1,17 @@
-import { CurrencyRule as PrismaCurrencyRule, Prisma } from '@prisma/client';
-import { CacheType, Guild, GuildMember, Interaction, Message, MessageReaction, PartialMessage, PartialMessageReaction, PartialUser, TextChannel, User as DiscordUser } from 'discord.js'
-import Currency from '../commands/currency';
+import { CurrencyRule as PrismaCurrencyRule } from '@prisma/client';
+import { 
+    CacheType, 
+    Guild, 
+    GuildMember, 
+    Interaction, 
+    Message, 
+    MessageReaction, 
+    PartialMessage, 
+    PartialMessageReaction, 
+    PartialUser, 
+    TextChannel, 
+    User as DiscordUser 
+} from 'discord.js'
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 
@@ -216,8 +227,6 @@ export const undoMessageReactionIncome = async (reaction: MessageReaction | Part
                 }
             }
         });
-
-
 
         if (log.Server?.currencyHistoryChannelId && log.Server.currencyHistoryChannelActive) {
             await (reaction.client.channels.cache.get(log.Server?.currencyHistoryChannelId) as TextChannel).send({
