@@ -7,6 +7,17 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
     
     return {
         commandName,
+        client: {
+            users: {
+                cache: {
+                    get: (id: string) => {
+                        return {
+                            id
+                        }
+                    }
+                }
+            }
+        },
         isCommand: () => true,
         // @ts-ignore
         toJSON: () => {},
