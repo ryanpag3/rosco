@@ -3,6 +3,7 @@ import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../types/command';
 import CurrencyGrant from './currency-grant.sub';
 import CurrencyLog from './currency-log.sub';
+import CurrencyRevoke from './currency-revoke.sub';
 
 const Currency: Command = {
     id: '84807808-614a-48cc-b962-edff455abf2e',
@@ -52,6 +53,8 @@ const Currency: Command = {
                 return CurrencyLog.handler(interaction, user);
             case 'grant':
                 return CurrencyGrant.handler(interaction, user, server);
+            case 'revoke':
+                return CurrencyRevoke.handler(interaction, user, server);
         }
     }
 }
