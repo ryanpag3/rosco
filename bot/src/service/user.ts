@@ -18,6 +18,9 @@ export const initUser = async (member: GuildMember, server: Server) => {
                     }
                 ]
             }
+        },
+        include: {
+            UserServer: true
         }
     });
 }

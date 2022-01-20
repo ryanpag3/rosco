@@ -9,6 +9,11 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
         commandName,
         client: {
             users: {
+                fetch: (id: string) => {
+                    return {
+                        id
+                    }
+                },
                 cache: {
                     get: (id: string) => {
                         return {
@@ -16,7 +21,7 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
                         }
                     }
                 }
-            }
+            } as any
         },
         isCommand: () => true,
         // @ts-ignore

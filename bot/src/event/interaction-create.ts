@@ -39,7 +39,7 @@ const onInteractionCreate = async (interaction: CommandInteraction) => {
             return interaction.reply('command not found.');
         }
 
-        await handler(interaction, user);
+        await handler(interaction, user, server);
     } catch (e) {
         logger.error(`An error occured while receiving interaction.`, e);
 
