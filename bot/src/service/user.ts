@@ -20,7 +20,11 @@ export const initUser = async (member: GuildMember, server: Server) => {
             }
         },
         include: {
-            UserServer: true
+            UserServer: {
+                where: {
+                    serverId: server.id
+                }
+            }
         }
     });
 }

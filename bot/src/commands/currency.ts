@@ -4,6 +4,7 @@ import { Command } from '../../types/command';
 import CurrencyGrant from './currency-grant.sub';
 import CurrencyLog from './currency-log.sub';
 import CurrencyRevoke from './currency-revoke.sub';
+import CurrencySend from './currency-send.sub';
 
 const Currency: Command = {
     id: '84807808-614a-48cc-b962-edff455abf2e',
@@ -44,6 +45,25 @@ const Currency: Command = {
                     type: ApplicationCommandOptionType.Boolean
                 }
             ]
+        },
+        {
+            name: 'send',
+            description: 'Send currency to another user.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'to',
+                    description: 'The user you want to send currency to.',
+                    type: ApplicationCommandOptionType.User,
+                    required: true
+                },
+                {
+                    name: 'amount',
+                    description: 'The amount of currency you want to send.',
+                    type: ApplicationCommandOptionType.Integer,
+                    required: true
+                }
+            ]
         }
     ],
     handler: async (interaction, user, server) => {
@@ -51,6 +71,8 @@ const Currency: Command = {
         switch (sub) {
             case 'log':
                 return CurrencyLog.handler(interaction, user);
+            case 'send':
+                return CurrencySend.handler(interaction, user, server);
             case 'grant':
                 return CurrencyGrant.handler(interaction, user, server);
             case 'revoke':
