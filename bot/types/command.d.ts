@@ -8,5 +8,7 @@ export interface Command {
     description?: string;
     examples?: string;
     options?: any;
-    handler: (interaction: CommandInteraction, user: User, server?: Server) => void;
+    handler: (interaction: CommandInteraction, user: User & {
+        UserServer: UserServer[];
+    }, server?: Server) => void;
 }

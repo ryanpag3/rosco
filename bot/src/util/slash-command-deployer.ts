@@ -1,9 +1,10 @@
 import logger from './logger';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
-import { delay } from 'bluebird';
+import { hashElement } from 'folder-hash';
 import COMMANDS from '../commands';
-import { SlashCommandBuilder } from '@discordjs/builders';
+import path from 'path';
+import { promises as fs } from 'fs';
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN as string);
 
@@ -17,8 +18,13 @@ const mappedCommands = keys.map((c: any) => {
 });
 
 export async function deploy() {
-    logger.debug(`deploying slash commands`);
+    const needsDeployment = await commandsNeedToBeDeployed();
+
+    if (!needsDeployment)
+        return
+
     return new Promise(async (resolve, reject) => {
+        logger.debug(`deploying slash commands`);
         try {
             if (process.env.NODE_ENV !== 'production') {
                 // register with test server
@@ -44,5 +50,40 @@ export async function deploy() {
             throw e;
         }
     });
+}
 
+const commandsNeedToBeDeployed = async () => {
+    const hash = await getCommandsHash();
+    const hashFile = await getHashFile();
+    if (hashFile !== hash) {
+        await createHashFile();
+        return true;
+    }
+    return false;
+}
+
+const filepath = path.join(__dirname, `../commands/commands.hash`);
+
+const createHashFile = async () => {
+    const hash = await getCommandsHash();
+    return fs.writeFile(filepath, hash);
+}
+
+const getCommandsHash = async () => {
+    const { hash } = await hashElement(path.join(__dirname, '../commands'), {
+        files: {
+            exclude: [ '*.sub.ts' ],
+            include: [ '*.ts' ]
+        }
+    });
+    return hash;
+}
+
+const getHashFile = async () => {
+    try {
+        const res = await fs.readFile(filepath);
+        return res.toString();
+    } catch (e) {
+        return undefined;   
+    }
 }

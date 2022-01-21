@@ -1,6 +1,9 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../types/command';
+import logger from '../util/logger';
+import CurrencyBankDeposit from './currency-bank-deposit.sub';
+import CurrencyBankWithdraw from './currency-bank-withdraw.sub';
 import CurrencyGrant from './currency-grant.sub';
 import CurrencyLog from './currency-log.sub';
 import CurrencyRevoke from './currency-revoke.sub';
@@ -64,6 +67,39 @@ const Currency: Command = {
                     required: true
                 }
             ]
+        },
+        {
+            name: 'bank',
+            description: 'Take various actions on a bank.',
+            type: ApplicationCommandOptionType.SubcommandGroup,
+            options: [
+                {
+                    name: 'withdraw',
+                    description: 'Withdraw currency from the bank.',
+                    type: ApplicationCommandOptionType.Subcommand,
+                    options: [
+                        {
+                            name: 'amount',
+                            description: 'The amount to withdraw.',
+                            type: ApplicationCommandOptionType.Integer,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: 'deposit',
+                    description: 'Deposit currency to the bank.',
+                    type: ApplicationCommandOptionType.Subcommand,
+                    options: [
+                        {
+                            name: 'amount',
+                            description: 'The amount to deposit.',
+                            type: ApplicationCommandOptionType.Integer,
+                            required: true
+                        }
+                    ]
+                }
+            ]
         }
     ],
     handler: async (interaction, user, server) => {
@@ -77,6 +113,10 @@ const Currency: Command = {
                 return CurrencyGrant.handler(interaction, user, server);
             case 'revoke':
                 return CurrencyRevoke.handler(interaction, user, server);
+            case 'withdraw':
+                return CurrencyBankWithdraw.handler(interaction, user, server);
+            case 'deposit':
+                return CurrencyBankDeposit.handler(interaction, user, server);
         }
     }
 }

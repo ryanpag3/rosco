@@ -4,3 +4,4 @@ node_modules
 .env.test
 yarn-error.log
 bot/coverage
+bot/src/commands/commands.hash

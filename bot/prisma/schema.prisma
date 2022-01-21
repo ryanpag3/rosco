@@ -43,12 +43,13 @@ model User {
 }
 
 model UserServer {
-  id            String @id @default(uuid())
-  User          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Server        Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  userId        String
-  serverId      String
-  currencyCount Int    @default(0)
+  id                String @id @default(uuid())
+  User              User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Server            Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  userId            String
+  serverId          String
+  currencyCount     Int    @default(0)
+  bankCurrencyCount Int    @default(0)
 
   @@unique([userId, serverId])
 }
