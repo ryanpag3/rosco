@@ -1,5 +1,4 @@
 import onInteractionCreate from '../event/interaction-create';
-import logger from '../util/logger';
 import prisma from '../util/prisma';
 import { createTestInteraction } from '../util/test-helper';
 
