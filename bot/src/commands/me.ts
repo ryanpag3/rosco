@@ -1,3 +1,4 @@
+import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
@@ -6,7 +7,16 @@ const Me: Command = {
     id: '21ca1a1e-0e49-4b08-a83e-bf87f4e26fd2',
     name: 'me',
     description: 'Get information about the user.',
+    options: [
+        {
+            name: 'announce',
+            description: 'Set to "True" to post the results to the server.',
+            type: ApplicationCommandOptionType.Boolean,
+            default: false
+        }
+    ],
     handler: async (interaction, user, server) => {
+        const announce = interaction.options.getBoolean('announce') || false;
 
         const u = await prisma.user.findUnique({
             where: {
@@ -67,7 +77,8 @@ const Me: Command = {
                         }
                     ]
                 }
-            ]
+            ],
+            ephemeral: !announce
         })
     }
 };

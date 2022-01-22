@@ -38,7 +38,8 @@ const CurrencyBankDeposit: Command = {
                     title: ':bank: Your deposit was successful.',
                     description: `${interaction.member.user} deposited ${amount} seeds into the bank.`
                 }
-            ]
+            ],
+            ephemeral: true
         })
     }
 }

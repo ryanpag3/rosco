@@ -38,8 +38,9 @@ const CurrencyBankWithdraw: Command = {
                     title: ':bank: Your withdrawl was successful.',
                     description: `${interaction.member.user} withdrew ${amount} seeds from the bank.`
                 }
-            ]
-        }) 
+            ],
+            ephemeral: true
+        });
     }
 }
 
