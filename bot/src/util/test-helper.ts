@@ -24,6 +24,7 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
             } as any
         },
         isCommand: () => true,
+        isButton: () => false,
         // @ts-ignore
         toJSON: () => {},
         channel: {
