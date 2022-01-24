@@ -231,5 +231,5 @@ model PollVote {
   CreatedBy    User       @relation(fields: [userId], references: [id])
   userId       String
 
-  // @@unique([userId, pollId])
+  @@unique([userId, pollId])
 }

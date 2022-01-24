@@ -9,8 +9,6 @@ import * as UserService from '../service/user';
 import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
 import { Server, User } from '@prisma/client';
 import prisma from '../util/prisma';
-import Poll from '../commands/poll';
-import { idText } from 'typescript';
 
 const onInteractionCreate = async (interaction: CommandInteraction) => {
     try {
@@ -22,7 +20,7 @@ const onInteractionCreate = async (interaction: CommandInteraction) => {
         const user = await UserService.initUser(interaction.member as any, server as Server); 
 
         if (interaction.isButton())
-            return onButtonPressed(interaction, user, server as Server);
+            return await onButtonPressed(interaction, user, server as Server);
 
         if (!await userHasPermission(interaction, user)) {
             return interaction.reply({
@@ -52,12 +50,14 @@ const onInteractionCreate = async (interaction: CommandInteraction) => {
         const extraInfo = `\n\n_Need help?_\n - Run \`/help ${interaction.commandName}\` \n - [Join the support server](https://discord.gg/KwJUfbt5Wv)`;
 
         if (!(e instanceof BotError)) {
+
             interaction.reply({
                 embeds: [
                     {
                         description: `An internal server error occured. Please contact bot administrator.${extraInfo}`
                     }
-                ]
+                ],
+                ephemeral: true
             });
         } else {
             interaction.reply({
@@ -66,7 +66,8 @@ const onInteractionCreate = async (interaction: CommandInteraction) => {
                         title: `:cry: Whoops, an error occured.`,
                         description: `${e.message}${extraInfo}`
                     }
-                ]
+                ],
+                ephemeral: true
             });
         }
 
@@ -86,44 +87,68 @@ const onButtonPressed = async (interaction: ButtonInteraction, user: User, serve
     }
 }
 
-const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, server: Server) => {
-    // TODO: handle case if poll doesnt exist
-    // TODO: handle case if poll has been closed
-    // TODO: handle case of if poll option already exists
-    // TODO: handle case of poll option already exists, but a change is happening
+const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, _server: Server) => {
+    const pollOption = await prisma.pollOption.findUnique({
+        where: {
+            id: interaction.customId
+        },
+        include: {
+            Poll: {
+                include: {
+                    PollVote: {
+                        where: {
+                            userId: user.id,
+                            pollOptionId: {
+                                not: interaction.customId
+                            }
+                        }
+                    }
+                }
+            },
+            Votes: {
+                where: {
+                    userId: user.id
+                }
+            }
+        }
+    });
 
-    try {
-        const pollOption = await prisma.pollOption.findUnique({
+    if (!pollOption?.Poll || !pollOption?.Poll.isOpen)
+        throw new BotError('The poll has been closed for voting.');
+
+    if (pollOption.Votes.length === 1)
+        throw new BotError('You have already voted this option in the poll.');
+
+    if (pollOption.Poll.PollVote[0]) {
+        await prisma.pollVote.delete({
             where: {
-                id: interaction.customId
+                id: pollOption.Poll.PollVote[0].id
             }
         });
+    }     
+
+    await prisma.pollVote.create({
+        data: {
+            pollId: pollOption?.pollId as string,
+            pollOptionId: pollOption?.id as string,
+            userId: user.id
+        }
+    });
     
-        await prisma.pollVote.create({
-            data: {
-                pollId: pollOption?.pollId as string,
-                pollOptionId: pollOption?.id as string,
-                userId: user.id
-            }
-        });
-        
-        interaction.update({
-            embeds: [{
-                title: interaction.message.embeds[0].title as string,
-                description: await createPollOptionsUpdate(pollOption?.pollId as string)
-            }]
-        })
-    
-        interaction.reply({
-            embeds: [{
-                title: ':ballot_box_with_check: Your vote has been submitted.' 
-            }],
-            ephemeral: true
-        });
-    } catch (e) {
-        logger.error(e);
-        throw e;
-    }
+    interaction.update({
+        embeds: [{
+            title: interaction.message.embeds[0].title as string,
+            description: await createPollOptionsUpdate(pollOption?.pollId as string),
+            footer: interaction.message.embeds[0].footer as any
+        }]
+    })
+
+    interaction.reply({
+        embeds: [{
+            title: ':ballot_box_with_check: Your vote has been submitted.' 
+        }],
+        ephemeral: true
+    });
 }
 
 const createPollOptionsUpdate = async (pollId: string) => {
@@ -139,6 +164,9 @@ const createPollOptionsUpdate = async (pollId: string) => {
                             Votes: true
                         }
                     }
+                },
+                orderBy: {
+                    content: 'asc'
                 }
             }
         }

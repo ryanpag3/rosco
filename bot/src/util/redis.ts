@@ -10,8 +10,13 @@ const client = createClient({
 });
 
 (async () => {
-    await client.connect();
-    logger.debug(`redis connection established.`);
+    try {
+        await client.connect();
+        logger.debug(`redis connection established.`);
+    } catch (e) {
+        logger.error(e);
+        process.exit(1);
+    }
 })();
 
 const redis = client;

@@ -54,8 +54,11 @@ const PollCreate: Command = {
             return interaction.reply({
                 embeds: [
                     {
-                        title: `:abacus: Poll has been created`,
-                        description: poll.PollOption.map(po => `_0_ | **${po.content}**`).join('\n')
+                        title: `:abacus: Poll "${name}" has been created`,
+                        description: poll.PollOption.map(po => `_0_ | **${po.content}**`).join('\n'),
+                        footer: {
+                            text: `Use \`/poll info\` to get information.`
+                        }
                     }
                 ],
                 components: rows,
