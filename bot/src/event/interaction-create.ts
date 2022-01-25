@@ -138,7 +138,16 @@ const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, _
     interaction.update({
         embeds: [{
             title: interaction.message.embeds[0].title as string,
-            description: await createPollOptionsUpdate(pollOption?.pollId as string),
+            fields: [
+                // @ts-ignore
+                interaction.message.embeds[0].fields[0] as any,
+                // @ts-ignore
+                interaction.message.embeds[0].fields[1] as any,
+                {
+                    name: 'options',
+                    value: await createPollOptionsUpdate(pollOption?.pollId as string)
+                }
+            ],
             footer: interaction.message.embeds[0].footer as any
         }]
     })

@@ -1,7 +1,7 @@
+import { Prisma } from '@prisma/client';
 import { CacheType, CommandInteraction } from 'discord.js';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
-import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 const OPTION_LIMIT = 10;
@@ -60,7 +60,22 @@ const PollCreate: Command = {
                 embeds: [
                     {
                         title: `:abacus: Poll "${name}" has been created`,
-                        description: poll.PollOption.map(po => `_0_ | **${po.content}**`).join('\n'),
+                        fields: [
+                            {
+                                name: 'name',
+                                value: poll.name
+                            },
+                            {
+                                name: 'question',
+                                value: poll.question
+                            },
+                            {
+                                name: 'options',
+                                value: poll.PollOption.map(po => {
+                                    return `0 | **${po.content}**`
+                                }).join('\n')
+                            }
+                        ],
                         footer: {
                             text: `Use \`/poll info\` to get information.`
                         }
@@ -69,8 +84,14 @@ const PollCreate: Command = {
                 components: rows,
             });
         } catch(e) {
-            throw e;       
-        }
+            if (!(e instanceof Prisma.PrismaClientKnownRequestError)) {
+                throw e;
+            } else {
+                if (e.code === 'P2002') {
+                    throw new BotError(`A poll already exists with that name.`);
+                }
+                throw e;
+            }        }
     }
 };
 

@@ -17,6 +17,8 @@ const mappedCommands = keys.map((c: any) => {
     }
 });
 
+const filepath = path.join(__dirname, `../commands/commands.hash`);
+
 export async function deploy() {
     const needsDeployment = await commandsNeedToBeDeployed();
 
@@ -47,6 +49,7 @@ export async function deploy() {
             resolve(undefined);
         } catch (e) {
             logger.error(`Failed to deploy slash commands.`, e);
+            await fs.rm(filepath)
             throw e;
         }
     });
@@ -62,7 +65,6 @@ const commandsNeedToBeDeployed = async () => {
     return false;
 }
 
-const filepath = path.join(__dirname, `../commands/commands.hash`);
 
 const createHashFile = async () => {
     const hash = await getCommandsHash();

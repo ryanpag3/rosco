@@ -2,6 +2,7 @@ import { ApplicationCommandOptionType, ApplicationCommandType } from 'discord-ap
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../types/command';
 import PollCreate from './poll-create.sub';
+import PollInfo from './poll-info.sub';
 
 const Poll: Command = {
     id: 'ed7341f1-b1c9-4e95-af04-f11944e14710',
@@ -76,6 +77,75 @@ const Poll: Command = {
                     type: ApplicationCommandOptionType.String
                 }
             ]
+        },
+        {
+            name: 'info',
+            description: 'Get information on a poll.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the poll you want info for.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
+        },
+        {
+            name: 'close',
+            description: 'Close a poll, preventing further votes.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the poll you want to close.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
+        },
+        {
+            name: 'open',
+            description: 'Open a closed poll.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the poll you want to open.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
+        },
+        {
+            name: 'delete',
+            description: 'Delete a poll.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the poll you want to delete.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
+        },
+        {
+            name: 'list',
+            description: 'List out the current polls in the server.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                 {
+                     name: 'page',
+                     description: 'Increase by 1 for each page you want to view',
+                     type: ApplicationCommandOptionType.Integer
+                 },
+                 {
+                     name: 'filter',
+                     description: 'Will match any name or question containing this text.',
+                     type: ApplicationCommandOptionType.String
+                 }
+            ]
         }
     ],
     handler: async (interaction, user, server) => {
@@ -84,6 +154,8 @@ const Poll: Command = {
         switch(sub) {
             case 'create':
                 return PollCreate.handler(interaction, user, server);
+            case 'info':
+                return PollInfo.handler(interaction, user, server);
         }
     }
 };

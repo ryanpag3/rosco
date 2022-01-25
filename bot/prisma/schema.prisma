@@ -206,7 +206,7 @@ model Poll {
   PollOption PollOption[]
   PollVote   PollVote[]
 
-  @@unique([name, serverId, isOpen])
+  @@unique([name, serverId])
 }
 
 // no explicit CreatedBy reference since this would always be the same as Poll

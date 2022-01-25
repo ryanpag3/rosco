@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "watch": "nodemon --delay 3000ms src/index.ts",
+    "watch": "nodemon src/index.ts",
     "w": "yarn watch",
     "jest": "NODE_ENV=test jest --runInBand --coverage --forceExit",
     "j": "NODE_ENV=test jest --runInBand --forceExit",
