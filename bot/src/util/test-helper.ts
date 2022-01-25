@@ -6,6 +6,7 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
     const userId = staticUserId || '1';
     
     return {
+        id: '1',
         commandName,
         client: {
             users: {

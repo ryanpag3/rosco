@@ -1,5 +1,7 @@
 import { CacheType, CommandInteraction } from 'discord.js';
 import { Command } from '../../types/command';
+import BotError from '../util/bot-error';
+import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 const OPTION_LIMIT = 10;
@@ -11,6 +13,9 @@ const PollCreate: Command = {
         const name = interaction.options.getString('name', true);
         const question = interaction.options.getString('question', true);   
         const pollOptions = buildOptionsArray(interaction);
+
+        if (pollOptions.length <= 1)
+            throw new BotError(`You must provide at least two options.`);
         
         try {
             const poll = await prisma.poll.create({
@@ -70,13 +75,15 @@ const PollCreate: Command = {
 };
 
 const buildOptionsArray = (interaction: CommandInteraction<CacheType>) => {
-    
     let options = [];
     for (let i = 1; i <= OPTION_LIMIT; i++) {
-        options.push(interaction.options.getString(`option-${i}`));
+        const option = interaction.options.getString(`option-${i}`);
+        if(!option)
+            continue;
+        options.push(option);
     }
 
-    return options.filter(o => o !== null);
+    return options;
 }
 
 function chunk (arr: any[], len: number) {
