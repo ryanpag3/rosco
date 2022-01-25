@@ -63,7 +63,11 @@ const PollInfo: Command = {
                                 value: poll.question
                             },
                             {
-                                name: 'options',
+                                name: 'status',
+                                value: poll.isOpen ? 'open' : 'closed'
+                            },
+                            {
+                                name: 'results',
                                 value: poll.PollOption.map(po => {
                                     return `${po.Votes.length} | **${po.content}**`
                                 }).join('\n')
@@ -71,7 +75,7 @@ const PollInfo: Command = {
                         ]
                     }
                 ],
-                components: rows
+                components: poll.isOpen ? rows : []
             })
 
         } catch (e: any) {

@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType, ApplicationCommandType } from 'discord-api-types';
 import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../types/command';
+import PollClose from './poll-close.sub';
 import PollCreate from './poll-create.sub';
 import PollInfo from './poll-info.sub';
 
@@ -156,6 +157,8 @@ const Poll: Command = {
                 return PollCreate.handler(interaction, user, server);
             case 'info':
                 return PollInfo.handler(interaction, user, server);
+            case 'close':
+                return PollClose.handler(interaction, user, server);
         }
     }
 };
