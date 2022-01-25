@@ -4,6 +4,7 @@ import { Command } from '../../types/command';
 import PollClose from './poll-close.sub';
 import PollCreate from './poll-create.sub';
 import PollInfo from './poll-info.sub';
+import PollOpen from './poll-open.sub';
 
 const Poll: Command = {
     id: 'ed7341f1-b1c9-4e95-af04-f11944e14710',
@@ -159,6 +160,8 @@ const Poll: Command = {
                 return PollInfo.handler(interaction, user, server);
             case 'close':
                 return PollClose.handler(interaction, user, server);
+            case 'open':
+                return PollOpen.handler(interaction, user, server);
         }
     }
 };
