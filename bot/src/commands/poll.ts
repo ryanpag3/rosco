@@ -3,6 +3,7 @@ import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../types/command';
 import PollClose from './poll-close.sub';
 import PollCreate from './poll-create.sub';
+import PollDelete from './poll-delete.sub';
 import PollInfo from './poll-info.sub';
 import PollOpen from './poll-open.sub';
 
@@ -156,6 +157,8 @@ const Poll: Command = {
         switch(sub) {
             case 'create':
                 return PollCreate.handler(interaction, user, server);
+            case 'delete':
+                return PollDelete.handler(interaction, user, server);
             case 'info':
                 return PollInfo.handler(interaction, user, server);
             case 'close':
