@@ -5,6 +5,7 @@ import PollClose from './poll-close.sub';
 import PollCreate from './poll-create.sub';
 import PollDelete from './poll-delete.sub';
 import PollInfo from './poll-info.sub';
+import PollList from './poll-list.sub';
 import PollOpen from './poll-open.sub';
 
 const Poll: Command = {
@@ -165,6 +166,8 @@ const Poll: Command = {
                 return PollClose.handler(interaction, user, server);
             case 'open':
                 return PollOpen.handler(interaction, user, server);
+            case 'list':
+                return PollList.handler(interaction, user, server);
         }
     }
 };
