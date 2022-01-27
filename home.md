@@ -2,13 +2,13 @@
 title: Home
 description: 
 published: true
-date: 2022-01-27T19:12:02.565Z
+date: 2022-01-27T19:12:26.738Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-26T17:24:51.849Z
 ---
 
-# Guac Bot
+## Guac Bot
 
 Guac Bot aims to be the next generation Discord Bot providing a wide feature set alongside 24/7 production availability and support.
 
