@@ -2,7 +2,7 @@
 title: Poll
 description: 
 published: true
-date: 2022-01-27T22:04:20.977Z
+date: 2022-01-27T22:05:37.238Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:00:30.235Z
@@ -59,7 +59,7 @@ Issue `/poll info` to get information on a poll. If a poll is open, this will al
 ### Examples
 
 ``` bash
-/poll info name: favorite-snack'
+/poll info name: favorite-snack
 ```
 
 ## `close` - Close a poll
