@@ -2,13 +2,13 @@
 title: Score
 description: 
 published: true
-date: 2022-01-27T05:14:56.824Z
+date: 2022-01-27T05:20:32.432Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T03:40:55.281Z
 ---
 
-# Scores - `/score`
+# Scores
 
 The `/score` command allows you to to create and manage scores. Scores each have a value that can be increased or decreased. They can also be assigned to [scoreboards](/commands/scoreboards).
 
@@ -33,6 +33,9 @@ Issue `/score create` to create a new score.
 /score create name: test description: This is my score! amount: 100 color: #000000
 ```
 
+## `delete` - Delete a score.
+
+Issue `/score delete` to delete a previously [created]() score.
 
 
 
