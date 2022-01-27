@@ -2,7 +2,7 @@
 title: Poll
 description: 
 published: true
-date: 2022-01-27T21:46:42.062Z
+date: 2022-01-27T21:50:35.756Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:00:30.235Z
@@ -12,11 +12,22 @@ dateCreated: 2022-01-27T06:00:30.235Z
 
 Polls allow your users to vote on a defined topic. Upon completion, polls can be closed and results announced.
 
-## Voting on a poll
+## Tips
+
+### Voting on a poll
 
 When a poll is created, buttons based on the options defined will be presented. Each user has the opportunity to vote once. Users can submit their vote by clicking on one of the options. 
 
 ![screen_shot_2022-01-27_at_1.41.31_pm.png](/screen_shot_2022-01-27_at_1.41.31_pm.png =35%x)
+
+### Opening and Closing Polls
+
+On creation, a poll is "open". An open poll allows responses from users. If you would like to stop responses and codify the results, you need to "close" it.
+
+For more information, please refer to the respective command documentation.
+
+- [`/poll open`]()
+- [`/poll close`]()
 
 ## `create` - Create a poll
 
