@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-01-27T04:04:13.091Z
+date: 2022-01-27T04:05:32.043Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T03:40:55.281Z
@@ -14,7 +14,7 @@ The `/score` command allows you to to create and manage scores. Scores each have
 
 ## `/score create` - Create a score.
 
-#### Arguments
+### Arguments
 
 | Argument | Description | Required |
 |----------|-------------|----------|
@@ -23,10 +23,11 @@ The `/score` command allows you to to create and manage scores. Scores each have
 | `amount` | Set the initial value of the score upon creation. | `false` |
 | `color` | Set the color of the bar when `/score list` is run. Defaults to a random color. | `false` |
 
-#### Examples
+### Examples
 
 ```
 /score create name: test description: This is my score! amount: 100 color: #000000
 ```
+
 
 
