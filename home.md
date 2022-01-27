@@ -2,7 +2,7 @@
 title: Home
 description: 
 published: true
-date: 2022-01-27T17:21:53.749Z
+date: 2022-01-27T18:44:33.322Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-26T17:24:51.849Z
@@ -33,4 +33,9 @@ Welcome aboard!
   - [`/score update`](/commands/score#update-update-a-score) - Update a score
   - [`/score list`](/commands/score#list-list-out-scores) - List out scores
 - [`/scoreboard`](/commands/scoreboard)
+  - [`/scoreboard create`](/commands/scoreboard#create-create-a-scoreboard) - Create a scoreboard
+  - [`/scoreboard add-score`](/commands/scoreboard#add-score-add-score-to-scoreboard) - Add a score to a scoreboard
+  - [`/scoreboard remove-score`](/commands/scoreboard#remove-score-remove-score-from-scoreboard) - Remove a score from a scoreboard.
+  - [`/scoreboard update`](/commands/scoreboard#update-update-a-scoreboard) - Update a scoreboard
+  - [`/scoreboard delete`](/commands/scoreboard#delete-delete-a-scoreboard) - Delete a scoreboard
 - [`/stopwatch`](/commands/stopwatch)
