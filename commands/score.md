@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-01-27T05:41:36.455Z
+date: 2022-01-27T05:52:04.117Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T03:40:55.281Z
@@ -107,7 +107,29 @@ Issue `/score update` to update one or more properties of the score.
 
 Issue `/score list` to list out the scores that have been created.
 
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `amount` | The amount of scores to list. Default is 10. | `false` |
+| `page`   | Increase this value to view the next page of scores. Default is 1. | `false` |
+| `filter` | Filter scores based on this pattern. | `false` |
+| `includeRaw` | Include the raw text output of the result.s | `false` |
+| `scoreboard` | Filter on a specific [scoreboard](/commands/scoreboard) | `false` |
 
+### Examples
+
+``` bash
+# list the most recent 10 scores
+/score list
+
+# list the next 10 most recent scores
+/score list page: 2
+
+# list up to 20 scores containing "t"
+/score list filter: t amount: 20
+
+# list the scores in the scoreboard "test"
+/score list scoreboard: test
+```
 
 
 
