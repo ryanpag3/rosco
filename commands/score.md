@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-01-27T05:27:31.051Z
+date: 2022-01-27T05:34:27.721Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T03:40:55.281Z
@@ -31,6 +31,40 @@ Issue `/score create` to create a new score.
 
 # with optional arguments
 /score create name: test description: This is my score! amount: 100 color: #000000
+```
+
+## `up` - Increase score amount.
+
+Issue `/score up` to increase a score's amount.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `name` | The unique name of the score. | `true` |
+| `amount` | Increase the score by this amount. Defaults to 1. | `false` |
+
+### Examples
+
+``` bash
+/score up name: test
+
+/score up name: test amount: 1000
+```
+
+## `down` - Decrease score amount.
+
+Issue `/score down` to increase a score's amount.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `name` | The unique name of the score. | `true` |
+| `amount` | Decrease the score by this amount. Defaults to 1. | `false` |
+
+### Examples
+
+``` bash
+/score up name: test
+
+/score up name: test amount: 1000
 ```
 
 ## `delete` - Delete a score.
