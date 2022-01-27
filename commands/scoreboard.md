@@ -2,7 +2,7 @@
 title: Scoreboard
 description: 
 published: true
-date: 2022-01-27T18:20:57.093Z
+date: 2022-01-27T18:22:02.336Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T05:59:11.638Z
@@ -80,7 +80,19 @@ Issue `/scoreboard update` to update your existing scoreboard with new propertie
 /scoreboard update name: my-scoreboard description: This is a new description!
 ```
 
+## `delete` - Delete a scoreboard
 
+Issue `/scoreboard delete` to delete an existing scoreboard.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `name` | The name of the scoreboard you are deleting. | `true` |
+
+### Examples
+
+``` bash
+/scoreboard delete name: my-scoreboard
+```
 
 
 
