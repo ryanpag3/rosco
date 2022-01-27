@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-01-27T04:06:27.533Z
+date: 2022-01-27T04:07:11.547Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T03:40:55.281Z
@@ -15,8 +15,6 @@ The `/score` command allows you to to create and manage scores. Scores each have
 ## `create` - Create a score.
 
 Issue `/score create` to create a new score.
-
-### Arguments
 
 | Argument | Description | Required |
 |----------|-------------|----------|
