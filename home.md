@@ -2,7 +2,7 @@
 title: Home
 description: 
 published: true
-date: 2022-01-27T19:07:20.726Z
+date: 2022-01-27T19:10:26.083Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-26T17:24:51.849Z
@@ -43,4 +43,6 @@ Welcome aboard!
   - [`/stopwatch delete`](/commands/stopwatch#delete-delete-a-stopwatch) - **Delete a stopwatch**
   - [`/stopwatch start`](/commands/stopwatch#start-start-a-stopwatch) - **Start a stopwatch.**
   - [`/stopwatch stop`](/commands/stopwatch#stop-stop-a-stopwatch) - **Stop a stopwatch.**
+  - [`/stopwatch reset`](/commands/stopwatch#reset-reset-a-stopwatch) - **Reset a stopwatch**
+  - [`/stopwatch list`](/commands/stopwatch#list-list-all-stopwatches) - **List all stopwatches**
 
