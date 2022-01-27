@@ -2,7 +2,7 @@
 title: Poll
 description: 
 published: true
-date: 2022-01-27T21:50:35.756Z
+date: 2022-01-27T21:56:51.921Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:00:30.235Z
@@ -47,4 +47,68 @@ Issue `/poll create` to create a poll. Polls have one `question` which is the co
 ``` bash
 /poll create name: favorite-snack question: What is your favorite snack? option-1: chips option-2: ice cream
 ```
+
+## `info` - Get poll info
+
+Issue `/poll info` to get information on a poll. If a poll is open, this will also attach votable option buttons to it.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `name` | The name of the poll. | `true` |
+
+### Examples
+
+``` bash
+/poll info name: favorite-snack'
+```
+
+## `close` - Close a poll
+
+Issue `/poll close` to close a poll. Once closed, users will be shown an error message that they may no longer vote.
+
+![screen_shot_2022-01-27_at_1.56.10_pm.png](/screen_shot_2022-01-27_at_1.56.10_pm.png =50%x)
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `name` | The name of the poll. | `true` |
+
+### Examples
+
+``` bash
+/poll close name: favorite-snack
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
