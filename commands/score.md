@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-01-27T05:52:04.117Z
+date: 2022-01-27T18:23:44.866Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T03:40:55.281Z
@@ -130,6 +130,7 @@ Issue `/score list` to list out the scores that have been created.
 # list the scores in the scoreboard "test"
 /score list scoreboard: test
 ```
+
 
 
 
