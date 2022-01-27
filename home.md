@@ -2,7 +2,7 @@
 title: Home
 description: 
 published: true
-date: 2022-01-27T06:04:51.231Z
+date: 2022-01-27T06:07:53.584Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-26T17:24:51.849Z
@@ -18,7 +18,16 @@ Welcome aboard!
 
 ## Commands
 
+- [`/bing`](/commands/bing)
+- [`/currency`](/commands/currency)
+- [`/keyword`](/commands/keyword)
+- [`/me`](/commands/me)
+- [`/permission`](/commands/permission)
+- [`/ping`](/commands/ping)
+- [`/poll`](/commands/poll)
 - [`/score`](/commands/score)
   - [`/score create`](/commands/score#create-create-a-score) - Create a score
   - [`/score delete`](/commands/score#delete-delete-a-score) - Delete a score
   - [`/score update`](/commands/score#update-update-a-score) - Update a score
+- [`/scoreboard`](/commands/scoreboard)
+- [`/stopwatch`](/commands/stopwatch)
