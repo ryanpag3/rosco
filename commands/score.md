@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-01-27T04:03:07.715Z
+date: 2022-01-27T04:04:13.091Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T03:40:55.281Z
@@ -12,11 +12,7 @@ dateCreated: 2022-01-27T03:40:55.281Z
 
 The `/score` command allows you to to create and manage scores. Scores each have a value that can be increased or decreased. They can also be assigned to [scoreboards](/commands/scoreboards).
 
-## **Subcommands**
-
-The `score` command support several subcommands.
-
-### `/score create` - Create a score.
+## `/score create` - Create a score.
 
 #### Arguments
 
