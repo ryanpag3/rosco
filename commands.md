@@ -2,12 +2,12 @@
 title: Commands
 description: 
 published: true
-date: 2022-01-27T05:04:35.159Z
+date: 2022-01-27T05:06:13.021Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-27T05:00:30.161Z
 ---
 
-# Commands
+# Index of Commands
 - [`/score`](/commands/score)
   - [`/score create`](/commands/score#create) - Create a score
