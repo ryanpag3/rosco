@@ -2,11 +2,13 @@
 title: Scoreboard
 description: 
 published: true
-date: 2022-01-27T18:22:08.999Z
+date: 2022-01-27T18:22:40.637Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T05:59:11.638Z
 ---
+
+## Introduction
 
 Scoreboards contain [scores](/commands/score) and can be used to group results together with ease.
 
