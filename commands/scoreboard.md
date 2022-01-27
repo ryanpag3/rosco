@@ -2,7 +2,7 @@
 title: Scoreboard
 description: 
 published: true
-date: 2022-01-27T17:32:16.445Z
+date: 2022-01-27T18:20:57.093Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T05:59:11.638Z
@@ -55,3 +55,67 @@ Issue `/scoreboard remove-score` to remove a score from a scoreboard.
 |----------|-------------|----------|
 | `name` | The name of the scoreboard you are removing. | `true` |
 | `score-name` | The name of the score being removed. | `true` |
+
+### Examples
+
+``` bash
+/scoreboard remove-score name: my-scoreboard score-name: score1
+```
+
+## `update` - Update a scoreboard
+
+Issue `/scoreboard update` to update your existing scoreboard with new properties.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `name` | The name of the scoreboard you are updating. | `true` |
+| `new-name` | The new name of the scoreboard. | `false` |
+| `description` | The new description of the scoreboard. | `false` |
+
+### Examples
+
+``` bash
+/scoreboard update name: my-scoreboard new-name: my-updated-scoreboard
+
+/scoreboard update name: my-scoreboard description: This is a new description!
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
