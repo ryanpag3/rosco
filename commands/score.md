@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-01-27T05:37:43.211Z
+date: 2022-01-27T05:41:36.455Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T03:40:55.281Z
@@ -102,6 +102,12 @@ Issue `/score update` to update one or more properties of the score.
 
 /score update name: test description: new description amount: 1000 color: #FFFFF
 ```
+
+## `list` - List out scores
+
+Issue `/score list` to list out the scores that have been created.
+
+
 
 
 
