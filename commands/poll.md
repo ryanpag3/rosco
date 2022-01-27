@@ -2,7 +2,7 @@
 title: Poll
 description: 
 published: true
-date: 2022-01-27T22:05:37.238Z
+date: 2022-01-27T22:06:06.487Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:00:30.235Z
@@ -26,8 +26,8 @@ On creation, a poll is "open". An open poll allows responses from users. If you 
 
 For more information, please refer to the respective command documentation.
 
-- [`/poll open`]()
-- [`/poll close`]()
+- [`/poll open`](/commands/poll#open-open-a-poll)
+- [`/poll close`](/commands/poll#close-close-a-poll)
 
 ## `create` - Create a poll
 
