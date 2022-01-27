@@ -2,7 +2,7 @@
 title: Poll
 description: 
 published: true
-date: 2022-01-27T21:43:34.202Z
+date: 2022-01-27T21:43:54.910Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:00:30.235Z
@@ -16,7 +16,7 @@ Polls allow your users to vote on a defined topic. Upon completion, polls can be
 
 When a poll is created, buttons based on the options defined will be presented. Each user has the opportunity to vote once. 
 
-![screen_shot_2022-01-27_at_1.41.31_pm.png=25%x](/screen_shot_2022-01-27_at_1.41.31_pm.png)
+![screen_shot_2022-01-27_at_1.41.31_pm.png](/screen_shot_2022-01-27_at_1.41.31_pm.png)
 
 ## `create` - Create a poll
 
