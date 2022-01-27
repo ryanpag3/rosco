@@ -2,7 +2,7 @@
 title: Poll
 description: 
 published: true
-date: 2022-01-27T21:56:51.921Z
+date: 2022-01-27T22:04:20.977Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:00:30.235Z
@@ -79,8 +79,52 @@ Issue `/poll close` to close a poll. Once closed, users will be shown an error m
 ```
 
 
+## `open` - Open a poll
 
+Issue `/poll open` to open a poll. Once opened, users may begin voting again.
 
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `name` | The name of the poll. | `true` |
+
+### Examples
+
+``` bash
+/poll open name: favorite-snack
+```
+
+## `delete` - Delete a poll
+
+Issue `/poll delete` to delete a poll.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `name` | The name of the poll. | `true` |
+
+### Examples
+
+``` bash
+/poll delete name: favorite-snack
+```
+
+## `list` - List polls
+
+Issue `/poll list` to list out polls in the server.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `page` | Increase by 1 for each page you want to view. There are 10 polls per page and the default value is 1 | `false` |
+| `filter` | If provided, the results will filter on `name` and `question` containing this pattern. | `false` |
+
+### Examples
+
+``` bash
+/poll list
+
+/poll list page: 2
+
+/poll list page: 2 filter: snack
+```
 
 
 
