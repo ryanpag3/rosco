@@ -2,6 +2,7 @@ import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import WelcomeDisable from './welcome-disable.sub';
 import WelcomeEnable from './welcome-enable.sub';
+import WelcomeSet from './welcome-set.sub';
 
 export enum WelcomeType {
     PUBLIC = 'PUBLIC',
@@ -67,6 +68,8 @@ const Welcome: Command = {
                 return WelcomeEnable.handler(interaction, user, server);
             case 'disable':
                 return WelcomeDisable.handler(interaction, user, server);
+            case 'set':
+                return WelcomeSet.handler(interaction, user, server);
         }
     }
 };

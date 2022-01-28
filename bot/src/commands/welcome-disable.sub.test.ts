@@ -36,8 +36,8 @@ it('should disable public welcome messages', async () => {
 
 it('should throw an error if an invalid type is provided', async () => {
     let int = createTestInteraction('welcome', 'disable', {
-        type: 'private'
+        type: 'asdasd'
     });
 
-    await onInteractionCreate(int);
+    await expect(onInteractionCreate(int)).rejects.toThrow();
 });
