@@ -2,7 +2,7 @@
 title: Home
 description: 
 published: true
-date: 2022-01-28T01:24:10.062Z
+date: 2022-01-28T01:46:29.443Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-26T17:24:51.849Z
@@ -19,9 +19,22 @@ Welcome aboard!
 ## Commands
 
 - [`/bing`](/commands/bing)
-- [`/currency`](/commands/currency)
-- [`/keyword`](/commands/keyword)
-- [`/me`](/commands/me)
+### [`/currency`](/commands/currency)
+- [`/currency grant`](/commands/currency#grant-grant-a-user-currency) - **Grant a user currency**
+- [`/currency log`](/commands/currency#log-audit-currency-events) - **Log currency events**
+- [`/currency send`](/commands/currency#send-send-a-user-currency) - **Send a user currency**
+- [Bank](/commands/currency#bank)
+  - [`/currency bank withdraw`](/commands/currency#withdraw-withdraw-from-the-bank) - **Withdraw from your bank account**
+  - [`/currency bank deposit`](/commands/currency#deposit-deposit-to-the-bank) - **Deposit to your bank account**
+
+### [`/keyword`](/commands/keyword)
+- [`/keyword create`](/commands/keyword#create-create-a-keyword) - **Create a keyword**
+- [`/keyword delete`](/commands/keyword#delete-delete-a-keyword) - **Delete a keyword**
+- [`/keyword list`](/commands/keyword#list-list-all-keywords) - **List all keywords**
+
+
+### [`/me`](/commands/me)
+
 ### [`/permission`](/commands/permission)
 - [`/permission set`](/commands/permission#set-set-a-permission) - **Set a permission**
 - [`/permission unset`](/commands/permission#unset-unset-a-permission) - **Unset a permission**
