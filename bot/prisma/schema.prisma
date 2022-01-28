@@ -16,6 +16,10 @@ model Server {
   discordId                    String               @unique @db.VarChar(32)
   createdAt                    DateTime             @default(now())
   updatedAt                    DateTime             @updatedAt
+  privateWelcomeMessageEnabled Boolean?
+  publicWelcomeMessageEnabled  Boolean?
+  privateWelcomeMessage        String?
+  publicWelcomeMessage         String?
   currencyHistoryChannelId     String?
   currencyHistoryChannelActive Boolean?             @default(true)
   currencyCount                Int                  @default(0)
@@ -201,7 +205,7 @@ model Poll {
   Server     Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
   serverId   String
   messageId  String
-  CreatedBy  User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  CreatedBy  User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId     String?
   PollOption PollOption[]
   PollVote   PollVote[]
