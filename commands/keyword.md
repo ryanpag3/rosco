@@ -2,7 +2,7 @@
 title: Keyword
 description: 
 published: true
-date: 2022-01-28T00:39:55.600Z
+date: 2022-01-28T00:41:07.579Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:02:10.000Z
@@ -35,7 +35,7 @@ Issue `/keyword create` to create a keyword and assign it to a score. Keywords c
 /keyword create keyword: abc score-name: 1234 amount: 20 action: DOWN
 
 # increase the score "ryan" by 1 every time ryan types "ryan"
-/keyword create keyword: ryan score-name: ryan
+/keyword create keyword: ryan score-name: ryan user: ryan
 ```
 
 ## `delete` - Delete a keyword
