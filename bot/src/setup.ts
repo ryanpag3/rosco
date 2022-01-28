@@ -11,6 +11,7 @@ import { baselineKeywordCacheToDatabase, buildKeywordValues } from './service/ke
 import { onGuildCreate } from './event/guild-create';
 import { onMessageActionAdd } from './event/message-reaction-add';
 import { onMessageReactionRemove } from './event/message-reaction-remove';
+import onGuildMemberAdd from './event/guild-member-add';
 
 export default async function (client: Client) {
     // baseline cache against database
@@ -34,4 +35,5 @@ export default async function (client: Client) {
     
     client.on('messageReactionRemove', async (reaction, user) => onMessageReactionRemove(reaction, user));
 
+    client.on('guildMemberAdd', async (member) => onGuildMemberAdd(member));
 }
