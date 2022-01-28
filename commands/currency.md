@@ -2,7 +2,7 @@
 title: Currency
 description: 
 published: true
-date: 2022-01-28T01:12:57.692Z
+date: 2022-01-28T01:13:16.132Z
 tags: c
 editor: markdown
 dateCreated: 2022-01-27T06:02:40.184Z
@@ -85,7 +85,7 @@ Issue `/currency bank withdraw` to withdraw money from your bank.
 |----------|-------------|----------|
 | `amount` | The amount of currency you are withdrawing. | `true` |
 
-### Examples
+#### Examples
 
 ``` bash
 /currency bank withdraw amount: 1000
