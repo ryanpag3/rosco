@@ -2,7 +2,7 @@
 title: Home
 description: 
 published: true
-date: 2022-01-28T01:46:29.443Z
+date: 2022-01-28T01:46:39.043Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-26T17:24:51.849Z
@@ -18,7 +18,8 @@ Welcome aboard!
 
 ## Commands
 
-- [`/bing`](/commands/bing)
+### [`/bing`](/commands/bing)
+
 ### [`/currency`](/commands/currency)
 - [`/currency grant`](/commands/currency#grant-grant-a-user-currency) - **Grant a user currency**
 - [`/currency log`](/commands/currency#log-audit-currency-events) - **Log currency events**
