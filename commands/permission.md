@@ -2,7 +2,7 @@
 title: Permission
 description: 
 published: true
-date: 2022-01-27T23:11:19.424Z
+date: 2022-01-28T00:17:19.927Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:01:07.499Z
@@ -58,9 +58,41 @@ Issue `/permission set-all` to set all commands to require a specific role.
 
 | Argument | Description | Required |
 |----------|-------------|----------|
+| `role` | The role to set for all commands. | `true` |
+
+### Examples
+
+``` bash
+/permission set-all role: @everyone
+
+/permission set-all role: Administrators
+```
+
+## `unset-all` - Unset all permissions
+
+Issue `/permission unset-all` to unset a role from all commands.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
 | `role` | The role to unset from this command. | `true` |
 
+### Examples
 
+``` bash
+/permission unset-all role: @everyone
+
+/permission unset-all role: Administrators
+```
+
+## `list` - List all permissions
+
+Issue `/permission list` to list all permissions in a server.
+
+### Examples
+
+``` bash
+/permission list
+```
 
 
 
