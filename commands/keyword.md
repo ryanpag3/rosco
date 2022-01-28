@@ -2,7 +2,7 @@
 title: Keyword
 description: 
 published: true
-date: 2022-01-28T00:38:57.120Z
+date: 2022-01-28T00:39:55.600Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:02:10.000Z
@@ -62,7 +62,17 @@ Issue `/keyword list` to list out current keywords.
 | `keyword` | Filter results by a keyword or phrase. | `false` |
 | `score-name` | Filter the results by score name. | `false` |
 
+### Examples
 
+``` bash
+/keyword list
+
+/keyword list keyword: test
+
+/keyword list score-name: my-score
+
+/keyword list keyword: test score-name: my-score
+```
 
 
 
