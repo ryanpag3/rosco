@@ -2,7 +2,7 @@
 title: Currency
 description: 
 published: true
-date: 2022-01-28T01:13:16.132Z
+date: 2022-01-28T01:13:28.941Z
 tags: c
 editor: markdown
 dateCreated: 2022-01-27T06:02:40.184Z
@@ -99,10 +99,11 @@ Issue `/currency bank deposit` to deposit money into the bank.
 |----------|-------------|----------|
 | `amount` | The amount of currency you are depositing. | `true` |
 
+#### Examples
+
 ``` bash
 /currency bank deposit amount: 1000
 ```
-
 
 
 
