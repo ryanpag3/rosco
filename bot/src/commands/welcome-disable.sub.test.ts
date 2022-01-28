@@ -2,8 +2,8 @@ import onInteractionCreate from '../event/interaction-create';
 import prisma from '../util/prisma';
 import { createTestInteraction } from '../util/test-helper';
 
-it('should enable private welcome messages', async () => {
-    let int = createTestInteraction('welcome', 'enable', {
+it('should disable private welcome messages', async () => {
+    let int = createTestInteraction('welcome', 'disable', {
         type: 'private'
     }, '1', '1', '1');
 
@@ -15,11 +15,11 @@ it('should enable private welcome messages', async () => {
         }
     });
 
-    expect(server?.privateWelcomeMessageEnabled).toBeTruthy();
+    expect(server?.privateWelcomeMessageEnabled).toBeFalsy();
 });
 
-it('should enable public welcome messages', async () => {
-    let int = createTestInteraction('welcome', 'enable', {
+it('should disable public welcome messages', async () => {
+    let int = createTestInteraction('welcome', 'disable', {
         type: 'public'
     });
 
@@ -31,11 +31,11 @@ it('should enable public welcome messages', async () => {
         }
     });
 
-    expect(server?.publicWelcomeMessageEnabled).toBeTruthy();
+    expect(server?.publicWelcomeMessageEnabled).toBeFalsy();
 });
 
 it('should throw an error if an invalid type is provided', async () => {
-    let int = createTestInteraction('welcome', 'enable', {
+    let int = createTestInteraction('welcome', 'disable', {
         type: 'private'
     });
 

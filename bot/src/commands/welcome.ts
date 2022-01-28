@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
+import WelcomeDisable from './welcome-disable.sub';
 import WelcomeEnable from './welcome-enable.sub';
 
 export enum WelcomeType {
@@ -64,6 +65,8 @@ const Welcome: Command = {
         switch(sub) {
             case 'enable':
                 return WelcomeEnable.handler(interaction, user, server);
+            case 'disable':
+                return WelcomeDisable.handler(interaction, user, server);
         }
     }
 };
