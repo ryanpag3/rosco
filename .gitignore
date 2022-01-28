@@ -5,4 +5,4 @@ node_modules
 yarn-error.log
 bot/coverage
 bot/src/commands/commands.hash
-# documentation/data
+documentation/data
