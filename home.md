@@ -2,7 +2,7 @@
 title: Home
 description: 
 published: true
-date: 2022-01-27T19:12:26.738Z
+date: 2022-01-28T01:20:33.515Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-26T17:24:51.849Z
@@ -24,7 +24,14 @@ Welcome aboard!
 - [`/me`](/commands/me)
 - [`/permission`](/commands/permission)
 - [`/ping`](/commands/ping)
-- [`/poll`](/commands/poll)
+### [`/poll`](/commands/poll)
+- [`/poll create`](/commands/poll#create-create-a-poll) - **Create a poll**
+- [`/poll info`](/commands/poll#info-get-poll-info) - **Get poll info**
+- [`/poll close`](/commands/poll#close-close-a-poll) - **Close a poll**
+- [`/poll open`](/commands/poll#open-open-a-poll) - **Open a poll**
+- [`/poll delete`](/commands/poll#delete-delete-a-poll) - **Delete a poll**
+- [`/poll list`](/commands/poll#delete-list-a-poll) - **List polls**
+
 ### [`/score`](/commands/score)
 - [`/score create`](/commands/score#create-create-a-score) - **Create a score**
 - [`/score up`](/commands/score#up-increase-score-amount) - **Increase score amount**
