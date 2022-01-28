@@ -2,7 +2,7 @@
 title: Keyword
 description: 
 published: true
-date: 2022-01-28T00:29:16.847Z
+date: 2022-01-28T00:31:31.520Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:02:10.000Z
@@ -36,5 +36,20 @@ Issue `/keyword create` to create a keyword and assign it to a score. Keywords c
 
 # increase the score "ryan" by 1 every time ryan types "ryan"
 /keyword create keyword: ryan score-name: ryan
+```
+
+## `delete` - Delete a keyword
+
+Issue `/keyword delete` to delete a keyword for a score.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `keyword` | The keyword or phrase you would like to delete. | `true` |
+| `score-name` | The score that you would like to delete the keyword for. | `true` |
+
+### Examples
+
+``` bash
+/keyword delete keyword: hello score-name: test
 ```
 
