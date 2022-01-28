@@ -2,7 +2,7 @@
 title: Home
 description: 
 published: true
-date: 2022-01-28T01:20:45.953Z
+date: 2022-01-28T01:24:10.062Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-26T17:24:51.849Z
@@ -22,8 +22,16 @@ Welcome aboard!
 - [`/currency`](/commands/currency)
 - [`/keyword`](/commands/keyword)
 - [`/me`](/commands/me)
-- [`/permission`](/commands/permission)
-- [`/ping`](/commands/ping)
+### [`/permission`](/commands/permission)
+- [`/permission set`](/commands/permission#set-set-a-permission) - **Set a permission**
+- [`/permission unset`](/commands/permission#unset-unset-a-permission) - **Unset a permission**
+- [`/permission set-all`](/commands/permission#set-all-set-all-permissions) - **Set all permissions**
+- [`/permission unset-all`](/commands/permission#unset-all-unset-all-permissions) - **Set all permissions**
+- [`/permission list`](/commands/permission#list-list-all-permissions) - **List all permissions**
+
+
+
+### [`/ping`](/commands/ping)
 
 ### [`/poll`](/commands/poll)
 - [`/poll create`](/commands/poll#create-create-a-poll) - **Create a poll**
