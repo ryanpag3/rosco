@@ -2,7 +2,7 @@
 title: Keyword
 description: 
 published: true
-date: 2022-01-28T00:31:31.520Z
+date: 2022-01-28T00:38:57.120Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:02:10.000Z
@@ -52,4 +52,45 @@ Issue `/keyword delete` to delete a keyword for a score.
 ``` bash
 /keyword delete keyword: hello score-name: test
 ```
+
+## `list` - List all keywords
+
+Issue `/keyword list` to list out current keywords.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `keyword` | Filter results by a keyword or phrase. | `false` |
+| `score-name` | Filter the results by score name. | `false` |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
