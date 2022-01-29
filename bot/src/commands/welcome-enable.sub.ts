@@ -8,6 +8,7 @@ const WelcomeEnable: Command = {
     name: 'welcome enable',
     handler: async (interaction, user, server) => {
         const type = interaction.options.getString('type', true).toUpperCase();
+        const channel = interaction.options.getChannel('channel', true);
 
         // @ts-ignore
         if (!WelcomeType[type])
@@ -23,7 +24,12 @@ const WelcomeEnable: Command = {
                         type === WelcomeType.PUBLIC ? 
                             'publicWelcomeMessageEnabled' : 
                             'privateWelcomeMessageEnabled'
-                    ]: true
+                    ]: true,
+                    [
+                        type === WelcomeType.PUBLIC ? 
+                            'publicWelcomeMessageChannelId' : 
+                            'privateWelcomeMessageChannelId'
+                    ]: channel.id, 
                 }
             });
         } catch (e) {
@@ -37,7 +43,7 @@ const WelcomeEnable: Command = {
             embeds: [
                 {
                     title: `:green_circle: ${t} welcome messages are now enabled.`,
-                    description: `Use \`/welcome disable\` to disable them again.`
+                    description: `${t} welcome messages will be sent to ${channel}.\n\nUse \`/welcome disable\` to disable them again.`
                 }
             ]
         });

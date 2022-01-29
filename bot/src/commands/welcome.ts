@@ -24,6 +24,12 @@ const Welcome: Command = {
                     description: 'The type of welcome message. Valid options are "public" and "private".',
                     type: ApplicationCommandOptionType.String,
                     required: true
+                },
+                {
+                    name: 'channel',
+                    description: 'The channel you want welcome messages assigned to.',
+                    type: ApplicationCommandOptionType.Channel,
+                    required: true
                 }
             ]
         },

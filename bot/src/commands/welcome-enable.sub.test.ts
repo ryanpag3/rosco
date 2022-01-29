@@ -4,8 +4,11 @@ import { createTestInteraction } from '../util/test-helper';
 
 it('should enable private welcome messages', async () => {
     let int = createTestInteraction('welcome', 'enable', {
-        type: 'private'
-    }, '1', '1', '1');
+        type: 'private',
+        channel: {
+            id: '1'
+        }
+    });
 
     await onInteractionCreate(int);
 
@@ -20,7 +23,10 @@ it('should enable private welcome messages', async () => {
 
 it('should enable public welcome messages', async () => {
     let int = createTestInteraction('welcome', 'enable', {
-        type: 'public'
+        type: 'public',
+        channel: {
+            id: '1'
+        }
     });
 
     await onInteractionCreate(int);
