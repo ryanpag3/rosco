@@ -6,20 +6,25 @@ import logger from '../util/logger';
 
 const onGuildMemberAdd = async (member: GuildMember) => {
     logger.debug(`${member.user.tag} was added to ${member.guild.name} - ${member.guild.id}`);
-
-    const server = await ServerService.initializeServer(member.guild);
-    const user = await UserService.initUser(member, server as Server); 
-
-    if (server?.privateWelcomeMessageEnabled) {
-        await sendWelcomeMessage(false, server, member);
-    }
-
-    if (server?.publicWelcomeMessageEnabled) {
-        await sendWelcomeMessage(true, server, member);
+    try {
+        const server = await ServerService.initializeServer(member.guild);
+        await UserService.initUser(member, server as Server); 
+    
+        if (server?.privateWelcomeMessageEnabled) {
+            await sendWelcomeMessage(false, server, member);
+        }
+    
+        if (server?.publicWelcomeMessageEnabled) {
+            await sendWelcomeMessage(true, server, member);
+        }
+    } catch (e) {
+        logger.error(e);
     }
 }
 
 const sendWelcomeMessage = async (publicMessage: boolean, server: Server, member: GuildMember) => {
+    logger.info('sending welcome message');
+    
     if (publicMessage) {
         const c = await member.guild.channels.cache.get(server.publicWelcomeMessageChannelId as string);
         await (c as TextChannel).send({
@@ -27,7 +32,7 @@ const sendWelcomeMessage = async (publicMessage: boolean, server: Server, member
                 {
                     description: server.publicWelcomeMessage as string
                 }
-            ]
+            ],
         })
     }
 
