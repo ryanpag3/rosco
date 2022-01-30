@@ -5,6 +5,10 @@ import { createTestInteraction } from '../util/test-helper';
 it('should disable private welcome messages', async () => {
     let int = createTestInteraction('welcome', 'set', {
         type: 'private',
+        channel: {
+            id: 'asdasd'
+        },
+        title: 'yo!',
         message: 'Welcome!'
     });
 
@@ -13,15 +17,22 @@ it('should disable private welcome messages', async () => {
     const server = await prisma.server.findUnique({
         where: {
             discordId: int.guild?.id as string
+        },
+        include: {
+            ServerWelcomeMessage: true
         }
     });
 
-    expect(server?.privateWelcomeMessage).not.toBeUndefined();
+    expect(server?.ServerWelcomeMessage[0]).not.toBeUndefined();
 });
 
 it('should disable public welcome messages', async () => {
     let int = createTestInteraction('welcome', 'set', {
         type: 'public',
+        channel: {
+            id: 'asdasd'
+        },
+        title: 'yo!',
         message: 'Welcome!'
     });
 
@@ -30,10 +41,13 @@ it('should disable public welcome messages', async () => {
     const server = await prisma.server.findUnique({
         where: {
             discordId: int.guild?.id as string
+        },
+        include: {
+            ServerWelcomeMessage: true
         }
     });
 
-    expect(server?.publicWelcomeMessage).not.toBeUndefined();
+    expect(server?.ServerWelcomeMessage[0]).not.toBeUndefined();
 });
 
 

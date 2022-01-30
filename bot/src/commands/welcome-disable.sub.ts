@@ -16,16 +16,15 @@ const WelcomeDisable: Command = {
             throw new BotError('Invalid type provided. Valid options are "public" or "private".');
 
         try {
-            await prisma.server.update({
+            await prisma.serverWelcomeMessage.update({
                 where: {
-                    id: server?.id as string
+                    serverId_isPublic: {
+                        serverId: server?.id as string,
+                        isPublic: type === 'PUBLIC'
+                    }
                 },
                 data: {
-                    [
-                        type === WelcomeType.PUBLIC ? 
-                            'publicWelcomeMessageEnabled' : 
-                            'privateWelcomeMessageEnabled'
-                    ]: false 
+                    isEnabled: false
                 }
             });
         } catch (e) {

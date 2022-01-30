@@ -27,7 +27,8 @@ export const initializeServer = async (guild: Guild|null) => {
             }
         },
         include: {
-            CurrencyRule: true
+            CurrencyRule: true,
+            ServerWelcomeMessage: true
         }
     });
 }

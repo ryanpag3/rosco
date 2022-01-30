@@ -58,6 +58,18 @@ const Welcome: Command = {
                     required: true
                 },
                 {
+                    name: 'channel',
+                    description: 'The channel you want to send this message to.',
+                    type: ApplicationCommandOptionType.Channel,
+                    required: true
+                },
+                {
+                    name: 'title',
+                    description: 'The title of the welcome message.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
                     name: 'message',
                     description: 'The message you want to use to welcome users.',
                     type: ApplicationCommandOptionType.String,

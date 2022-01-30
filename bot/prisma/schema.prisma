@@ -12,23 +12,31 @@ datasource db {
 }
 
 model Server {
-  id                             String               @id @default(uuid())
-  discordId                      String               @unique @db.VarChar(32)
-  createdAt                      DateTime             @default(now())
-  updatedAt                      DateTime             @updatedAt
-  privateWelcomeMessageEnabled   Boolean?
-  publicWelcomeMessageEnabled    Boolean?
-  privateWelcomeMessage          String?
-  privateWelcomeMessageChannelId String?
-  publicWelcomeMessage           String?
-  publicWelcomeMessageChannelId  String?
-  currencyHistoryChannelId       String?
-  currencyHistoryChannelActive   Boolean?             @default(true)
-  currencyCount                  Int                  @default(0)
-  CurrencyHistoryLog             CurrencyHistoryLog[]
-  CurrencyRule                   CurrencyRule[]
-  UserServer                     UserServer[]
-  Poll                           Poll[]
+  id                           String                 @id @default(uuid())
+  discordId                    String                 @unique @db.VarChar(32)
+  createdAt                    DateTime               @default(now())
+  updatedAt                    DateTime               @updatedAt
+  currencyHistoryChannelId     String?
+  currencyHistoryChannelActive Boolean?               @default(true)
+  currencyCount                Int                    @default(0)
+  CurrencyHistoryLog           CurrencyHistoryLog[]
+  CurrencyRule                 CurrencyRule[]
+  UserServer                   UserServer[]
+  Poll                         Poll[]
+  ServerWelcomeMessage         ServerWelcomeMessage[]
+}
+
+model ServerWelcomeMessage {
+  id        String  @id @default(uuid())
+  Server    Server  @relation(fields: [serverId], references: [id])
+  serverId  String
+  channelId String
+  title     String
+  message   String
+  isPublic  Boolean
+  isEnabled Boolean @default(false)
+
+  @@unique([serverId, isPublic])
 }
 
 model User {
