@@ -2,7 +2,7 @@
 title: Home
 description: 
 published: true
-date: 2022-01-28T01:46:39.043Z
+date: 2022-01-31T21:21:14.476Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-26T17:24:51.849Z
@@ -78,3 +78,7 @@ Welcome aboard!
 - [`/stopwatch reset`](/commands/stopwatch#reset-reset-a-stopwatch) - **Reset a stopwatch**
 - [`/stopwatch list`](/commands/stopwatch#list-list-all-stopwatches) - **List all stopwatches**
 
+### [`/welcome`](/commands/welcome)
+- [`/welcome set`](/commands/Welcome#set-set-the-welcome-message) - **Set a welcome message**
+- [`/welcome enable`](/commands/Welcome#enable-enable-a-welcome-message) - **Enable a welcome message**
+- [`/welcome disable`](/commands/Welcome#disable-disable-a-welcome-message) - **Disable a welcome message**
