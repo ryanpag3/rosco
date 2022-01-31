@@ -2,7 +2,7 @@
 title: Welcome
 description: 
 published: true
-date: 2022-01-31T21:14:23.894Z
+date: 2022-01-31T21:18:43.724Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-31T21:10:21.034Z
@@ -45,4 +45,20 @@ Issue `/welcome enable` to enable a welcome message. When enabled, the message w
 /welcome enable type: PUBLIC
 
 /welcome enable type: PRIVATE
+```
+
+## `disable` - Disable a welcome message
+
+Issue `/welcome enable` to disable a welcome message. When enabled, no message will be sent upon invite to the server.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `type` | The type of welcome message. Can be `PUBLIC` or `PRIVATE` | `true` |
+
+### Examples
+
+``` bash
+/welcome disable type: PUBLIC
+
+/welcome disable type: PRIVATE
 ```
