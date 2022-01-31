@@ -28,7 +28,7 @@ model Server {
 
 model ServerWelcomeMessage {
   id        String  @id @default(uuid())
-  Server    Server  @relation(fields: [serverId], references: [id])
+  Server    Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
   serverId  String
   channelId String
   title     String
