@@ -2,7 +2,7 @@
 title: Welcome
 description: 
 published: true
-date: 2022-01-31T21:10:21.034Z
+date: 2022-01-31T21:14:23.894Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-31T21:10:21.034Z
@@ -31,4 +31,18 @@ Issue `/welcome set` to set a welcome message for your server.
 /welcome set type: PRIVATE title: Welcome to the server! message: Hey you! Welcome to the server. I hope you enjoy your stay!
 ```
 
+## `enable` - Enable a welcome message
 
+Issue `/welcome enable` to enable a welcome message. When enabled, the message will be sent to the user when invited to the server.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `type` | The type of welcome message. Can be `PUBLIC` or `PRIVATE` | `true` |
+
+### Examples
+
+``` bash
+/welcome enable type: PUBLIC
+
+/welcome enable type: PRIVATE
+```
