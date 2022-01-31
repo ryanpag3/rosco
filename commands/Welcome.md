@@ -2,7 +2,7 @@
 title: Welcome
 description: 
 published: true
-date: 2022-01-31T21:18:43.724Z
+date: 2022-01-31T21:21:52.651Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-31T21:10:21.034Z
