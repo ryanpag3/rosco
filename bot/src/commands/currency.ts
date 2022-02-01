@@ -33,6 +33,24 @@ const Currency: Command = {
             ]
         },
         {
+            name: 'revoke',
+            description: 'Revoke a user currency.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'user',
+                    description: 'The user to revoke currency.',
+                    type: ApplicationCommandOptionType.User,
+                    required: true
+                },
+                {
+                    name: 'amount',
+                    description: 'The amount of currency to revoke. Defaults to 1',
+                    type: ApplicationCommandOptionType.Integer
+                }
+            ]
+        },
+        {
             name: 'log',
             description: 'Audit currency events.',
             type: ApplicationCommandOptionType.Subcommand,
