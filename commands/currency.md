@@ -2,7 +2,7 @@
 title: Currency
 description: 
 published: true
-date: 2022-01-28T01:13:47.920Z
+date: 2022-02-01T04:38:23.206Z
 tags: command
 editor: markdown
 dateCreated: 2022-01-27T06:02:40.184Z
@@ -37,6 +37,25 @@ Issue `/currency grant` if you would like to issue currency to a user.
 /currency grant user: ryan
 
 /currency grant user: ryan amount: 1000
+```
+
+## `revoke` - Revoke a user currency
+
+Issue `/currency revoke` if you would like to revoke currency to a user. 
+
+***We highly recommend restricting this command to administrators to avoid abuse.***
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `user` | The user being revoked currency. | `true` |
+| `amount` | The amount of currency to revoke. Default is `1` | `false` |
+
+### Examples
+
+``` bash
+/currency revoke user: ryan
+
+/currency revoke user: ryan amount: 1000
 ```
 
 ## `log` - Audit currency events
