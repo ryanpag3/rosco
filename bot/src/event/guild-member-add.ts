@@ -22,8 +22,6 @@ const sendWelcomeMessage = async (welcomeMessage: ServerWelcomeMessage, member: 
     if (!welcomeMessage.isEnabled)
         return;
 
-    logger.info('sending welcome message');
-
     if (welcomeMessage.isPublic) {
         const c = await member.guild.channels.cache.get(welcomeMessage.channelId as string);
         await (c as TextChannel).send({

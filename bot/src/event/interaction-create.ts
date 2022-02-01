@@ -1,4 +1,5 @@
 import { ButtonInteraction, CommandInteraction } from 'discord.js';
+import { v4 as uuidv4 } from 'uuid';
 import COMMANDS from '../commands';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
@@ -45,16 +46,17 @@ const onInteractionCreate = async (interaction: CommandInteraction) => {
 
         await handler(interaction, user, server);
     } catch (e) {
+        const supportId = uuidv4();
+
         logger.error(`An error occured while receiving interaction.`, e);
 
         const extraInfo = `\n\n_Need help?_\n - Run \`/help ${interaction.commandName}\` \n - [Join the support server](https://discord.gg/KwJUfbt5Wv)`;
 
         if (!(e instanceof BotError)) {
-
             interaction.reply({
                 embeds: [
                     {
-                        description: `An internal server error occured. Please contact bot administrator.${extraInfo}`
+                        description: `An internal server error occured. Please contact bot administrator.${extraInfo}. \n\n Reference this support case ID in the support server. \n\n Support ID: **${supportId}**`
                     }
                 ],
                 ephemeral: true
