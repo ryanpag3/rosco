@@ -36,7 +36,7 @@ const CurrencyBankWithdraw: Command = {
             embeds: [
                 {
                     title: ':bank: Your withdrawl was successful.',
-                    description: `${interaction.member.user} withdrew ${amount} seeds from the bank.`
+                    description: `${interaction.member?.user} withdrew ${amount} seeds from the bank.`
                 }
             ],
             ephemeral: true
