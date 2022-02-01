@@ -22,7 +22,7 @@
     "chartjs-plugin-datalabels": "^2.0.0",
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.6.0",
-    "dotenv": "^10.0.0",
+    "dotenv": "^15.0.0",
     "folder-hash": "^4.0.1",
     "log4js": "^6.4.0",
     "luxon": "^2.3.0",
