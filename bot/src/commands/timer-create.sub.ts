@@ -1,0 +1,45 @@
+import { Duration } from 'luxon';
+import { Command } from '../../types/command';
+import BotError from '../util/bot-error';
+import logger from '../util/logger';
+
+const TimerCreate: Command = {
+    id: '354ff6c7-a179-4284-bee7-abbc4871ac59',
+    name: 'timer create',
+    handler: async (interaction, user, server) => {
+        const name = interaction.options.getString('name', true);
+        const time = interaction.options.getString('time', true);
+        const message = interaction.options.getString('message');
+
+        const duration = buildDurationObject(time);
+
+        // convert duration to an expiresOn date
+        // store in database
+        // async job will run once every 5 seconds
+          // query for jobs that are going to expire in 1 minute and lock them in redis
+        // jobs that are not already locked by nodes on redis are loaded into memory and set via setTimeout()
+    }
+}
+
+const buildDurationObject = (time: string): {
+    days?: number;
+    hours?: number;
+    minutes?: number;
+    seconds?: number;
+} => {
+    let split = time.split(':').map((s) => Number.parseInt(s));
+    
+    if (split.length < 3)
+        throw new BotError('Invalid duration provided.');
+
+    split = split.reverse()
+
+    return {
+        seconds: split[0],
+        minutes: split[1],
+        hours: split[2],
+        days: split[3]
+    }
+}
+
+export default TimerCreate;
