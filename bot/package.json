@@ -18,7 +18,7 @@
     "@prisma/client": "3.7.0",
     "bluebird": "^3.7.2",
     "chart.js": "^3.7.0",
-    "chartjs-node-canvas": "^4.1.5",
+    "chartjs-node-canvas": "^4.1.6",
     "chartjs-plugin-datalabels": "^2.0.0",
     "discord-api-types": "^0.25.2",
     "discord.js": "^13.3.1",
