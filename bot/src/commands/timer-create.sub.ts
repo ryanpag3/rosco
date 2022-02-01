@@ -1,7 +1,8 @@
-import { Duration } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
+import prisma from '../util/prisma';
 
 const TimerCreate: Command = {
     id: '354ff6c7-a179-4284-bee7-abbc4871ac59',
@@ -13,20 +14,37 @@ const TimerCreate: Command = {
 
         const duration = buildDurationObject(time);
 
+        let dt = DateTime.now();
+        dt = dt.plus(duration);
+
         // convert duration to an expiresOn date
         // store in database
         // async job will run once every 5 seconds
           // query for jobs that are going to expire in 1 minute and lock them in redis
         // jobs that are not already locked by nodes on redis are loaded into memory and set via setTimeout()
+
+        await prisma.timer.create({
+            data: {
+                name,
+                message,
+                createdById: user.id,
+                serverId: server?.id as string,
+                expiresOn: dt.toJSDate()
+            }
+        });
+
+        return interaction.reply({
+            embeds: [
+                {
+                    title: 'timer created',
+                    description: 'timer created'
+                }
+            ]
+        });
     }
 }
 
-const buildDurationObject = (time: string): {
-    days?: number;
-    hours?: number;
-    minutes?: number;
-    seconds?: number;
-} => {
+const buildDurationObject = (time: string): Duration => {
     let split = time.split(':').map((s) => Number.parseInt(s));
     
     if (split.length < 3)
@@ -34,12 +52,12 @@ const buildDurationObject = (time: string): {
 
     split = split.reverse()
 
-    return {
+    return Duration.fromDurationLike({
         seconds: split[0],
         minutes: split[1],
         hours: split[2],
         days: split[3]
-    }
+    });
 }
 
 export default TimerCreate;

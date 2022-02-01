@@ -24,6 +24,7 @@ model Server {
   UserServer                   UserServer[]
   Poll                         Poll[]
   ServerWelcomeMessage         ServerWelcomeMessage[]
+  Timer                        Timer[]
 }
 
 model ServerWelcomeMessage {
@@ -57,6 +58,7 @@ model User {
   UserServer                UserServer[]
   Poll                      Poll[]
   PollVote                  PollVote[]
+  Timer                     Timer[]
 }
 
 model UserServer {
@@ -246,4 +248,17 @@ model PollVote {
   userId       String
 
   @@unique([userId, pollId])
+}
+
+model Timer {
+  id          String @id @default(uuid())
+  name        String
+  Server      Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId    String
+  CreatedBy   User?   @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdById String?
+  message     String?
+  expiresOn   DateTime
+
+  @@unique([name, serverId])
 }

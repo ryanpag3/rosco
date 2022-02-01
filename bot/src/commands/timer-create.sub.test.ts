@@ -1,1 +1,3 @@
-it('does something', () => {});
+it('should create a timer', () => {
+
+});
