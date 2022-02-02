@@ -251,14 +251,15 @@ model PollVote {
 }
 
 model Timer {
-  id          String @id @default(uuid())
-  name        String
-  Server      Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  serverId    String
-  CreatedBy   User?   @relation(fields: [createdById], references: [id], onDelete: SetNull)
-  createdById String?
-  message     String?
-  expiresOn   DateTime
+  id               String   @id @default(uuid())
+  name             String
+  Server           Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId         String
+  CreatedBy        User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdById      String?
+  message          String?
+  expiresOn        DateTime
+  announcementSent Boolean  @default(false)
 
   @@unique([name, serverId])
 }

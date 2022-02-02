@@ -12,6 +12,7 @@ import { onGuildCreate } from './event/guild-create';
 import { onMessageActionAdd } from './event/message-reaction-add';
 import { onMessageReactionRemove } from './event/message-reaction-remove';
 import onGuildMemberAdd from './event/guild-member-add';
+import * as TimerExecutor from './util/timer-executor';
 
 export default async function (client: Client) {
     // baseline cache against database
@@ -22,6 +23,9 @@ export default async function (client: Client) {
     
     // deploy slash commands
     await CommandDeployer.deploy();
+
+    // start timer daemon
+    TimerExecutor.startDaemon();
 
     client.on('ready', () => onReady());
 
