@@ -19,12 +19,6 @@ const TimerCreate: Command = {
         let dt = DateTime.now();
         dt = dt.plus(duration);
 
-        // convert duration to an expiresOn date
-        // store in database
-        // async job will run once every 5 seconds
-        // query for jobs that are going to expire in 1 minute and lock them in redis
-        // jobs that are not already locked by nodes on redis are loaded into memory and set via setTimeout()
-
         try {
             await prisma.timer.create({
                 data: {

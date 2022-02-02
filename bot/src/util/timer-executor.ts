@@ -1,9 +1,11 @@
 import { Timer } from '@prisma/client';
 import { DateTime, Duration } from 'luxon';
+import { Lock } from 'redlock';
 import logger from './logger';
 import prisma from './prisma';
+import { redlock } from './redlock';
 
-const CHECK_INTERVAL = process.env.TIMER_CHECK_INTERVAL_MS || 3000;
+const CHECK_INTERVAL = process.env.TIMER_CHECK_INTERVAL_MS || 5000;
 
 let daemonId: any;
 
@@ -31,12 +33,8 @@ export const checkForTimers = async () => {
             OR: [
                 {
                     expiresOn: {
-                        gte: DateTime.now().toJSDate(),
-                        lte: inFiveMins.toJSDate()
+                        lt: inFiveMins.toJSDate()
                     }
-                },
-                {
-                    announcementSent: false
                 }
             ],
             id: {
@@ -45,38 +43,43 @@ export const checkForTimers = async () => {
         }
     });
 
-    logger.debug(`${timersToBeAdded.length} timers to be added to cache`);
+    const results = (await Promise
+        .all(timersToBeAdded.map((t) => addTimerToCache(t))))
+        .filter((r) => r === true);
 
-    timersToBeAdded.forEach((t) => addTimerToCache(t));
+    if (results.length !== 0)
+        logger.debug(`${results.length} timers added to executor cache.`); 
 }
 
-const addTimerToCache = (timer: Timer) => {
+const addTimerToCache = async (timer: Timer) => {
     const timeToAnnounce = DateTime.fromJSDate(timer.expiresOn).diff(DateTime.now(), 'milliseconds');
     const milliseconds = timeToAnnounce.milliseconds < 0 ? 0 : timeToAnnounce.milliseconds;
 
-    logger.debug(`${timer.id} should be announced in ${milliseconds} milliseconds`);
-
-    // TODO: establish lock
+    let lock: Lock;
+    try {
+        lock = await redlock.acquire([timer.id], milliseconds + 5000);
+    } catch (e) {
+        // to stop the daemon from unnecessarily querying this
+        activeTimers[timer.id] = {};
+        logger.trace(`Could not acquire a lock. Expected noop...`);
+        return false;
+    }
 
     const t = setTimeout(async () => {
         // TODO: send announcement
-
-        await prisma.timer.update({
+        await prisma.timer.delete({
             where: {
                 id: timer.id
-            },
-            data: {
-                announcementSent: true
             }
         });
-        
+
         logger.debug(`${timer.id} announced.`);
-        
         delete activeTimers[timer.id];
-        // TODO: release lock
+        await lock.release();
     }, milliseconds);
 
     activeTimers[timer.id] = t;
-
-    logger.debug(`${timer.id} added to cache.`);
+    logger.debug(`${timer.id} added to cache. Should be announced in ${milliseconds} milliseconds`);
+    
+    return true;
 }
