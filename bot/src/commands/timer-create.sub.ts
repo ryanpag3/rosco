@@ -1,7 +1,7 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { DateTime, Duration } from 'luxon';
 import { Command } from '../../types/command';
-import BotError from '../util/bot-error';
+import BotError from '../util/bot-error';""
 import prisma from '../util/prisma';
 import PrismaErrorCode from '../util/prisma-error-code';
 
@@ -38,8 +38,21 @@ const TimerCreate: Command = {
         return interaction.reply({
             embeds: [
                 {
-                    title: 'timer created',
-                    description: 'timer created'
+                    title: ':alarm_clock: A timer has been created!',
+                    fields: [
+                        {
+                            name: 'name',
+                            value: name
+                        },
+                        {
+                            name: 'message',
+                            value: message || 'Timer completed.'
+                        },
+                        {
+                            name: 'time',
+                            value: time
+                        }
+                    ]
                 }
             ]
         });

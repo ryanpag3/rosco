@@ -71,8 +71,17 @@ const addTimerToCache = async (timer: Timer) => {
         await channel.send({
             embeds: [
                 {
-                    title: timer.name,
-                    description: timer.message || 'Timer completed.'
+                    title: ':hourglass_flowing_sand: Timer has completed!',
+                    fields: [
+                        {
+                            name: 'name',
+                            value: timer.name
+                        },
+                        {
+                            name: 'message',
+                            value: timer.message || 'Timer completed.'
+                        }
+                    ]
                 }
             ]
         })
