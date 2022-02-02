@@ -1,6 +1,8 @@
 import { Timer } from '@prisma/client';
+import { TextChannel } from 'discord.js';
 import { DateTime, Duration } from 'luxon';
 import { Lock } from 'redlock';
+import client from '..';
 import logger from './logger';
 import prisma from './prisma';
 import { redlock } from './redlock';
@@ -30,13 +32,9 @@ export const checkForTimers = async () => {
 
     const timersToBeAdded = await prisma.timer.findMany({
         where: {
-            OR: [
-                {
-                    expiresOn: {
-                        lt: inFiveMins.toJSDate()
-                    }
-                }
-            ],
+            expiresOn: {
+                lt: inFiveMins.toJSDate()
+            },
             id: {
                 notIn: Object.keys(activeTimers)
             }
@@ -67,6 +65,18 @@ const addTimerToCache = async (timer: Timer) => {
 
     const t = setTimeout(async () => {
         // TODO: send announcement
+
+        const channel = (await client.channels.fetch(timer.channelId)) as TextChannel;
+
+        await channel.send({
+            embeds: [
+                {
+                    title: timer.name,
+                    description: timer.message || 'Timer completed.'
+                }
+            ]
+        })
+
         await prisma.timer.delete({
             where: {
                 id: timer.id

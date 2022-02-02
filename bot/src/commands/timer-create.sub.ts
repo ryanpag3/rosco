@@ -2,7 +2,6 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { DateTime, Duration } from 'luxon';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
-import logger from '../util/logger';
 import prisma from '../util/prisma';
 import PrismaErrorCode from '../util/prisma-error-code';
 
@@ -26,6 +25,7 @@ const TimerCreate: Command = {
                     message,
                     createdById: user.id,
                     serverId: server?.id as string,
+                    channelId: interaction.channelId,
                     expiresOn: dt.toJSDate()
                 }
             });
