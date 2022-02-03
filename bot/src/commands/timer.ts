@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import TimerCreate from './timer-create.sub';
+import TimerDelete from './timer-delete.sub';
 import TimerInfo from './timer-info.sub';
 
 const Timer: Command = {
@@ -67,6 +68,10 @@ const Timer: Command = {
                 return TimerCreate.handler(interaction, user, server);
             case 'info':
                 return TimerInfo.handler(interaction, user, server);
+            case 'delete':
+                return TimerDelete.handler(interaction, user, server);
+            case 'pause':
+                return;
         }
     }
 }
