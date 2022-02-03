@@ -4,7 +4,6 @@ import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
 import PrismaErrorCode from '../util/prisma-error-code';
-import { buildTimestamp } from '../util/timer-executor';
 
 const TimerInfo: Command = {
     id: '23e9d368-5a08-48dc-8ff5-0f7cb9176158',
@@ -46,7 +45,7 @@ const TimerInfo: Command = {
                         },
                         {
                             name: 'time left',
-                            value: buildTimestamp(duration)
+                            value: duration.toFormat('dd:hh:mm:ss')
                         }
                     ]
                 }
