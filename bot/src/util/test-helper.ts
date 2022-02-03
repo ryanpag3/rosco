@@ -28,6 +28,7 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
         isButton: () => false,
         // @ts-ignore
         toJSON: () => {},
+        channelId:  channelId || '1', 
         channel: {
             id: channelId || '1',
             send: async (options: string | MessagePayload | MessageOptions) => {
