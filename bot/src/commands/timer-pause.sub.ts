@@ -52,8 +52,6 @@ const TimerPause: Command = {
                 throw new BotError('Could not find timer to pause.');
             throw e;            
         }
-
-        
     }
 };
 

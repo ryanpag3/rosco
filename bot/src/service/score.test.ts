@@ -115,14 +115,12 @@ expect(found?.id).toBe(s.id);
 });
 
 it('should return null when a record does not exist', async () => {
-    const found = await ScoreService.findUnique({
+    await expect(ScoreService.findUnique({
         name_serverId: {
             name: 'abc',
             serverId: 'abc'
         }
-    });
-
-    expect(found).toBeNull();
+    })).rejects.toThrow();
 });
 
 it('should delete the score', async () => {
@@ -144,14 +142,12 @@ it('should delete the score', async () => {
         serverId: 'abcd'
     });
 
-    const itsHere = await ScoreService.findUnique({
+    await expect(ScoreService.findUnique({
         name_serverId: {
             name: s.name,
             serverId: s.serverId
         }
-    });
-
-    expect(itsHere).toBeNull();
+    })).rejects.toThrow();
 });
 
 it('should do nothing if no valid scores are available to delete', async () => {

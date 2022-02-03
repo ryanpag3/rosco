@@ -29,8 +29,9 @@ it('should delete a poll', async () => {
     poll = await prisma.poll.findUnique({
         where: {
             name: 't'
-        }
-    });
+        },
+        rejectOnNotFound: false
+    }) as any;
 
     expect(poll).toBeNull();
 });

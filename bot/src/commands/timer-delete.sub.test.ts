@@ -22,7 +22,8 @@ it('should delete a timer', async () => {
                 name: 'test',
                 serverId: '1'
             }
-        }
+        },
+        rejectOnNotFound: false
     });
 
     expect(timer).toBeNull();

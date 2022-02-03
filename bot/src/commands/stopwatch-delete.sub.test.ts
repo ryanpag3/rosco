@@ -21,7 +21,8 @@ it('should delete a stopwatch', async () => {
                 name: 'test',
                 serverId: '1'
             }
-        }
+        },
+        rejectOnNotFound: false
     });
 
     expect(stopwatch).toBeNull();

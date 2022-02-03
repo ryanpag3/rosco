@@ -6,7 +6,7 @@ import { createTestInteraction } from '../util/test-helper';
 it('should revoke a user currency', async () => {
     let int = createTestInteraction('currency', 'revoke', {
         user: {
-            id: '2'
+            id: '1'
         }
     });
 
@@ -14,20 +14,21 @@ it('should revoke a user currency', async () => {
 
     const user = await prisma.user.findUnique({
         where: {
-            discordId: '2'
+            discordId: '1'
         },
         include: {
             UserServer: true
-        }
+        },
+        rejectOnNotFound: false
     });
 
-    expect(user?.UserServer[0].currencyCount).toBe(-1);
+    expect(user?.UserServer[0].currencyCount).toBe(0);
 });
 
 it('should throw an error if amount is above 0', async () => {
     let int = createTestInteraction('currency', 'revoke', {
         user: {
-            id: '2'
+            id: '1'
         },
         amount: 1
     });
@@ -38,7 +39,7 @@ it('should throw an error if amount is above 0', async () => {
 it('should revoke a user currency by amount', async () => {
     let int = createTestInteraction('currency', 'revoke', {
         user: {
-            id: '2'
+            id: '1'
         },
         amount: -100000
     });
@@ -47,12 +48,13 @@ it('should revoke a user currency by amount', async () => {
 
     const user = await prisma.user.findUnique({
         where: {
-            discordId: '2'
+            discordId: '1'
         },
         include: {
             UserServer: true
-        }
+        },
+        rejectOnNotFound: false
     });
 
-    expect(user?.UserServer[0].currencyCount).toBe(-100000);
+    expect(user?.UserServer[0].currencyCount).toBe(-99999);
 });

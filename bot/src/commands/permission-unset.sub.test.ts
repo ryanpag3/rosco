@@ -42,8 +42,9 @@ it('should unset the permission', async () => {
                 serverId: int.guild?.id as string,
                 roleId: '1'
             }
-        }
-    });
+        },
+        rejectOnNotFound: false
+    }) as any;
 
     expect(permission).toBeNull();
 });

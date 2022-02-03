@@ -18,15 +18,13 @@ it('should delete a score', async () => {
 
     await onCommandReceived(int);
 
-    const found = await ScoreService.findUnique({
+    await expect(ScoreService.findUnique({
         name_serverId: {
             name: 'test',
             // @ts-ignore
             serverId: int.guild?.id
         }
-    });
-
-    expect(found).toBeNull();
+    })).rejects.toThrow();
 });
 
 it('should throw an error if a score doesnt exist to delete.', async () => {

@@ -21,7 +21,8 @@ it('should delete a scoreboard', async () => {
                 name: 'test',
                 serverId: '1'
             }
-        }
+        },
+        rejectOnNotFound: false
     });
 
     expect(scoreboard).toBeNull();
