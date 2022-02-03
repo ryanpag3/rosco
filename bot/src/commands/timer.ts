@@ -3,6 +3,7 @@ import { Command } from '../../types/command';
 import TimerCreate from './timer-create.sub';
 import TimerDelete from './timer-delete.sub';
 import TimerInfo from './timer-info.sub';
+import TimerPause from './timer-pause.sub';
 
 const Timer: Command = {
     id: 'f28d9eda-81e9-404c-ad70-9423d9cdb105',
@@ -58,6 +59,19 @@ const Timer: Command = {
                     required: true
                 }
             ]
+        },
+        {
+            name: 'pause',
+            description: 'Pause and unpause a timer.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the timer you want to pause/unpause.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
         }
     ],
     handler: async (interaction, user, server) => {
@@ -71,7 +85,7 @@ const Timer: Command = {
             case 'delete':
                 return TimerDelete.handler(interaction, user, server);
             case 'pause':
-                return;
+                return TimerPause.handler(interaction, user, server);
         }
     }
 }

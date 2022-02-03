@@ -1,5 +1,5 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { DateTime } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
@@ -28,7 +28,8 @@ const TimerInfo: Command = {
             throw e;
         }
 
-        const duration = DateTime.fromJSDate(timer?.expiresOn as any).diff(DateTime.now());
+        const duration = timer.expiresOn ? DateTime.fromJSDate(timer?.expiresOn as any).diff(DateTime.now()) 
+                                            : Duration.fromISO(timer.pausedDuration as any);
 
         return interaction.reply({
             embeds: [

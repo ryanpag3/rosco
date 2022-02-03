@@ -33,7 +33,8 @@ export const checkForTimers = async () => {
     const timersToBeAdded = await prisma.timer.findMany({
         where: {
             expiresOn: {
-                lt: inFiveMins.toJSDate()
+                lt: inFiveMins.toJSDate(),
+                not: null
             },
             id: {
                 notIn: Object.keys(activeTimers)
@@ -50,7 +51,7 @@ export const checkForTimers = async () => {
 }
 
 const addTimerToCache = async (timer: Timer) => {
-    const timeToAnnounce = DateTime.fromJSDate(timer.expiresOn).diff(DateTime.now(), 'milliseconds');
+    const timeToAnnounce = DateTime.fromJSDate(timer.expiresOn as Date).diff(DateTime.now(), 'milliseconds');
     const milliseconds = timeToAnnounce.milliseconds < 0 ? 0 : timeToAnnounce.milliseconds;
 
     let lock: Lock;

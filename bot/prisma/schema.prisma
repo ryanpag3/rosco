@@ -259,7 +259,8 @@ model Timer {
   CreatedBy        User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
   createdById      String?
   message          String?
-  expiresOn        DateTime
+  expiresOn        DateTime?
+  pausedDuration   String?
 
   @@unique([name, serverId])
 }
