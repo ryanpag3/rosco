@@ -2,7 +2,7 @@
 title: Home
 description: 
 published: true
-date: 2022-02-03T17:19:09.640Z
+date: 2022-02-03T17:22:21.554Z
 tags: 
 editor: markdown
 dateCreated: 2022-01-26T17:24:51.849Z
@@ -15,3 +15,11 @@ Guac Bot aims to be the next generation Discord Bot providing a wide feature set
 Please note it is currently in _beta_ so all functionality is subject to change. 
 
 Welcome aboard!
+
+### Getting Started
+
+1. Click the below image to invite the bot to your server.
+    [image]()
+
+1. Review the [Commands Reference](/commands) to see what features are available.
+1. Check out the [Guides]() for detailed examples.
