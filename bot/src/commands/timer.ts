@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import TimerCreate from './timer-create.sub';
+import TimerInfo from './timer-info.sub';
 
 const Timer: Command = {
     id: 'f28d9eda-81e9-404c-ad70-9423d9cdb105',
@@ -64,6 +65,8 @@ const Timer: Command = {
         switch(sub) {
             case 'create':
                 return TimerCreate.handler(interaction, user, server);
+            case 'info':
+                return TimerInfo.handler(interaction, user, server);
         }
     }
 }

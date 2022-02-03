@@ -1,17 +1,17 @@
 import { createTestInteraction } from '../util/test-helper'
 import onCommandReceived from '../event/interaction-create';
 
-it('should list out the scores', async () => {
-    let int = createTestInteraction('stopwatch', 'create', {
-        name: 'test'
-    }, '1', '1', '1');
-
+it('should display timer info', async () => {
+    let int = createTestInteraction('timer', 'create', {
+        name: 'test',
+        time: '00:00:00:00'
+    });
     
     await onCommandReceived(int);
 
-    int = createTestInteraction('stopwatch', 'info', {
+    int = createTestInteraction('timer', 'info', {
         name: 'test'
-    }, '1', '1', '1');
+    });
 
     const spy = jest.spyOn(int, 'reply');
     
@@ -23,11 +23,10 @@ it('should list out the scores', async () => {
     expect(spy.mock.calls[0][0].embeds.length).toBe(1);
 });
 
-
-it('should throw an error if the stopwatch does not exist', async () => {
-    const int = createTestInteraction('stopwatch', 'info', {
+it('should throw an error if the timer does not exist', async () => {
+    let int = createTestInteraction('timer', 'info', {
         name: 'test'
-    }, '1', '1', '1');
+    });
     
     await expect(onCommandReceived(int)).rejects.toThrow();
 });

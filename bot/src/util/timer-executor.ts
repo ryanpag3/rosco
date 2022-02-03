@@ -102,3 +102,7 @@ const addTimerToCache = async (timer: Timer) => {
     
     return true;
 }
+
+export const buildTimestamp = (duration: Duration) => {
+    return duration.toFormat('dd:hh:mm:ss');
+};
