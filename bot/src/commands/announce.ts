@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import AnnounceCreate from './announce-create.sub';
+import AnnounceList from './announce-list.sub';
 
 const Announce: Command = {
     id: '5bc832b5-8adf-466a-a14f-b7fb6ca289df',
@@ -36,6 +37,18 @@ const Announce: Command = {
                     required: true
                 }
             ]
+        },
+        {
+            name: 'list',
+            description: 'List out the current active announcements.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'page',
+                    description: 'Set to 2 or more to see the next page of results.',
+                    type: ApplicationCommandOptionType.Integer
+                }
+            ]
         }
     ],
     handler: async (interaction, user, server) => {
@@ -44,6 +57,8 @@ const Announce: Command = {
         switch (sub) {
             case 'create':
                 return AnnounceCreate.handler(interaction, user, server);
+            case 'list':
+                return AnnounceList.handler(interaction, user, server);
         }
     }
 };
