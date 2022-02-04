@@ -20,6 +20,7 @@
     "chart.js": "^3.7.0",
     "chartjs-node-canvas": "^4.1.6",
     "chartjs-plugin-datalabels": "^2.0.0",
+    "countries-and-timezones": "^3.3.0",
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.6.0",
     "dotenv": "^15.0.0",

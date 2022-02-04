@@ -19,6 +19,7 @@ model Server {
   currencyHistoryChannelId     String?
   currencyHistoryChannelActive Boolean?               @default(true)
   currencyCount                Int                    @default(0)
+  timezone                     String                 @default("America/Los_Angeles")
   CurrencyHistoryLog           CurrencyHistoryLog[]
   CurrencyRule                 CurrencyRule[]
   UserServer                   UserServer[]
