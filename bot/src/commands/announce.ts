@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import AnnounceCreate from './announce-create.sub';
+import AnnounceDelete from './announce-delete.sub';
 import AnnounceList from './announce-list.sub';
 
 const Announce: Command = {
@@ -23,7 +24,8 @@ const Announce: Command = {
                     name: 'channel',
                     description: 'The channel to make the announcement in.',
                     type: ApplicationCommandOptionType.Channel,
-                    required: true                },
+                    required: true
+                },
                 {
                     name: 'when',
                     description: 'When to run the announcement. e.g "in 5 days"',
@@ -49,6 +51,19 @@ const Announce: Command = {
                     type: ApplicationCommandOptionType.Integer
                 }
             ]
+        },
+        {
+            name: 'delete',
+            description: 'Delete an announcement.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'A unique name identifying the announcement.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                }
+            ]
         }
     ],
     handler: async (interaction, user, server) => {
@@ -59,6 +74,8 @@ const Announce: Command = {
                 return AnnounceCreate.handler(interaction, user, server);
             case 'list':
                 return AnnounceList.handler(interaction, user, server);
+            case 'delete':
+                return AnnounceDelete.handler(interaction, user, server);
         }
     }
 };
