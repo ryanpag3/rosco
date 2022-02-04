@@ -18,6 +18,9 @@ const AnnounceCreate: Command = {
 
         const whenDate = chrono.parseDate(when);
 
+        if (!whenDate)
+            throw new BotError('Could not interpret date from what was provided.');
+
         try {
             await prisma.announcement.create({
                 data: {
