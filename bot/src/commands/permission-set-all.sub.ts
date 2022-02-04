@@ -6,12 +6,12 @@ import Commands from '../util/command-subcommand-map';
 const PermissionSetAll: Command = {
     id: '9b199c0d-3dea-40bc-96a4-ef34d59b5f04',
     name: 'permission set-all',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const role = interaction.options.getRole('role', true);
 
         await prisma.permission.deleteMany({
             where: {
-                serverId: interaction.guild?.id
+                serverId: server?.id
             }
         });
 
@@ -22,7 +22,7 @@ const PermissionSetAll: Command = {
                 return {
                     commandId: Commands[key].id,
                     roleId: role.id,
-                    serverId: interaction.guild?.id as string,
+                    serverId: server?.id as string,
                     userId: user.id
                 }
             })

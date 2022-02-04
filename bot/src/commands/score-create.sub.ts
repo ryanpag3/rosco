@@ -10,7 +10,7 @@ const ScoreCreate: Command = {
     examples: ``,
     // options for this subcommand are located in score.ts
     options: {},
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name');
         const description = interaction.options.getString('description');
         const amount = interaction.options.getInteger('amount') || 0;
@@ -29,7 +29,8 @@ const ScoreCreate: Command = {
             name,
             description,
             amount,
-            serverId: interaction.guild?.id,
+            // @ts-ignore
+            serverId: server?.id,
             channelId: interaction.channel?.id,
             color,
             // @ts-ignore

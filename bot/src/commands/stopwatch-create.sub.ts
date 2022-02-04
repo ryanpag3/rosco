@@ -6,7 +6,7 @@ import prisma from '../util/prisma';
 const StopwatchCreate: Command = {
     id: '00923569-fbc4-4ccf-a8ba-c625eaa5cbea',
     name: 'stopwatch create',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name', true);
         let startOnCreate = interaction.options.getBoolean('start-on-create');
 
@@ -17,7 +17,7 @@ const StopwatchCreate: Command = {
             const res = await prisma.stopwatch.create({
                 data: {
                     name,
-                    serverId: interaction.guild?.id as string,
+                    serverId: server?.id as string,
                     channelId: interaction.channel?.id as string,
                     userId: user.id
                 }

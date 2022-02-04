@@ -11,7 +11,7 @@ const ScoreList: Command = {
     examples: ``,
     // this is manages in score.ts because it is a subcommand
     options: {},
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const amount = interaction.options.getInteger('amount') || 10;
         const page = interaction.options.getInteger('page') || 1;
         const filter = interaction.options.getString('filter');
@@ -33,7 +33,7 @@ const ScoreList: Command = {
                 Scoreboards: true
             },
             where: {
-                serverId: interaction.guild?.id,
+                serverId: server?.id,
                 name: {
                     contains: filter || undefined
                 },

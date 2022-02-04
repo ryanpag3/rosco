@@ -103,24 +103,24 @@ const Stopwatch: Command = {
             type: ApplicationCommandOptionType.Subcommand
         },
     ],
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const subcommand = interaction.options.getSubcommand();
 
         switch(subcommand){
             case 'create':
-                return StopwatchCreate.handler(interaction, user);
+                return StopwatchCreate.handler(interaction, user, server);
             case `start`:
-                return StopwatchStart.handler(interaction, user); 
+                return StopwatchStart.handler(interaction, user, server); 
             case `stop`:
-                return StopwatchStop.handler(interaction, user);
+                return StopwatchStop.handler(interaction, user, server);
             case `reset`:
-                return StopwatchReset.handler(interaction, user);
+                return StopwatchReset.handler(interaction, user, server);
             case `delete`:
-                return StopwatchDelete.handler(interaction, user);
+                return StopwatchDelete.handler(interaction, user, server);
             case 'info':
-                return StopwatchInfo.handler(interaction, user);
+                return StopwatchInfo.handler(interaction, user, server);
             case 'list':
-                return StopwatchList.handler(interaction, user);
+                return StopwatchList.handler(interaction, user, server);
         }
     }
 }

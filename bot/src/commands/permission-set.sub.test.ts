@@ -12,13 +12,13 @@ it('should set the permission', async () => {
         }
     });
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const permission = await prisma.permission.findUnique({
         where: {
             roleId_commandId_serverId: {
                 commandId: COMMANDS['ping'].id,
-                serverId: int.guild?.id as string,
+                serverId: r.server.id as string,
                 roleId: '1'
             }
         }
@@ -36,13 +36,13 @@ it('should allow multiple permissions on the same command', async () => {
         }
     }, '1', '1', '1');
 
-    await onCommandReceived(int);
+    let r = await onCommandReceived(int);
 
     let permission = await prisma.permission.findUnique({
         where: {
             roleId_commandId_serverId: {
                 commandId: COMMANDS['ping'].id,
-                serverId: int.guild?.id as string,
+                serverId: r.server?.id as string,
                 roleId: '1'
             }
         }
@@ -58,13 +58,13 @@ it('should allow multiple permissions on the same command', async () => {
         }
     }, '1', '1', '1');
 
-    await onCommandReceived(int);
+    r = await onCommandReceived(int);
 
     permission = await prisma.permission.findUnique({
         where: {
             roleId_commandId_serverId: {
                 commandId: COMMANDS['ping'].id,
-                serverId: int.guild?.id as string,
+                serverId: r.server?.id as string,
                 roleId: '2'
             }
         }

@@ -11,14 +11,14 @@ it('should save a keyword to the cache', async () => {
         amount: 1
     }, '1', '1', '1');
     
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const [ score ] = await prisma.score.findMany();
 
     const keyword = await prisma.keyword.create({
         data: {
             keyword: 'test',
-            serverId: '1',
+            serverId: r.server.id,
             scoreId: score.id
         }
     });
@@ -37,14 +37,14 @@ it('should get a cached keyword', async () => {
         amount: 1
     }, '1', '1', '1');
     
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const [ score ] = await prisma.score.findMany();
 
     const keyword = await prisma.keyword.create({
         data: {
             keyword: 'test',
-            serverId: '1',
+            serverId: r.server.id,
             scoreId: score.id
         }
     });
@@ -69,14 +69,14 @@ it('should delete a keyword from the cache', async () => {
         amount: 1
     }, '1', '1', '1');
     
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const [ score ] = await prisma.score.findMany();
 
     const keyword = await prisma.keyword.create({
         data: {
             keyword: 'test',
-            serverId: '1',
+            serverId: r.server.id,
             scoreId: score.id
         }
     });
@@ -97,14 +97,14 @@ it('should return true if keyword does exist', async () => {
         amount: 1
     }, '1', '1', '1');
     
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const [ score ] = await prisma.score.findMany();
 
     const keyword = await prisma.keyword.create({
         data: {
             keyword: 'test',
-            serverId: '1',
+            serverId: r.server.id,
             scoreId: score.id
         }
     });

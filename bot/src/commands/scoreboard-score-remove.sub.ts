@@ -6,7 +6,7 @@ import prisma from '../util/prisma';
 const ScoreboardScoreRemove: Command = {
     id: 'd21f0939-021b-4787-85d9-f226fa26166a',
     name: 'scoreboard remove-score',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name') as string;
         const scoreName = interaction.options.getString('score-name') as string;
 
@@ -15,7 +15,7 @@ const ScoreboardScoreRemove: Command = {
                 where: {
                     name_serverId: {
                         name,
-                        serverId: interaction.guild?.id as string
+                        serverId: server?.id as string
                     }
                 },
                 include: {
@@ -32,7 +32,7 @@ const ScoreboardScoreRemove: Command = {
                 where: {
                     name_serverId: {
                         name,
-                        serverId: interaction.guild?.id as string
+                        serverId: server?.id as string
                     }
                 },
                 data: {
@@ -40,7 +40,7 @@ const ScoreboardScoreRemove: Command = {
                         disconnect: [{
                             name_serverId: {
                                 name: scoreName,
-                                serverId: interaction.guild?.id as string
+                                serverId: server?.id as string
                             }
                         }]
                     }

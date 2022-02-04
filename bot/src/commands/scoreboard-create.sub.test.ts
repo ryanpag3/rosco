@@ -7,13 +7,13 @@ it('should create a scoreboard', async () => {
         name: 'test'
     });
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const scoreboard = await prisma.scoreboard.findUnique({
         where: {
             name_serverId: {
                 name: 'test',
-                serverId: int.guild?.id as string
+                serverId: r.server?.id as string
             }
         }
     });

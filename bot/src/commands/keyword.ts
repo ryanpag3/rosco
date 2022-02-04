@@ -87,16 +87,16 @@ const Keyword: Command = {
             ]
         }
     ],
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const commandName = interaction.options.getSubcommand();
         
         switch(commandName) {
             case 'create':
-                return KeywordCreate.handler(interaction, user);
+                return KeywordCreate.handler(interaction, user, server);
             case 'delete':
-                return KeywordDelete.handler(interaction, user);
+                return KeywordDelete.handler(interaction, user, server);
             case 'list':
-                return KeywordList.handler(interaction, user);
+                return KeywordList.handler(interaction, user, server);
             default:
                 throw new BotError(`Invalid keyword subcommand provided.`);
         }

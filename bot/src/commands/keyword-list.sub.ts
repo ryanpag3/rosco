@@ -5,7 +5,7 @@ import prisma from '../util/prisma';
 const KeywordList: Command = {
     id: '03ea918e-099f-4019-b70e-5edd777279fd',
     name: 'keyword list',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const keyword = interaction.options.getString('keyword') || undefined;
         const scoreName = interaction.options.getString('score-name') || undefined;
 
@@ -16,7 +16,7 @@ const KeywordList: Command = {
                 where: {
                     name_serverId: {
                         name: scoreName,
-                        serverId: interaction.guild?.id as string
+                        serverId: server?.id as string
                     }
                 }
             });

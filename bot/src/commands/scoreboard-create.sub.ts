@@ -6,7 +6,7 @@ import prisma from '../util/prisma';
 const ScoreboardCreate: Command = {
     id: '9e55b0aa-c8c2-4d0d-8f97-12794be6ef3d',
     name: 'scoreboard create',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name') as string;
         const description = interaction.options.getString('description');
         const scores = interaction.options.getString('scores')?.split(',') || [];
@@ -16,7 +16,7 @@ const ScoreboardCreate: Command = {
                 data: {
                     name,
                     description,
-                    serverId: interaction.guild?.id as string,
+                    serverId: server?.id as string,
                     channelId: interaction.channel?.id as string,
                     userId: user.id
                 }
@@ -32,7 +32,7 @@ const ScoreboardCreate: Command = {
                             return {
                                 name_serverId: {
                                     name: s,
-                                    serverId: interaction.guild?.id as string
+                                    serverId: server?.id as string
                                 }
                             }
                         })

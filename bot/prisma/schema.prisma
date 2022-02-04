@@ -25,6 +25,11 @@ model Server {
   Poll                         Poll[]
   ServerWelcomeMessage         ServerWelcomeMessage[]
   Timer                        Timer[]
+  Stopwatch                    Stopwatch[]
+  Keyword                      Keyword[]
+  Scoreboard                   Scoreboard[]
+  Score                        Score[]
+  Permission                   Permission[]
 }
 
 model ServerWelcomeMessage {
@@ -120,9 +125,10 @@ model Permission {
   commandId String
   roleId    String
   serverId  String
+  Server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
   // In theory, a user could be deleted but we want to persist the Permission record.
-  userId    String?
-  User      User?    @relation(references: [id], onDelete: SetNull, fields: [userId])
+  userId String?
+  User   User?   @relation(references: [id], onDelete: SetNull, fields: [userId])
 
   @@unique([roleId, commandId, serverId])
 }
@@ -146,6 +152,7 @@ model Score {
   color       String
   amount      Int          @default(0)
   serverId    String
+  Server      Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
   channelId   String
   userId      String
   User        User         @relation(references: [id], onDelete: Cascade, fields: [userId])
@@ -162,6 +169,7 @@ model Scoreboard {
   name        String
   description String?
   serverId    String
+  Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
   channelId   String
   userId      String
   User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
@@ -185,6 +193,7 @@ model Keyword {
   action    KeywordAction @default(UP)
   amount    Int           @default(1)
   serverId  String
+  Server    Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
   channelId String?
   userId    String?
   User      User?         @relation(fields: [userId], references: [id])
@@ -194,6 +203,7 @@ model Keyword {
 
 model Stopwatch {
   id        String    @id @default(uuid())
+  Server    Server    @relation(fields: [serverId], references: [id], onDelete: Cascade)
   serverId  String
   channelId String
   createdAt DateTime  @default(now())
@@ -251,16 +261,16 @@ model PollVote {
 }
 
 model Timer {
-  id               String   @id @default(uuid())
-  name             String
-  Server           Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  serverId         String
-  channelId        String
-  CreatedBy        User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
-  createdById      String?
-  message          String?
-  expiresOn        DateTime?
-  pausedDuration   String?
+  id             String    @id @default(uuid())
+  name           String
+  Server         Server    @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId       String
+  channelId      String
+  CreatedBy      User?     @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdById    String?
+  message        String?
+  expiresOn      DateTime?
+  pausedDuration String?
 
   @@unique([name, serverId])
 }

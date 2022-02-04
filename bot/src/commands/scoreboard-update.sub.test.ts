@@ -15,13 +15,13 @@ it('should update a scoreboard', async () => {
         description: 'aaa'
     }, '1', '1', '1');
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const scoreboard = await prisma.scoreboard.findUnique({
         where: {
             name_serverId: {
                 name: 'test2',
-                serverId: '1'
+                serverId: r.server.id
             }
         }
     });

@@ -7,7 +7,7 @@ import commands from '../util/command-subcommand-map';
 const PermissionSet: Command = {
     id: '5587e040-7897-4874-ab8e-2eff98b9618b',
     name: 'permission set',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const command = cleanCommand(interaction.options.getString('command', true));
         const role = interaction.options.getRole('role', true);
 
@@ -19,7 +19,7 @@ const PermissionSet: Command = {
                 data: {
                     commandId: commands[command].id,
                     roleId: role.id,
-                    serverId: interaction.guild?.id as string,
+                    serverId: server?.id as string,
                     userId: user.id
                 }
             });

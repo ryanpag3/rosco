@@ -124,7 +124,7 @@ const Currency: Command = {
         const sub = interaction.options.getSubcommand();
         switch (sub) {
             case 'log':
-                return CurrencyLog.handler(interaction, user);
+                return CurrencyLog.handler(interaction, user, server);
             case 'send':
                 return CurrencySend.handler(interaction, user, server);
             case 'grant':

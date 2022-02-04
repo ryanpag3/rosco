@@ -20,7 +20,7 @@ it('should set the channel id of the channel specified', async () => {
         }
     });
 
-    await onCommandReceived(int); 
+    const r = await onCommandReceived(int); 
 
     const server = await prisma.server.findUnique({
         where: {

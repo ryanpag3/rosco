@@ -9,7 +9,7 @@ it('should create a valid server score', async () => {
         amount: 1
     });
     
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const score = await prisma.score.findUnique({
         where: {
@@ -17,7 +17,7 @@ it('should create a valid server score', async () => {
                 // @ts-ignore
                 name: int.options.name,
                 // @ts-ignore
-                serverId: int.guild?.id,
+                serverId: r.server?.id,
             }
         }
     });
@@ -33,7 +33,7 @@ it('should throw an error if two scores in the same server have the same name', 
         amount: 1
     });
     
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const score = await prisma.score.findUnique({
         where: {
@@ -41,7 +41,7 @@ it('should throw an error if two scores in the same server have the same name', 
                 // @ts-ignore
                 name: int.options.name,
                 // @ts-ignore
-                serverId: int.guild?.id,
+                serverId: r.server?.id,
             }
         }
     });
@@ -59,7 +59,7 @@ it('should create a valid channel score', async () => {
         amount: 1
     });
     
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const score = await prisma.score.findUnique({
         where: {
@@ -67,7 +67,7 @@ it('should create a valid channel score', async () => {
                 // @ts-ignore
                 name: int.options.name,
                 // @ts-ignore
-                serverId: int.guild?.id,
+                serverId: r.server?.id,
             }
         }
     });

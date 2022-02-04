@@ -23,13 +23,13 @@ it('should add a score to a valid scoreboard', async () => {
         'score-name': 'test-score'
     }, '1', '1', '1');
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const scoreboard = await prisma.scoreboard.findUnique({
         where: {
             name_serverId: {
                 name: 'test',
-                serverId: int.guild?.id as string
+                serverId: r.server?.id as string
             }
         },
         include: {

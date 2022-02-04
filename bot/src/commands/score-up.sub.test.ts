@@ -14,12 +14,12 @@ it('should increase the score count', async () => {
         name: 'test'
     }, '1', '1', '1');
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const score = await ScoreService.findUnique({
         name_serverId: {
             name: 'test',
-            serverId: int.guild?.id as string
+            serverId: r.server?.id as string
         }
     });
 
@@ -39,12 +39,12 @@ it('should increase the score count by the designated amount', async () => {
         amount: 100
     }, '1', '1', '1');
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const score = await ScoreService.findUnique({
         name_serverId: {
             name: 'test',
-            serverId: int.guild?.id as string
+            serverId: r.server?.id as string
         }
     });
 

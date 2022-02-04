@@ -10,7 +10,7 @@ const ScoreUpdate: Command = {
     examples: ``,
     // options are handled in score.ts since this is a subcommand
     options: {},
-    handler: async (interaction, _user) => {
+    handler: async (interaction, _user, server) => {
         const name = interaction.options.getString('name');
         const newName = interaction.options.getString('new-name');
         const description = interaction.options.getString('description');
@@ -21,7 +21,7 @@ const ScoreUpdate: Command = {
             where: {
                 name_serverId: {
                     name: name as string,
-                    serverId: interaction.guild?.id as string
+                    serverId: server?.id as string
                 }
             }
         });
@@ -33,7 +33,7 @@ const ScoreUpdate: Command = {
         const updateData = buildUpdateObject(newName, description, amount, color);
 
         // @ts-ignore
-        await ScoreService.update(name, interaction.guild?.id, updateData);
+        await ScoreService.update(name, server?.id, updateData);
 
         const fields: {
             name: string;

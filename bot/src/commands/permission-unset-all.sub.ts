@@ -4,10 +4,10 @@ import prisma from '../util/prisma';
 const PermissionUnsetAll: Command = {
     id: '6d8707cb-2489-43ec-b686-60a9ce9beff5',
     name: 'permission unset-all',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         await prisma.permission.deleteMany({
             where: {
-                serverId: interaction.guild?.id
+                serverId: server?.id
             }
         });
 

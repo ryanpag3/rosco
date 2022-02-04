@@ -12,13 +12,13 @@ it('should unset the permission', async () => {
         }
     }, '1', '1', '1');
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     let permission = await prisma.permission.findUnique({
         where: {
             roleId_commandId_serverId: {
                 commandId: COMMANDS['ping'].id,
-                serverId: int.guild?.id as string,
+                serverId: r.server?.id as string,
                 roleId: '1'
             }
         }
@@ -39,7 +39,7 @@ it('should unset the permission', async () => {
         where: {
             roleId_commandId_serverId: {
                 commandId: COMMANDS['ping'].id,
-                serverId: int.guild?.id as string,
+                serverId: r.server?.id as string,
                 roleId: '1'
             }
         },

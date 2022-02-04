@@ -6,7 +6,7 @@ import prisma from '../util/prisma';
 const ScoreboardUpdate: Command = {
     id: 'babcf50b-c183-4b0e-b3ee-23640251459e',
     name: 'scoreboard update',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name') as string;
         const newName = interaction.options.getString('new-name') as string;
         const description = interaction.options.getString('description') as string;
@@ -15,7 +15,7 @@ const ScoreboardUpdate: Command = {
             where: {
                 name_serverId: {
                     name,
-                    serverId: interaction.guild?.id as string
+                    serverId: server?.id as string
                 }
             }
         });
@@ -38,7 +38,7 @@ const ScoreboardUpdate: Command = {
                 where: {
                     name_serverId: {
                         name,
-                        serverId: interaction.guild?.id as string 
+                        serverId: server?.id as string 
                     }
                 },
                 data

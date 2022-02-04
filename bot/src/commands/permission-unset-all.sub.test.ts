@@ -11,11 +11,11 @@ it('should set all permissions', async () => {
         }
     }, '1', '1', '1');
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     let permissions = await prisma.permission.findMany({
         where: {
-            serverId: int.guild?.id
+            serverId: r.server?.id
         }
     });
 
@@ -32,7 +32,7 @@ it('should set all permissions', async () => {
 
     permissions = await prisma.permission.findMany({
         where: {
-            serverId: int.guild?.id
+            serverId: r.server?.id
         }
     });
 

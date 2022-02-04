@@ -14,13 +14,13 @@ it('should delete a timer', async () => {
         name: 'test'
     });
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const timer = await prisma.timer.findUnique({
         where: {
             name_serverId: {
                 name: 'test',
-                serverId: '1'
+                serverId: r?.server?.id as string
             }
         },
         rejectOnNotFound: false

@@ -16,13 +16,13 @@ it('should delete a score', async () => {
         name: 'test'
     }, '1', '1', '1');
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     await expect(ScoreService.findUnique({
         name_serverId: {
             name: 'test',
             // @ts-ignore
-            serverId: int.guild?.id
+            serverId: r.server?.id
         }
     })).rejects.toThrow();
 });

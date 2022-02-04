@@ -7,7 +7,7 @@ import commands from '../util/command-subcommand-map';
 const PermissionUnset: Command = {
     id: '4e876254-dda4-4da0-9a61-bf3a9a67c3a1',
     name: 'permission unset',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         let command = interaction.options.getString('command', true);
         const role = interaction.options.getRole('role', true);
 
@@ -21,7 +21,7 @@ const PermissionUnset: Command = {
                 where: {
                     roleId_commandId_serverId: {
                         commandId: commands[command].id,
-                        serverId: interaction.guild?.id as string,
+                        serverId: server?.id as string,
                         roleId: role.id
                     } 
                 }
@@ -34,7 +34,7 @@ const PermissionUnset: Command = {
                 where: {
                     roleId_commandId_serverId: {
                         commandId: commands[command].id,
-                        serverId: interaction.guild?.id as string,
+                        serverId: server?.id as string,
                         roleId: role.id
                     }
                 }

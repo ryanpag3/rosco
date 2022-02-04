@@ -22,13 +22,13 @@ it('should remove a score to a valid scoreboard', async () => {
         'score-name': 'test-score'
     }, '1', '1', '1');
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     let scoreboard = await prisma.scoreboard.findUnique({
         where: {
             name_serverId: {
                 name: 'test',
-                serverId: int.guild?.id as string
+                serverId: r.server?.id as string
             }
         },
         include: {
@@ -49,7 +49,7 @@ it('should remove a score to a valid scoreboard', async () => {
         where: {
             name_serverId: {
                 name: 'test',
-                serverId: int.guild?.id as string
+                serverId: r.server?.id as string
             }
         },
         include: {

@@ -7,7 +7,7 @@ import prisma from '../util/prisma';
 const ScoreboardDelete: Command = {
     id: '1adb16b7-d904-47bb-b4e3-5ac93b2cc491',
     name: 'scoreboard delete',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name');
 
         try {
@@ -15,7 +15,7 @@ const ScoreboardDelete: Command = {
                 where: {
                     name_serverId: {
                         name: name as string,
-                        serverId: interaction.guild?.id as string
+                        serverId: server?.id as string
                     }
                 }
             });

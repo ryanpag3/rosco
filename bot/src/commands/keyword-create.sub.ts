@@ -7,7 +7,7 @@ import * as KeywordCache from '../service/keyword-cache';
 const KeywordCreate: Command = {
     id: '6ec5e902-f482-48a5-879e-7427b8ba5a20',
     name: 'keyword create',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const keyword = interaction.options.getString('keyword', true);
         const scoreName = interaction.options.getString('score-name', true);
         const action = interaction.options.getString('action');
@@ -19,7 +19,7 @@ const KeywordCreate: Command = {
             where: {
                 name_serverId: {
                     name: scoreName,
-                    serverId: interaction.guild?.id as string
+                    serverId: server?.id as string
                 }
             }
         });
@@ -45,7 +45,7 @@ const KeywordCreate: Command = {
                 data: {
                     keyword,
                     scoreId: score.id,
-                    serverId: interaction.guild?.id as string,
+                    serverId: server?.id as string,
                     channelId: channel?.id,
                     amount: amount || undefined,
                     action: action as KeywordAction || undefined,

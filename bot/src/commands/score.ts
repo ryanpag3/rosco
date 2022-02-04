@@ -157,21 +157,21 @@ const Score: Command = {
             ]
         }
     ],
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const subcommand = interaction.options.getSubcommand();
         switch(subcommand) {
             case 'create':
-                return ScoreCreate.handler(interaction, user);
+                return ScoreCreate.handler(interaction, user, server);
             case 'update':
-                return ScoreUpdate.handler(interaction, user);
+                return ScoreUpdate.handler(interaction, user, server);
             case 'delete':
-                return ScoreDelete.handler(interaction, user);
+                return ScoreDelete.handler(interaction, user, server);
             case 'up':
-                return ScoreUp.handler(interaction, user);
+                return ScoreUp.handler(interaction, user, server);
             case 'down':
-                return ScoreDown.handler(interaction, user);
+                return ScoreDown.handler(interaction, user, server);
             case 'list':
-                return ScoreList.handler(interaction, user);
+                return ScoreList.handler(interaction, user, server);
             default:
                 throw new BotError(`Invalid subcommand provided.`);
         }

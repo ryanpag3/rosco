@@ -22,12 +22,12 @@ it('should update a valid score', async () => {
     // @ts-ignore
     int.guild.id = serverId;
 
-    await onCommandReceived(int);
+    const r = await onCommandReceived(int);
 
     const score = await ScoreService.findUnique({
         name_serverId: {
             name: 'test',
-            serverId: int.guild?.id as string
+            serverId: r.server?.id as string
         }
     });
 

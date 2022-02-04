@@ -23,11 +23,20 @@ it('should reset a created timer.', async () => {
 
     await onCommandReceived(int);
 
+    const server = await prisma.server.findUnique({
+        where: {
+            discordId: int.guild?.id as string
+        },
+        include: {
+            ServerWelcomeMessage: true
+        }
+    });
+
     const stopwatch = await prisma.stopwatch.findUnique({
         where: {
             name_serverId: {
                 name: 'test',
-                serverId: int.guild?.id as string
+                serverId: server?.id as string
             }
         }
     });

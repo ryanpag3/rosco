@@ -74,19 +74,19 @@ const Permission: Command = {
             type: ApplicationCommandOptionType.Subcommand
         },
     ],
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const subcommand = interaction.options.getSubcommand();
         switch(subcommand) {
             case 'set':
-                return PermissionSet.handler(interaction, user);
+                return PermissionSet.handler(interaction, user, server);
             case 'unset':
-                return PermissionUnset.handler(interaction, user);
+                return PermissionUnset.handler(interaction, user, server);
             case 'set-all':
-                return PermissionSetAll.handler(interaction, user);
+                return PermissionSetAll.handler(interaction, user, server);
             case 'unset-all':
-                return PermissionUnsetAll.handler(interaction, user);
+                return PermissionUnsetAll.handler(interaction, user, server);
             case 'list':
-                return PermissionList.handler(interaction, user);
+                return PermissionList.handler(interaction, user, server);
             default:
                 throw new BotError(`Invalid subcommand issued to /permission`);
         }

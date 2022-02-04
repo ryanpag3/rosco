@@ -9,19 +9,13 @@ it('should create a timer', async () => {
         message: 'message'
     });
 
-    await onInteractionCreate(int);
-
-    const server = await prisma.server.findUnique({
-        where: {
-            discordId: int.guild?.id
-        }
-    });
+    const r = await onInteractionCreate(int);
 
     const timer = await prisma.timer.findUnique({
         where: {
             name_serverId: {
                 name: 'test',
-                serverId: server?.id as string
+                serverId: r?.server?.id as string
             }
         }
     });

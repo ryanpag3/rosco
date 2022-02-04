@@ -111,19 +111,19 @@ const Scoreboard: Command = {
             ]
         }
     ],
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const subcommand = interaction.options.getSubcommand();
         switch(subcommand) {
             case 'create':
-                return ScoreboardCreate.handler(interaction, user);
+                return ScoreboardCreate.handler(interaction, user, server);
             case 'delete':
-                return ScoreboardDelete.handler(interaction, user);
+                return ScoreboardDelete.handler(interaction, user, server);
             case 'update':
-                return ScoreboardUpdate.handler(interaction, user);
+                return ScoreboardUpdate.handler(interaction, user, server);
             case 'add-score':
-                return ScoreboardScoreAdd.handler(interaction, user);
+                return ScoreboardScoreAdd.handler(interaction, user, server);
             case 'remove-score':
-                return ScoreboardScoreRemove.handler(interaction, user);
+                return ScoreboardScoreRemove.handler(interaction, user, server);
             default:
                 throw new BotError(`Invalid scoreboard subcommand issued.`);
         }

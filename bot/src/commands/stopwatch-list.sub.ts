@@ -5,10 +5,10 @@ import { getDuration } from '../util/stopwatch';
 const StopwatchList: Command = {
     id: 'cc354bf6-73c5-47cb-b61c-a8e5d967f753',
     name: 'stopwatch list',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const stopwatches = await prisma.stopwatch.findMany({
             where: {
-                serverId: interaction.guild?.id
+                serverId: server?.id
             },
             include: {
                 User: true

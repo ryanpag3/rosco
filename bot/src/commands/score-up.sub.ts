@@ -9,14 +9,14 @@ const ScoreUp: Command = {
     examples: ``,
     // options are handled in score.ts since this is a subcommand
     options: {},
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name');
         const amount = interaction.options.getInteger('amount') || 1;
 
         const score = await ScoreService.findUnique({
             name_serverId: {
                 name: name as string,
-                serverId: interaction.guild?.id as string
+                serverId: server?.id as string
             }
         });
 

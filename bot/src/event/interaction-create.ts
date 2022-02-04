@@ -11,7 +11,7 @@ import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
 import { Server, User } from '@prisma/client';
 import prisma from '../util/prisma';
 
-const onInteractionCreate = async (interaction: CommandInteraction) => {
+const onInteractionCreate = async (interaction: CommandInteraction): Promise<any> => {
     try {
         if (!interaction.isButton() && !interaction.isCommand() )
             return;
@@ -45,6 +45,11 @@ const onInteractionCreate = async (interaction: CommandInteraction) => {
         }
 
         await handler(interaction, user, server);
+
+        return {
+            user,
+            server
+        };
     } catch (e) {
         const supportId = uuidv4();
 

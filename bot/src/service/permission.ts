@@ -35,7 +35,6 @@ export const userHasPermission = async (interaction: CommandInteraction, user: U
                 logger.debug(`permission found`);
                 return true;
             }
-        
         }
 
         return false;

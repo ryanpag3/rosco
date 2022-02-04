@@ -6,7 +6,7 @@ import { getDuration } from '../util/stopwatch';
 const StopwatchInfo: Command = {
     id: `b12adfe8-bdb8-4e63-9f70-8d1a27e0c6ee`,
     name: `stopwatch info`,
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const name = interaction.options.getString(`name`, true);
 
         try {
@@ -14,7 +14,7 @@ const StopwatchInfo: Command = {
                 where: {
                     name_serverId: {
                         name,
-                        serverId: interaction.guild?.id as string
+                        serverId: server?.id as string
                     }
                 }
             });

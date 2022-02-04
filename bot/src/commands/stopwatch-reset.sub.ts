@@ -7,7 +7,7 @@ import prisma from '../util/prisma';
 const StopwatchReset: Command = {
     id: `544eff62-e831-4840-a61c-d7e988c677ac`,
     name: `stopwatch reset`,
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const name = interaction.options.getString(`name`, true);
 
         try {
@@ -15,7 +15,7 @@ const StopwatchReset: Command = {
                 where: {
                     name_serverId: {
                         name,
-                        serverId: interaction.guild?.id as string
+                        serverId: server?.id as string
                     }
                 },
                 data: {

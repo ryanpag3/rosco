@@ -10,7 +10,7 @@ const ScoreDelete: Command = {
     examples: ``,
     // options are handled in score.ts since this is a subcommand
     options: {},
-    handler: async (interaction, _user) => {
+    handler: async (interaction, _user, server) => {
         const name = interaction.options.getString('name');
 
         const score = await prisma.score.findUnique({
@@ -19,7 +19,7 @@ const ScoreDelete: Command = {
                     // @ts-ignore
                     name,
                     // @ts-ignore
-                    serverId: interaction.guild?.id
+                    serverId: server?.id
                 }
             }
         });

@@ -5,10 +5,10 @@ import prisma from '../util/prisma';
 const PermissionList: Command = {
     id: '7d4c9938-cbe8-4e06-94e9-8a67da846102',
     name: 'permission list',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const permissions = await prisma.permission.findMany({
             where: {
-                serverId: interaction.guild?.id
+                serverId: server?.id
             },
             include: {
                 User: true

@@ -7,7 +7,7 @@ import * as KeywordCache from '../service/keyword-cache';
 const KeywordDelete: Command = {
     id: 'f10df570-b711-41bc-a083-0b2465304b1e',
     name: 'keyword delete',
-    handler: async (interaction, user) => {
+    handler: async (interaction, user, server) => {
         const keyword = interaction.options.getString('keyword', true);
         const scoreName = interaction.options.getString('score-name', true);
 
@@ -15,7 +15,7 @@ const KeywordDelete: Command = {
             where: {
                 name_serverId: {
                     name: scoreName,
-                    serverId: interaction.guild?.id as string
+                    serverId: server?.id as string
                 }
             }
         });
@@ -28,7 +28,7 @@ const KeywordDelete: Command = {
                 keyword_scoreId_serverId: {
                     keyword,
                     scoreId: score.id,
-                    serverId: interaction.guild?.id as string,
+                    serverId: server?.id as string,
                 }
             }
         });
