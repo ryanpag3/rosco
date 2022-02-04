@@ -1,4 +1,5 @@
 ./src
 ./types
 ./node_modules
+!./node_modules/*prisma*
 .env

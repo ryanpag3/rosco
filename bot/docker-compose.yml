@@ -1,7 +1,7 @@
 version: '3'
 services:
   bot:
-    image: ryanpage/guac-bot:latest
+    image: docker.io/ryanpage/guac-bot:latest
     env_file:
       - ./.env
   db:
