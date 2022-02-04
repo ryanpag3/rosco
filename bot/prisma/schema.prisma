@@ -9,6 +9,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Announcement {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  CreatedBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdById String?
+  Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId    String
+  channelId   String
+  announceAt  DateTime
+  message     String
+
+  @@unique([serverId, name])
+}
+
 model CommandHistory {
   id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
@@ -182,6 +198,7 @@ model Server {
   Scoreboard                   Scoreboard[]
   Score                        Score[]
   Permission                   Permission[]
+  Announcement                 Announcement[]
 }
 
 model ServerWelcomeMessage {
@@ -247,6 +264,7 @@ model User {
   Poll                      Poll[]
   PollVote                  PollVote[]
   Timer                     Timer[]
+  Announcement              Announcement[]
 }
 
 model UserServer {

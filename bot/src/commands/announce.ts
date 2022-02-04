@@ -19,8 +19,19 @@ const Announce: Command = {
                     required: true
                 },
                 {
+                    name: 'channel',
+                    description: 'The channel to make the announcement in.',
+                    type: ApplicationCommandOptionType.Channel,
+                    required: true                },
+                {
                     name: 'when',
                     description: 'When to run the announcement. e.g "in 5 days"',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'message',
+                    description: 'The message to display when the announcement is up.',
                     type: ApplicationCommandOptionType.String,
                     required: true
                 }
