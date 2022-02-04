@@ -1,5 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider        = "prisma-client-js"
@@ -11,91 +9,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Server {
-  id                           String                 @id @default(uuid())
-  discordId                    String                 @unique @db.VarChar(32)
-  createdAt                    DateTime               @default(now())
-  updatedAt                    DateTime               @updatedAt
-  currencyHistoryChannelId     String?
-  currencyHistoryChannelActive Boolean?               @default(true)
-  currencyCount                Int                    @default(0)
-  timezone                     String                 @default("America/Los_Angeles")
-  CurrencyHistoryLog           CurrencyHistoryLog[]
-  CurrencyRule                 CurrencyRule[]
-  UserServer                   UserServer[]
-  Poll                         Poll[]
-  ServerWelcomeMessage         ServerWelcomeMessage[]
-  Timer                        Timer[]
-  Stopwatch                    Stopwatch[]
-  Keyword                      Keyword[]
-  Scoreboard                   Scoreboard[]
-  Score                        Score[]
-  Permission                   Permission[]
-}
-
-model ServerWelcomeMessage {
-  id        String  @id @default(uuid())
-  Server    Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  serverId  String
-  channelId String
-  title     String
-  message   String
-  isPublic  Boolean
-  isEnabled Boolean @default(false)
-
-  @@unique([serverId, isPublic])
-}
-
-model User {
-  id                        String               @id @default(uuid())
-  discordId                 String               @unique @db.VarChar(32)
-  createdAt                 DateTime             @default(now())
-  updatedAt                 DateTime             @updatedAt
-  botCurrencyCount          Int                  @default(0)
-  CommandHistory            CommandHistory[]
-  Scores                    Score[]
-  Scoreboards               Scoreboard[]
-  Permission                Permission[]
-  Keyword                   Keyword[]
-  Stopwatch                 Stopwatch[]
-  SendCurrencyHistoryLog    CurrencyHistoryLog[] @relation("Sender")
-  ReceiveCurrencyHistoryLog CurrencyHistoryLog[] @relation("Receiver")
-  CurrencyRule              CurrencyRule[]
-  UserServer                UserServer[]
-  Poll                      Poll[]
-  PollVote                  PollVote[]
-  Timer                     Timer[]
-}
-
-model UserServer {
-  id                String @id @default(uuid())
-  User              User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Server            Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  userId            String
-  serverId          String
-  currencyCount     Int    @default(0)
-  bankCurrencyCount Int    @default(0)
-
-  @@unique([userId, serverId])
-}
-
-// keep in sync with currency.ts
-enum CurrencyAction {
-  COMMAND
-  MESSAGE
-  REACTION
-}
-
-model CurrencyRule {
-  id                 String               @id @default(uuid())
-  roleId             String
-  amount             Int
-  action             CurrencyAction
-  serverId           String
-  Server             Server               @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  userId             String?
-  User               User?                @relation(fields: [userId], references: [id], onDelete: SetNull)
-  CurrencyHistoryLog CurrencyHistoryLog[]
+model CommandHistory {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  User        User?    @relation(references: [id], onDelete: Cascade, fields: [userId])
+  userId      String
+  commandName String
+  commandRaw  String?
 }
 
 model CurrencyHistoryLog {
@@ -119,6 +40,36 @@ model CurrencyHistoryLog {
   @@unique([receiverId, reaction, messageId])
 }
 
+model CurrencyRule {
+  id                 String               @id @default(uuid())
+  roleId             String
+  amount             Int
+  action             CurrencyAction
+  serverId           String
+  Server             Server               @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  userId             String?
+  User               User?                @relation(fields: [userId], references: [id], onDelete: SetNull)
+  CurrencyHistoryLog CurrencyHistoryLog[]
+}
+
+model Keyword {
+  id        String        @id @default(uuid())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  keyword   String
+  scoreId   String
+  Score     Score         @relation(fields: [scoreId], references: [id], onDelete: Cascade)
+  action    KeywordAction @default(UP)
+  amount    Int           @default(1)
+  serverId  String
+  Server    Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  channelId String?
+  userId    String?
+  User      User?         @relation(fields: [userId], references: [id])
+
+  @@unique([keyword, scoreId, serverId])
+}
+
 model Permission {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -128,20 +79,52 @@ model Permission {
   serverId  String
   Server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
   // In theory, a user could be deleted but we want to persist the Permission record.
-  userId String?
-  User   User?   @relation(references: [id], onDelete: SetNull, fields: [userId])
+  userId    String?
+  User      User?    @relation(references: [id], onDelete: SetNull, fields: [userId])
 
   @@unique([roleId, commandId, serverId])
 }
 
-model CommandHistory {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  User        User?    @relation(references: [id], onDelete: Cascade, fields: [userId])
-  userId      String
-  commandName String
-  commandRaw  String?
+model Poll {
+  id         String       @id @default(uuid())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  name       String       @unique
+  question   String
+  isOpen     Boolean      @default(true)
+  Server     Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId   String
+  messageId  String
+  CreatedBy  User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId     String?
+  PollOption PollOption[]
+  PollVote   PollVote[]
+
+  @@unique([name, serverId])
+}
+
+model PollOption {
+  id        String     @id @default(uuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Poll      Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollId    String
+  content   String
+  Votes     PollVote[]
+}
+
+model PollVote {
+  id           String     @id @default(uuid())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  Poll         Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollId       String
+  PollOption   PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+  pollOptionId String
+  CreatedBy    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+
+  @@unique([userId, pollId])
 }
 
 model Score {
@@ -179,27 +162,39 @@ model Scoreboard {
   @@unique([name, serverId])
 }
 
-enum KeywordAction {
-  UP
-  DOWN
+model Server {
+  id                           String                 @id @default(uuid())
+  discordId                    String                 @unique @db.VarChar(32)
+  createdAt                    DateTime               @default(now())
+  updatedAt                    DateTime               @updatedAt
+  currencyHistoryChannelId     String?
+  currencyHistoryChannelActive Boolean?               @default(true)
+  currencyCount                Int                    @default(0)
+  timezone                     String                 @default("America/Los_Angeles")
+  CurrencyHistoryLog           CurrencyHistoryLog[]
+  CurrencyRule                 CurrencyRule[]
+  UserServer                   UserServer[]
+  Poll                         Poll[]
+  ServerWelcomeMessage         ServerWelcomeMessage[]
+  Timer                        Timer[]
+  Stopwatch                    Stopwatch[]
+  Keyword                      Keyword[]
+  Scoreboard                   Scoreboard[]
+  Score                        Score[]
+  Permission                   Permission[]
 }
 
-model Keyword {
-  id        String        @id @default(uuid())
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  keyword   String
-  scoreId   String
-  Score     Score         @relation(fields: [scoreId], references: [id], onDelete: Cascade)
-  action    KeywordAction @default(UP)
-  amount    Int           @default(1)
+model ServerWelcomeMessage {
+  id        String  @id @default(uuid())
+  Server    Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
   serverId  String
-  Server    Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  channelId String?
-  userId    String?
-  User      User?         @relation(fields: [userId], references: [id])
+  channelId String
+  title     String
+  message   String
+  isPublic  Boolean
+  isEnabled Boolean @default(false)
 
-  @@unique([keyword, scoreId, serverId])
+  @@unique([serverId, isPublic])
 }
 
 model Stopwatch {
@@ -218,49 +213,6 @@ model Stopwatch {
   @@unique([name, serverId])
 }
 
-model Poll {
-  id         String       @id @default(uuid())
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  name       String       @unique
-  question   String
-  isOpen     Boolean      @default(true)
-  Server     Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  serverId   String
-  messageId  String
-  CreatedBy  User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
-  userId     String?
-  PollOption PollOption[]
-  PollVote   PollVote[]
-
-  @@unique([name, serverId])
-}
-
-// no explicit CreatedBy reference since this would always be the same as Poll
-model PollOption {
-  id        String     @id @default(uuid())
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  Poll      Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
-  pollId    String
-  content   String
-  Votes     PollVote[]
-}
-
-model PollVote {
-  id           String     @id @default(uuid())
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  Poll         Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
-  pollId       String
-  PollOption   PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
-  pollOptionId String
-  CreatedBy    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       String
-
-  @@unique([userId, pollId])
-}
-
 model Timer {
   id             String    @id @default(uuid())
   name           String
@@ -274,4 +226,48 @@ model Timer {
   pausedDuration String?
 
   @@unique([name, serverId])
+}
+
+model User {
+  id                        String               @id @default(uuid())
+  discordId                 String               @unique @db.VarChar(32)
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime             @updatedAt
+  botCurrencyCount          Int                  @default(0)
+  CommandHistory            CommandHistory[]
+  Scores                    Score[]
+  Scoreboards               Scoreboard[]
+  Permission                Permission[]
+  Keyword                   Keyword[]
+  Stopwatch                 Stopwatch[]
+  SendCurrencyHistoryLog    CurrencyHistoryLog[] @relation("Sender")
+  ReceiveCurrencyHistoryLog CurrencyHistoryLog[] @relation("Receiver")
+  CurrencyRule              CurrencyRule[]
+  UserServer                UserServer[]
+  Poll                      Poll[]
+  PollVote                  PollVote[]
+  Timer                     Timer[]
+}
+
+model UserServer {
+  id                String @id @default(uuid())
+  User              User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Server            Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  userId            String
+  serverId          String
+  currencyCount     Int    @default(0)
+  bankCurrencyCount Int    @default(0)
+
+  @@unique([userId, serverId])
+}
+
+enum CurrencyAction {
+  COMMAND
+  MESSAGE
+  REACTION
+}
+
+enum KeywordAction {
+  UP
+  DOWN
 }
