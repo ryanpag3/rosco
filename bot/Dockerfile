@@ -30,6 +30,8 @@ COPY node_modules/@prisma node_modules/@prisma
 
 COPY ./out/minified .
 
+COPY entrypoint.sh entrypoint.sh
+
 COPY prisma/schema.prisma prisma/schema.prisma
 
-ENTRYPOINT ["yarn", "migrate", "deploy", "&&", "node", "src/index.js"]
+ENTRYPOINT ["./entrypoint.sh"]
