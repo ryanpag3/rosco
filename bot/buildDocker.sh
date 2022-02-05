@@ -1,10 +1,10 @@
 #!/bin/bash
 
-yarn migrate deploy
-
 rm -rf ./out
 
 npx tsc 
+
+npx prisma generate
 
 cd out && \
  rm -rf **/*.min.js && \
