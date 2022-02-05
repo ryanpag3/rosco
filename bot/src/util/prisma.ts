@@ -6,7 +6,7 @@ const prisma = new PrismaClient({
     rejectOnNotFound: true
 });
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
     const { sortPrismaSchema } = require('prisma-schema-sorter');
 
     sortPrismaSchema(path.join(__dirname, '../../prisma/schema.prisma'))
