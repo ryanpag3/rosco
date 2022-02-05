@@ -32,6 +32,6 @@ COPY ./out/minified .
 
 COPY entrypoint.sh ./entrypoint.sh
 
-COPY prisma/schema.prisma prisma/schema.prisma
+COPY prisma/ prisma/
 
 ENTRYPOINT ["./entrypoint.sh"]
