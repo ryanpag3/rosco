@@ -26,9 +26,10 @@ export async function deploy() {
         return
 
     return new Promise(async (resolve, reject) => {
-        logger.debug(`deploying slash commands`);
+        logger.debug(`deploying slash ${mappedCommands.length} commands`);
         try {
             if (process.env.NODE_ENV !== 'production') {
+                logger.debug('using test server');
                 // register with test server
                 await rest.put(
                     Routes.applicationGuildCommands(process.env.DISCORD_APPLICATION_ID as string, process.env.TEST_GUILD_ID as string),
@@ -37,6 +38,7 @@ export async function deploy() {
                     }
                 );
             } else {
+                logger.debug('using global');
                 // register globally in production
                 await rest.put(
                     Routes.applicationCommands(process.env.DISCORD_APPLICATION_ID as string),
