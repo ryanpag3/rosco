@@ -14,12 +14,9 @@ import { onMessageReactionRemove } from './event/message-reaction-remove';
 import onGuildMemberAdd from './event/guild-member-add';
 import * as ScheduledTaskExecutor from './util/scheduled-task-executor';
 import execa from 'execa';
-import { delay } from 'bluebird';
 
 export default async function (client: Client) {
     await execa.command('yarn migrate deploy');
-
-    await delay(5000);
 
     // baseline cache against database
     await baselineKeywordCacheToDatabase();
