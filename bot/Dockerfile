@@ -30,4 +30,6 @@ COPY node_modules/@prisma node_modules/@prisma
 
 COPY ./out/minified .
 
+COPY prisma/schema.prisma prisma/schema.prisma
+
 ENTRYPOINT ["node", "src/index.js"]
