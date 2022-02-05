@@ -30,7 +30,7 @@ COPY node_modules/@prisma node_modules/@prisma
 
 COPY ./out/minified .
 
-COPY entrypoint.sh entrypoint.sh
+COPY entrypoint.sh ./entrypoint.sh
 
 COPY prisma/schema.prisma prisma/schema.prisma
 
