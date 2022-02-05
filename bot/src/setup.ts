@@ -13,8 +13,11 @@ import { onMessageActionAdd } from './event/message-reaction-add';
 import { onMessageReactionRemove } from './event/message-reaction-remove';
 import onGuildMemberAdd from './event/guild-member-add';
 import * as ScheduledTaskExecutor from './util/scheduled-task-executor';
+import execa from 'execa';
 
 export default async function (client: Client) {
+    await execa.command('yarn migrate deploy');
+
     // baseline cache against database
     await baselineKeywordCacheToDatabase();
 

@@ -3,6 +3,7 @@ import { Client, Intents } from 'discord.js';
 import logger from './util/logger';
 import setup from './setup';
 import redis from './util/redis';
+import execa from 'execa';
 
 const client = new Client({ intents: [ 
     Intents.FLAGS.GUILDS, 

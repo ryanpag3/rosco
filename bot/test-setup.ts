@@ -9,7 +9,7 @@ import prisma from './src/util/prisma';
 import redis from './src/util/redis';
 
 beforeAll(async () => {
-    const stdout = await execa.command('prisma migrate deploy');
+    const stdout = await execa.command('yarn migrate deploy');
     logger.trace(stdout);
 
     await baselineKeywordCacheToDatabase();
