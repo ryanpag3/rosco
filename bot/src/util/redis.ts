@@ -15,7 +15,8 @@ const client = createClient({
         logger.debug(`redis connection established.`);
     } catch (e) {
         logger.error(e);
-        process.exit(1);
+        if (process.env.NODE_ENV !== 'test')
+            process.exit(1);
     }
 })();
 
