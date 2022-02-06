@@ -106,7 +106,7 @@ model Poll {
   id         String       @id @default(uuid())
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
-  name       String       @unique
+  name       String
   question   String
   isOpen     Boolean      @default(true)
   Server     Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
