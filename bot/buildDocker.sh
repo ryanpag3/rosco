@@ -17,7 +17,7 @@ DOCKER_TAG=${1:-ryanpage/guac-bot}:${2:-latest}
 pwd
 
 
-docker build . -t $DOCKER_TAG
+docker build . -t $DOCKER_TAG --progress=plain
 
 if [[ ! -z "${PUSH}" ]]; then
     docker push $DOCKER_TAG
