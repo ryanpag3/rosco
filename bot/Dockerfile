@@ -4,6 +4,8 @@ ENV WORKDIR /opt/guac-bot
 
 ENV FONT_LOCATION /usr/share/fonts/truetype
 
+ENV NODE_ENV production
+
 FROM base AS build
 
 RUN apk add --update --no-cache \
@@ -52,6 +54,8 @@ COPY --from=build ${WORKDIR}/package.json .
 COPY --from=build ${WORKDIR}/node_modules ./node_modules
 
 COPY --from=build ${FONT_LOCATION} ${FONT_LOCATION}
+
+COPY --from=build /usr/lib /usr/lib 
 
 COPY ./prisma ./prisma
 
