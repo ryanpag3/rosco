@@ -70,6 +70,10 @@ const PollCreate: Command = {
                                 value: poll.question
                             },
                             {
+                                name: 'status',
+                                value: 'open'
+                            },
+                            {
                                 name: 'results',
                                 value: poll.PollOption.map(po => {
                                     return `0 | **${po.content}**`
