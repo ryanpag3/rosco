@@ -14,7 +14,8 @@ RUN apk add --update --no-cache \
     jpeg-dev \
     cairo-dev \
     giflib-dev \
-    pango-dev
+    pango-dev \
+    libuuid
 
 WORKDIR /tmp
 
