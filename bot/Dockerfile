@@ -14,8 +14,7 @@ RUN apk add --update --no-cache \
     jpeg-dev \
     cairo-dev \
     giflib-dev \
-    pango-dev \
-    libuuid
+    pango-dev 
 
 WORKDIR /tmp
 
@@ -46,17 +45,17 @@ COPY node_modules/prisma node_modules/prisma
 
 COPY node_modules/@prisma node_modules/@prisma
 
-FROM base AS RELEASE
+# FROM base AS RELEASE
 
-WORKDIR ${WORKDIR}
+# WORKDIR ${WORKDIR}
 
-COPY --from=build ${WORKDIR}/package.json .
+# COPY --from=build ${WORKDIR}/package.json .
 
-COPY --from=build ${WORKDIR}/node_modules ./node_modules
+# COPY --from=build ${WORKDIR}/node_modules ./node_modules
 
-COPY --from=build ${FONT_LOCATION} ${FONT_LOCATION}
+# COPY --from=build ${FONT_LOCATION} ${FONT_LOCATION}
 
-COPY --from=build /usr/lib /usr/lib 
+# COPY --from=build /usr/lib /usr/lib 
 
 COPY ./prisma ./prisma
 
