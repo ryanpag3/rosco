@@ -1,4 +1,3 @@
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["extendedIndexes"]
@@ -182,27 +181,40 @@ model Scoreboard {
 }
 
 model Server {
-  id                           String                 @id @default(uuid())
-  discordId                    String                 @unique @db.VarChar(32)
-  createdAt                    DateTime               @default(now())
-  updatedAt                    DateTime               @updatedAt
+  id                           String   @id @default(uuid())
+  discordId                    String   @unique @db.VarChar(32)
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
   currencyHistoryChannelId     String?
-  currencyHistoryChannelActive Boolean?               @default(true)
-  currencyCount                Int                    @default(0)
-  timezone                     String                 @default("America/Los_Angeles")
-  CurrencyHistoryLog           CurrencyHistoryLog[]
-  CurrencyRule                 CurrencyRule[]
-  UserServer                   UserServer[]
-  Poll                         Poll[]
-  ServerWelcomeMessage         ServerWelcomeMessage[]
-  Timer                        Timer[]
-  Stopwatch                    Stopwatch[]
-  Keyword                      Keyword[]
-  Scoreboard                   Scoreboard[]
-  Score                        Score[]
-  Permission                   Permission[]
-  Announcement                 Announcement[]
-  CommandHistory               CommandHistory[]
+  currencyHistoryChannelActive Boolean? @default(true)
+  currencyCount                Int      @default(0)
+  timezone                     String   @default("America/Los_Angeles")
+
+  // module toggle flags
+  autoModBannedWordsEnabled Boolean @default(false)
+  announceEnabled           Boolean @default(true)
+  currencyEnabled           Boolean @default(true)
+  keywordEnabled            Boolean @default(true)
+  pollEnabled               Boolean @default(true)
+  scoreEnabled              Boolean @default(true)
+  scoreboardEnabled         Boolean @default(true)
+  stopwatchEnabled          Boolean @default(true)
+  timerEnabled              Boolean @default(true)
+  welcomeEnabled            Boolean @default(true)
+
+  CurrencyHistoryLog   CurrencyHistoryLog[]
+  CurrencyRule         CurrencyRule[]
+  UserServer           UserServer[]
+  Poll                 Poll[]
+  ServerWelcomeMessage ServerWelcomeMessage[]
+  Timer                Timer[]
+  Stopwatch            Stopwatch[]
+  Keyword              Keyword[]
+  Scoreboard           Scoreboard[]
+  Score                Score[]
+  Permission           Permission[]
+  Announcement         Announcement[]
+  CommandHistory       CommandHistory[]
 }
 
 model ServerWelcomeMessage {
