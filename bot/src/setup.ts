@@ -14,9 +14,15 @@ import { onMessageReactionRemove } from './event/message-reaction-remove';
 import onGuildMemberAdd from './event/guild-member-add';
 import * as ScheduledTaskExecutor from './util/scheduled-task-executor';
 import execa from 'execa';
+import logger from './util/logger';
 
 export default async function (client: Client) {
-    await execa.command('yarn migrate deploy');
+    try {
+        await execa.command('yarn migrate deploy');
+    } catch (e) {
+        logger.error(e);
+        process.exit(1);
+    }
 
     // baseline cache against database
     await baselineKeywordCacheToDatabase();
