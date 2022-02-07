@@ -10,26 +10,32 @@ it('should close a poll', async () => {
         'option-2': '2'
     });
 
-    await onInteractionCreate(int);
+    let r = await onInteractionCreate(int);
 
     let poll = await prisma.poll.findUnique({
         where: {
-            name: 't'
+            name_serverId: {
+                name: 't',
+                serverId: r.server.id
+            }
         }
     });
 
     expect(poll).not.toBeNull();
-    
+
 
     int = createTestInteraction('poll', 'close', {
         name: 't',
     });
 
-    await onInteractionCreate(int); 
+    await onInteractionCreate(int);
 
     poll = await prisma.poll.findUnique({
         where: {
-            name: 't'
+            name_serverId: {
+                name: 't',
+                serverId: r.server.id
+            }
         }
     });
 
@@ -41,5 +47,5 @@ it('should throw an error if the poll does not exist', async () => {
         name: 't',
     });
 
-    await expect(onInteractionCreate(int)).rejects.toThrow(); 
+    await expect(onInteractionCreate(int)).rejects.toThrow();
 });

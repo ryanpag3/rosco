@@ -10,11 +10,14 @@ it('should delete a poll', async () => {
         'option-2': '2'
     });
 
-    await onInteractionCreate(int);
+    const r = await onInteractionCreate(int);
 
     let poll = await prisma.poll.findUnique({
         where: {
-            name: 't'
+            name_serverId: {
+                name: 't',
+                serverId: r.server.id
+            }
         }
     });
 
@@ -28,7 +31,10 @@ it('should delete a poll', async () => {
 
     poll = await prisma.poll.findUnique({
         where: {
-            name: 't'
+            name_serverId: {
+                name: 't',
+                serverId: r.server.id
+            }
         },
         rejectOnNotFound: false
     }) as any;

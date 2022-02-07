@@ -10,11 +10,14 @@ it('should create a poll', async () => {
         'option-2': '2'
     });
 
-    await onInteractionCreate(int);
+    const r = await onInteractionCreate(int);
 
     const poll = await prisma.poll.findUnique({
         where: {
-            name: 't'
+            name_serverId: {
+                name: 't',
+                serverId: r.server.id
+            }
         }
     });
 
