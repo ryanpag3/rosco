@@ -1,4 +1,3 @@
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["extendedIndexes"]
@@ -30,6 +29,8 @@ model CommandHistory {
   id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId    String
   User        User?    @relation(references: [id], onDelete: Cascade, fields: [userId])
   userId      String
   commandName String
@@ -200,6 +201,7 @@ model Server {
   Score                        Score[]
   Permission                   Permission[]
   Announcement                 Announcement[]
+  CommandHistory               CommandHistory[]
 }
 
 model ServerWelcomeMessage {

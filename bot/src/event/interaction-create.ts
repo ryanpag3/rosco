@@ -36,7 +36,7 @@ const onInteractionCreate = async (interaction: CommandInteraction): Promise<any
 
         await handleCurrencyEvent(CurrencyAction.COMMAND, interaction);
 
-        await CommandHistory.addToHistory(user.id, interaction, JSON.stringify(interaction.toJSON(), (key, value) => typeof value === 'bigint' ? value.toString() : value, 4));
+        await CommandHistory.addToHistory(user.id, server?.id as string, interaction, JSON.stringify(interaction.toJSON(), (key, value) => typeof value === 'bigint' ? value.toString() : value, 4));
 
         const { handler } = COMMANDS[interaction.commandName];
 
