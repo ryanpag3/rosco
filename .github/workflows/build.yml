@@ -40,8 +40,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '16'
-      - name: install yarn
-        run: npm i -g yarn
+      - name: install deps
+        run: |
+          npm i -g yarn
+          yum install -y gcc-c++ patch readline readline-devel zlib zlib-devel \
+            libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison iconv-devel
       - name: build bot
         run: |
           yarn install
