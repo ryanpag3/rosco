@@ -27,6 +27,8 @@ jobs:
           github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           ec2-image-id: ami-123
           ec2-instance-type: t2.nano
+          subnet-id: subnet-3d8df115
+          security-group-id: sg-07335f4bd9769ac34
   stop-runner:
     name: Stop self-hosted EC2 runner
     needs:
