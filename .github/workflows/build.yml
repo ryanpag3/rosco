@@ -25,7 +25,7 @@ jobs:
         with:
           mode: start
           github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          ec2-image-id: ami-0416dbd2c71c31a20
+          ec2-image-id: ami-08bf243ce56f68bfd
           ec2-instance-type: t2.medium
           subnet-id: subnet-eb4d25a0
           security-group-id: sg-07335f4bd9769ac34
@@ -80,7 +80,6 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           export NODE_OPTIONS=--max_old_space_size=4096
-          yum install libuuid-devel libmount-devel && cp /lib64/{libuuid,libmount,libblkid}.so.1 node_modules/canvas/build/Release/
           yarn install
           yarn jest
         working-directory: ./bot
