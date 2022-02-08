@@ -79,9 +79,8 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          export LD_LIBRARY_PATH=/var/task/node_modules/canvas/build/Release
-          export LD_PRELOAD=/var/task/node_modules/canvas/build/Release/libz.so.1
           export NODE_OPTIONS=--max_old_space_size=4096
+          yum install libuuid-devel libmount-devel && cp /lib64/{libuuid,libmount,libblkid}.so.1 node_modules/canvas/build/Release/
           yarn install
           yarn jest
         working-directory: ./bot
