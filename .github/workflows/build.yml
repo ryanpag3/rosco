@@ -79,6 +79,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
+          export LD_PRELOAD=/var/task/node_modules/canvas/build/Release/libz.so.1
           export NODE_OPTIONS=--max_old_space_size=4096
           yarn install
           yarn jest
