@@ -2,9 +2,18 @@ import { CommandInteraction, InteractionReplyOptions, Message, MessageOptions, M
 import logger from './logger';
 
 // add fields as necessary
-export function createTestInteraction(commandName: string, subcommandName?: string, options?: any, serverId?: string, channelId?: string, staticUserId?: string): CommandInteraction {
+export function createTestInteraction(commandName: string, 
+    subcommandName?: string|string[], options?: any, 
+    serverId?: string, channelId?: string, 
+    staticUserId?: string): CommandInteraction {
     const userId = staticUserId || '1';
-    
+    let sName = subcommandName;
+    let sGroup: any;
+    if ((subcommandName as string[]).length > 1) {
+        sName = (subcommandName as string[])[1];
+        sGroup = (subcommandName as string[])[0];
+    }
+
     return {
         id: '1',
         commandName,
@@ -77,7 +86,8 @@ export function createTestInteraction(commandName: string, subcommandName?: stri
             getRole: (key: string) => options ? options[key] : null,
             // @ts-ignore
             getInteger: (key: string) => Number.parseInt(options ? options[key] : undefined),
-            getSubcommand: () => subcommandName,
+            getSubcommand: () => sName,
+            getSubcommandGroup: () => sGroup,
             getBoolean: (key: string) => options ? options[key]?.toString() === 'true' : null,
             getUser: (key: string) => options ? options[key] : null,
             getChannel: (key: string) => options ? options[key] : null

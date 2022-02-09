@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
 import logger from '../util/logger';
+import BannedWordsDisable from './automod-banned-words-disable.sub';
 import BannedWordsEnable from './automod-banned-words-enable.sub';
 
 const AUTO_MOD_ACTIONS_SUBCOMMANDS = [
@@ -108,14 +109,13 @@ const AutoMod: Command = {
         const subgroup = interaction.options.getSubcommandGroup();
         const subcmd = interaction.options.getSubcommand();
 
-        logger.info(subgroup);
-        logger.info(subcmd);
-
         switch (subgroup) {
             case 'banned-words': 
                 switch (subcmd) {
                     case 'enable':
                         return BannedWordsEnable.handler(interaction, user, server);
+                    case 'disable':
+                        return BannedWordsDisable.handler(interaction, user, server);
                 }
         }
     } 
