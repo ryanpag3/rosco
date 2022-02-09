@@ -9,7 +9,8 @@ export function createTestInteraction(commandName: string,
     const userId = staticUserId || '1';
     let sName = subcommandName;
     let sGroup: any;
-    if ((subcommandName as string[]).length > 1) {
+
+    if (typeof subcommandName !== 'string' && (subcommandName as string[]).length > 1) {
         sName = (subcommandName as string[])[1];
         sGroup = (subcommandName as string[])[0];
     }
