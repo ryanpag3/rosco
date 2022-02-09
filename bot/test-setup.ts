@@ -14,7 +14,7 @@ beforeAll(async () => {
 
     await baselineKeywordCacheToDatabase();
     await buildKeywordValues();
-}, 10000);
+}, 30000);
 
 beforeEach(async () => {
     // @ts-ignore
