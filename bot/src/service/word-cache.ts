@@ -1,7 +1,7 @@
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 import redis from '../util/redis';
-import { buildKeywordValues } from './keyword-cache-old';
+import { buildKeywordValues } from './keyword-cache';
 
 export default class WordCache {
     private cooldownInMs: number = Number.parseInt(process.env?.KEYWORD_CACHE_COOLDOWN || '10000');

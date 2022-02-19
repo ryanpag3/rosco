@@ -27,7 +27,7 @@ const KeywordList: Command = {
 
         const keywords = await prisma.keyword.findMany({
             where: {
-                keyword: {
+                word: {
                     contains: keyword
                 },
                 scoreId: score?.id
@@ -41,7 +41,7 @@ const KeywordList: Command = {
             embeds: [
                 {
                     title: `:newspaper: Keywords`,
-                    description: `Here are the keywords you asked for\n\n__**keyword** - **score**__\n${keywords.map((k) => `_"${k.keyword}"_ - ${k.Score?.name}`).join('\n')}`
+                    description: `Here are the keywords you asked for\n\n__**keyword** - **score**__\n${keywords.map((k) => `_"${k.word}"_ - ${k.Score?.name}`).join('\n')}`
                 }
             ]
         });

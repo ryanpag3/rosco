@@ -2,13 +2,13 @@ import { KeywordAction, Prisma } from '@prisma/client';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
-import * as KeywordCache from '../service/keyword-cache-old';
+import * as KeywordCache from '../service/keyword-cache';
 
 const KeywordCreate: Command = {
     id: '6ec5e902-f482-48a5-879e-7427b8ba5a20',
     name: 'keyword create',
     handler: async (interaction, user, server) => {
-        const keyword = interaction.options.getString('keyword', true);
+        const word = interaction.options.getString('keyword', true);
         const scoreName = interaction.options.getString('score-name', true);
         const action = interaction.options.getString('action');
         const amount = interaction.options.getInteger('amount');
@@ -43,7 +43,7 @@ const KeywordCreate: Command = {
         try {
             const keywordRecord = await prisma.keyword.create({
                 data: {
-                    keyword,
+                    word,
                     scoreId: score.id,
                     serverId: server?.id as string,
                     channelId: channel?.id,
@@ -59,7 +59,7 @@ const KeywordCreate: Command = {
                 embeds: [
                     {
                         title: `:bookmark: Keyword assigned successfully.`,
-                        description: `Now, when **${keyword}** is typed in chat the score **${scoreName}** will be modified.`
+                        description: `Now, when **${word}** is typed in chat the score **${scoreName}** will be modified.`
                     }
                 ]
             })

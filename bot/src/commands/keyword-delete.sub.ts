@@ -2,13 +2,13 @@ import { KeywordAction, Prisma } from '@prisma/client';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
-import * as KeywordCache from '../service/keyword-cache-old';
+import * as KeywordCache from '../service/keyword-cache';
 
 const KeywordDelete: Command = {
     id: 'f10df570-b711-41bc-a083-0b2465304b1e',
     name: 'keyword delete',
     handler: async (interaction, user, server) => {
-        const keyword = interaction.options.getString('keyword', true);
+        const word = interaction.options.getString('keyword', true);
         const scoreName = interaction.options.getString('score-name', true);
 
         const score = await prisma.score.findUnique({
@@ -25,8 +25,8 @@ const KeywordDelete: Command = {
 
         const keywordRecord = await prisma.keyword.delete({
             where: {
-                keyword_scoreId_serverId: {
-                    keyword,
+                word_scoreId_serverId: {
+                    word,
                     scoreId: score.id,
                     serverId: server?.id as string,
                 }
@@ -39,7 +39,7 @@ const KeywordDelete: Command = {
             embeds: [
                 {
                     title: `:bookmark: Keyword deleted successfully.`,
-                    description: `The keyword **${keyword}** will no longer trigger any score functionality.`
+                    description: `The keyword **${word}** will no longer trigger any score functionality.`
                 }
             ]
         });

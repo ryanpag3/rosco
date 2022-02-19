@@ -1,7 +1,7 @@
 import { Keyword, Server } from '@prisma/client';
 import { Message } from 'discord.js';
 import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
-import { buildKeywordValues, doesKeywordsExist, getValidKeywords } from '../service/keyword-cache-old';
+import { buildKeywordValues, doesKeywordsExist, getValidKeywords } from '../service/keyword-cache';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 import * as ServerService from '../service/server';
@@ -27,7 +27,7 @@ const handleKeywords = async (message: Message) => {
     if (!doesKeywordsExist(message.content))
         return;
 
-    const keywords: Keyword[] = getValidKeywords(message.content, message.guild?.id as string);
+    const keywords: Keyword[] = getValidKeywords(message.content, message.guild?.id as string) as Keyword[];
 
     for (const k of keywords) {
         if (k.channelId && k.channelId !== message.channel?.id)

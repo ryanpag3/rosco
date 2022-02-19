@@ -7,7 +7,8 @@ import * as CommandDeployer from './util/slash-command-deployer';
 import onReady from './event/ready';
 import onInteractionCreate from './event/interaction-create';
 import onMessageReceived from './event/message';
-import { baselineKeywordCacheToDatabase, buildKeywordValues } from './service/keyword-cache-old';
+import * as KeywordCache from './service/keyword-cache';
+import * as WordCache from './service/word-cache';
 import { onGuildCreate } from './event/guild-create';
 import { onMessageActionAdd } from './event/message-reaction-add';
 import { onMessageReactionRemove } from './event/message-reaction-remove';
@@ -15,6 +16,8 @@ import onGuildMemberAdd from './event/guild-member-add';
 import * as ScheduledTaskExecutor from './util/scheduled-task-executor';
 import execa from 'execa';
 import logger from './util/logger';
+
+// const bannedWordCache = new WordCache('bannedWord')
 
 export default async function (client: Client) {
     try {
@@ -25,10 +28,10 @@ export default async function (client: Client) {
     }
 
     // baseline cache against database
-    await baselineKeywordCacheToDatabase();
+    await KeywordCache.baselineKeywordCacheToDatabase();
 
     // build keyword cache
-    await buildKeywordValues();
+    await KeywordCache.buildKeywordValues();
     
     // deploy slash commands
     await CommandDeployer.deploy();
