@@ -1,3 +1,4 @@
+
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["extendedIndexes"]
@@ -23,6 +24,17 @@ model Announcement {
   message     String
 
   @@unique([serverId, name])
+}
+
+model BannedWord {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  word      String
+  Server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId  String
+
+  @@unique([word, serverId])
 }
 
 model CommandHistory {
@@ -202,19 +214,20 @@ model Server {
   timerEnabled              Boolean @default(true)
   welcomeEnabled            Boolean @default(true)
 
+  Announcement         Announcement[]
+  BannedWord           BannedWord[]
+  CommandHistory       CommandHistory[]
   CurrencyHistoryLog   CurrencyHistoryLog[]
   CurrencyRule         CurrencyRule[]
-  UserServer           UserServer[]
-  Poll                 Poll[]
-  ServerWelcomeMessage ServerWelcomeMessage[]
-  Timer                Timer[]
-  Stopwatch            Stopwatch[]
   Keyword              Keyword[]
-  Scoreboard           Scoreboard[]
-  Score                Score[]
   Permission           Permission[]
-  Announcement         Announcement[]
-  CommandHistory       CommandHistory[]
+  Poll                 Poll[]
+  Score                Score[]
+  Scoreboard           Scoreboard[]
+  ServerWelcomeMessage ServerWelcomeMessage[]
+  Stopwatch            Stopwatch[]
+  Timer                Timer[]
+  UserServer           UserServer[]
 }
 
 model ServerWelcomeMessage {
