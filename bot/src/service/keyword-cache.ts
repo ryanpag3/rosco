@@ -28,8 +28,7 @@ export const buildKeywordValues = async (bypassCooldown: boolean = false) => {
             continue;
         keyword = JSON.parse(keyword) as Keyword;
         logger.trace(`adding "${keyword.keyword}" to keyword cache.`);
-        let i = 0;
-        KEYWORDS[keyword?.id + i] = keyword;
+        KEYWORDS[keyword?.id] = keyword;
         KEYWORD_VALUES.push(keyword.keyword);
     }
 

@@ -1,5 +1,4 @@
 import { CommandInteraction, InteractionReplyOptions, Message, MessageOptions, MessagePayload, MessageReaction, User } from 'discord.js';
-import logger from './logger';
 
 // add fields as necessary
 export function createTestInteraction(commandName: string, 
