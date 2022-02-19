@@ -26,6 +26,31 @@ model Announcement {
   @@unique([serverId, name])
 }
 
+model AutoModRule {
+  id                 String            @id @default(uuid())
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  Server             Server            @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId           String
+  rule               String
+  duration           Int
+  violations         Int
+  cooldownPeriodSecs Int
+  AutoModRuleUser    AutoModRuleUser[]
+}
+
+model AutoModRuleUser {
+  id                String      @id @default(uuid())
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  User              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String
+  Rule              AutoModRule @relation(fields: [autoModRuleId], references: [id], onDelete: Cascade)
+  autoModRuleId     String
+  currentViolations Int
+  cooldownExpiresOn DateTime
+}
+
 model BannedWord {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -228,6 +253,7 @@ model Server {
   Stopwatch            Stopwatch[]
   Timer                Timer[]
   UserServer           UserServer[]
+  AutoModRule          AutoModRule[]
 }
 
 model ServerWelcomeMessage {
@@ -294,6 +320,7 @@ model User {
   PollVote                  PollVote[]
   Timer                     Timer[]
   Announcement              Announcement[]
+  AutoModRuleUser           AutoModRuleUser[]
 }
 
 model UserServer {
