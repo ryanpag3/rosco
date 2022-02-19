@@ -7,7 +7,7 @@ import * as CommandDeployer from './util/slash-command-deployer';
 import onReady from './event/ready';
 import onInteractionCreate from './event/interaction-create';
 import onMessageReceived from './event/message';
-import { baselineKeywordCacheToDatabase, buildKeywordValues } from './service/keyword-cache';
+import { baselineKeywordCacheToDatabase, buildKeywordValues } from './service/keyword-cache-old';
 import { onGuildCreate } from './event/guild-create';
 import { onMessageActionAdd } from './event/message-reaction-add';
 import { onMessageReactionRemove } from './event/message-reaction-remove';

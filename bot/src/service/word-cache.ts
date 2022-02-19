@@ -1,7 +1,7 @@
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 import redis from '../util/redis';
-import { buildKeywordValues } from './keyword-cache';
+import { buildKeywordValues } from './keyword-cache-old';
 
 export default class WordCache {
     private cooldownInMs: number = Number.parseInt(process.env?.KEYWORD_CACHE_COOLDOWN || '10000');
@@ -64,7 +64,14 @@ export default class WordCache {
         return r;
     }
 
-    messageContainsCachedWord = async (rawMsg: string) => {
+    deleteCachedWord = async (id: string) => {
+        logger.trace(`deleting cached word ${id}`);
+        const res = await redis.del(this.buildId(id));
+        await buildKeywordValues(true); // always bypass
+        return res;
+    }
+
+    messageContainsCachedWord = (rawMsg: string) => {
         if (!this.words)
             throw new Error('Cannot validate if message contains cached word. Cached is not built!');
             
@@ -118,7 +125,19 @@ export default class WordCache {
         const wordId = this.buildId(recordId);
         const raw = await redis.get(wordId);
         if (!raw)
-            return;
+            return null;
         return JSON.parse(raw);
+    }
+
+    getValidWords = (content: string, serverId: string) => {
+        if (this.words)
+            throw new Error('Cannot get valid words. Word cache has not been built!');
+
+        const validWords = Object.values(this.words).filter((parsed: any) => {
+            return this.isValidCachedWord(parsed.word, content) 
+                    && parsed.serverId === serverId;
+        });
+
+        return validWords;
     }
 }

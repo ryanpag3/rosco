@@ -1,7 +1,7 @@
 import { Keyword, Server } from '@prisma/client';
 import { Message } from 'discord.js';
 import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
-import { buildKeywordValues, doesKeywordsExist, getValidKeywords } from '../service/keyword-cache';
+import { buildKeywordValues, doesKeywordsExist, getValidKeywords } from '../service/keyword-cache-old';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 import * as ServerService from '../service/server';

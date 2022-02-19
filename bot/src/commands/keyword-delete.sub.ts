@@ -2,7 +2,7 @@ import { KeywordAction, Prisma } from '@prisma/client';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
-import * as KeywordCache from '../service/keyword-cache';
+import * as KeywordCache from '../service/keyword-cache-old';
 
 const KeywordDelete: Command = {
     id: 'f10df570-b711-41bc-a083-0b2465304b1e',

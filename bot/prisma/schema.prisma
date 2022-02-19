@@ -1,4 +1,3 @@
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["extendedIndexes"]
@@ -75,7 +74,7 @@ model Keyword {
   id        String        @id @default(uuid())
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
-  keyword   String
+  word      String
   scoreId   String
   Score     Score         @relation(fields: [scoreId], references: [id], onDelete: Cascade)
   action    KeywordAction @default(UP)
@@ -86,7 +85,7 @@ model Keyword {
   userId    String?
   User      User?         @relation(fields: [userId], references: [id])
 
-  @@unique([keyword, scoreId, serverId])
+  @@unique([word, scoreId, serverId])
 }
 
 model Permission {

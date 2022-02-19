@@ -17,7 +17,7 @@ it('should save a keyword to the cache', async () => {
 
     const keyword = await prisma.keyword.create({
         data: {
-            keyword: 'test',
+            word: 'test',
             serverId: r.server.id,
             scoreId: score.id
         }
@@ -25,7 +25,7 @@ it('should save a keyword to the cache', async () => {
 
     const cached = await KeywordCache.cacheKeyword(keyword);
 
-    const queried = await redis.get(KeywordCache.buildId(keyword.id));
+    const queried = await redis.get(KeywordCache.cache.buildId(keyword.id));
 
     expect(queried).not.toBeNull();
 });
@@ -43,7 +43,7 @@ it('should get a cached keyword', async () => {
 
     const keyword = await prisma.keyword.create({
         data: {
-            keyword: 'test',
+            word: 'test',
             serverId: r.server.id,
             scoreId: score.id
         }
@@ -75,7 +75,7 @@ it('should delete a keyword from the cache', async () => {
 
     const keyword = await prisma.keyword.create({
         data: {
-            keyword: 'test',
+            word: 'test',
             serverId: r.server.id,
             scoreId: score.id
         }
@@ -103,7 +103,7 @@ it('should return true if keyword does exist', async () => {
 
     const keyword = await prisma.keyword.create({
         data: {
-            keyword: 'test',
+            word: 'test',
             serverId: r.server.id,
             scoreId: score.id
         }

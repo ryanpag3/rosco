@@ -3,13 +3,17 @@ require('dotenv').config({
 });
 import execa from 'execa';
 import './src/util/command-subcommand-map';
-import { baselineKeywordCacheToDatabase, buildKeywordValues } from './src/service/keyword-cache';
+import { baselineKeywordCacheToDatabase, buildKeywordValues } from './src/service/keyword-cache-old';
 import logger from './src/util/logger';
 import prisma from './src/util/prisma';
 import redis from './src/util/redis';
 
 beforeAll(async () => {
-    const stdout = await execa.command('yarn migrate deploy');
+    
+    let stdout = await execa.command('yarn migrate reset --force');
+    logger.trace(stdout);
+
+    stdout = await execa.command('yarn migrate deploy');
     logger.trace(stdout);
 
     await baselineKeywordCacheToDatabase();
@@ -17,7 +21,9 @@ beforeAll(async () => {
 }, 30000);
 
 beforeEach(async () => {
-    // @ts-ignore
+    // const stdout = await execa.command('yarn migrate reset --force');
+    // logger.trace(stdout);
+    //@ts-ignore
     for (const { tablename } of await prisma.$queryRaw`SELECT tablename FROM pg_tables WHERE schemaname='public'`) {
         if (tablename !== '_prisma_migrations' && !tablename.startsWith('_')) {
             // @ts-ignore

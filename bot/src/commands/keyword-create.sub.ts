@@ -2,7 +2,7 @@ import { KeywordAction, Prisma } from '@prisma/client';
 import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
-import * as KeywordCache from '../service/keyword-cache';
+import * as KeywordCache from '../service/keyword-cache-old';
 
 const KeywordCreate: Command = {
     id: '6ec5e902-f482-48a5-879e-7427b8ba5a20',
