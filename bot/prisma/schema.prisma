@@ -32,11 +32,13 @@ model AutoModRule {
   updatedAt          DateTime          @updatedAt
   Server             Server            @relation(fields: [serverId], references: [id], onDelete: Cascade)
   serverId           String
-  rule               String
+  action             String
   duration           Int
   violations         Int
   cooldownPeriodSecs Int
   AutoModRuleUser    AutoModRuleUser[]
+  BannedWord         BannedWord?       @relation(fields: [bannedWordId], references: [id], onDelete: Cascade)
+  bannedWordId       String?
 }
 
 model AutoModRuleUser {
@@ -52,12 +54,13 @@ model AutoModRuleUser {
 }
 
 model BannedWord {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  word      String
-  Server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  serverId  String
+  id          String        @id @default(uuid())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  word        String
+  Server      Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId    String
+  AutoModRule AutoModRule[]
 
   @@unique([word, serverId])
 }
