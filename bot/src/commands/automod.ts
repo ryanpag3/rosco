@@ -46,6 +46,12 @@ const AutoMod: Command = {
                             description: 'The amount of violations to allow before taking action on the user.',
                             type: ApplicationCommandOptionType.Integer,
                             required: true
+                        },
+                        {
+                            name: 'cooldown',
+                            description: 'The amount of time to wait, in seconds, before resetting the violation count.',
+                            type: ApplicationCommandOptionType.Integer,
+                            required: true
                         }
                     ]
                 }

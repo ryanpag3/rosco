@@ -38,6 +38,8 @@ model AutoModRule {
   violations         Int
   cooldownPeriodSecs Int
   AutoModRuleUser    AutoModRuleUser[]
+
+  @@unique([serverId, module, action])
 }
 
 model AutoModRuleUser {
