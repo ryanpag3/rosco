@@ -2,6 +2,7 @@ import 'chartjs-plugin-datalabels';
 import './util/command-subcommand-map';
 
 import { CacheType, Client, CommandInteraction, Message } from 'discord.js';
+import BannedWordCache from './service/banned-word-cache';
 // prevent race condition
 import * as CommandDeployer from './util/slash-command-deployer';
 import onReady from './event/ready';
@@ -15,7 +16,6 @@ import onGuildMemberAdd from './event/guild-member-add';
 import * as ScheduledTaskExecutor from './util/scheduled-task-executor';
 import execa from 'execa';
 import logger from './util/logger';
-import BannedWordCache from './service/banned-word-cache';
 
 export default async function (client: Client) {
     try {

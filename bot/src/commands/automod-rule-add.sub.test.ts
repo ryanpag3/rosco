@@ -5,7 +5,7 @@ import prisma from '../util/prisma';
 it('should create a new automod rule for banned words', async () => {
     let int = createTestInteraction('automod', ['rule', 'add'], {
         module: 'banned-words',
-        action: 'mute',
+        action: 'timeout',
         duration: 30,
         violations: 10,
         cooldown: 120
@@ -17,7 +17,7 @@ it('should create a new automod rule for banned words', async () => {
         where: {
             serverId_module_action: {
                 serverId: r.server.id,
-                action: 'mute',
+                action: 'timeout',
                 module: 'banned-words'
             }
         }
@@ -29,7 +29,7 @@ it('should create a new automod rule for banned words', async () => {
 it('It should throw an error if an invalid module is provided.', async () => {
     let int = createTestInteraction('automod', ['rule', 'add'], {
         module: 'iwinagainlewstherin',
-        action: 'mute',
+        action: 'timeout',
         duration: 30,
         violations: 10,
         cooldown: 120
@@ -53,7 +53,7 @@ it('It should throw an error if an invalid action is provided.', async () => {
 it('It should throw an error if a rule already exists', async () => {
     let int = createTestInteraction('automod', ['rule', 'add'], {
         module: 'banned-words',
-        action: 'mute',
+        action: 'timeout',
         duration: 30,
         violations: 10,
         cooldown: 120
@@ -65,7 +65,7 @@ it('It should throw an error if a rule already exists', async () => {
         where: {
             serverId_module_action: {
                 serverId: r.server.id,
-                action: 'mute',
+                action: 'timeout',
                 module: 'banned-words'
             }
         }
@@ -75,7 +75,7 @@ it('It should throw an error if a rule already exists', async () => {
 
     int = createTestInteraction('automod', ['rule', 'add'], {
         module: 'banned-words',
-        action: 'mute',
+        action: 'timeout',
         duration: 30,
         violations: 10,
         cooldown: 120

@@ -11,7 +11,7 @@ enum MODULE {
 
 enum ACTION {
     WARN = 'warn',
-    MUTE = 'mute',
+    TIMEOUT = 'timeout',
     KICK = 'kick',
     BAN = 'ban'
 }

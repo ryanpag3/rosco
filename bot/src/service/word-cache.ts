@@ -1,7 +1,6 @@
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 import redis from '../util/redis';
-import { buildKeywordValues } from './keyword-cache';
 
 export default class WordCache {
     private cooldownInMs: number = Number.parseInt(process.env?.KEYWORD_CACHE_COOLDOWN || '10000');
@@ -67,7 +66,7 @@ export default class WordCache {
     deleteCachedWord = async (id: string) => {
         logger.trace(`deleting cached word ${id}`);
         const res = await redis.del(this.buildId(id));
-        await buildKeywordValues(true); // always bypass
+        await this.buildInMemoryCache(true); // always bypass
         return res;
     }
 
@@ -117,7 +116,7 @@ export default class WordCache {
     deleteCachedKeyword = async (recordId: string, bypassCache: boolean = true) => {
         logger.trace(`deleting cached word ${recordId}`);
         const r = await redis.del(this.buildId(recordId));
-        await buildKeywordValues(bypassCache);
+        await this.buildInMemoryCache(bypassCache);
         return r;
     }
 

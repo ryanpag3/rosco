@@ -12,8 +12,9 @@ export const userHasPermission = async (interaction: CommandInteraction, user: U
         }
 
         const { commandName } = interaction;
+        const subcommandGroup = interaction.options.getSubcommandGroup(false);
         const subcommand = interaction.options.getSubcommand(false);
-        const fullCommand = `${commandName}${subcommand ? ` ${subcommand}` : ''}`;
+        const fullCommand = `${subcommandGroup || commandName}${subcommand ? ` ${subcommand}` : ''}`;
         const module = commands[fullCommand];
 
         if (!module)
@@ -32,7 +33,7 @@ export const userHasPermission = async (interaction: CommandInteraction, user: U
         for (const permission of permissions) {
             // @ts-ignore
             if (await interaction.member.roles.cache.has(permission.roleId)) {
-                logger.debug(`permission found`);
+                logger.trace(`permission found`);
                 return true;
             }
         }

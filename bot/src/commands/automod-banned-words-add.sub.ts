@@ -3,6 +3,7 @@ import { Command } from '../../types/command';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
 import PrismaErrorCode from '../util/prisma-error-code';
+import BannedWordCache from '../service/banned-word-cache';
 
 const BannedWordsAdd: Command = {
     id: '147f53a3-7bb3-4a78-9ee5-ed5425557ad9',
@@ -22,6 +23,8 @@ const BannedWordsAdd: Command = {
                 throw new BotError(`That word is already included in the banned word list.`);
             throw e;
         }
+
+        await BannedWordCache.baselineWordCacheToDatabase();
 
         return interaction.reply({
             embeds: [
