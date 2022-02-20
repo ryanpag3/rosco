@@ -6,7 +6,6 @@ import { Lock } from 'redlock';
 import logger from './logger';
 import prisma from './prisma';
 import client from '..';
-import { time } from 'console';
 
 const POLL_INTERVAL = process.env.SCHEDULED_TASK_POLL_INTERVAL || 5000;
 let daemonId: any;

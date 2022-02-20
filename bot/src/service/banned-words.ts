@@ -1,7 +1,6 @@
 import { Server, User } from '@prisma/client';
 import { CacheType, CommandInteraction, Message } from 'discord.js';
 import { DateTime, Duration } from 'luxon';
-import client from '..';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 
@@ -62,6 +61,7 @@ export const onBannedWordDetected = async (message: Message, userId: string, ser
 }
 
 const timeoutUser = async (serverDiscordId: string, userDiscordId: string, durationSecs: number) => {
+    const client = require('..');
     const guild = await client.guilds.fetch(serverDiscordId);
     const member = await guild.members.fetch(userDiscordId);
     await member.timeout(durationSecs * 1000);
