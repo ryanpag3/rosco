@@ -1,4 +1,4 @@
-import { Announcement, Timer } from '@prisma/client';
+import { Announcement, AutoModRule, AutoModRuleUser, Timer } from '@prisma/client';
 import { MessageEmbedOptions, TextChannel } from 'discord.js';
 import { DateTime } from 'luxon';
 import { redlock } from './redlock';
@@ -6,6 +6,7 @@ import { Lock } from 'redlock';
 import logger from './logger';
 import prisma from './prisma';
 import client from '..';
+import { time } from 'console';
 
 const POLL_INTERVAL = process.env.SCHEDULED_TASK_POLL_INTERVAL || 5000;
 let daemonId: any;
@@ -27,7 +28,8 @@ export const checkForScheduledTasks = async () => {
 
     const [
         timers,
-        announcements
+        announcements,
+        autoModRuleUsers
     ] = await prisma.$transaction([
         prisma.timer.findMany({
             where: {
@@ -49,12 +51,21 @@ export const checkForScheduledTasks = async () => {
                     notIn: Object.keys(activeTasks)
                 }
             }
+        }),
+        prisma.autoModRuleUser.findMany({
+            where: {
+                cooldownExpiresOn: fiveMinsFromNow.toJSDate(),
+                id: {
+                    notIn: Object.keys(activeTasks)
+                }
+            }
         })
     ]);
 
     const promises = [
         ...timers.map((t) => scheduleTimer(t)),
-        ...announcements.map((a) => scheduleAnnouncement(a))
+        ...announcements.map((a) => scheduleAnnouncement(a)),
+        ...autoModRuleUsers.map((a) => scheduleAutoModUserRuleCooldownExpiration(a))
     ];
 
     return Promise.all(promises);
@@ -95,19 +106,50 @@ const scheduleAnnouncement = async (announcement: Announcement) => {
     });
 }
 
+const scheduleAutoModUserRuleCooldownExpiration = async (autoModRuleUser: AutoModRuleUser) => {
+    const timeToAnnounce = DateTime.fromJSDate(autoModRuleUser.cooldownExpiresOn).diff(DateTime.now(), 'milliseconds');
+    const milliseconds = timeToAnnounce.milliseconds < 0 ? 0 : timeToAnnounce.milliseconds;
+
+    const lock: Lock|undefined = await obtainLock(autoModRuleUser.id, milliseconds);
+
+    if(!lock)
+        return false;
+
+    const t = setTimeout(async () => {
+        const updatedRecord = await prisma.autoModRuleUser.findUnique({
+            where: {
+                id: autoModRuleUser.id
+            }
+        });
+
+        if(autoModRuleUser.cooldownExpiresOn !== updatedRecord.cooldownExpiresOn) {
+            await lock?.release();
+            // noop
+            return false;
+        }
+        
+        await prisma.autoModRuleUser.delete({
+            where: {
+                id: autoModRuleUser.id
+            }
+        });
+
+        logger.debug(`An AutoMod rule user record was cleaned up because no violations were found in the cooldown period.`);
+    });    
+
+    activeTasks[autoModRuleUser.id] = t;
+    logger.debug(`${autoModRuleUser.id} added to cache. Should be announced in ${milliseconds} milliseconds`);
+    return true;
+}
+
 const scheduleTask = async (at: Date, taskId: string, channelId: string, messageEmbed: MessageEmbedOptions, onCompleted: () => Promise<void>) => {
     const timeToAnnounce = DateTime.fromJSDate(at).diff(DateTime.now(), 'milliseconds');
     const milliseconds = timeToAnnounce.milliseconds < 0 ? 0 : timeToAnnounce.milliseconds;
 
-    let lock: Lock;
-    try {
-        lock = await redlock.acquire([taskId], milliseconds + 5000);
-    } catch (e) {
-        // to stop the daemon from unnecessarily querying this
-        activeTasks[taskId] = {};
-        logger.trace(`Could not acquire a lock. Expected noop...`);
+    let lock: Lock|undefined = await obtainLock(taskId, milliseconds);
+
+    if(!lock)
         return false;
-    }
 
     const t = setTimeout(async () => {
         // TODO: send announcement
@@ -122,10 +164,24 @@ const scheduleTask = async (at: Date, taskId: string, channelId: string, message
 
         logger.debug(`${taskId} announced.`);
         delete activeTasks[taskId];
-        await lock.release();
+        await lock?.release();
     }, milliseconds);
 
     activeTasks[taskId] = t;
     logger.debug(`${taskId} added to cache. Should be announced in ${milliseconds} milliseconds`);
     return true;
+}
+
+const obtainLock = async (id: string, milliseconds: number) => {
+    let lock: Lock|undefined;
+    
+    try {
+        lock = await redlock.acquire([id], milliseconds + 5000);
+    } catch (e) {
+        // to stop the daemon from unnecessarily querying this
+        activeTasks[id] = {};
+        logger.trace(`Could not acquire a lock. Expected noop...`);
+    }
+
+    return lock;
 }
