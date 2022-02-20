@@ -54,7 +54,9 @@ export const checkForScheduledTasks = async () => {
         }),
         prisma.autoModRuleUser.findMany({
             where: {
-                cooldownExpiresOn: fiveMinsFromNow.toJSDate(),
+                cooldownExpiresOn: {
+                    lt: fiveMinsFromNow.toJSDate()
+                },
                 id: {
                     notIn: Object.keys(activeTasks)
                 }
@@ -116,15 +118,16 @@ const scheduleAutoModUserRuleCooldownExpiration = async (autoModRuleUser: AutoMo
         return false;
 
     const t = setTimeout(async () => {
+        logger.debug(`expiring user rule`);
         const updatedRecord = await prisma.autoModRuleUser.findUnique({
             where: {
                 id: autoModRuleUser.id
             }
         });
 
-        if(autoModRuleUser.cooldownExpiresOn !== updatedRecord.cooldownExpiresOn) {
+        if(DateTime.fromJSDate(autoModRuleUser.cooldownExpiresOn) < DateTime.fromJSDate(updatedRecord.cooldownExpiresOn)) {
+            logger.debug(`cooldown has been moved while task was cached for execution.`);
             await lock?.release();
-            // noop
             return false;
         }
         
@@ -135,7 +138,7 @@ const scheduleAutoModUserRuleCooldownExpiration = async (autoModRuleUser: AutoMo
         });
 
         logger.debug(`An AutoMod rule user record was cleaned up because no violations were found in the cooldown period.`);
-    });    
+    }, milliseconds);    
 
     activeTasks[autoModRuleUser.id] = t;
     logger.debug(`${autoModRuleUser.id} added to cache. Should be announced in ${milliseconds} milliseconds`);

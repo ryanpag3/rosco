@@ -52,6 +52,8 @@ model AutoModRuleUser {
   autoModRuleId     String
   currentViolations Int
   cooldownExpiresOn DateTime
+
+  @@unique([userId, autoModRuleId])
 }
 
 model BannedWord {

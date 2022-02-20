@@ -18,10 +18,10 @@ const onMessageReceived = async (message: Message) => {
 
     const server = await ServerService.initializeServer(message.guild);
 
-    await UserService.initUser(message.member as any, server as Server);
+    const user = await UserService.initUser(message.member as any, server as Server);
 
     if (BannedWordCache.messageContainsCachedWord(message.content)) {
-        await onBannedWordDetected(message);
+        await onBannedWordDetected(message, user.id, server?.id as string);
     }
 
     await handleCurrencyEvent(CurrencyAction.MESSAGE, message);
