@@ -1,7 +1,11 @@
 import { Server, User } from '@prisma/client';
-import { CacheType, CommandInteraction } from 'discord.js';
+import { CacheType, CommandInteraction, Message } from 'discord.js';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
+
+export const onBannedWordDetected = async (message: Message) => {
+    logger.info('banned word detected');
+}
 
 export const toggleBannedWordsRule = async (interaction: CommandInteraction<CacheType>, user: User, server: Server, isEnabled: boolean) => {
 

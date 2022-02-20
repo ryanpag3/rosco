@@ -83,7 +83,6 @@ const AutoMod: Command = {
                             type: ApplicationCommandOptionType.String,
                             required: true
                         },
-                        ...RuleBuilderOptions
                     ]
                 },
                 {
@@ -97,7 +96,6 @@ const AutoMod: Command = {
                             type: ApplicationCommandOptionType.String,
                             required: true
                         },
-                        ...RuleBuilderOptions
                     ]
                 },
                 {

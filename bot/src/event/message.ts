@@ -1,11 +1,13 @@
 import { Keyword, Server } from '@prisma/client';
 import { Message } from 'discord.js';
 import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
-import { buildKeywordValues, doesKeywordsExist, getValidKeywords } from '../service/keyword-cache';
+import { doesKeywordsExist, getValidKeywords } from '../service/keyword-cache';
+import BannedWordCache from '../service/banned-word-cache';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 import * as ServerService from '../service/server';
 import * as UserService from '../service/user';
+import { onBannedWordDetected } from '../service/banned-words';
 
 const onMessageReceived = async (message: Message) => {
     if (message.type === 'APPLICATION_COMMAND')
@@ -17,6 +19,10 @@ const onMessageReceived = async (message: Message) => {
     const server = await ServerService.initializeServer(message.guild);
 
     await UserService.initUser(message.member as any, server as Server);
+
+    if (BannedWordCache.messageContainsCachedWord(message.content)) {
+        await onBannedWordDetected(message);
+    }
 
     await handleCurrencyEvent(CurrencyAction.MESSAGE, message);
 
