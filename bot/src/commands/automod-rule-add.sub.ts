@@ -10,6 +10,7 @@ enum MODULE {
 }
 
 enum ACTION {
+    DELETE = 'delete',
     WARN = 'warn',
     TIMEOUT = 'timeout',
     KICK = 'kick',

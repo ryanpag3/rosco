@@ -6,7 +6,7 @@ import prisma from '../util/prisma';
 
 export const onBannedWordDetected = async (message: Message, userId: string, serverId: string) => {
     try {
-        logger.info('banned word detected');
+        logger.debug('banned word detected');
 
         const autoModRule = await prisma.autoModRule.findMany({
             where: {
@@ -51,6 +51,8 @@ export const onBannedWordDetected = async (message: Message, userId: string, ser
                 continue;
 
             switch (ruleUser.Rule.action) {
+                case 'delete':
+                    return message.delete();
                 case 'timeout':
                     return await timeoutUser(ruleUser.Rule.Server.discordId, ruleUser.User.discordId, ruleUser.Rule.duration);
             }
@@ -60,6 +62,9 @@ export const onBannedWordDetected = async (message: Message, userId: string, ser
     }
 }
 
+/**
+ * TODO: look into whether we can just use client pointer from message object instead of this require()
+ */
 const timeoutUser = async (serverDiscordId: string, userDiscordId: string, durationSecs: number) => {
     const client = require('..');
     const guild = await client.guilds.fetch(serverDiscordId);
