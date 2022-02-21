@@ -31,7 +31,7 @@ const AutoMod: Command = {
                         },
                         {
                             name: 'action',
-                            description: 'The action to take when the rule is broken. Can be either "mute", "kick", or "ban".',
+                            description: 'The action to take when the rule is broken. Can be either "timeout", "kick", or "ban".',
                             type: ApplicationCommandOptionType.String,
                             required: true
                         },
