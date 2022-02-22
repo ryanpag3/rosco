@@ -7,6 +7,7 @@ import BannedWordsDisable from './automod-banned-words-disable.sub';
 import BannedWordsEnable from './automod-banned-words-enable.sub';
 import BannedWordsList from './automod-banned-words-list.sub';
 import RuleAdd from './automod-rule-add.sub';
+import RuleList from './automod-rule-list.sub';
 import AutoModRuleRemove from './automod-rule-remove.sub';
 
 const AutoMod: Command = {
@@ -73,6 +74,19 @@ const AutoMod: Command = {
                             type: ApplicationCommandOptionType.String,
                             required: true
                         }
+                    ]
+                },
+                {
+                    name: 'list',
+                    description: 'List out the AutoMod rules for a particular module.',
+                    type: ApplicationCommandOptionType.Subcommand,
+                    options: [
+                        {
+                            name: 'module',
+                            description: 'Which module to list rules for.',
+                            type: ApplicationCommandOptionType.String,
+                            required: true
+                        },
                     ]
                 }
             ]
@@ -149,6 +163,8 @@ const AutoMod: Command = {
                         return RuleAdd.handler(interaction, user, server);
                     case 'remove':
                         return AutoModRuleRemove.handler(interaction, user, server);
+                    case 'list':
+                        return RuleList.handler(interaction, user, server);
                 }
                 break;
             }
