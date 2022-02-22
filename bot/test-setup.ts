@@ -35,13 +35,17 @@ beforeEach(async () => {
     await prisma.$disconnect();
 });
 
-afterAll(async () => {
-    await delay(10000);
-    try {
-        await redis.quit()
-    } catch (e) {
-        // noop
-}}, 15000);
+afterEach(async () => {
+    await prisma.$disconnect();
+});
+
+// afterAll(async () => {
+//     await delay(10000);
+//     try {
+//         await redis.quit()
+//     } catch (e) {
+//         // noop
+// }}, 15000);
 
 function camelize(str: string) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
