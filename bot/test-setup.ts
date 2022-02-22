@@ -32,7 +32,6 @@ beforeEach(async () => {
             logger.trace(`truncated ${tablename}`);
         } 
     }
-    await prisma.$disconnect();
 });
 
 afterEach(async () => {
