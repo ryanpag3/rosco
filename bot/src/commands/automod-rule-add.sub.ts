@@ -1,21 +1,11 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../types/command';
+import { validateModuleAndAction } from '../service/auto-mod';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
 import PrismaErrorCode from '../util/prisma-error-code';
 
-enum MODULE {
-    BANNED_WORDS = 'banned-words',
-    ALL_CAPS = 'all-caps'
-}
 
-enum ACTION {
-    DELETE = 'delete',
-    WARN = 'warn',
-    TIMEOUT = 'timeout',
-    KICK = 'kick',
-    BAN = 'ban'
-}
 
 const RuleAdd: Command = {
     id: 'b5a6c7a4-d898-4cdf-9c10-c3bc901f9b30',
@@ -27,11 +17,7 @@ const RuleAdd: Command = {
         const violations = interaction.options.getInteger('violations', true);
         const cooldown = interaction.options.getInteger('cooldown', true);
 
-        if (!Object.values(MODULE).some((v) => v === module))
-            throw new BotError('Invalid module provided. Valid options are: \n' + Object.values(MODULE).join('\n'));
-
-        if (!Object.values(ACTION).some((v) => v === action))
-            throw new BotError('Invalid action provided. Valid options are: \n' + Object.values(ACTION).join('\n'));
+        validateModuleAndAction(module, action);
 
         try {
             await prisma.autoModRule.create({

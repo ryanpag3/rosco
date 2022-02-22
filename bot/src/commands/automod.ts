@@ -7,6 +7,7 @@ import BannedWordsDisable from './automod-banned-words-disable.sub';
 import BannedWordsEnable from './automod-banned-words-enable.sub';
 import BannedWordsList from './automod-banned-words-list.sub';
 import RuleAdd from './automod-rule-add.sub';
+import AutoModRuleRemove from './automod-rule-remove.sub';
 
 const AutoMod: Command = {
     id: '3m928f7a-49ff-4419-9a2d-f1b72f024ba7',
@@ -51,6 +52,25 @@ const AutoMod: Command = {
                             name: 'cooldown',
                             description: 'The amount of time to wait, in seconds, before resetting the violation count.',
                             type: ApplicationCommandOptionType.Integer,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: 'remove',
+                    description: 'Remove an AutoMod rule.',
+                    type: ApplicationCommandOptionType.Subcommand,
+                    options: [
+                        {
+                            name: 'module',
+                            description: 'Which module to remove the rule for.',
+                            type: ApplicationCommandOptionType.String,
+                            required: true
+                        },
+                        {
+                            name: 'action',
+                            description: 'The action to stop performing when the module rule is broken.',
+                            type: ApplicationCommandOptionType.String,
                             required: true
                         }
                     ]
@@ -127,6 +147,8 @@ const AutoMod: Command = {
                 switch (subcmd) {
                     case 'add':
                         return RuleAdd.handler(interaction, user, server);
+                    case 'remove':
+                        return AutoModRuleRemove.handler(interaction, user, server);
                 }
                 break;
             }

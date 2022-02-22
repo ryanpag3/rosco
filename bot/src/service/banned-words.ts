@@ -54,7 +54,7 @@ export const onBannedWordDetected = async (message: Message, userId: string, ser
                 case 'delete':
                     return message.delete();
                 case 'timeout':
-                    return await timeoutUser(ruleUser.Rule.Server.discordId, ruleUser.User.discordId, ruleUser.Rule.duration);
+                    return await timeoutUser(message, ruleUser.Rule.Server.discordId, ruleUser.User.discordId, ruleUser.Rule.duration);
             }
         }
     } catch (e) {
@@ -65,8 +65,8 @@ export const onBannedWordDetected = async (message: Message, userId: string, ser
 /**
  * TODO: look into whether we can just use client pointer from message object instead of this require()
  */
-const timeoutUser = async (serverDiscordId: string, userDiscordId: string, durationSecs: number) => {
-    const client = require('..');
+const timeoutUser = async (message: Message, serverDiscordId: string, userDiscordId: string, durationSecs: number) => {
+    const { client } = message;
     const guild = await client.guilds.fetch(serverDiscordId);
     const member = await guild.members.fetch(userDiscordId);
     await member.timeout(durationSecs * 1000);
