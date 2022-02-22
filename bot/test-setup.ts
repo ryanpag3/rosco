@@ -32,6 +32,12 @@ beforeEach(async () => {
             logger.trace(`truncated ${tablename}`);
         } 
     }
+
+    try {
+        await redis.connect();
+    } catch (e) {
+        // noop
+    }
 });
 
 afterEach(async () => {
