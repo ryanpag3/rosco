@@ -7,6 +7,7 @@ import { baselineKeywordCacheToDatabase, buildKeywordValues } from './src/servic
 import logger from './src/util/logger';
 import prisma from './src/util/prisma';
 import redis from './src/util/redis';
+import { delay } from 'bluebird';
 
 beforeAll(async () => {
     
@@ -34,12 +35,13 @@ beforeEach(async () => {
     await prisma.$disconnect();
 });
 
-// afterAll(async () => {
-//     try {
-//         await redis.quit()
-//     } catch (e) {
-//         // noop
-//     }});
+afterAll(async () => {
+    await delay(10000);
+    try {
+        await redis.quit()
+    } catch (e) {
+        // noop
+}}, 15000);
 
 function camelize(str: string) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {

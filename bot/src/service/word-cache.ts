@@ -22,6 +22,8 @@ export default class WordCache {
             return;
         }
         
+        let newCache: any = {};
+
         for await (const key of redis.scanIterator({
             TYPE: 'STRING',
             MATCH: `${this.delimiter}.*`
@@ -30,8 +32,10 @@ export default class WordCache {
             if (!dataAsString) 
                 continue;
             const wordObject = JSON.parse(dataAsString);
-            this.words[wordObject.id] = wordObject;
+            newCache[wordObject.id] = wordObject;
         }
+
+        this.words = newCache;
 
         logger.debug(`rebuilt cache with ${Object.keys(this.words)} values.`);
 
