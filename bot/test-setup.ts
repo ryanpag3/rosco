@@ -17,6 +17,12 @@ beforeAll(async () => {
     stdout = await execa.command('yarn migrate deploy');
     logger.trace(stdout);
 
+    try {
+        await redis.connect();
+    } catch (e) {
+        // noop
+    }
+
     await baselineKeywordCacheToDatabase();
     await buildKeywordValues();
 }, 30000);
