@@ -140,14 +140,31 @@ const AutoMod: Command = {
             ]
         },
         {
-            name: 'all-caps',
-            description: 'Manage banned words functionality.',
+            name: 'capslock-detect',
+            description: 'Manage capslock detection AutoMod functionality.',
             type: ApplicationCommandOptionType.SubcommandGroup,
             options: [
                 {
-                    name: 'toggle',
-                    description: 'Toggle banned words functionality.',
+                    name: 'enable',
+                    description: 'Enable capslock detection.',
                     type: ApplicationCommandOptionType.Subcommand
+                },
+                {
+                    name: 'disable',
+                    description: 'Disable capslock detection.',
+                    type: ApplicationCommandOptionType.Subcommand
+                },
+                {
+                    name: 'config',
+                    description: 'Configure the capslock detection',
+                    type: ApplicationCommandOptionType.Subcommand,
+                    options: [
+                        {
+                            name: 'length',
+                            description: 'The amount of consecutive capitalized characters to allow. Default is 12.',
+                            type: ApplicationCommandOptionType.Integer
+                        }
+                    ]
                 }
             ]
         }
@@ -168,7 +185,7 @@ const AutoMod: Command = {
                 }
                 break;
             }
-            case 'banned-words': 
+            case 'banned-words': {
                 switch (subcmd) {
                     case 'enable':
                         return BannedWordsEnable.handler(interaction, user, server);
@@ -181,6 +198,17 @@ const AutoMod: Command = {
                     case 'list':
                         return BannedWordsList.handler(interaction, user, server);
                 }
+            }
+            case 'capslock-detect)': {
+                switch (subcmd) {
+                    case 'enable':
+                        return;
+                    case 'disable':
+                        return;
+                    case 'config':
+                        return;
+                }
+            }
         }
     } 
 }

@@ -27,8 +27,6 @@ beforeAll(async () => {
 }, 30000);
 
 beforeEach(async () => {
-    // const stdout = await execa.command('yarn migrate reset --force');
-    // logger.trace(stdout);
     //@ts-ignore
     for (const { tablename } of await prisma.$queryRaw`SELECT tablename FROM pg_tables WHERE schemaname='public'`) {
         if (tablename !== '_prisma_migrations' && !tablename.startsWith('_')) {
