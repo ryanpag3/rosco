@@ -235,6 +235,7 @@ model Server {
   // module toggle flags
   autoModBannedWordsEnabled    Boolean @default(false)
   autoModCapslockDetectEnabled Boolean @default(false)
+  autoModCapslockDetectLength  Int     @default(12)
   announceEnabled              Boolean @default(true)
   currencyEnabled              Boolean @default(true)
   keywordEnabled               Boolean @default(true)
