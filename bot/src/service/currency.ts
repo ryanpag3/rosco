@@ -145,7 +145,7 @@ const updateCurrencyAmount = async (serverDiscordId: string, userId: string, cur
             }
         },
         data: {
-            currencyCount: (server?.UserServer[0].currencyCount || 0) + currencyRule.amount
+            currencyCount: (server?.UserServer[0]?.currencyCount || 0) + currencyRule.amount
         },
         include: {
             Server: true

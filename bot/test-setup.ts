@@ -7,7 +7,6 @@ import { baselineKeywordCacheToDatabase, buildKeywordValues } from './src/servic
 import logger from './src/util/logger';
 import prisma from './src/util/prisma';
 import redis from './src/util/redis';
-import { delay } from 'bluebird';
 
 beforeAll(async () => {
     
