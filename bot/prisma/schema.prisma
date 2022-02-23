@@ -1,4 +1,3 @@
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["extendedIndexes"]
@@ -233,16 +232,17 @@ model Server {
   timezone                     String   @default("America/Los_Angeles")
 
   // module toggle flags
-  autoModBannedWordsEnabled Boolean @default(false)
-  announceEnabled           Boolean @default(true)
-  currencyEnabled           Boolean @default(true)
-  keywordEnabled            Boolean @default(true)
-  pollEnabled               Boolean @default(true)
-  scoreEnabled              Boolean @default(true)
-  scoreboardEnabled         Boolean @default(true)
-  stopwatchEnabled          Boolean @default(true)
-  timerEnabled              Boolean @default(true)
-  welcomeEnabled            Boolean @default(true)
+  autoModBannedWordsEnabled    Boolean @default(false)
+  autoModCapslockDetectEnabled Boolean @default(false)
+  announceEnabled              Boolean @default(true)
+  currencyEnabled              Boolean @default(true)
+  keywordEnabled               Boolean @default(true)
+  pollEnabled                  Boolean @default(true)
+  scoreEnabled                 Boolean @default(true)
+  scoreboardEnabled            Boolean @default(true)
+  stopwatchEnabled             Boolean @default(true)
+  timerEnabled                 Boolean @default(true)
+  welcomeEnabled               Boolean @default(true)
 
   Announcement         Announcement[]
   BannedWord           BannedWord[]
