@@ -1,6 +1,9 @@
+import { Server } from '@prisma/client';
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { CacheType, CommandInteraction } from 'discord.js';
 import BotError from '../util/bot-error';
+import logger from '../util/logger';
+import prisma from '../util/prisma';
 
 enum MODULE {
     BANNED_WORDS = 'banned-words',
@@ -55,3 +58,50 @@ export const getRuleOptions = (interaction: CommandInteraction<CacheType>) => {
         violations
     };
 };
+
+
+export const toggleAutoModModule = async (interaction: CommandInteraction<CacheType>, server: Server, serverProperty: string, isEnabled: boolean) => {
+    logger.debug(`setting ${serverProperty} to ${isEnabled} for server ${server.id}`);
+
+    await prisma.server.update({
+        where: {
+            id: server.id
+        },
+        data: {
+            [serverProperty]: isEnabled
+        }
+    });
+
+    return sendToggleAutoModModule(interaction, serverProperty, isEnabled);
+}
+
+const sendToggleAutoModModule = async (interaction: CommandInteraction<CacheType>, serverProperty: string, isEnabled: boolean) => {
+    let plainEnglishModule = 'module';
+
+    switch (serverProperty) {
+        case 'autoModBannedWordsEnabled':
+            plainEnglishModule = 'Banned Words';
+            break;
+        case 'autoModCapslockDetectEnabled':
+            plainEnglishModule = 'Capslock Detection';
+            break;
+    }
+
+    return interaction.reply({
+        embeds: [
+            {
+                title: ':traffic_light: An AutoMod module has been toggled.',
+                fields: [
+                    {
+                        name: 'module',
+                        value: plainEnglishModule
+                    },
+                    {
+                        name: 'enabled?',
+                        value: isEnabled.toString()
+                    }
+                ]
+            }
+        ]
+    })
+}

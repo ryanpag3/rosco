@@ -205,7 +205,7 @@ const AutoMod: Command = {
                 break;
             }
 
-            case 'capslock-detect)': {
+            case 'capslock-detect': {
                 switch (subcmd) {
                     case 'enable':
                         return CapslockDetectEnable.handler(interaction, user, server);

@@ -73,29 +73,29 @@ const timeoutUser = async (message: Message, serverDiscordId: string, userDiscor
     logger.debug(`${member} has been timed out for ${durationSecs} seconds`);
 }
 
-export const toggleBannedWordsRule = async (interaction: CommandInteraction<CacheType>, user: User, server: Server, isEnabled: boolean) => {
+// export const toggleBannedWordsRule = async (interaction: CommandInteraction<CacheType>, user: User, server: Server, isEnabled: boolean) => {
 
-    logger.debug(`setting banned words rule to ${isEnabled}`);
+//     logger.debug(`setting banned words rule to ${isEnabled}`);
 
-    await prisma.server.update({
-        where: {
-            id: server.id
-        },
-        data: {
-            autoModBannedWordsEnabled: isEnabled
-        }
-    });
+//     await prisma.server.update({
+//         where: {
+//             id: server.id
+//         },
+//         data: {
+//             autoModBannedWordsEnabled: isEnabled
+//         }
+//     });
 
-    return sendAutoModeToggledMessage(interaction, 'Banned Words', isEnabled);
-}
+//     return sendAutoModeToggledMessage(interaction, 'Banned Words', isEnabled);
+// }
 
-const sendAutoModeToggledMessage = async (interaction: CommandInteraction<CacheType>, feature: string, isEnabled: boolean) => {
-    return interaction.reply({
-        embeds: [
-            {
-                title: 'AutoMod',
-                description: `_${feature}_ rule has been **${isEnabled ? 'enabled' : 'disabled'}.**`
-            }
-        ]
-    });
-}
+// const sendAutoModeToggledMessage = async (interaction: CommandInteraction<CacheType>, feature: string, isEnabled: boolean) => {
+//     return interaction.reply({
+//         embeds: [
+//             {
+//                 title: 'AutoMod',
+//                 description: `_${feature}_ rule has been **${isEnabled ? 'enabled' : 'disabled'}.**`
+//             }
+//         ]
+//     });
+// }
