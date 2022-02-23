@@ -6,6 +6,9 @@ import BannedWordsDelete from './automod-banned-words-delete.sub';
 import BannedWordsDisable from './automod-banned-words-disable.sub';
 import BannedWordsEnable from './automod-banned-words-enable.sub';
 import BannedWordsList from './automod-banned-words-list.sub';
+import CapslockDetectConfig from './automod-capslock-detect-config.sub';
+import CapslockDetectDisable from './automod-capslock-detect-disable.sub';
+import CapslockDetectEnable from './automod-capslock-detect-enable.sub';
 import RuleAdd from './automod-rule-add.sub';
 import RuleList from './automod-rule-list.sub';
 import AutoModRuleRemove from './automod-rule-remove.sub';
@@ -185,6 +188,7 @@ const AutoMod: Command = {
                 }
                 break;
             }
+
             case 'banned-words': {
                 switch (subcmd) {
                     case 'enable':
@@ -198,16 +202,19 @@ const AutoMod: Command = {
                     case 'list':
                         return BannedWordsList.handler(interaction, user, server);
                 }
+                break;
             }
+
             case 'capslock-detect)': {
                 switch (subcmd) {
                     case 'enable':
-                        return;
+                        return CapslockDetectEnable.handler(interaction, user, server);
                     case 'disable':
-                        return;
+                        return CapslockDetectDisable.handler(interaction, user, server);
                     case 'config':
-                        return;
+                        return CapslockDetectConfig.handler(interaction, user, server);
                 }
+                break;
             }
         }
     } 
