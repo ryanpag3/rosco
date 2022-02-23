@@ -44,6 +44,7 @@ jobs:
         run: |
           npm i -g yarn
           apt-get update -y
+          sleep 60
           apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
       - name: build bot
         run: |
