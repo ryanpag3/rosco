@@ -1,4 +1,4 @@
-import { Keyword, Server } from '@prisma/client';
+import { Keyword, Server, User } from '@prisma/client';
 import { Message } from 'discord.js';
 import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
 import { doesKeywordsExist, getValidKeywords } from '../service/keyword-cache';
@@ -7,7 +7,7 @@ import logger from '../util/logger';
 import prisma from '../util/prisma';
 import * as ServerService from '../service/server';
 import * as UserService from '../service/user';
-import { onBannedWordDetected } from '../service/banned-words';
+import { onAutoModRuleBroken } from '../service/auto-mod';
 
 const onMessageReceived = async (message: Message) => {
     if (message.type === 'APPLICATION_COMMAND')
@@ -20,14 +20,26 @@ const onMessageReceived = async (message: Message) => {
 
     const user = await UserService.initUser(message.member as any, server as Server);
 
-    if (BannedWordCache.messageContainsCachedWord(message.content)) {
-        await onBannedWordDetected(message, user.id, server?.id as string);
-    }
+    await validateAutoMod(message, user, server as Server);
 
     await handleCurrencyEvent(CurrencyAction.MESSAGE, message);
 
     await handleKeywords(message);
 };
+
+const validateAutoMod = async (message: Message, user: User, server: Server) => {
+    try {
+        if (BannedWordCache.messageContainsCachedWord(message.content)) {
+            await onAutoModRuleBroken('banned-words', message, user.id, server.id);
+        }
+
+        if (server.autoModCapslockDetectEnabled === true) {
+            await onAutoModRuleBroken('capslock-detect', message, user.id, server.id);
+        }
+    } catch (e) {
+        // noop
+    }
+}
 
 const handleKeywords = async (message: Message) => {
     if (!doesKeywordsExist(message.content))

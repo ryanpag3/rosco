@@ -30,7 +30,7 @@ const AutoMod: Command = {
                     options: [
                         {
                             name: 'module',
-                            description: 'Which module to set rule for. Can be "banned-words".',
+                            description: 'Which module to set rule for. Can be "banned-words" or "capslock-detect".',
                             type: ApplicationCommandOptionType.String,
                             required: true
                         },

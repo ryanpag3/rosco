@@ -1,13 +1,14 @@
-import { Server } from '@prisma/client';
+import { Server, AutoModRuleUser, User, AutoModRule } from '@prisma/client';
 import { ApplicationCommandOptionType } from 'discord-api-types';
-import { CacheType, CommandInteraction } from 'discord.js';
+import { CacheType, CommandInteraction, Message } from 'discord.js';
+import { DateTime, Duration } from 'luxon';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 enum MODULE {
     BANNED_WORDS = 'banned-words',
-    ALL_CAPS = 'all-caps'
+    ALL_CAPS = 'capslock-detect'
 }
 
 enum ACTION {
@@ -105,3 +106,91 @@ const sendToggleAutoModModule = async (interaction: CommandInteraction<CacheType
         ]
     })
 }
+
+export const onAutoModRuleBroken = async (module: string, message: Message, userId: string, serverId: string) => {
+    logger.trace(`${userId} broke the ${module} module in ${serverId} server.`);
+
+    try {
+        const autoModRules = await prisma.autoModRule.findMany({
+            where: {
+                module,
+                serverId
+            }
+        });
+
+        const ruleUsers: any[] = [];
+        for (const rule of autoModRules) {
+            ruleUsers.push(await upsertAutoModRuleUser(userId, rule.id, rule.cooldownPeriodSecs));
+        }
+
+        await takeAction(message, ruleUsers);
+      } catch (e) {
+        logger.error(e);
+    }
+
+    throw new Error(`An AutoMod action was taken for ${message.id}`);
+};
+
+const upsertAutoModRuleUser = async (userId: string, ruleId: string, ruleCooldownPeriod: number) => {
+    const user = await prisma.autoModRuleUser.upsert({
+        where: {
+            userId_autoModRuleId: {
+                userId,
+                autoModRuleId: ruleId
+            }
+        },
+        create: {
+            userId,
+            autoModRuleId: ruleId,
+            currentViolations: 1,
+            cooldownExpiresOn: DateTime.now().plus(Duration.fromDurationLike({ seconds: ruleCooldownPeriod })).toJSDate()
+        },
+        update: {
+           currentViolations: {
+               increment: 1
+           } 
+        },
+        include: {
+            User: true,
+            Rule: {
+                include: {
+                    Server: true
+                }
+            }
+        }
+    });
+
+    return user;
+}
+
+const takeAction = async (message: Message, ruleUsers: AutoModRuleUser[]) => {
+
+    for (const ruleUser of ruleUsers) {
+        const u: AutoModRuleUser & {
+            User: User;
+            Rule: AutoModRule & {
+                Server: Server;
+            };
+        } = ruleUser as any;
+
+        // @ts-ignore
+        if (ruleUser.currentViolations < u.Rule.violations) {
+            continue;
+        }
+
+        switch(u.Rule.action) {
+            case 'delete':
+                return message.delete();
+            case 'timeout':
+                return timeoutUser(message, u.Rule.Server.discordId, u.User.discordId, u.Rule.duration);
+        }
+    }
+}
+
+const timeoutUser = async (message: Message, serverDiscordId: string, userDiscordId: string, durationSecs: number) => {
+    const { client } = message;
+    const guild = await client.guilds.fetch(serverDiscordId);
+    const member = await guild.members.fetch(userDiscordId);
+    await member.timeout(durationSecs * 1000);
+    logger.debug(`${member} has been timed out for ${durationSecs} seconds`);
+};
