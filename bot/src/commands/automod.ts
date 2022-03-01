@@ -9,6 +9,8 @@ import BannedWordsList from './automod-banned-words-list.sub';
 import CapslockDetectConfig from './automod-capslock-detect-config.sub';
 import CapslockDetectDisable from './automod-capslock-detect-disable.sub';
 import CapslockDetectEnable from './automod-capslock-detect-enable.sub';
+import LinkDetectDisable from './automod-link-detect-disable.sub';
+import LinkDetectEnable from './automod-link-detect-enable.sub';
 import RuleAdd from './automod-rule-add.sub';
 import RuleList from './automod-rule-list.sub';
 import AutoModRuleRemove from './automod-rule-remove.sub';
@@ -170,6 +172,38 @@ const AutoMod: Command = {
                     ]
                 }
             ]
+        },
+        {
+            name: 'link-detect',
+            description: 'Manage link detection.',
+            type: ApplicationCommandOptionType.SubcommandGroup,
+            options: [
+                {
+                    name: 'enable',
+                    description: 'Enable link detection.',
+                    type: ApplicationCommandOptionType.Subcommand
+                },
+                {
+                    name: 'disable',
+                    description: 'Disable link detection.',
+                    type: ApplicationCommandOptionType.Subcommand
+                },
+                {
+                    name: 'allow',
+                    description: 'Add a link or pattern to the allow list.',
+                    type: ApplicationCommandOptionType.Subcommand
+                },
+                {
+                    name: 'deny',
+                    description: 'Remove a link from the allow list. This will fail if link not explicitely allowed first.',
+                    type: ApplicationCommandOptionType.Subcommand
+                },
+                {
+                    name: 'allow-list',
+                    description: 'List out the current allow list.',
+                    type: ApplicationCommandOptionType.Subcommand
+                }
+            ]
         }
     ],
     handler: async (interaction, user, server) => {
@@ -215,6 +249,21 @@ const AutoMod: Command = {
                         return CapslockDetectConfig.handler(interaction, user, server);
                 }
                 break;
+            }
+
+            case 'link-detect': {
+                switch(subcmd) {
+                    case 'enable':
+                        return LinkDetectEnable.handler(interaction, user, server);
+                    case 'disable':
+                        return LinkDetectDisable.handler(interaction, user, server);
+                    case 'allow':
+                        return;
+                    case 'deny':
+                        return;
+                    case 'allow-list':
+                        return;
+                }
             }
         }
     } 

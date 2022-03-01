@@ -236,6 +236,7 @@ model Server {
   autoModBannedWordsEnabled    Boolean @default(false)
   autoModCapslockDetectEnabled Boolean @default(false)
   autoModCapslockDetectLength  Int     @default(12)
+  autoModLinkDetectEnabled     Boolean @default(false)
   announceEnabled              Boolean @default(true)
   currencyEnabled              Boolean @default(true)
   keywordEnabled               Boolean @default(true)
