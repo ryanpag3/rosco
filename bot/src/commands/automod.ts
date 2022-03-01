@@ -9,6 +9,7 @@ import BannedWordsList from './automod-banned-words-list.sub';
 import CapslockDetectConfig from './automod-capslock-detect-config.sub';
 import CapslockDetectDisable from './automod-capslock-detect-disable.sub';
 import CapslockDetectEnable from './automod-capslock-detect-enable.sub';
+import LinkDetectAllowList from './automod-link-detect-allow-list.sub';
 import LinkDetectAllow from './automod-link-detect-allow.sub';
 import LinkDetectDeny from './automod-link-detect-deny.sub';
 import LinkDetectDisable from './automod-link-detect-disable.sub';
@@ -193,12 +194,28 @@ const AutoMod: Command = {
                 {
                     name: 'allow',
                     description: 'Add a link or pattern to the allow list.',
-                    type: ApplicationCommandOptionType.Subcommand
+                    type: ApplicationCommandOptionType.Subcommand,
+                    options: [
+                        {
+                            name: 'pattern',
+                            description: 'The link or pattern you want to allow.',
+                            type: ApplicationCommandOptionType.String,
+                            required: true
+                        }
+                    ]
                 },
                 {
                     name: 'deny',
                     description: 'Remove a link from the allow list. This will fail if link not explicitely allowed first.',
-                    type: ApplicationCommandOptionType.Subcommand
+                    type: ApplicationCommandOptionType.Subcommand,
+                    options: [
+                        {
+                            name: 'pattern',
+                            description: 'The link or pattern you want to deny.',
+                            type: ApplicationCommandOptionType.String,
+                            required: true
+                        }
+                    ]
                 },
                 {
                     name: 'allow-list',
@@ -264,7 +281,7 @@ const AutoMod: Command = {
                     case 'deny':
                         return LinkDetectDeny.handler(interaction, user, server);
                     case 'allow-list':
-                        return;
+                        return LinkDetectAllowList.handler(interaction, user, server);
                 }
             }
         }
