@@ -9,6 +9,8 @@ import BannedWordsList from './automod-banned-words-list.sub';
 import CapslockDetectConfig from './automod-capslock-detect-config.sub';
 import CapslockDetectDisable from './automod-capslock-detect-disable.sub';
 import CapslockDetectEnable from './automod-capslock-detect-enable.sub';
+import LinkDetectAllow from './automod-link-detect-allow.sub';
+import LinkDetectDeny from './automod-link-detect-deny.sub';
 import LinkDetectDisable from './automod-link-detect-disable.sub';
 import LinkDetectEnable from './automod-link-detect-enable.sub';
 import RuleAdd from './automod-rule-add.sub';
@@ -258,9 +260,9 @@ const AutoMod: Command = {
                     case 'disable':
                         return LinkDetectDisable.handler(interaction, user, server);
                     case 'allow':
-                        return;
+                        return LinkDetectAllow.handler(interaction, user, server);
                     case 'deny':
-                        return;
+                        return LinkDetectDeny.handler(interaction, user, server);
                     case 'allow-list':
                         return;
                 }

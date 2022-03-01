@@ -1,4 +1,3 @@
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["extendedIndexes"]
@@ -8,6 +7,17 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model AllowedLink {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId  String
+  pattern   String
+
+  @@unique([serverId, pattern])
 }
 
 model Announcement {
@@ -262,6 +272,7 @@ model Server {
   Timer                Timer[]
   UserServer           UserServer[]
   AutoModRule          AutoModRule[]
+  AllowedLink          AllowedLink[]
 }
 
 model ServerWelcomeMessage {
