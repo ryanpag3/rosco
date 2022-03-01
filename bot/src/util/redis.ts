@@ -20,6 +20,6 @@ const client = createClient({
     }
 })();
 
-const redis = client;
+let redis = client;
 
 export default redis;

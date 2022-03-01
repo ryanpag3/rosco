@@ -8,6 +8,7 @@ import prisma from '../util/prisma';
 import * as ServerService from '../service/server';
 import * as UserService from '../service/user';
 import { onAutoModRuleBroken } from '../service/auto-mod';
+import { isValidAmountOfCapslock } from '../service/capslock-detect';
 
 const onMessageReceived = async (message: Message) => {
     if (message.type === 'APPLICATION_COMMAND')
@@ -33,8 +34,13 @@ const validateAutoMod = async (message: Message, user: User, server: Server) => 
             await onAutoModRuleBroken('banned-words', message, user.id, server.id);
         }
 
-        if (server.autoModCapslockDetectEnabled === true) {
+        if (server.autoModCapslockDetectEnabled === true && 
+                !isValidAmountOfCapslock(message.content, server.autoModCapslockDetectLength)) {
             await onAutoModRuleBroken('capslock-detect', message, user.id, server.id);
+        }
+
+        if (server.autoModLinkDetectEnabled === true) {
+            
         }
     } catch (e) {
         // noop
