@@ -12,7 +12,7 @@ const BannedWordsDelete: Command = {
         const word = interaction.options.getString('word', true);
 
         try {
-            await prisma.bannedWord.delete({
+            const r = await prisma.bannedWord.delete({
                 where: {
                     word_serverId: {
                         serverId: server.id,
@@ -20,13 +20,13 @@ const BannedWordsDelete: Command = {
                     }
                 }
             });
+
+            await BannedWordCache.deleteRecord(server.id, r.id); 
         } catch (e) {
             if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.NOT_FOUND)
                 throw new BotError('Banned word not found to delete.');
             throw e;
         }
-
-        await BannedWordCache.baselineWordCacheToDatabase();
 
         return interaction.reply({
             embeds: [

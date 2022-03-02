@@ -2,7 +2,6 @@ import 'chartjs-plugin-datalabels';
 import './util/command-subcommand-map';
 
 import { CacheType, Client, CommandInteraction, Message } from 'discord.js';
-import BannedWordCache from './service/banned-word-cache';
 // prevent race condition
 import * as CommandDeployer from './util/slash-command-deployer';
 import onReady from './event/ready';
@@ -17,6 +16,7 @@ import execa from 'execa';
 import logger from './util/logger';
 import LinkCache from './service/link-cache';
 import KeywordCache from './service/keyword-cache';
+import BannedWordCache from './service/banned-word-cache';
 
 export default async function (client: Client) {
     try {
@@ -28,7 +28,7 @@ export default async function (client: Client) {
 
     await KeywordCache.baselineFromDatabase();
 
-    await setupBannedWordsCache();
+    await BannedWordCache.baselineFromDatabase();
 
     await LinkCache.baselineFromDatabase();
     
@@ -51,9 +51,4 @@ export default async function (client: Client) {
     client.on('messageReactionRemove', async (reaction, user) => onMessageReactionRemove(reaction, user));
 
     client.on('guildMemberAdd', async (member) => onGuildMemberAdd(member));
-}
-
-const setupBannedWordsCache = async () => {
-    await BannedWordCache.baselineWordCacheToDatabase();
-    await BannedWordCache.buildInMemoryCache();
 }
