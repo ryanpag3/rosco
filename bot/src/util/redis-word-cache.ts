@@ -71,6 +71,24 @@ export default class RedisWordCache {
         return redis.get(this.buildRedisKey(serverId, id));
     };
 
+    getCachedRecords = async (serverId: string) => {
+        const keys = await redis.keys(this.buildRedisKey(serverId, '*'));
+
+        logger.debug(`${keys.length} records to retrieve from the cache.`);
+
+        const records = [];
+
+        for (const key of keys) {
+            const raw = await redis.get(key);
+            const val = raw ? JSON.parse(raw) : null;
+            if (!val)
+                continue;
+            records.push(val);
+        }
+
+        return records;
+    }
+
     /**
      * Iterate through Redis cached entries and determine
      * whether the message content contains a cached word.
