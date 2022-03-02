@@ -7,7 +7,7 @@ import logger from './logger';
 import prisma from './prisma';
 import client from '..';
 
-const POLL_INTERVAL = process.env.SCHEDULED_TASK_POLL_INTERVAL || 5000;
+const POLL_INTERVAL = process.env.SCHEDULED_TASK_POLL_INTERVAL || 1000;
 let daemonId: any;
 let activeTasks: any = {};
 

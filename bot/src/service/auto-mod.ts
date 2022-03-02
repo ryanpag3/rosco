@@ -8,7 +8,8 @@ import prisma from '../util/prisma';
 
 enum MODULE {
     BANNED_WORDS = 'banned-words',
-    ALL_CAPS = 'capslock-detect'
+    ALL_CAPS = 'capslock-detect',
+    LINK_DETECT = 'link-detect'
 }
 
 enum ACTION {
@@ -108,7 +109,7 @@ const sendToggleAutoModModule = async (interaction: CommandInteraction<CacheType
 }
 
 export const onAutoModRuleBroken = async (module: string, message: Message, userId: string, serverId: string) => {
-    logger.trace(`${userId} broke the ${module} module in ${serverId} server.`);
+    logger.debug(`${userId} broke the ${module} module in ${serverId} server.`);
 
     try {
         const autoModRules = await prisma.autoModRule.findMany({
@@ -117,6 +118,8 @@ export const onAutoModRuleBroken = async (module: string, message: Message, user
                 serverId
             }
         });
+
+        logger.debug(`found ${autoModRules.length} automod rules to take action on.`)
 
         const ruleUsers: any[] = [];
         for (const rule of autoModRules) {
@@ -175,6 +178,7 @@ const takeAction = async (message: Message, ruleUsers: AutoModRuleUser[]) => {
 
         // @ts-ignore
         if (ruleUser.currentViolations < u.Rule.violations) {
+            logger.debug(`current violations not higher than or equal to rule violations.`)
             continue;
         }
 

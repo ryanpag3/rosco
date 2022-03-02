@@ -16,6 +16,7 @@ import onGuildMemberAdd from './event/guild-member-add';
 import * as ScheduledTaskExecutor from './util/scheduled-task-executor';
 import execa from 'execa';
 import logger from './util/logger';
+import LinkCache from './service/link-cache';
 
 export default async function (client: Client) {
     try {
@@ -28,6 +29,8 @@ export default async function (client: Client) {
     await setupKeywordCache();
 
     await setupBannedWordsCache();
+
+    await LinkCache.baselineFromDatabase();
     
     // deploy slash commands
     await CommandDeployer.deploy();

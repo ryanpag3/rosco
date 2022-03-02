@@ -72,7 +72,7 @@ export const handleCurrencyEvent = async (
                 continue;
             // @ts-ignore
             if (member?.roles.cache.has(currencyRule.roleId))
-                logger.debug(`granting ${member.user.id} ${currencyRule.amount}`);
+                logger.trace(`granting ${member.user.id} ${currencyRule.amount}`);
             promises.push(runEvent(currencyRule, guild, member as GuildMember, reaction, user))
         }
 

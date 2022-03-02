@@ -1,5 +1,6 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../types/command';
+import LinkCache from '../service/link-cache';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
 import PrismaErrorCode from '../util/prisma-error-code';
@@ -11,12 +12,14 @@ const LinkDetectAllow: Command = {
         const pattern = interaction.options.getString('pattern', true);
         
         try {
-            await prisma.allowedLink.create({
+            const r = await prisma.allowedLink.create({
                 data: {
                     serverId: server.id,
                     pattern
                 }
             });
+
+            await LinkCache.cacheRecord(r);
         } catch (e) {
             if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
                 throw new BotError('This pattern has already been added to the allow list.');

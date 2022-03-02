@@ -39,14 +39,15 @@ export default class RedisWordCache {
 
         const toBeDeletedKeys = keys.filter((k) => records.filter((r) => this.buildRedisKey(r.serverId, r.id) !== k));
 
-        await redis.del(toBeDeletedKeys);
+        if (toBeDeletedKeys.length > 0)
+            await redis.del(toBeDeletedKeys);
 
         for (const r of records) {
             await this.cacheRecord(r);
         }
 
-        logger.debug(`${toBeDeletedKeys.length} records removed from cache.`);
-        logger.debug(`${records.length} records added to cache.`);
+        logger.debug(`${toBeDeletedKeys.length} records removed from ${this.delimiter} cache.`);
+        logger.debug(`${records.length} records upserted to ${this.delimiter} cache.`);
     }
 
     /**

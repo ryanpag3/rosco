@@ -1,4 +1,5 @@
 import { Command } from '../../types/command';
+import LinkCache from '../service/link-cache';
 import prisma from '../util/prisma';
 
 const LinkDetectDeny: Command = {
@@ -8,7 +9,7 @@ const LinkDetectDeny: Command = {
         const pattern = interaction.options.getString('pattern', true);
 
         try {
-            await prisma.allowedLink.delete({
+            const deleted = await prisma.allowedLink.delete({
                 where: {
                     serverId_pattern: {
                         serverId: server.id,
@@ -16,6 +17,8 @@ const LinkDetectDeny: Command = {
                     }
                 }
             });
+
+            await LinkCache.deleteRecord(server.id, deleted.id);
         } catch (e) {
             // noop
         }

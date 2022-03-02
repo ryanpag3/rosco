@@ -9,6 +9,7 @@ import * as ServerService from '../service/server';
 import * as UserService from '../service/user';
 import { onAutoModRuleBroken } from '../service/auto-mod';
 import { isValidAmountOfCapslock } from '../service/capslock-detect';
+import LinkCache from '../service/link-cache';
 
 const onMessageReceived = async (message: Message) => {
     if (message.type === 'APPLICATION_COMMAND')
@@ -39,8 +40,11 @@ const validateAutoMod = async (message: Message, user: User, server: Server) => 
             await onAutoModRuleBroken('capslock-detect', message, user.id, server.id);
         }
 
-        if (server.autoModLinkDetectEnabled === true) {
-            
+        // links are only valid if on the approved list
+        if (server.autoModLinkDetectEnabled === true && 
+            // @ts-ignore
+            await LinkCache.containsInvalidLink(server.id, message.content) === true) {
+                await onAutoModRuleBroken('link-detect', message, user.id, server.id);
         }
     } catch (e) {
         // noop
