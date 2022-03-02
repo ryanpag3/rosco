@@ -185,6 +185,11 @@ const takeAction = async (message: Message, ruleUsers: AutoModRuleUser[]) => {
         switch(u.Rule.action) {
             case 'delete':
                 return message.delete();
+            case 'warn':
+                return warnUser(
+                    message,
+                    u.User.discordId,
+                    u.Rule.module);
             case 'timeout':
                 return timeoutUser(
                     message, 
@@ -214,6 +219,21 @@ const timeoutUser = async (message: Message, serverDiscordId: string, userDiscor
     const member = await guild.members.fetch(userDiscordId);
     await member.timeout(durationSecs * 1000);
     logger.debug(`${member} has been timed out for ${durationSecs} seconds`);
+};
+
+const warnUser = async (message: Message, userDiscordId: string, module: string) => {
+    const { client } = message;
+    const member = await client.users.fetch(userDiscordId);
+    member.send({
+        embeds: [
+            {
+                title: `AutoMod Rule Warning`,
+                description: `You have broken the ${module} module rule for this server and received a warning. If repeated, further actions may be taken.`
+            }
+        ]
+    });
+    await message.delete();
+    logger.debug(`${member} has been warned.`);
 };
 
 const kickUser = async (message: Message, serverDiscordId: string, userDiscordId: string, reason: string) => {
