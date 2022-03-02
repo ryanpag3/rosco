@@ -186,7 +186,24 @@ const takeAction = async (message: Message, ruleUsers: AutoModRuleUser[]) => {
             case 'delete':
                 return message.delete();
             case 'timeout':
-                return timeoutUser(message, u.Rule.Server.discordId, u.User.discordId, u.Rule.duration);
+                return timeoutUser(
+                    message, 
+                    u.Rule.Server.discordId, 
+                    u.User.discordId, 
+                    u.Rule.duration);
+            case 'kick':
+                return kickUser(
+                    message, 
+                    u.Rule.Server.discordId, 
+                    u.User.discordId, 
+                    `Broke AutoMod module rule "${u.Rule.module}" configured by server administrators.`);
+            case 'ban':
+                return banUser(
+                    message,  
+                    u.Rule.Server.discordId, 
+                    u.User.discordId, 
+                    `Broke AutoMod module rule "${u.Rule.module}" configured by server administrators.`, 
+                    Math.floor(u.Rule.duration / (3600*24)));
         }
     }
 }
@@ -198,3 +215,22 @@ const timeoutUser = async (message: Message, serverDiscordId: string, userDiscor
     await member.timeout(durationSecs * 1000);
     logger.debug(`${member} has been timed out for ${durationSecs} seconds`);
 };
+
+const kickUser = async (message: Message, serverDiscordId: string, userDiscordId: string, reason: string) => {
+    const { client } = message;
+    const guild = await client.guilds.fetch(serverDiscordId);
+    const member = await guild.members.fetch(userDiscordId);
+    await member.kick(reason);
+    logger.debug(`${member} has been kicked`);
+}
+
+const banUser = async (message: Message, serverDiscordId: string, userDiscordId: string, reason: string, durationDays: number) => {
+    const { client } = message;
+    const guild = await client.guilds.fetch(serverDiscordId);
+    const member = await guild.members.fetch(userDiscordId);
+    await member.ban({
+        reason,
+        days: durationDays
+    });
+    logger.debug(`${member} has been banned for ${durationDays} days.`);
+}
