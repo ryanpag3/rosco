@@ -1,7 +1,6 @@
 import { Keyword, Server, User } from '@prisma/client';
 import { Message } from 'discord.js';
 import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
-import BannedWordCache from '../service/banned-word-cache';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 import * as ServerService from '../service/server';
@@ -10,6 +9,7 @@ import { onAutoModRuleBroken } from '../service/auto-mod';
 import { isValidAmountOfCapslock } from '../service/capslock-detect';
 import LinkCache from '../service/link-cache';
 import KeywordCache from '../service/keyword-cache';
+import BannedWordCache from '../service/banned-word-cache';
 
 const onMessageReceived = async (message: Message) => {
     if (message.type === 'APPLICATION_COMMAND')
@@ -31,7 +31,7 @@ const onMessageReceived = async (message: Message) => {
 
 const validateAutoMod = async (message: Message, user: User, server: Server) => {
     try {
-        if (BannedWordCache.messageContainsCachedWord(message.content)) {
+        if (await BannedWordCache.containsCachedWord(server.id, message.content)) {
             await onAutoModRuleBroken('banned-words', message, user.id, server.id);
         }
 

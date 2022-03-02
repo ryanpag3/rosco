@@ -1,9 +1,6 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../types/command';
 import { validateModuleAndAction } from '../service/auto-mod';
-import BannedWordCache from '../service/banned-word-cache';
 import prisma from '../util/prisma';
-import PrismaErrorCode from '../util/prisma-error-code';
 
 const AutoModRuleRemove: Command = {
     id: '84b9c354-bc13-4366-b69c-bbfca01c05cd',

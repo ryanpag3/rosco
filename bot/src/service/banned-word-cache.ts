@@ -1,7 +1,5 @@
-import WordCache from './word-cache';
+import RedisWordCache from '../util/redis-word-cache';
 
-const BannedWordCache = new WordCache('bannedWord');
-
-export const reload = async () => BannedWordCache.buildInMemoryCache(true);
+const BannedWordCache = new RedisWordCache('bannedWord', 'word');
 
 export default BannedWordCache;
