@@ -8,7 +8,6 @@ import * as CommandDeployer from './util/slash-command-deployer';
 import onReady from './event/ready';
 import onInteractionCreate from './event/interaction-create';
 import onMessageReceived from './event/message';
-import * as KeywordCache from './service/keyword-cache';
 import { onGuildCreate } from './event/guild-create';
 import { onMessageActionAdd } from './event/message-reaction-add';
 import { onMessageReactionRemove } from './event/message-reaction-remove';
@@ -17,6 +16,7 @@ import * as ScheduledTaskExecutor from './util/scheduled-task-executor';
 import execa from 'execa';
 import logger from './util/logger';
 import LinkCache from './service/link-cache';
+import KeywordCache from './service/keyword-cache';
 
 export default async function (client: Client) {
     try {
@@ -26,7 +26,7 @@ export default async function (client: Client) {
         process.exit(1);
     }
 
-    await setupKeywordCache();
+    await KeywordCache.baselineFromDatabase();
 
     await setupBannedWordsCache();
 
@@ -51,14 +51,6 @@ export default async function (client: Client) {
     client.on('messageReactionRemove', async (reaction, user) => onMessageReactionRemove(reaction, user));
 
     client.on('guildMemberAdd', async (member) => onGuildMemberAdd(member));
-}
-
-const setupKeywordCache = async () => {
-    // baseline cache against database
-    await KeywordCache.baselineKeywordCacheToDatabase();
-
-    // build keyword cache
-    await KeywordCache.buildKeywordValues();
 }
 
 const setupBannedWordsCache = async () => {

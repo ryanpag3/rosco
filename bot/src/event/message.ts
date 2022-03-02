@@ -1,7 +1,6 @@
 import { Keyword, Server, User } from '@prisma/client';
 import { Message } from 'discord.js';
 import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
-import { doesKeywordsExist, getValidKeywords } from '../service/keyword-cache';
 import BannedWordCache from '../service/banned-word-cache';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
@@ -10,6 +9,7 @@ import * as UserService from '../service/user';
 import { onAutoModRuleBroken } from '../service/auto-mod';
 import { isValidAmountOfCapslock } from '../service/capslock-detect';
 import LinkCache from '../service/link-cache';
+import KeywordCache from '../service/keyword-cache';
 
 const onMessageReceived = async (message: Message) => {
     if (message.type === 'APPLICATION_COMMAND')
@@ -26,7 +26,7 @@ const onMessageReceived = async (message: Message) => {
 
     await handleCurrencyEvent(CurrencyAction.MESSAGE, message);
 
-    await handleKeywords(message);
+    await handleKeywords(message, server);
 };
 
 const validateAutoMod = async (message: Message, user: User, server: Server) => {
@@ -51,11 +51,16 @@ const validateAutoMod = async (message: Message, user: User, server: Server) => 
     }
 }
 
-const handleKeywords = async (message: Message) => {
-    if (!doesKeywordsExist(message.content))
-        return;
+const handleKeywords = async (message: Message, server: Server|any) => {
 
-    const keywords: Keyword[] = getValidKeywords(message.content, message.guild?.id as string) as Keyword[];
+    const containsKeyword = await KeywordCache.containsCachedWord(server.id, message.content);
+
+    if (!containsKeyword) {
+        logger.debug('message does not contain keyword');
+        return;
+    }
+
+    const keywords: Keyword[] = await KeywordCache.getCachedRecords(server.id) as Keyword[];
 
     for (const k of keywords) {
         if (k.channelId && k.channelId !== message.channel?.id)

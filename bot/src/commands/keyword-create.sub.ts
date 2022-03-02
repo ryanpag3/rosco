@@ -1,8 +1,8 @@
 import { KeywordAction, Prisma } from '@prisma/client';
 import { Command } from '../../types/command';
+import KeywordCache from '../service/keyword-cache';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
-import * as KeywordCache from '../service/keyword-cache';
 
 const KeywordCreate: Command = {
     id: '6ec5e902-f482-48a5-879e-7427b8ba5a20',
@@ -53,7 +53,7 @@ const KeywordCreate: Command = {
                 }
             });
 
-            await KeywordCache.cacheKeyword(keywordRecord);
+            await KeywordCache.cacheRecord(keywordRecord);
 
             return interaction.reply({
                 embeds: [
