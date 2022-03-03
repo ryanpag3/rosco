@@ -1,7 +1,6 @@
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
-import * as ScoreService from '../../service/score';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import PrismaErrorCode from '../../util/prisma-error-code';
 

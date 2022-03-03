@@ -1,7 +1,6 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
-import { MessageAttachment, MessageEmbed } from 'discord.js';
+import { MessageAttachment } from 'discord.js';
 import { Command } from '../../../types/command';
-import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 
 const ScoreList: Command = {

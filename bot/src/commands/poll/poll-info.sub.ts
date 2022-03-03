@@ -1,4 +1,3 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';

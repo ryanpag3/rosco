@@ -1,7 +1,5 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
-import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../../types/command';
-import logger from '../../util/logger';
 import CurrencyBankDeposit from './currency-bank-deposit.sub';
 import CurrencyBankWithdraw from './currency-bank-withdraw.sub';
 import CurrencyGrant from './currency-grant.sub';

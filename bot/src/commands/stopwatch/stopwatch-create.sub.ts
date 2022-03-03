@@ -14,7 +14,7 @@ const StopwatchCreate: Command = {
             startOnCreate = true;
 
         try {
-            const res = await prisma.stopwatch.create({
+            await prisma.stopwatch.create({
                 data: {
                     name,
                     serverId: server?.id as string,
@@ -23,7 +23,7 @@ const StopwatchCreate: Command = {
                     startedAt: startOnCreate === true ? new Date() : undefined
                 }
             });
-            
+
             return interaction.reply({
                 embeds: [
                     {

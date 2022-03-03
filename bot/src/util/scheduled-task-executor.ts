@@ -1,4 +1,4 @@
-import { Announcement, AutoModRule, AutoModRuleUser, Timer } from '@prisma/client';
+import { Announcement, AutoModRuleUser, Timer } from '@prisma/client';
 import { MessageEmbedOptions, TextChannel } from 'discord.js';
 import { DateTime } from 'luxon';
 import { redlock } from './redlock';

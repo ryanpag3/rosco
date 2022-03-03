@@ -1,5 +1,4 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
-import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
 import { Command } from '../../../types/command';
 import StopwatchCreate from './stopwatch-create.sub';
 import StopwatchDelete from './stopwatch-delete.sub';

@@ -1,6 +1,4 @@
-import { CurrencyHistoryLog } from '@prisma/client';
-import { APIInteractionDataResolvedChannel } from 'discord-api-types';
-import { CacheType, CommandInteraction, GuildChannel, ThreadChannel } from 'discord.js';
+import { CacheType, CommandInteraction, GuildChannel } from 'discord.js';
 import { Command } from '../../../types/command';
 import prisma from '../../util/prisma';
 

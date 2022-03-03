@@ -1,5 +1,4 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { DateTime, Duration, Interval } from 'luxon';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
@@ -11,7 +10,7 @@ const StopwatchReset: Command = {
         const name = interaction.options.getString(`name`, true);
 
         try {
-            let stopwatch = await prisma.stopwatch.update({
+            await prisma.stopwatch.update({
                 where: {
                     name_serverId: {
                         name,

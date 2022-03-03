@@ -1,7 +1,6 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
-import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 
 const ScoreboardDelete: Command = {

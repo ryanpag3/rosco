@@ -1,4 +1,4 @@
-import { KeywordAction, Prisma } from '@prisma/client';
+import { KeywordAction } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../../types/command';
 import KeywordCache from '../../service/keyword-cache';

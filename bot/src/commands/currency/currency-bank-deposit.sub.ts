@@ -15,7 +15,7 @@ const CurrencyBankDeposit: Command = {
             throw new BotError('You do not have enough currency to deposit.');
         }
 
-        const res = await prisma.userServer.update({
+        await prisma.userServer.update({
             where: {
                 userId_serverId: {
                     userId: user.id, 

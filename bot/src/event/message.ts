@@ -6,7 +6,6 @@ import prisma from '../util/prisma';
 import * as ServerService from '../service/server';
 import * as UserService from '../service/user';
 import { onAutoModRuleBroken } from '../service/auto-mod';
-import { isValidAmountOfCapslock } from '../service/capslock-detect';
 import LinkCache from '../service/link-cache';
 import KeywordCache from '../service/keyword-cache';
 import BannedWordCache from '../service/banned-word-cache';
@@ -35,8 +34,9 @@ const validateAutoMod = async (message: Message, user: User, server: Server) => 
             await onAutoModRuleBroken('banned-words', message, user.id, server.id);
         }
 
+        const numberUppercase = message.content.length - message.content.replace(/[A-Z]/g, '').length
         if (server.autoModCapslockDetectEnabled === true && 
-                !isValidAmountOfCapslock(message.content, server.autoModCapslockDetectLength)) {
+                server.autoModCapslockDetectLength > numberUppercase) {
             await onAutoModRuleBroken('capslock-detect', message, user.id, server.id);
         }
 

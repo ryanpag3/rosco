@@ -1,8 +1,7 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { DateTime, Duration, Interval } from 'luxon';
+import { DateTime, Interval } from 'luxon';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
-import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 import PrismaErrorCode from '../../util/prisma-error-code';
 

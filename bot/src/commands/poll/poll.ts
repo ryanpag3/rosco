@@ -1,5 +1,4 @@
-import { ApplicationCommandOptionType, ApplicationCommandType } from 'discord-api-types';
-import { ApplicationCommandOptionTypes } from 'discord.js/typings/enums';
+import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../../types/command';
 import PollClose from './poll-close.sub';
 import PollCreate from './poll-create.sub';

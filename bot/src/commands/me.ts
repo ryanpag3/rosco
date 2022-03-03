@@ -1,6 +1,5 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
-import logger from '../util/logger';
 import prisma from '../util/prisma';
 
 const Me: Command = {
