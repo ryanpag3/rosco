@@ -2,7 +2,6 @@ require('dotenv').config({
     path: '.env.test'
 });
 import execa from 'execa';
-import './src/util/command-subcommand-map';
 import logger from './src/util/logger';
 import prisma from './src/util/prisma';
 import redis from './src/util/redis';
