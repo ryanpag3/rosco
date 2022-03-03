@@ -3,7 +3,6 @@ require('dotenv').config({
 });
 import execa from 'execa';
 import './src/util/command-subcommand-map';
-import { baselineKeywordCacheToDatabase, buildKeywordValues } from './src/service/keyword-cache';
 import logger from './src/util/logger';
 import prisma from './src/util/prisma';
 import redis from './src/util/redis';
@@ -21,9 +20,6 @@ beforeAll(async () => {
     } catch (e) {
         // noop
     }
-
-    await baselineKeywordCacheToDatabase();
-    await buildKeywordValues();
 }, 30000);
 
 beforeEach(async () => {
