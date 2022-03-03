@@ -16,7 +16,6 @@ import logger from './util/logger';
 import LinkCache from './service/link-cache';
 import KeywordCache from './service/keyword-cache';
 import BannedWordCache from './service/banned-word-cache';
-import { parseCommands } from './recursive-commands';
 
 export default async function (client: Client) {
     try {
@@ -25,8 +24,6 @@ export default async function (client: Client) {
         logger.error(e);
         process.exit(1);
     }
-
-    await parseCommands();
 
     await KeywordCache.baselineFromDatabase();
 
