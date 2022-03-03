@@ -19,20 +19,11 @@ const StopwatchCreate: Command = {
                     name,
                     serverId: server?.id as string,
                     channelId: interaction.channel?.id as string,
-                    userId: user.id
+                    userId: user.id,
+                    startedAt: startOnCreate === true ? new Date() : undefined
                 }
             });
-
-            if (startOnCreate) {
-                await prisma.stopwatch.update({
-                    where: {
-                        id: res.id
-                    },
-                    data: {
-                        startedAt: new Date()
-                    }
-                });
-            }
+            
             return interaction.reply({
                 embeds: [
                     {

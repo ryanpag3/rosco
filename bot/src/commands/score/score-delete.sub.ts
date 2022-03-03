@@ -2,6 +2,8 @@ import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
 import * as ScoreService from '../../service/score';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import PrismaErrorCode from '../../util/prisma-error-code';
 
 const ScoreDelete: Command = {
     id: 'ec73f689-6a62-4c19-8a5f-73131e876526',
@@ -11,25 +13,22 @@ const ScoreDelete: Command = {
     // options are handled in score.ts since this is a subcommand
     options: {},
     handler: async (interaction, _user, server) => {
-        const name = interaction.options.getString('name');
+        const name = interaction.options.getString('name', true);
 
-        const score = await prisma.score.findUnique({
-            where: {
-                name_serverId: {
-                    // @ts-ignore
-                    name,
-                    // @ts-ignore
-                    serverId: server?.id
+        try {
+            await prisma.score.delete({
+                where: {
+                    name_serverId: {
+                        name,
+                        serverId: server?.id
+                    } 
                 }
-            }
-        });
-
-        if (!score)
-            throw new BotError(`Cannot find score with name **${name}**.`);
-
-        await ScoreService.del({
-            id: score.id
-        });
+            });
+        } catch (e) {
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.NOT_FOUND)
+                throw new BotError('Could not find score to delete.');
+            throw e;
+        }
 
         await interaction.reply({
             embeds: [
@@ -38,7 +37,7 @@ const ScoreDelete: Command = {
                     fields: [
                         {
                             name: 'name',
-                            value: score.name
+                            value: name
                         }
                     ]
                 }

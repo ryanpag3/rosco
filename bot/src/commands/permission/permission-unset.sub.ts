@@ -3,6 +3,7 @@ import prisma from '../../util/prisma';
 import BotError from '../../util/bot-error';
 import { Prisma } from '@prisma/client';
 import COMMANDS from '../../recursive-commands';
+import PrismaErrorCode from '../../util/prisma-error-code';
 
 const PermissionUnset: Command = {
     id: '4e876254-dda4-4da0-9a61-bf3a9a67c3a1',
@@ -52,6 +53,9 @@ const PermissionUnset: Command = {
             if (!(e instanceof Prisma.PrismaClientKnownRequestError)) {
                 throw e;
             } else {
+                if (e.code === PrismaErrorCode.NOT_FOUND)
+                    throw new BotError('Could not find permission.');
+
                 if (e.code === 'P2002') {
                     throw new BotError(`This permission already exists.`);
                 }

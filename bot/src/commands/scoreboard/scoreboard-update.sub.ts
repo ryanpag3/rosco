@@ -11,18 +11,6 @@ const ScoreboardUpdate: Command = {
         const newName = interaction.options.getString('new-name') as string;
         const description = interaction.options.getString('description') as string;
 
-        const scoreboard = await prisma.scoreboard.findUnique({
-            where: {
-                name_serverId: {
-                    name,
-                    serverId: server?.id as string
-                }
-            }
-        });
-
-        if (!scoreboard)
-            throw new BotError(`Could not find scoreboard to update.`);
-
         try {
 
             let data: any = {};

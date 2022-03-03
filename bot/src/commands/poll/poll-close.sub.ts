@@ -1,6 +1,8 @@
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
+import PrismaErrorCode from '../../util/prisma-error-code';
 
 const PollClose: Command = {
     id: '0c3e7a9a-f963-4d71-958f-65163aa3078c',
@@ -50,10 +52,10 @@ const PollClose: Command = {
                 ]
             })
         } catch (e) {
-            throw new BotError('Could not find a poll with that name.');
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.NOT_FOUND)
+                throw new BotError('Could not find a poll with that name.');
+            throw e;
         }
-
-
     }
 };
 

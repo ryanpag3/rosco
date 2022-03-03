@@ -97,9 +97,6 @@ export const runEvent = async (
         }
     });
 
-    if (!user)
-        throw new Error('Cannot find user to adjust currency.');
-
     const userServerProfile = await updateCurrencyAmount(guild?.id as string, user.id, currencyRule);
 
     await saveInHistory(
@@ -133,9 +130,6 @@ const updateCurrencyAmount = async (serverDiscordId: string, userId: string, cur
             }
         }
     });
-
-    if (!server)
-        throw new Error(`Server was not properly initialized before updating currency amount. id ${serverDiscordId}`);
 
     return await prisma.userServer.update({
         where: {

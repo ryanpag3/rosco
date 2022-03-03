@@ -1,8 +1,10 @@
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { DateTime, Duration, Interval } from 'luxon';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
 import logger from '../../util/logger';
 import prisma from '../../util/prisma';
+import PrismaErrorCode from '../../util/prisma-error-code';
 
 const StopwatchStart: Command = {
     id: `31c1c151-5a12-4b31-8cd0-1f094e688524`,
@@ -73,6 +75,8 @@ const StopwatchStart: Command = {
                 ]
             });
         } catch (e) {
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.NOT_FOUND)
+                throw new BotError('Could not find stopwatch to stop.');
             throw e;
         }
     } 

@@ -2,6 +2,8 @@ import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
 import * as ScoreService from '../../service/score';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import PrismaErrorCode from '../../util/prisma-error-code';
 
 const ScoreUpdate: Command = {
     id: '85826091-2e7e-484c-94c3-7d5da87d1166',
@@ -17,17 +19,21 @@ const ScoreUpdate: Command = {
         const amount = interaction.options.getInteger('amount');
         const color = interaction.options.getString('color');
 
-        const score = await prisma.score.findUnique({
-            where: {
-                name_serverId: {
-                    name: name as string,
-                    serverId: server?.id as string
+        let score;
+        try {
+            score = await prisma.score.findUnique({
+                where: {
+                    name_serverId: {
+                        name: name as string,
+                        serverId: server?.id as string
+                    }
                 }
-            }
-        });
-
-        if (!score)
-            throw new BotError(`Cannot find score with name **${name}**.`);
+            });
+        } catch (e) {
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.NOT_FOUND)
+                throw new BotError(`Cannot find score with name **${name}**.`);
+            throw e;
+        }
 
         // @ts-ignore
         const updateData = buildUpdateObject(newName, description, amount, color);

@@ -18,7 +18,7 @@ const PollDelete: Command = {
                         serverId: server?.id as string
                     }
                 }
-            })
+            });
         } catch (e) {
             if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.NOT_FOUND)
                 throw new BotError('Could not find poll to delete');
