@@ -1,8 +1,8 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { Command } from '../../types/command';
-import BotError from '../util/bot-error';
-import prisma from '../util/prisma';
-import PrismaErrorCode from '../util/prisma-error-code';
+import { Command } from '../../../types/command';
+import BotError from '../../util/bot-error';
+import prisma from '../../util/prisma';
+import PrismaErrorCode from '../../util/prisma-error-code';
 
 const AnnounceDelete: Command = {
     id: '3165ee15-7de8-4d80-a571-c88b60c90f8b',

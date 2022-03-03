@@ -1,5 +1,5 @@
-import { createTestInteraction } from '../util/test-helper'
-import onCommandReceived from '../event/interaction-create';
+import { createTestInteraction } from '../../util/test-helper'
+import onCommandReceived from '../../event/interaction-create';
 
 it('should list out the scores', async () => {
     let int = createTestInteraction('announce', 'create', {

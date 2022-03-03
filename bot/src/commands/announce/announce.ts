@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
-import { Command } from '../../types/command';
+import { Command } from '../../../types/command';
 import AnnounceCreate from './announce-create.sub';
 import AnnounceDelete from './announce-delete.sub';
 import AnnounceList from './announce-list.sub';

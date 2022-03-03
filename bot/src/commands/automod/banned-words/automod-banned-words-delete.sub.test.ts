@@ -1,6 +1,6 @@
-import { createTestInteraction } from '../util/test-helper'
-import onCommandReceived from '../event/interaction-create';
-import prisma from '../util/prisma';
+import { createTestInteraction } from '../../../util/test-helper'
+import onCommandReceived from '../../../event/interaction-create';
+import prisma from '../../../util/prisma';
 
 it('should remove a banned word from the server', async () => {
     let int = createTestInteraction('automod', ['banned-words', 'add'], {

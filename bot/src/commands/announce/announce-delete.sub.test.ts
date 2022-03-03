@@ -1,6 +1,6 @@
-import { createTestInteraction } from '../util/test-helper';
-import prisma from '../util/prisma';
-import onInteractionCreate from '../event/interaction-create';
+import { createTestInteraction } from '../../util/test-helper';
+import prisma from '../../util/prisma';
+import onInteractionCreate from '../../event/interaction-create';
 
 it('should delete a announcement', async () => {
     let int = createTestInteraction('announce', 'create', {

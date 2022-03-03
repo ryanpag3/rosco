@@ -1,9 +1,9 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { Command } from '../../types/command';
-import BannedWordCache from '../service/banned-word-cache';
-import BotError from '../util/bot-error';
-import prisma from '../util/prisma';
-import PrismaErrorCode from '../util/prisma-error-code';
+import { Command } from '../../../../types/command';
+import BannedWordCache from '../../../service/banned-word-cache';
+import BotError from '../../../util/bot-error';
+import prisma from '../../../util/prisma';
+import PrismaErrorCode from '../../../util/prisma-error-code';
 
 const BannedWordsDelete: Command = {
     id: '89b63cbb-9aa4-42f4-bc6c-8e4f33f55be2',

@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
-import { Command } from '../../types/command';
-import prisma from '../util/prisma';
+import { Command } from '../../../types/command';
+import prisma from '../../util/prisma';
 
 const AnnounceList: Command = {
     id: 'feee6b63-04ec-4c33-ac85-1af6705f8e38',

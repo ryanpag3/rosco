@@ -1,6 +1,6 @@
-import onInteractionCreate from '../event/interaction-create';
-import prisma from '../util/prisma';
-import { createTestInteraction } from '../util/test-helper';
+import onInteractionCreate from '../../event/interaction-create';
+import prisma from '../../util/prisma';
+import { createTestInteraction } from '../../util/test-helper';
 
 it('should create an announcement', async () => {
     const int = createTestInteraction('announce', 'create', {

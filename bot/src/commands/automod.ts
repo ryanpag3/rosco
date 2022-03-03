@@ -1,11 +1,10 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../types/command';
-import { RuleBuilderOptions } from '../service/auto-mod';
-import BannedWordsAdd from './automod-banned-words-add.sub';
-import BannedWordsDelete from './automod-banned-words-delete.sub';
-import BannedWordsDisable from './automod-banned-words-disable.sub';
-import BannedWordsEnable from './automod-banned-words-enable.sub';
-import BannedWordsList from './automod-banned-words-list.sub';
+import BannedWordsAdd from './automod/banned-words/automod-banned-words-add.sub';
+import BannedWordsDelete from './automod/banned-words/automod-banned-words-delete.sub';
+import BannedWordsDisable from './automod/banned-words/automod-banned-words-disable.sub';
+import BannedWordsEnable from './automod/banned-words/automod-banned-words-enable.sub';
+import BannedWordsList from './automod/banned-words/automod-banned-words-list.sub';
 import CapslockDetectConfig from './automod-capslock-detect-config.sub';
 import CapslockDetectDisable from './automod-capslock-detect-disable.sub';
 import CapslockDetectEnable from './automod-capslock-detect-enable.sub';

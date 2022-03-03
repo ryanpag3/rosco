@@ -1,5 +1,5 @@
-import { Command } from '../../types/command';
-import prisma from '../util/prisma';
+import { Command } from '../../../../types/command';
+import prisma from '../../../util/prisma';
 
 const BannedWordsList: Command = {
     id: '5f2962bf-8ff1-443e-acbb-97ce37c8c3c1',
