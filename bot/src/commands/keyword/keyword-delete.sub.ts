@@ -1,5 +1,6 @@
-import { KeywordAction, Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../../types/command';
+import PrismaErrorCode from '../../util/prisma-error-code';
 import KeywordCache from '../../service/keyword-cache';
 import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
@@ -11,29 +12,32 @@ const KeywordDelete: Command = {
         const word = interaction.options.getString('keyword', true);
         const scoreName = interaction.options.getString('score-name', true);
 
-        const score = await prisma.score.findUnique({
-            where: {
-                name_serverId: {
-                    name: scoreName,
-                    serverId: server?.id as string
+        try {
+            const score = await prisma.score.findUnique({
+                where: {
+                    name_serverId: {
+                        name: scoreName,
+                        serverId: server?.id as string
+                    }
                 }
-            }
-        });
-
-        if (!score)
-            throw new BotError(`Score does not exist. Cannot delete keyword.`);
-
-        const keywordRecord = await prisma.keyword.delete({
-            where: {
-                word_scoreId_serverId: {
-                    word,
-                    scoreId: score.id,
-                    serverId: server?.id as string,
+            });
+    
+            const keywordRecord = await prisma.keyword.delete({
+                where: {
+                    word_scoreId_serverId: {
+                        word,
+                        scoreId: score.id,
+                        serverId: server?.id as string,
+                    }
                 }
-            }
-        });
-
-        await KeywordCache.deleteRecord(server.id, keywordRecord.id);
+            });
+    
+            await KeywordCache.deleteRecord(server.id, keywordRecord.id);
+        } catch (e) {
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.NOT_FOUND)
+                throw new BotError(`The keyword/score does not exist.`);
+            throw e;
+        }
 
         return interaction.reply({
             embeds: [
