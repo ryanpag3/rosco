@@ -1,4 +1,3 @@
-import '../util/command-subcommand-map';
 import { createTestInteraction } from '../../util/test-helper'
 import onCommandReceived from '../../event/interaction-create';
 import prisma from '../../util/prisma';
