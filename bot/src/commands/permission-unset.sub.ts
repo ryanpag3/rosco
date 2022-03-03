@@ -2,7 +2,7 @@ import { Command } from '../../types/command';
 import prisma from '../util/prisma';
 import BotError from '../util/bot-error';
 import { Prisma } from '@prisma/client';
-import commands from '../util/command-subcommand-map';
+import COMMANDS from '../recursive-commands';
 
 const PermissionUnset: Command = {
     id: '4e876254-dda4-4da0-9a61-bf3a9a67c3a1',
@@ -12,7 +12,7 @@ const PermissionUnset: Command = {
         const role = interaction.options.getRole('role', true);
 
         try {
-            if (!commands[command])
+            if (!COMMANDS[command])
                 throw new BotError(`\`/${command}\` does not exist.`);
 
             command = cleanCommand(command);
@@ -20,7 +20,7 @@ const PermissionUnset: Command = {
             const permission = await prisma.permission.findUnique({
                 where: {
                     roleId_commandId_serverId: {
-                        commandId: commands[command].id,
+                        commandId: COMMANDS[command].id,
                         serverId: server?.id as string,
                         roleId: role.id
                     } 
@@ -33,7 +33,7 @@ const PermissionUnset: Command = {
             await prisma.permission.delete({
                 where: {
                     roleId_commandId_serverId: {
-                        commandId: commands[command].id,
+                        commandId: COMMANDS[command].id,
                         serverId: server?.id as string,
                         roleId: role.id
                     }

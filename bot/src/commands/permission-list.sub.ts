@@ -1,5 +1,5 @@
 import { Command } from '../../types/command';
-import commands from '../util/command-subcommand-map';
+import COMMANDS from '../recursive-commands';
 import prisma from '../util/prisma';
 
 const PermissionList: Command = {
@@ -20,7 +20,7 @@ const PermissionList: Command = {
         for (const p of permissions) {
             const r = await interaction.guild?.roles.fetch(p.roleId);
             // @ts-ignore
-            const command = Object.keys(commands).filter((commandName: string) => commands[commandName].id === p.commandId)[0];
+            const command = Object.keys(COMMANDS).filter((commandName: string) => COMMANDS[commandName].id === p.commandId)[0];
             mapped.push({
                 role: r?.name,
                 command

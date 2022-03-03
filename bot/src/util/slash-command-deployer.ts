@@ -2,14 +2,22 @@ import logger from './logger';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { hashElement } from 'folder-hash';
-import COMMANDS from '../commands';
 import path from 'path';
 import { promises as fs } from 'fs';
+import COMMANDS from '../recursive-commands';
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN as string);
 
 const keys = Object.keys(COMMANDS);
-const mappedCommands = keys.map((c: any) => {
+const mappedCommands = keys.filter((k) => {
+    /**
+     * All subcommands are attached to the main command 
+     * according to discord's API. For this bot however,
+     * we use different modules to represent subcommands.
+     * So, no need to deploy each file.
+     */
+    return COMMANDS[k].isSubCommand !== true;
+}).map((c: any) => {
     return {
         name: COMMANDS[c].name,
         description: COMMANDS[c].description,

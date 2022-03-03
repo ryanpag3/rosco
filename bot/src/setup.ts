@@ -1,5 +1,4 @@
 import 'chartjs-plugin-datalabels';
-import './util/command-subcommand-map';
 
 import { CacheType, Client, CommandInteraction, Message } from 'discord.js';
 // prevent race condition

@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 import { CommandInteraction } from 'discord.js';
-import commands from '../util/command-subcommand-map';
+import COMMANDS from '../recursive-commands';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 
@@ -15,7 +15,7 @@ export const userHasPermission = async (interaction: CommandInteraction, user: U
         const subcommandGroup = interaction.options.getSubcommandGroup(false);
         const subcommand = interaction.options.getSubcommand(false);
         const fullCommand = `${subcommandGroup || commandName}${subcommand ? ` ${subcommand}` : ''}`;
-        const module = commands[fullCommand];
+        const module = COMMANDS[fullCommand];
 
         if (!module)
             throw new Error(`Corrupted command schema detected. Verify your command names! Command ${fullCommand}`);

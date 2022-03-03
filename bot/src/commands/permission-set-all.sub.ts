@@ -1,7 +1,7 @@
 import { Command } from '../../types/command';
+import COMMANDS from '../recursive-commands';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
-import Commands from '../util/command-subcommand-map';
 
 const PermissionSetAll: Command = {
     id: '9b199c0d-3dea-40bc-96a4-ef34d59b5f04',
@@ -18,9 +18,9 @@ const PermissionSetAll: Command = {
         logger.debug(`deleted existing permissions for server`);
 
         await prisma.permission.createMany({
-            data: Object.keys(Commands).map((key: string) => {
+            data: Object.keys(COMMANDS).map((key: string) => {
                 return {
-                    commandId: Commands[key].id,
+                    commandId: COMMANDS[key].id,
                     roleId: role.id,
                     serverId: server?.id as string,
                     userId: user.id

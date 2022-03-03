@@ -1,6 +1,5 @@
 import { ButtonInteraction, CommandInteraction } from 'discord.js';
 import { v4 as uuidv4 } from 'uuid';
-import COMMANDS from '../commands';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
 import * as ServerService from '../service/server';
@@ -10,6 +9,7 @@ import * as UserService from '../service/user';
 import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
 import { Server, User } from '@prisma/client';
 import prisma from '../util/prisma';
+import COMMANDS from '../recursive-commands';
 
 const onInteractionCreate = async (interaction: CommandInteraction): Promise<any> => {
     try {

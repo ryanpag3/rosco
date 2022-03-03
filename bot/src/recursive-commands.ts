@@ -1,14 +1,15 @@
- import { promises as fs } from 'fs';
- import path from 'path';
- import logger from './util/logger';
+import fs from 'fs';
+import path from 'path';
+import logger from './util/logger';
 
-export const parseCommands = async () => {
+export const parseCommands = () => {
     const cmds = {};
-    await parseCommandsRecursively(cmds, './commands');
+    parseCommandsRecursively(cmds, './commands');
+    return cmds;
 }
 
-const parseCommandsRecursively = async (commandsObj: any, loc: string) => {
-    const filenames = (await fs.readdir(path.join(__dirname, loc)))
+const parseCommandsRecursively = (commandsObj: any, loc: string) => {
+    const filenames = fs.readdirSync(path.join(__dirname, loc))
         .filter((f) => {
             return (
                 (f.endsWith('.ts')       || f.endsWith('.js'))       &&
@@ -17,18 +18,23 @@ const parseCommandsRecursively = async (commandsObj: any, loc: string) => {
         }).map((f) => path.resolve(path.join(__dirname, loc), f));
 
     for (const fullPath of filenames) {
-        const module = require(fullPath).default;
+        let module = require(fullPath).default;
         const filename = fullPath.split('/').pop();
+        module.isSubCommand = filename?.endsWith('.sub.ts') || filename?.endsWith('.sub.js');
         commandsObj[module.name] = module;
         logger.debug(`loaded ${filename} command.`);
     }
 
-    const subdirs = (await fs.readdir(path.join(__dirname, loc), {
+    const subdirs = fs.readdirSync(path.join(__dirname, loc), {
         withFileTypes: true
-    })).filter((f) => f.isDirectory());
+    }).filter((f) => f.isDirectory());
 
     for(const subdir of subdirs) {
         const newLoc = path.join(__dirname, subdir.name);
-        await parseCommandsRecursively(commandsObj, newLoc);
+        parseCommandsRecursively(commandsObj, newLoc);
     }
 }
+
+const COMMANDS: any = parseCommands();
+
+export default COMMANDS;
