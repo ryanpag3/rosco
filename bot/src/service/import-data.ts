@@ -57,12 +57,33 @@ export const importDataFromScoreBot = async (channelId: string, user: User, serv
                     serverId: server.id,
                     channelId,
                     userId: user.id,
+                    // @ts-ignore
                     ...b
                 },
                 include: {
                     Scoreboards: true
                 }
             });
+        } catch (e) {
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT) {
+                logger.trace(e);
+            } else {
+                logger.error(e);
+            }
+        }
+    }
+
+    for (const keyword of data.keywords) {
+        try {
+            await prisma.keyword.create({
+                data: {
+                    id: keyword.id as string,
+                    word: keyword.name,
+                    scoreId: keyword.ScoreId as string,
+                    serverId: server.id,
+                    userId: user.id
+                }
+            })
         } catch (e) {
             if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT) {
                 logger.trace(e);

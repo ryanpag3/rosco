@@ -3,6 +3,7 @@ import path from 'path';
 import logger from './logger';
 
 const prisma = new PrismaClient({
+    log: ['info', 'warn', 'error'],    
     rejectOnNotFound: true
 });
 

@@ -20,6 +20,7 @@ import BannedWordCache from './service/banned-word-cache';
 export default async function (client: Client) {
     try {
         await execa.command('yarn migrate deploy');
+        logger.info('schema migrated');
     } catch (e) {
         logger.error(e);
         process.exit(1);
