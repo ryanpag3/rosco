@@ -112,6 +112,8 @@ const mapAssociatedIds = (data: ScoreBotImportData) => {
         const s = scores[k.ScoreId];
         if (!s)
             return k;
+
+        // @ts-ignore
         k.OldScoreId = k.ScoreId;
         k.ScoreId = s.id;
 

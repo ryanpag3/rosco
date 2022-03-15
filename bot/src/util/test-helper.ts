@@ -203,11 +203,16 @@ export const generateScoreBotData = (
     }
 
     for (let i = 0; i < numScores; i++) {
+        const types = ['SERVER', 'CHANNEL', 'SCOREBOARD', 'USER'];
+        const type = types[randomInt(0, types.length)] as any;
+
+
         res.scores.push({
             id: i,
             serverId,
             channelId,
-            type: 'SERVER',
+            type,
+            ScoreBoardId: type === 'SCOREBOARD' ? res.scoreboards[randomInt(0, res.scoreboards.length)].id : undefined,
             value: randomInt(0, 100000),
             name: randomstring.generate(24),
             description: randomstring.generate(124),
