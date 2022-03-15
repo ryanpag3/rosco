@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Command } from '../../types/command';
 import { importDataFromScoreBot } from '../service/import-data';
-import logger from '../util/logger';
 
 const Import: Command = {
     id: '4845d094-1b1c-4158-a4ba-3efc5736f72e',

@@ -132,7 +132,7 @@ const buildMap = (data: ScoreBotImportData, key: string) => {
     return m;
 }
 
-interface ScoreBotImportData {
+export interface ScoreBotImportData {
     scores: {
         id: number | string;
         oldId?: number;
@@ -165,5 +165,5 @@ interface ScoreBotImportData {
         ScoreId: number | string;
         createdAt: string;
         updatedAt: string;
-    }
+    }[]
 }
