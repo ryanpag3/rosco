@@ -9,9 +9,13 @@ const Screen = (props: any) => {
 
 const Container = styled.div`
     display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-left: .5em;
+    padding-right: .5em;
     background-color: #535353;
     min-height: 100%;
-    width: 100%;
+    max-width: 100%;
 `;
 
 export default Screen
