@@ -4,6 +4,7 @@ import Header from './Header'
 import styled from 'styled-components'
 import AppName from './AppName'
 import Column from 'component/Column'
+import InviteMenu from './InviteMenu'
 
 const LandingScreen = () => {
   return (
@@ -11,6 +12,7 @@ const LandingScreen = () => {
         <Header/>
         <ContentColumn>
           <StyledAppName/>
+          <InviteMenu/>
         </ContentColumn>
     </Screen>
   )

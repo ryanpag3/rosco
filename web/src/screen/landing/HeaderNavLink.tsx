@@ -15,6 +15,10 @@ const HeaderNavLink = (props: {
 const StyledText = styled.text`
     text-transform: uppercase;
     font-size: .9em;
+
+    :hover {
+      color: #c4c4c4;
+    }
 `;
 
 const Link = styled(RRLink)`
