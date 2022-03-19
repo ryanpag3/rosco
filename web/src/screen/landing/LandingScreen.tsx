@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import AppName from './AppName'
 import Column from 'component/Column'
 import InviteMenu from './InviteMenu'
+import LearnMore from './LearnMore'
 
 const LandingScreen = () => {
   return (
@@ -14,6 +15,8 @@ const LandingScreen = () => {
           <StyledAppName/>
           <InviteMenu/>
         </ContentColumn>
+        <LearnMore/>
+        {/* {"test\n".repeat(10000)} */}
     </Screen>
   )
 }
