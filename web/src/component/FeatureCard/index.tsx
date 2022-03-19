@@ -1,5 +1,6 @@
 import Column from 'component/Column';
-import React from 'react'
+import React, { useState } from 'react'
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 const FeatureCard = (props: {
@@ -9,12 +10,32 @@ const FeatureCard = (props: {
     docUrl: string;
     features: string[];
 }) => {
-    console.log(props);
+    const [isFlipped, setIsFlipped] = useState(false);
+
+    useEffect(() => console.log(isFlipped), [ isFlipped ]);
+
     return (
-        <Container {...props}>
-            <Img src={props.image} />
-            <Title>{props.title}</Title>
-            <Description>{props.description}</Description>
+        <Container {...props} onClick={() => setIsFlipped(!isFlipped)}>
+            {
+                !isFlipped ? 
+                <React.Fragment>
+                    <Img src={props.image} />
+                    <Title>{props.title}</Title>
+                    <Description>{props.description}</Description>
+                </React.Fragment> :
+                <React.Fragment>
+                    <Title>{props.title}</Title>
+                    <FeaturesColumn>
+                        <FeaturesTitle>Features</FeaturesTitle>
+                        <FeaturesUl>
+                            {props.features.map((f, i) => {
+                                return <Feature key={i}>{f}</Feature>
+                            })}
+                        </FeaturesUl>
+                    </FeaturesColumn>
+                </React.Fragment>
+            }
+
         </Container>
     )
 }
@@ -47,6 +68,11 @@ const Title = styled(FeatureCardText)`
     font-size: 1.5em;
 `;
 
+const FeaturesTitle = styled(Title)`
+    font-size: 1.3em;
+    font-weight: normal;
+`;
+
 const Description = styled(FeatureCardText)`
     font-size: 1em;
     font-weight: lighter;
@@ -56,6 +82,25 @@ const Description = styled(FeatureCardText)`
 
 const Img = styled.img`
     width: 12.5em;
+`;
+
+const FeaturesColumn = styled(Column)` 
+    padding-left: 1.5em;
+    padding-top: 1em;
+    height: 100%;
+    width: 100%;
+`;
+
+const FeaturesUl = styled.ul`
+    color: black;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: .9em;
+`;
+
+const Feature = styled.li`
+    margin-left: 0;
+    margin-bottom: .5em;
 `;
 
 export default FeatureCard;

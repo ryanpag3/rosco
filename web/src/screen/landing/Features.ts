@@ -11,9 +11,9 @@ const Features: {
         description: 'Schedule messages to be announced later.',
         docUrl: '',
         features: [
-            'Supports several date/time formats.',
-            'feature2',
-            'feature3'
+            'Schedule messages to be sent in the future.',
+            'Supports several date/time formats including plain english.',
+            'Control which channel announcements are sent to.'
         ]
     },
     {
