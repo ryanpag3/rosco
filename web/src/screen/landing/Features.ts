@@ -22,9 +22,10 @@ const Features: {
         description: 'Let the bot do the boring stuff for you.',
         docUrl: '',
         features: [
-            'Supports several date/time formats.',
-            'feature2',
-            'feature3'
+            'Banned words detection.',
+            'Spam detection.',
+            'Link detection.',
+            'Configurable punishments.'
         ]
     },
     {
@@ -33,9 +34,10 @@ const Features: {
         description: 'Users earn currency for engaging in your server.',
         docUrl: '',
         features: [
-            'Supports several date/time formats.',
-            'feature2',
-            'feature3'
+            'Earn currency for performing server actions.',
+            'Trade currency with other users.',
+            'Store currency in a bank.',
+            'Admins can issue/revoke currency.'
         ]
     },
     {
@@ -44,9 +46,9 @@ const Features: {
         description: 'Set granular control over bot actions.',
         docUrl: '',
         features: [
-            'Supports several date/time formats.',
-            'feature2',
-            'feature3'
+            'Set specific roles for commands.',
+            'Can also configure specific sub-commands.',
+            'Easily set all commands to require a certain role.'
         ]
     },
     {
@@ -55,9 +57,9 @@ const Features: {
         description: 'Create polls that your community votes on.',
         docUrl: '',
         features: [
-            'Supports several date/time formats.',
-            'feature2',
-            'feature3'
+            'Create polls that users can interact with.',
+            'Open/close polls manually or by time.',
+            'Announce results when poll has been closed.'
         ]
     },
     {
@@ -66,9 +68,9 @@ const Features: {
         description: 'Create and track values of items over time.',
         docUrl: '',
         features: [
-            'Supports several date/time formats.',
-            'feature2',
-            'feature3'
+            'Display score progress in scoreboards.',
+            'Display scores in a generated bar graph.',
+            'Filter graph display on multiple search queries, including scoreboards.'
         ]
     },
     {
@@ -77,9 +79,9 @@ const Features: {
         description: 'Define a keyword or phrase and track it using a score.',
         docUrl: '',
         features: [
-            'Supports several date/time formats.',
-            'feature2',
-            'feature3'
+            'Track the occurence of keywords typed in chat.',
+            'Supports keywords, patterns, and wildcards (*).',
+            'Customize actions on scores when detection occurs.'
         ]
     },
     {
@@ -88,9 +90,9 @@ const Features: {
         description: 'Track the amount of time that passes.',
         docUrl: '',
         features: [
-            'Supports several date/time formats.',
-            'feature2',
-            'feature3'
+            'Start and stop the stopwatch at any time.',
+            'List out current defined stopwatches.',
+            'Reset a stopwatch to 00:00:00.'
         ]
     },
     {
@@ -99,9 +101,8 @@ const Features: {
         description: 'Count down a specific amount of time.',
         docUrl: '',
         features: [
-            'Supports several date/time formats.',
-            'feature2',
-            'feature3'
+            'Count down from up to 99 days.',
+            'Create a custom message when the timer reaches 00:00:00:00.'
         ]
     },
     {
@@ -110,9 +111,8 @@ const Features: {
         description: 'Send a welcome message when a user joins your community.',
         docUrl: '',
         features: [
-            'Supports several date/time formats.',
-            'feature2',
-            'feature3'
+            'Define a custom message to be sent to the user when they join the server.',
+            'Messages can be public, private, or both.'
         ]
     }
 ];

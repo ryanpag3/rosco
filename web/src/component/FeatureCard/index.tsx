@@ -33,9 +33,9 @@ const FeatureCard = (props: {
                             })}
                         </FeaturesUl>
                     </FeaturesColumn>
+                    <DocAnchor>Documentation</DocAnchor>
                 </React.Fragment>
             }
-
         </Container>
     )
 }
@@ -50,6 +50,7 @@ const Container = styled(Column)`
     margin: 1em;
     padding: .5em;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.66);
+    cursor: pointer;
 
     :hover {
         width: 14.2em;
@@ -66,6 +67,7 @@ const FeatureCardText = styled.text`
 const Title = styled(FeatureCardText)`
     font-weight: bold;
     font-size: 1.5em;
+    margin-top: .75em;
 `;
 
 const FeaturesTitle = styled(Title)`
@@ -78,6 +80,7 @@ const Description = styled(FeatureCardText)`
     font-weight: lighter;
     text-align: center;
     max-width: 85%;
+    flex-grow: 1;
 `;
 
 const Img = styled.img`
@@ -101,6 +104,12 @@ const FeaturesUl = styled.ul`
 const Feature = styled.li`
     margin-left: 0;
     margin-bottom: .5em;
+`;
+
+const DocAnchor = styled.a`
+    color: #1c76fe;
+    margin: 1em;
+    cursor: pointer;
 `;
 
 export default FeatureCard;

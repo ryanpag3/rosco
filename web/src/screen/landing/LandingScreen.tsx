@@ -12,6 +12,7 @@ import FeatureCard from 'component/FeatureCard'
 import Stage from './Stage'
 import FeatureCardStage from './FeatureCardStage'
 import QuestionsStage from './QuestionsStage'
+import LandingFooter from './LandingFooter'
 
 const LandingScreen = () => {
   return (
@@ -26,6 +27,7 @@ const LandingScreen = () => {
         </Stage>
         <FeatureCardStage/>
         <QuestionsStage/>
+        <LandingFooter/>
     </Screen>
   )
 }
