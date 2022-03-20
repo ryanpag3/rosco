@@ -33,7 +33,7 @@ const FeatureCard = (props: {
                             })}
                         </FeaturesUl>
                     </FeaturesColumn>
-                    <DocAnchor>Documentation</DocAnchor>
+                    <DocAnchor href={props.docUrl} target="_blank" rel="noopener noreferrer">Documentation</DocAnchor>
                 </React.Fragment>
             }
         </Container>
@@ -110,6 +110,8 @@ const DocAnchor = styled.a`
     color: #1c76fe;
     margin: 1em;
     cursor: pointer;
+    z-index: 1;
+    padding: .25em;
 `;
 
 export default FeatureCard;

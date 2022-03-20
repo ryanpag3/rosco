@@ -8,8 +8,8 @@ const QuestionsStage = () => {
       <StyledStage>
           <StyledStageHeaderText>Join the community.</StyledStageHeaderText>
           <Ul>
-              <Li>Join us on reddit at <Anchor>https://reddit.com/r/roscobot</Anchor></Li>
-              <Li>Join our Discord server <Anchor>link</Anchor></Li>
+              <Li>Our subreddit <Anchor>https://reddit.com/r/roscobot</Anchor></Li>
+              <Li>Our Discord server <Anchor>link</Anchor></Li>
               <Li>Write a ticket on our <Anchor>Github Repo</Anchor></Li>
           </Ul>
       </StyledStage>
@@ -27,7 +27,8 @@ const StyledStageHeaderText = styled(StageHeaderText)`
 `;
 
 const Ul = styled.ul`
-    font-size: 1.25em;
+    font-size: 2em;
+    font-weight: lighter;
 `;
 
 const Li = styled.li`
@@ -36,6 +37,7 @@ const Li = styled.li`
 
 const Anchor = styled.a`
     color: #9ac2ff;
+    font-weight: normal;
 
     :hover {
         cursor: pointer;

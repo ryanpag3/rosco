@@ -21,7 +21,7 @@ const FeatureCardStage = () => {
                     })
                 }
             </FeatureCardRow>
-            <AndMoreText>and more to come.</AndMoreText>
+            <AndMoreText>and more to come</AndMoreText>
         </Stage>
     )
 }
@@ -38,8 +38,11 @@ const FeatureCardRow = styled(Row)`
 `;
 
 const AndMoreText = styled.text`
-  font-size: 2em;
-  margin-bottom: 1em;
+  font-weight: lighter;
+  letter-spacing: .25em;
+  font-size: 2.5em;
+  margin-bottom: .5em;
+  margin-top: 1em;
 `;
 
 export default FeatureCardStage;
