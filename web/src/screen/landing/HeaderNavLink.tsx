@@ -6,7 +6,7 @@ const HeaderNavLink = (props: {
     to: string;
 } & any) => {
   return (
-    <Link to={props.to}>
+    <Link to={props.to} {...props}>
         <StyledText>{props.children}</StyledText>
     </Link>
   )

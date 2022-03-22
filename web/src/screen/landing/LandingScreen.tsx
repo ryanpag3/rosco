@@ -6,12 +6,9 @@ import AppName from './AppName'
 import Column from 'component/Column'
 import InviteMenu from './InviteMenu'
 import LearnMore from './LearnMore'
-import Row from 'component/Row'
-import Features from './Features'
-import FeatureCard from 'component/FeatureCard'
 import Stage from './Stage'
 import FeatureCardStage from './FeatureCardStage'
-import QuestionsStage from './QuestionsStage'
+import CommunityStage from './CommunityStage'
 import LandingFooter from './LandingFooter'
 
 const LandingScreen = () => {
@@ -26,7 +23,7 @@ const LandingScreen = () => {
           <LearnMore/>
         </Stage>
         <FeatureCardStage/>
-        <QuestionsStage/>
+        <CommunityStage/>
         <LandingFooter/>
     </Screen>
   )
