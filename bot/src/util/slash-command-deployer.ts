@@ -82,12 +82,18 @@ const createHashFile = async () => {
 }
 
 const getCommandsHash = async () => {
-    const { hash } = await hashElement(path.join(__dirname, '../commands'), {
+    let { hash } = await hashElement(path.join(__dirname, '../commands'), {
         files: {
             exclude: [ '*.sub.ts' ],
             include: [ '*.ts' ]
         }
     });
+     
+    // reset the hash if the dev server changes, not affected in prod
+    hash += process.env.DISCORD_APPLICATION_ID;
+
+    hash += process.env.TEST_GUILD_ID;
+
     return hash;
 }
 

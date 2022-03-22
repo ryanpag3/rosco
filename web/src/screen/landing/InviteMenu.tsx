@@ -7,10 +7,14 @@ import { FaDiscord } from 'react-icons/fa';
 const InviteMenu = () => {
   return (
     <Container>
-        <StyledInviteButton>
+        <StyledInviteButton
+            onClick={() => window.open("https://discord.com/oauth2/authorize?client_id=955851785346613248&scope=bot&permissions=8", "_blank")}
+        >
             Invite to &nbsp;<DiscordIcon/>   
         </StyledInviteButton>
-        <TryItYourselfAnchor>Or try it yourself first</TryItYourselfAnchor>
+        <TryItYourselfAnchor
+            onClick={() => window.open("https://discord.gg/YVcXfJWEhA", "_blank")}
+        >Or try it yourself first</TryItYourselfAnchor>
     </Container>
   )
 }
