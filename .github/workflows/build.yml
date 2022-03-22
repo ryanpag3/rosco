@@ -105,9 +105,16 @@ jobs:
         run: |
           yarn install
           npx tsc
-          export PUSH=true; ./buildDocker.sh ryanpage/guac-bot latest
-          export PUSH=true; ./buildDocker.sh ryanpage/guac-bot ${{ github.run_number }}
+          export PUSH=true; ./buildDocker.sh ryanpage/rosco latest
+          export PUSH=true; ./buildDocker.sh ryanpage/rosco ${{ github.run_number }}
         working-directory: ./bot
+      - name: build web app
+        run: |
+          docker build . -t ryanpage/rosco-web:latest
+          docker tag ryanpage/rosco-web:latest ryanpage/rosco-web:${{ github.run_number }}
+          docker push ryanpage/rosco-web:${{ github.run_number }}
+          docker push ryanpage/rosco-web:latest
+        working-directory: ./web
   stop-runner:
     name: Stop self-hosted EC2 runner
     needs:
