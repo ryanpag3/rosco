@@ -28,16 +28,30 @@ const CommunityStage = () => {
 const StyledStage = styled(Stage)`
     align-items: flex-start;
     margin-left: 3em;
+
+    @media (max-width:500px) {
+        margin-left: .2em;
+    }
 `;
 
 const StyledStageHeaderText = styled(StageHeaderText)`
     margin-bottom: 0em;
     font-size: 5em;
+
+    @media (max-width:500px) {
+        text-align: center;
+        margin: 0;
+        font-size: 2.25em;
+    }
 `;
 
 const Ul = styled.ul`
     font-size: 2em;
     font-weight: lighter;
+
+    @media (max-width:500px) {
+      font-size: 1.5em;
+    }
 `;
 
 const Li = styled.li`

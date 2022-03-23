@@ -43,6 +43,10 @@ const AndMoreText = styled.text`
   font-size: 2.5em;
   margin-bottom: .5em;
   margin-top: 1em;
+
+  @media (max-width:500px) {
+      font-size: 1.5em;
+  }
 `;
 
 export default FeatureCardStage;

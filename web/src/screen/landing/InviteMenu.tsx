@@ -22,6 +22,10 @@ const InviteMenu = () => {
 const Container = styled(Column)`
     align-items: center;
     margin-top: 7em;
+
+    @media (max-width:500px) {
+      margin-top: 3em;
+    }
 `;
 
 const StyledInviteButtonProps: any = {
@@ -31,6 +35,7 @@ const StyledInviteButtonProps: any = {
 const StyledInviteButton = styled(Button)`
     font-size: 1.3em;
     background-color: #A3DCEE;
+    color: black;
     padding-left: ${StyledInviteButtonProps.horizPadding};
     padding-right: ${StyledInviteButtonProps.horizPadding};
 
