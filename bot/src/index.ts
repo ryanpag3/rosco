@@ -43,6 +43,7 @@ async function main() {
         await client.login(process.env.DISCORD_TOKEN);
     } catch (e) {
         logger.error(e);
+        process.exit(1);
     }
 }
 
