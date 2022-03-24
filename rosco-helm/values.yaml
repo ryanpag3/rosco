@@ -7,6 +7,10 @@ bot:
   service:
     name: rosco
     type: ClusterIP
+  secretName: rosco
+  env:
+    - name: LOG_LEVEL
+      value: debug
 
 web:
   replicaCount: 3
