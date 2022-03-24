@@ -37,7 +37,7 @@ ingress:
       paths:
         - path: /?(.*)
           pathType: Prefix
-    - host: wiki.roscobot.local
+    - host: wiki.roscobot.com
       service:
         name: rosco-helm-wiki
         port: 80
