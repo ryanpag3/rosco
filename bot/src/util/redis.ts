@@ -5,7 +5,8 @@ const client = createClient({
     socket: {
         port: Number.parseInt(process.env.REDIS_PORT || '6379'),
         host: process.env.REDIS_HOST || 'localhost',
-        connectTimeout: Number.parseInt(process.env.REDIS_CONNECT_TIMEOUT || '5000')
+        connectTimeout: Number.parseInt(process.env.REDIS_CONNECT_TIMEOUT || '5000'),
+        passphrase: process.env.REDIS_PASSWORD
     }
 });
 
