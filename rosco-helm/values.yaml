@@ -49,6 +49,20 @@ ingress-nginx:
         service.beta.kubernetes.io/do-loadbalancer-size-unit: "1"
         service.beta.kubernetes.io/do-loadbalancer-disable-lets-encrypt-dns-records: "false"
 
+wiki:
+  volumeMounts:
+  - name: postgres-cert
+    mountPath: /etc/rosco/ca-certificate.crt
+    subPath: ca-certificate.crt
+  postgres:
+    ssl: true
+    ca: /etc/rosco/ca-certificate.crt
+    postgresqlUser: user
+    postgresSqlHost: postgres
+    existingSecret: wikijs
+    existingSecretKey: password
+
+
 serviceAccount:
   # Specifies whether helm should create a service account or not.
   create: true
