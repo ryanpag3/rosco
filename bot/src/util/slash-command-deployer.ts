@@ -46,7 +46,7 @@ export async function deploy() {
                     }
                 );
             } else {
-                logger.debug('using global');
+                logger.debug('registering globally for ' + process.env.DISCORD_APPLICATION_ID);
                 // register globally in production
                 await rest.put(
                     Routes.applicationCommands(process.env.DISCORD_APPLICATION_ID as string),

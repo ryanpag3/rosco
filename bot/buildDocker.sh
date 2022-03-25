@@ -11,7 +11,7 @@ cd out && \
  npx uglifyjs-folder . -x .js -eo minified && \
  cd -
 
-DOCKER_TAG=${1:-ryanpage/guac-bot}:${2:-latest}
+DOCKER_TAG=${1:-ryanpage/rosco}:${2:-latest}
 
 
 pwd
