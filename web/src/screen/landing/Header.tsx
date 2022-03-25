@@ -7,7 +7,7 @@ const Header = () => {
         <Container>
             <EmptySpace />
             <HeaderNavLink to="/"
-                onClick={() => window.open(process.env.REACT_APP_DOC_URL || 'http://localhost:9081')}
+                onClick={() => window.open(process.env.REACT_APP_DOC_URL || 'http://wiki.roscobot.com')}
             >Documentation</HeaderNavLink>
             <HeaderNavLink to="/" rel="noopener noreferrer"
                 onClick={() => window.open("https://discord.gg/FH5trS4TS9", "_blank")}
