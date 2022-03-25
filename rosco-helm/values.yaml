@@ -44,6 +44,13 @@ ingress:
       paths:
         - path: /?(.*)
           pathType: Prefix
+    - host: www.wiki.roscobot.com
+      service:
+        name: rosco-helm-wiki
+        port: 80
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
 
   tls: []
   #  - secretName: chart-example-tls
