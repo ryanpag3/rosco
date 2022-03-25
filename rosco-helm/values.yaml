@@ -60,7 +60,6 @@ ingress:
       paths:
         - path: /?(.*)
           pathType: Prefix
-
   tls:
     - hosts:
       - www.wiki.roscobot.com
@@ -93,6 +92,11 @@ wiki:
     existingSecretKey: PASSWORD 
     persistence:
       enabled: false
+
+redis:
+  auth:
+    existingSecret: redis-auth
+    existingSecretPasswordKey: PASSWORD
 
 serviceAccount:
   # Specifies whether helm should create a service account or not.

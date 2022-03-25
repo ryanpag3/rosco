@@ -5,5 +5,8 @@ dependencies:
 - name: wiki
   repository: https://charts.js.wiki
   version: 2.2.13
-digest: sha256:07b1a4a9d61c314591780c71729f6db3896a7fd795af48c6b1a702ee5baea806
-generated: "2022-03-24T10:04:50.74218-07:00"
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.6.0
+digest: sha256:bd5618388e2688215378e6089661251d7429d6ac46251f641e692571e4b9f135
+generated: "2022-03-25T15:21:28.356616-07:00"

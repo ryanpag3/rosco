@@ -30,3 +30,6 @@ dependencies:
   - name: wiki
     repository: https://charts.js.wiki
     version: 2.2.13
+  - name: redis
+    repository: https://charts.bitnami.com/bitnami
+    version: 16.6.0
