@@ -13,6 +13,8 @@ bot:
       value: debug
     - name: NODE_ENV
       value: production
+    - name: REDIS_HOST
+      value: rosco-helm-redis-master
 
 web:
   replicaCount: 3
