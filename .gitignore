@@ -6,3 +6,4 @@ yarn-error.log
 bot/coverage
 bot/src/commands/commands.hash
 documentation/data
+rosco-helm/reinstallHelmChart.sh

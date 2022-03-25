@@ -1,4 +1,4 @@
-const docBaseUrl = process.env.REACT_APP_DOC_URL || 'http://wiki.roscobot.com'
+const docBaseUrl = process.env.REACT_APP_DOC_URL || 'https://wiki.roscobot.com'
 
 const Features: {
     image: string;
