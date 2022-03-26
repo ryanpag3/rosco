@@ -90,6 +90,7 @@ ingress-nginx:
         service.beta.kubernetes.io/do-loadbalancer-disable-lets-encrypt-dns-records: "false"
 
 wiki:
+  replicaCount: 2
   volumeMounts:
   - name: wikijs-config
     mountPath: /wiki/config.yml
@@ -111,6 +112,7 @@ redis:
     existingSecretPasswordKey: PASSWORD
 
 grafana:
+  replicas: 1
   admin:
     existingSecret: grafana-admin
     userKey: username

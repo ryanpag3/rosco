@@ -12,8 +12,6 @@ const FeatureCard = (props: {
 }) => {
     const [isFlipped, setIsFlipped] = useState(false);
 
-    useEffect(() => console.log(isFlipped), [ isFlipped ]);
-
     return (
         <Container {...props} onClick={() => setIsFlipped(!isFlipped)}>
             {
@@ -33,7 +31,7 @@ const FeatureCard = (props: {
                             })}
                         </FeaturesUl>
                     </FeaturesColumn>
-                    <DocAnchor href={props.docUrl} target="_blank" rel="noopener noreferrer">Documentation</DocAnchor>
+                    <DocAnchor href={props.docUrl}>Documentation</DocAnchor>
                 </React.Fragment>
             }
         </Container>
