@@ -1,5 +1,5 @@
 bot:
-  replicaCount: 1
+  replicaCount: 3
   image:
     repository: docker.io/ryanpage/rosco
     tag: latest
@@ -15,7 +15,10 @@ bot:
       value: production
     - name: REDIS_HOST
       value: rosco-helm-redis-master
-
+    - name: NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
 web:
   replicaCount: 3
   image:

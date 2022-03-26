@@ -33,6 +33,8 @@ spec:
           subPath: ca-certificate.crt
         env:
           {{- toYaml .Values.bot.env | nindent 10 }}
+          - name: SHARD_COUNT
+            value: {{ .Values.bot.replicaCount | quote }}
       volumes:
         - name: postgres-cert
           configMap:

@@ -3,7 +3,14 @@ import { Client, Intents } from 'discord.js';
 import logger from './util/logger';
 import setup from './setup';
 
+if (process.env.NODE_NAME) {
+    const split = process.env.NODE_NAME.split('.');
+    process.env.SHARD_ID = split[split.length-1];
+}
+
 const client = new Client({
+    shards: Number.parseInt(process.env.SHARD_ID || "0"),
+    shardCount: Number.parseInt(process.env.SHARD_COUNT || "1"),
     intents: [
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MESSAGES,
