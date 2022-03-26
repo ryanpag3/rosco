@@ -1,7 +1,29 @@
 import log4js from 'log4js';
 
-const logger = log4js.getLogger();
+log4js.addLayout('json', (config) => {
+    return (event) => {
+        return JSON.stringify(event) + config.separator;
+    }
+});
 
-logger.level = process.env.LOG_LEVEL || 'INFO';
+log4js.configure({
+    appenders: {
+        out: {
+            type: 'stdout',
+            layout: {
+                type: process.env.NODE_ENV === 'production' ? 'json' : 'colored',
+                separator: ','
+            }
+        }
+    },
+    categories: {
+        default: {
+            appenders: ['out'],
+            level: process.env.LOG_LEVEL || 'INFO'
+        }
+    }
+});
+
+const logger = log4js.getLogger();
 
 export default logger;

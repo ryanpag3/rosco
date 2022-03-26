@@ -5,7 +5,7 @@ bot:
     tag: latest
     pullPolicy: Always
   service:
-    name: rosco
+    name: rosco-bot
     type: ClusterIP
   secretName: rosco
   env:
@@ -62,6 +62,13 @@ ingress:
       paths:
         - path: /?(.*)
           pathType: Prefix
+    - host: rosco.grafana.local
+      service:
+        name: rosco-helm-grafana
+        port: 3000
+      paths:
+        - path: /?(.*)
+          pathType: Prefix 
   tls:
     - hosts:
       - www.wiki.roscobot.com
@@ -99,6 +106,14 @@ redis:
   auth:
     existingSecret: redis-auth
     existingSecretPasswordKey: PASSWORD
+
+grafana:
+  admin:
+    existingSecret: grafana-admin
+    userKey: username
+    passwordKey: password
+  persistence:
+    enabled: true
 
 serviceAccount:
   # Specifies whether helm should create a service account or not.
