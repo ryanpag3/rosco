@@ -4,7 +4,7 @@ import logger from './util/logger';
 import setup from './setup';
 
 if (process.env.NODE_NAME) {
-    const split = process.env.NODE_NAME.split('.');
+    const split = process.env.NODE_NAME.split('-');
     process.env.SHARD_ID = split[split.length-1];
 }
 
