@@ -2,7 +2,7 @@
 title: Auto Moderation
 description: 
 published: true
-date: 2022-03-28T05:06:39.764Z
+date: 2022-03-28T05:12:17.190Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-27T00:43:02.930Z
@@ -57,6 +57,8 @@ Create a new rule. You may only have one rule for every combination of `module` 
 ```
 /automod rule add module: banned-words action: warn violations: 1 cooldown: 86400
 ```
+
+![screen_shot_2022-03-27_at_10.07.18_pm.png](/screen_shot_2022-03-27_at_10.07.18_pm.png =75%x)
 
 ##### `delete` - Delete an AutoMod rule
 
