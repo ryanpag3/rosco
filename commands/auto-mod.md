@@ -2,7 +2,7 @@
 title: Auto Moderation
 description: 
 published: true
-date: 2022-03-28T04:54:46.139Z
+date: 2022-03-28T05:00:28.733Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-27T00:43:02.930Z
@@ -47,7 +47,12 @@ When creating a rule you can specify an `action` indicating what you would like 
 | Argument | Description | Required |
 |----------|-------------|----------|
 | `module` | For more details see [modules](#modules) | `true` |
-| `action` | Choose the module you are going to create the rule for. | `true` |
+| `action` | For more details see [actions](#supported-actions) | `true` |
+| `duration` | The duration to take action for. Only applicable for `timeout` and `mute` | `true` |
+| `violations` | The amount of violations to allow before taking action. | `true` |
+| `cooldown` | The amount of time from the first violation to reset the violation count. | `true` |
+
+
 
 ##### Example
 
