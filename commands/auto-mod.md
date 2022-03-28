@@ -2,7 +2,7 @@
 title: Auto Moderation
 description: 
 published: true
-date: 2022-03-28T05:12:17.190Z
+date: 2022-03-28T05:15:57.812Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-27T00:43:02.930Z
@@ -60,12 +60,20 @@ Create a new rule. You may only have one rule for every combination of `module` 
 
 ![screen_shot_2022-03-27_at_10.07.18_pm.png](/screen_shot_2022-03-27_at_10.07.18_pm.png =75%x)
 
-##### `delete` - Delete an AutoMod rule
+##### `remove` - Remove an AutoMod rule
+
+To remove an AutoMod rule, all you need to do is provide the `module` and `action`.
 
 | Argument | Description | Required |
 |----------|-------------|----------|
 | `module` | For more details see [modules](#modules) | `true` |
 | `action` | For more details see [actions](#supported-actions) | `true` |
+
+```
+/automod rule remove module: banned-words action: warn
+```
+
+![screen_shot_2022-03-27_at_10.14.52_pm.png](/screen_shot_2022-03-27_at_10.14.52_pm.png =75%x)
 
 ##### Example
 
