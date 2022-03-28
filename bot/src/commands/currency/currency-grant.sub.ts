@@ -45,7 +45,7 @@ const CurrencyGrant: Command = {
             embeds: [
                 {
                     title: `:money_mouth: Currency has been granted.`,
-                    description: `${dSendUser} has granted ${discordUser} ${amount} seeds.`
+                    description: `${dSendUser} has granted ${discordUser} ${amount} roscoins.`
                 }
             ]
         })

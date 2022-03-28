@@ -36,7 +36,7 @@ const CurrencyBankDeposit: Command = {
             embeds: [
                 {
                     title: ':bank: Your deposit was successful.',
-                    description: `${interaction.member?.user} deposited ${amount} seeds into the bank.`
+                    description: `${interaction.member?.user} deposited ${amount} roscoins into the bank.`
                 }
             ],
             ephemeral: true

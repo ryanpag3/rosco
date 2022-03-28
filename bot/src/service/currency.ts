@@ -173,7 +173,7 @@ const announce = async (
         await (guild?.channels.cache.get(currencyHistoryChannelId) as TextChannel).send({
             embeds: [
                 {
-                    description: `${member.user.tag} earned ${currencyRule.amount} seed(s) for ${currencyRule.action} with role ${guild?.roles.cache.get(currencyRule.roleId)}`
+                    description: `${member.user.tag} earned ${currencyRule.amount} roscoin(s) for ${currencyRule.action} with role ${guild?.roles.cache.get(currencyRule.roleId)}`
                 }
             ],
             allowedMentions: {
@@ -226,7 +226,7 @@ export const undoMessageReactionIncome = async (reaction: MessageReaction | Part
             await (reaction.client.channels.cache.get(log.Server?.currencyHistoryChannelId) as TextChannel).send({
                 embeds: [
                     {
-                        description: `${discordUser.tag} lost ${log.currencyRule?.amount} seeds for removing a reaction.`
+                        description: `${discordUser.tag} lost ${log.currencyRule?.amount} roscoins for removing a reaction.`
                     }
                 ],
                 allowedMentions: {

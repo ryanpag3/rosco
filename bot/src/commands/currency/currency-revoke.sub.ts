@@ -45,7 +45,7 @@ const CurrencyRevoke: Command = {
             embeds: [
                 {
                     title: `:money_mouth: Currency has been revoked.`,
-                    description: `${dSendUser} has revoked ${discordUser} ${amount} seeds.`
+                    description: `${dSendUser} has revoked ${discordUser} ${amount} roscoins.`
                 }
             ]
         })

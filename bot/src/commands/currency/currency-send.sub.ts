@@ -16,7 +16,7 @@ const CurrencySend: Command = {
 
         // @ts-ignore
         if (user.UserServer[0].currencyCount - amount < 0)
-            throw new BotError('You don\'t have enough seeds to send.');
+            throw new BotError('You don\'t have enough roscoins to send.');
 
         await prisma.$transaction([
             prisma.userServer.update({
@@ -54,7 +54,7 @@ const CurrencySend: Command = {
                 {
                     title: ':mailbox_with_mail: Currency was sent!',
                     // @ts-ignore
-                    description: `${senderDiscord} sent ${amount} seeds to ${recipient}\n\n${senderDiscord} new total ${user.UserServer[0].currencyCount - amount - 1}\n---\n${recipient} new total ${recipientInDb.UserServer[0].currencyCount + amount}`
+                    description: `${senderDiscord} sent ${amount} roscoins to ${recipient}\n\n${senderDiscord} new total ${user.UserServer[0].currencyCount - amount - 1}\n---\n${recipient} new total ${recipientInDb.UserServer[0].currencyCount + amount}`
                 }
             ]
         });
