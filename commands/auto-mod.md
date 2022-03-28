@@ -2,7 +2,7 @@
 title: Auto Moderation
 description: 
 published: true
-date: 2022-03-28T04:47:32.237Z
+date: 2022-03-28T04:54:46.139Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-27T00:43:02.930Z
@@ -36,9 +36,9 @@ When creating a rule you can specify an `action` indicating what you would like 
 - **mute**
   - You can indicate how long to mute a user out with the `duration` property.
 - **kick**
-  - kick the user
+  - The bot will kick the user.
 - **ban**
-  - ban the user
+  - The bot will ban the user.
 
 #### **Reference**
 
