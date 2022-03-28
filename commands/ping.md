@@ -2,10 +2,10 @@
 title: Ping
 description: 
 published: true
-date: 2022-01-27T22:27:35.372Z
+date: 2022-03-28T23:53:47.080Z
 tags: command
 editor: markdown
-dateCreated: 2022-01-27T06:03:14.164Z
+dateCreated: 2022-03-24T21:13:05.235Z
 ---
 
 ## Introduction
@@ -17,3 +17,5 @@ Issue `/ping` to get network latency statistics from the bot.
 ``` bash
 /ping
 ```
+
+![ping-example.png](/ping-example.png)
