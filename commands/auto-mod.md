@@ -2,7 +2,7 @@
 title: Auto Moderation
 description: 
 published: true
-date: 2022-03-28T05:01:27.556Z
+date: 2022-03-28T05:06:39.764Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-27T00:43:02.930Z
@@ -44,6 +44,8 @@ When creating a rule you can specify an `action` indicating what you would like 
 
 ##### `add` - Add an AutoMod rule
 
+Create a new rule. You may only have one rule for every combination of `module` and `action`.
+
 | Argument | Description | Required |
 |----------|-------------|----------|
 | `module` | For more details see [modules](#modules) | `true` |
@@ -56,12 +58,16 @@ When creating a rule you can specify an `action` indicating what you would like 
 /automod rule add module: banned-words action: warn violations: 1 cooldown: 86400
 ```
 
+##### `delete` - Delete an AutoMod rule
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `module` | For more details see [modules](#modules) | `true` |
+| `action` | For more details see [actions](#supported-actions) | `true` |
 
 ##### Example
 
-Let's say you want to block the word `banana`. It's a really bad word and you want to give escalating punishment when users use it too much. 
-
-Let's say you want to do the following when the bad word is said:
+Let's say you want to block the word `banana`. It's a really bad word and you want to give escalating punishment when users use it too much. So, you want to do the following when the bad word is said:
 
 - When `banana` is typed 1 times in a 24 hour period, I want to warn a user. 
 
