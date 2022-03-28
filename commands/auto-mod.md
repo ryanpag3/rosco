@@ -2,7 +2,7 @@
 title: Auto Moderation
 description: 
 published: true
-date: 2022-03-28T05:15:57.812Z
+date: 2022-03-28T05:16:33.000Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-27T00:43:02.930Z
@@ -19,7 +19,7 @@ Rosco's AutoMod feature is broken up into several modules. That way you can pick
 - [**Banned Words**](/commands/auto-mod/banned-words) - Prevent, or slow down, the posting of certain banned words in your server. 
 - [**Link Detect**](/commands/auto-mod/link-detect) - Block certain links from being posted.
 - [**Capslock Detect**](/commands/auto-mod/capslock-detect) - Detect the use of CAPITALIZED LETTERS
-
+ 
 ### **Rules**
 
 For each of the modules in auto moderation, you can write rules. When you define a rule, you enable the bot to take moderation action based on customizable parameters.
