@@ -2,7 +2,7 @@
 title: Auto Moderation
 description: 
 published: true
-date: 2022-03-28T05:00:28.733Z
+date: 2022-03-28T05:01:27.556Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-27T00:43:02.930Z
@@ -50,8 +50,11 @@ When creating a rule you can specify an `action` indicating what you would like 
 | `action` | For more details see [actions](#supported-actions) | `true` |
 | `duration` | The duration to take action for. Only applicable for `timeout` and `mute` | `true` |
 | `violations` | The amount of violations to allow before taking action. | `true` |
-| `cooldown` | The amount of time from the first violation to reset the violation count. | `true` |
+| `cooldown` | The amount of time, in seconds, from the first violation to reset the violation count. | `true` |
 
+```
+/automod rule add module: banned-words action: warn violations: 1 cooldown: 86400
+```
 
 
 ##### Example
