@@ -3,6 +3,7 @@ import * as chrono from 'chrono-node';
 import { DateTime } from 'luxon';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
+import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 import PrismaErrorCode from '../../util/prisma-error-code';
 
@@ -15,7 +16,12 @@ const AnnounceCreate: Command = {
         const message = interaction.options.getString('message', true);
         const when = interaction.options.getString('when', true);
 
-        const whenDate = chrono.parseDate(when);
+        const abbreviatedTz = DateTime.now().setZone(server.timezone).toFormat('TTT').split(' ')[1];
+
+        const whenDate = chrono.parseDate(when,
+            {
+                timezone: abbreviatedTz
+            });
 
         if (!whenDate)
             throw new BotError('Could not interpret date from what was provided.');

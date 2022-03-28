@@ -17,5 +17,8 @@ dependencies:
 - name: loki
   repository: https://grafana.github.io/helm-charts
   version: 2.10.2
-digest: sha256:3e1f09cc2c58c6daf519ab1521dc1703954d4b51f60644e6ee535bfad808d0ca
-generated: "2022-03-26T07:15:57.423575-07:00"
+- name: descheduler
+  repository: https://kubernetes-sigs.github.io/descheduler/
+  version: 0.23.2
+digest: sha256:a8c86cc14bd5eb632ac1134f2a1dbbf2f1e295af0d802947b714c7246807521e
+generated: "2022-03-27T16:04:32.005465-07:00"
