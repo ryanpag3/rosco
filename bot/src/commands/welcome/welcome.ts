@@ -53,9 +53,8 @@ const Welcome: Command = {
                 },
                 {
                     name: 'channel',
-                    description: 'The channel you want to send this message to.',
-                    type: ApplicationCommandOptionType.Channel,
-                    required: true
+                    description: 'The channel you want to send this message to. You can skip for private welcome messages.',
+                    type: ApplicationCommandOptionType.Channel
                 },
                 {
                     name: 'title',
