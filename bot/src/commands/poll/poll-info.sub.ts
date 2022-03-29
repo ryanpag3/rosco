@@ -28,8 +28,7 @@ const PollInfo: Command = {
                             }
                         }
                     }
-                },
-                rejectOnNotFound: true
+                }
             });
 
             const components = poll.PollOption.map((option) => {

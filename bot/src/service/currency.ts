@@ -189,8 +189,7 @@ export const undoMessageReactionIncome = async (reaction: MessageReaction | Part
         const user = await prisma.user.findUnique({
             where: {
                 discordId: discordUser.id
-            },
-            rejectOnNotFound: true
+            }
         });
 
         const log = await prisma.currencyHistoryLog.findUnique({
@@ -204,8 +203,7 @@ export const undoMessageReactionIncome = async (reaction: MessageReaction | Part
             include: {
                 currencyRule: true,
                 Server: true
-            },
-            rejectOnNotFound: true
+            }
         });
 
         await prisma.userServer.update({
