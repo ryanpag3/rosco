@@ -2,10 +2,10 @@
 title: Score
 description: 
 published: true
-date: 2022-01-27T18:24:07.391Z
+date: 2022-03-29T00:02:35.883Z
 tags: command
 editor: markdown
-dateCreated: 2022-01-27T03:40:55.281Z
+dateCreated: 2022-03-24T21:13:14.026Z
 ---
 
 ## Introduction
@@ -33,6 +33,8 @@ Issue `/score create` to create a new score.
 /score create name: test description: This is my score! amount: 100 color: #000000
 ```
 
+![score-create-example.png](/score-create-example.png)
+
 ## `up` - Increase score amount.
 
 Issue `/score up` to increase a score's amount.
@@ -49,6 +51,8 @@ Issue `/score up` to increase a score's amount.
 
 /score up name: test amount: 1000
 ```
+
+![score-up-example.png](/score-up-example.png)
 
 ## `down` - Decrease score amount.
 
@@ -67,6 +71,8 @@ Issue `/score down` to increase a score's amount.
 /score down name: test amount: 1000
 ```
 
+![score-down-example.png](/score-down-example.png)
+
 ## `delete` - Delete a score.
 
 Issue `/score delete` to delete a previously [created](/commands/score#create-create-a-score) score.
@@ -80,6 +86,8 @@ Issue `/score delete` to delete a previously [created](/commands/score#create-cr
 ```
 /score delete name: test
 ```
+
+![score-delete-example.png](/score-delete-example.png)
 
 ## `update` - Update a score.
 
@@ -102,6 +110,8 @@ Issue `/score update` to update one or more properties of the score.
 
 /score update name: test description: new description amount: 1000 color: #FFFFF
 ```
+
+![score-update-example.png](/score-update-example.png)
 
 ## `list` - List out scores
 
@@ -130,6 +140,8 @@ Issue `/score list` to list out the scores that have been created.
 # list the scores in the scoreboard "test"
 /score list scoreboard: test
 ```
+
+![score-list-example.png](/score-list-example.png)
 
 
 
