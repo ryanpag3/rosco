@@ -2,10 +2,10 @@
 title: Permission
 description: 
 published: true
-date: 2022-01-28T00:17:19.927Z
+date: 2022-03-29T02:15:38.915Z
 tags: command
 editor: markdown
-dateCreated: 2022-01-27T06:01:07.499Z
+dateCreated: 2022-03-24T21:13:00.905Z
 ---
 
 ## Introduction
@@ -33,6 +33,8 @@ Issue `/permission set` to set a specific permission.
 /permission set command: score list role: @everyone
 ```
 
+![permission-set-example.png](/permission-set-example.png)
+
 ## `unset` - Unset a permission
 
 Issue `/permission unset` to remove the role requirement from that command.
@@ -52,6 +54,8 @@ Issue `/permission unset` to remove the role requirement from that command.
 /permission unset command: score list role: @everyone
 ```
 
+![permission-unset-example.png](/permission-unset-example.png)
+
 ## `set-all` - Set all permissions
 
 Issue `/permission set-all` to set all commands to require a specific role.
@@ -67,6 +71,8 @@ Issue `/permission set-all` to set all commands to require a specific role.
 
 /permission set-all role: Administrators
 ```
+
+![permission-set-all-example.png](/permission-set-all-example.png)
 
 ## `unset-all` - Unset all permissions
 
@@ -84,6 +90,8 @@ Issue `/permission unset-all` to unset a role from all commands.
 /permission unset-all role: Administrators
 ```
 
+![permission-unset-all-example.png](/permission-unset-all-example.png)
+
 ## `list` - List all permissions
 
 Issue `/permission list` to list all permissions in a server.
@@ -94,7 +102,9 @@ Issue `/permission list` to list all permissions in a server.
 /permission list
 ```
 
+![permission-list-example.png](/permission-list-example.png)
 
+*note: screenshot cropped to save space*
 
 
 
