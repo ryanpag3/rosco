@@ -2,10 +2,10 @@
 title: Welcome
 description: 
 published: true
-date: 2022-01-31T21:21:52.651Z
+date: 2022-03-29T16:23:08.152Z
 tags: command
 editor: markdown
-dateCreated: 2022-01-31T21:10:21.034Z
+dateCreated: 2022-03-24T21:13:30.705Z
 ---
 
 ## Introduction
@@ -31,6 +31,8 @@ Issue `/welcome set` to set a welcome message for your server.
 /welcome set type: PRIVATE title: Welcome to the server! message: Hey you! Welcome to the server. I hope you enjoy your stay!
 ```
 
+![welcome-set-example.png](/welcome-set-example.png)
+
 ## `enable` - Enable a welcome message
 
 Issue `/welcome enable` to enable a welcome message. When enabled, the message will be sent to the user when invited to the server.
@@ -47,6 +49,8 @@ Issue `/welcome enable` to enable a welcome message. When enabled, the message w
 /welcome enable type: PRIVATE
 ```
 
+![welcome-set-example.png](/welcome-set-example.png)
+
 ## `disable` - Disable a welcome message
 
 Issue `/welcome enable` to disable a welcome message. When enabled, no message will be sent upon invite to the server.
@@ -62,3 +66,5 @@ Issue `/welcome enable` to disable a welcome message. When enabled, no message w
 
 /welcome disable type: PRIVATE
 ```
+
+![welcome-disable-example.png](/welcome-disable-example.png)
