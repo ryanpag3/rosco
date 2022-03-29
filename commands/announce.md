@@ -2,10 +2,10 @@
 title: Announce
 description: Run various commands related to announcements.
 published: true
-date: 2022-02-04T22:33:28.787Z
+date: 2022-03-29T01:45:01.118Z
 tags: command
 editor: markdown
-dateCreated: 2022-02-04T22:33:28.787Z
+dateCreated: 2022-03-24T21:12:40.202Z
 ---
 
 ## Introduction
@@ -33,6 +33,8 @@ Issue `/announce create` to create an announcement.
 /announce create name: test channel: General when: 01/01/2023 message: Happy New Year!/
 ```
 
+![announcement-create-example.png](/announcement-create-example.png)
+
 ## `delete` - Delete an announcement
 
 Issue `/announce delete` to delete an announcement.
@@ -46,6 +48,8 @@ Issue `/announce delete` to delete an announcement.
 ``` bash
 /announce delete name: test
 ```
+
+![announcement-delete-example.png](/announcement-delete-example.png)
 
 ## `list` - List announcements
 
@@ -62,3 +66,5 @@ Issue `/announce list` to get a list of current announcements.
 
 /anounce list page: 2
 ```
+
+![announcement-list-example.png](/announcement-list-example.png)
