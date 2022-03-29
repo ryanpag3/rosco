@@ -2,22 +2,27 @@ require('dotenv').config({
     path: '.env.test'
 });
 import execa from 'execa';
-import './src/util/command-subcommand-map';
-import { baselineKeywordCacheToDatabase, buildKeywordValues } from './src/service/keyword-cache';
 import logger from './src/util/logger';
 import prisma from './src/util/prisma';
 import redis from './src/util/redis';
 
 beforeAll(async () => {
-    const stdout = await execa.command('prisma migrate deploy');
+    
+    let stdout = await execa.command('yarn migrate reset --force');
     logger.trace(stdout);
 
-    await baselineKeywordCacheToDatabase();
-    await buildKeywordValues();
-}, 10000);
+    stdout = await execa.command('yarn migrate deploy');
+    logger.trace(stdout);
+
+    try {
+        await redis.connect();
+    } catch (e) {
+        // noop
+    }
+}, 30000);
 
 beforeEach(async () => {
-    // @ts-ignore
+    //@ts-ignore
     for (const { tablename } of await prisma.$queryRaw`SELECT tablename FROM pg_tables WHERE schemaname='public'`) {
         if (tablename !== '_prisma_migrations' && !tablename.startsWith('_')) {
             // @ts-ignore
@@ -25,10 +30,25 @@ beforeEach(async () => {
             logger.trace(`truncated ${tablename}`);
         } 
     }
+
+    try {
+        await redis.connect();
+    } catch (e) {
+        // noop
+    }
+});
+
+afterEach(async () => {
     await prisma.$disconnect();
 });
 
-afterAll(() => redis.quit());
+// afterAll(async () => {
+//     await delay(10000);
+//     try {
+//         await redis.quit()
+//     } catch (e) {
+//         // noop
+// }}, 15000);
 
 function camelize(str: string) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {

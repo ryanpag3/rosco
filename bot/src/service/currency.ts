@@ -72,7 +72,7 @@ export const handleCurrencyEvent = async (
                 continue;
             // @ts-ignore
             if (member?.roles.cache.has(currencyRule.roleId))
-                logger.debug(`granting ${member.user.id} ${currencyRule.amount}`);
+                logger.trace(`granting ${member.user.id} ${currencyRule.amount}`);
             promises.push(runEvent(currencyRule, guild, member as GuildMember, reaction, user))
         }
 
@@ -96,9 +96,6 @@ export const runEvent = async (
             discordId
         }
     });
-
-    if (!user)
-        throw new Error('Cannot find user to adjust currency.');
 
     const userServerProfile = await updateCurrencyAmount(guild?.id as string, user.id, currencyRule);
 
@@ -134,9 +131,6 @@ const updateCurrencyAmount = async (serverDiscordId: string, userId: string, cur
         }
     });
 
-    if (!server)
-        throw new Error(`Server was not properly initialized before updating currency amount. id ${serverDiscordId}`);
-
     return await prisma.userServer.update({
         where: {
             userId_serverId: {
@@ -145,7 +139,7 @@ const updateCurrencyAmount = async (serverDiscordId: string, userId: string, cur
             }
         },
         data: {
-            currencyCount: (server?.UserServer[0].currencyCount || 0) + currencyRule.amount
+            currencyCount: (server?.UserServer[0]?.currencyCount || 0) + currencyRule.amount
         },
         include: {
             Server: true
@@ -179,7 +173,7 @@ const announce = async (
         await (guild?.channels.cache.get(currencyHistoryChannelId) as TextChannel).send({
             embeds: [
                 {
-                    description: `${member.user.tag} earned ${currencyRule.amount} seed(s) for ${currencyRule.action} with role ${guild?.roles.cache.get(currencyRule.roleId)}`
+                    description: `${member.user.tag} earned ${currencyRule.amount} roscoin(s) for ${currencyRule.action} with role ${guild?.roles.cache.get(currencyRule.roleId)}`
                 }
             ],
             allowedMentions: {
@@ -232,7 +226,7 @@ export const undoMessageReactionIncome = async (reaction: MessageReaction | Part
             await (reaction.client.channels.cache.get(log.Server?.currencyHistoryChannelId) as TextChannel).send({
                 embeds: [
                     {
-                        description: `${discordUser.tag} lost ${log.currencyRule?.amount} seeds for removing a reaction.`
+                        description: `${discordUser.tag} lost ${log.currencyRule?.amount} roscoins for removing a reaction.`
                     }
                 ],
                 allowedMentions: {

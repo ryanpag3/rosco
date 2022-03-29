@@ -2,14 +2,22 @@ import logger from './logger';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { hashElement } from 'folder-hash';
-import COMMANDS from '../commands';
 import path from 'path';
 import { promises as fs } from 'fs';
+import COMMANDS from '../recursive-commands';
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN as string);
 
 const keys = Object.keys(COMMANDS);
-const mappedCommands = keys.map((c: any) => {
+const mappedCommands = keys.filter((k) => {
+    /**
+     * All subcommands are attached to the main command 
+     * according to discord's API. For this bot however,
+     * we use different modules to represent subcommands.
+     * So, no need to deploy each file.
+     */
+    return COMMANDS[k].isSubCommand !== true;
+}).map((c: any) => {
     return {
         name: COMMANDS[c].name,
         description: COMMANDS[c].description,
@@ -26,9 +34,10 @@ export async function deploy() {
         return
 
     return new Promise(async (resolve, reject) => {
-        logger.debug(`deploying slash commands`);
+        logger.debug(`deploying slash ${mappedCommands.length} commands`);
         try {
             if (process.env.NODE_ENV !== 'production') {
+                logger.debug('using test server');
                 // register with test server
                 await rest.put(
                     Routes.applicationGuildCommands(process.env.DISCORD_APPLICATION_ID as string, process.env.TEST_GUILD_ID as string),
@@ -37,6 +46,7 @@ export async function deploy() {
                     }
                 );
             } else {
+                logger.debug('registering globally for ' + process.env.DISCORD_APPLICATION_ID);
                 // register globally in production
                 await rest.put(
                     Routes.applicationCommands(process.env.DISCORD_APPLICATION_ID as string),
@@ -72,12 +82,18 @@ const createHashFile = async () => {
 }
 
 const getCommandsHash = async () => {
-    const { hash } = await hashElement(path.join(__dirname, '../commands'), {
+    let { hash } = await hashElement(path.join(__dirname, '../commands'), {
         files: {
             exclude: [ '*.sub.ts' ],
             include: [ '*.ts' ]
         }
     });
+     
+    // reset the hash if the dev server changes, not affected in prod
+    hash += process.env.DISCORD_APPLICATION_ID;
+
+    hash += process.env.TEST_GUILD_ID;
+
     return hash;
 }
 

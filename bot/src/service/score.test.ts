@@ -1,13 +1,19 @@
-import * as UserService from './user';
 import * as ScoreService from './score';
 import prisma from '../util/prisma';
 
 it('should create a score', async () => {
     const u = await createUser('abcd');
 
+    const serv = await prisma.server.create({
+        data: {
+            discordId: `asdasdasd`
+        }
+    })
+
     const s = await ScoreService.create({
         name: 'testing',
-        serverId: 'abcd',
+        // @ts-ignore
+        serverId: serv.id,
         channelId: 'abcd',
         // @ts-ignore
         userId: u.id,
@@ -20,9 +26,16 @@ it('should create a score', async () => {
 it('should throw a BotError if a score already exists in the server', async () => {
     const u = await createUser('abcd');
 
+    const serv = await prisma.server.create({
+        data: {
+            discordId: `asdasdasd`
+        }
+    })
+
     const s = await ScoreService.create({
         name: 'testing',
-        serverId: 'abcd',
+        // @ts-ignore
+        serverId: serv.id,
         channelId: 'abcd',
         // @ts-ignore
         userId: u.id,
@@ -31,7 +44,8 @@ it('should throw a BotError if a score already exists in the server', async () =
 
     await expect(ScoreService.create({
         name: 'testing',
-        serverId: 'abcd',
+        // @ts-ignore
+        serverId: serv.id,
         channelId: 'abcd',
         // @ts-ignore
         userId: u.id,
@@ -42,9 +56,17 @@ it('should throw a BotError if a score already exists in the server', async () =
 it('should update a score', async () => {
     const u = await createUser('abcd');
 
+
+    const serv = await prisma.server.create({
+        data: {
+            discordId: `asdasdasd`
+        }
+    })
+
     const s = await ScoreService.create({
         name: 'testing',
-        serverId: 'abcd',
+        // @ts-ignore
+        serverId: serv.id,
         channelId: 'abcd',
         // @ts-ignore
         userId: u.id,
@@ -53,7 +75,7 @@ it('should update a score', async () => {
 
     expect(s.id).not.toBeUndefined();
 
-    const updated = await ScoreService.update(s.name, 'abcd', {
+    const updated = await ScoreService.update(s.name, serv.id, {
         description: 'new'
     });
 
@@ -63,9 +85,16 @@ it('should update a score', async () => {
 it('should throw an error if updating a score to an existing name', async () => {
     const u = await createUser('abcd');
 
+    const serv = await prisma.server.create({
+        data: {
+            discordId: `asdasdasd`
+        }
+    })
+
     const s = await ScoreService.create({
         name: 'testing',
-        serverId: 'abcd',
+        // @ts-ignore
+        serverId: serv.id,        
         channelId: 'abcd',
         // @ts-ignore
         userId: u.id,
@@ -76,7 +105,8 @@ it('should throw an error if updating a score to an existing name', async () => 
 
     const ss = await ScoreService.create({
         name: 'testing2',
-        serverId: 'abcd',
+        // @ts-ignore
+        serverId: serv.id,        
         channelId: 'abcd',
         // @ts-ignore
         userId: u.id,
@@ -92,10 +122,17 @@ it('should throw an error if updating a score to an existing name', async () => 
 
 it('should get a score record', async () => {
     const u = await createUser('abcd');
+    
+    const serv = await prisma.server.create({
+        data: {
+            discordId: `asdasdasd`
+        }
+    })
 
     const s = await ScoreService.create({
         name: 'testing',
-        serverId: 'abcd',
+        // @ts-ignore
+        serverId: serv.id,
         channelId: 'abcd',
         // @ts-ignore
         userId: u.id,
@@ -115,22 +152,27 @@ expect(found?.id).toBe(s.id);
 });
 
 it('should return null when a record does not exist', async () => {
-    const found = await ScoreService.findUnique({
+    await expect(ScoreService.findUnique({
         name_serverId: {
             name: 'abc',
             serverId: 'abc'
         }
-    });
-
-    expect(found).toBeNull();
+    })).rejects.toThrow();
 });
 
 it('should delete the score', async () => {
     const u = await createUser('abcd');
 
+    const serv = await prisma.server.create({
+        data: {
+            discordId: `asdasdasd`
+        }
+    })
+
     const s = await ScoreService.create({
         name: 'testing',
-        serverId: 'abcd',
+        // @ts-ignore
+        serverId: serv.id,
         channelId: 'abcd',
         // @ts-ignore
         userId: u.id,
@@ -141,25 +183,30 @@ it('should delete the score', async () => {
 
     await ScoreService.del({
         name: 'testing',
-        serverId: 'abcd'
+        serverId: serv.id
     });
 
-    const itsHere = await ScoreService.findUnique({
+    await expect(ScoreService.findUnique({
         name_serverId: {
             name: s.name,
             serverId: s.serverId
         }
-    });
-
-    expect(itsHere).toBeNull();
+    })).rejects.toThrow();
 });
 
 it('should do nothing if no valid scores are available to delete', async () => {
     const u = await createUser('abcd');
 
+    const serv = await prisma.server.create({
+        data: {
+            discordId: `asdasdasd`
+        }
+    })
+
     const s = await ScoreService.create({
         name: 'testing',
-        serverId: 'abcd',
+        // @ts-ignore
+        serverId: serv.id,
         channelId: 'abcd',
         // @ts-ignore
         userId: u.id,

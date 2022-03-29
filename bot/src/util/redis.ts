@@ -6,7 +6,8 @@ const client = createClient({
         port: Number.parseInt(process.env.REDIS_PORT || '6379'),
         host: process.env.REDIS_HOST || 'localhost',
         connectTimeout: Number.parseInt(process.env.REDIS_CONNECT_TIMEOUT || '5000')
-    }
+    },
+    password: process.env.REDIS_PASSWORD
 });
 
 (async () => {
@@ -15,10 +16,11 @@ const client = createClient({
         logger.debug(`redis connection established.`);
     } catch (e) {
         logger.error(e);
-        process.exit(1);
+        if (process.env.NODE_ENV !== 'test')
+            process.exit(1);
     }
 })();
 
-const redis = client;
+let redis = client;
 
 export default redis;

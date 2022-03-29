@@ -1,0 +1,24 @@
+dependencies:
+- name: ingress-nginx
+  repository: https://kubernetes.github.io/ingress-nginx
+  version: 4.0.18
+- name: wiki
+  repository: https://charts.js.wiki
+  version: 2.2.13
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.6.0
+- name: prometheus
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 15.6.0
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 6.24.1
+- name: loki
+  repository: https://grafana.github.io/helm-charts
+  version: 2.10.2
+- name: descheduler
+  repository: https://kubernetes-sigs.github.io/descheduler/
+  version: 0.23.2
+digest: sha256:a8c86cc14bd5eb632ac1134f2a1dbbf2f1e295af0d802947b714c7246807521e
+generated: "2022-03-27T16:04:32.005465-07:00"

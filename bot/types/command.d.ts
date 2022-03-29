@@ -10,5 +10,5 @@ export interface Command {
     options?: any;
     handler: (interaction: CommandInteraction, user: User & {
         UserServer: UserServer[];
-    }, server?: Server) => void;
+    }, server: Server) => void;
 }

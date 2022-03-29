@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.bot.service.name }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "rosco-helm.selectorLabels" . | nindent 6 }}
+  serviceName: {{ .Values.bot.service.name }}
+  replicas: {{ .Values.bot.replicaCount }}
+  template:
+    metadata:
+      labels:
+        {{- include "rosco-helm.labels" . | nindent 10 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: rosco
+        image: docker.io/ryanpage/rosco:latest
+        imagePullPolicy: {{ .Values.bot.image.pullPolicy }}
+        securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+        envFrom:
+        - secretRef:
+            name: {{ .Values.bot.secretName }}
+        volumeMounts:
+        - name: postgres-cert
+          mountPath: /etc/rosco/ca-certificate.crt
+          subPath: ca-certificate.crt
+        env:
+          {{- toYaml .Values.bot.env | nindent 10 }}
+          - name: SHARD_COUNT
+            value: {{ .Values.bot.replicaCount | quote }}
+      volumes:
+        - name: postgres-cert
+          configMap:
+            name: postgres-cert
