@@ -2,10 +2,10 @@
 title: Keyword
 description: 
 published: true
-date: 2022-01-28T00:41:07.579Z
+date: 2022-03-29T02:03:26.398Z
 tags: command
 editor: markdown
-dateCreated: 2022-01-27T06:02:10.000Z
+dateCreated: 2022-03-24T21:12:52.742Z
 ---
 
 ## Introduction
@@ -38,6 +38,8 @@ Issue `/keyword create` to create a keyword and assign it to a score. Keywords c
 /keyword create keyword: ryan score-name: ryan user: ryan
 ```
 
+![keyword-create-example.png](/keyword-create-example.png)
+
 ## `delete` - Delete a keyword
 
 Issue `/keyword delete` to delete a keyword for a score.
@@ -52,6 +54,8 @@ Issue `/keyword delete` to delete a keyword for a score.
 ``` bash
 /keyword delete keyword: hello score-name: test
 ```
+
+![keyword-delete-example.png](/keyword-delete-example.png)
 
 ## `list` - List all keywords
 
@@ -73,6 +77,8 @@ Issue `/keyword list` to list out current keywords.
 
 /keyword list keyword: test score-name: my-score
 ```
+
+![keyword-list-example.png](/keyword-list-example.png)
 
 
 
