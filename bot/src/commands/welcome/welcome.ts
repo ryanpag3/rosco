@@ -24,6 +24,11 @@ const Welcome: Command = {
                     description: 'The type of welcome message. Valid options are "public" and "private".',
                     type: ApplicationCommandOptionType.String,
                     required: true
+                },
+                {
+                    name: 'channel',
+                    description: 'Optionally change the channel you want to send this message to.',
+                    type: ApplicationCommandOptionType.Channel
                 }
             ]
         },
@@ -52,11 +57,6 @@ const Welcome: Command = {
                     required: true
                 },
                 {
-                    name: 'channel',
-                    description: 'The channel you want to send this message to. You can skip for private welcome messages.',
-                    type: ApplicationCommandOptionType.Channel
-                },
-                {
                     name: 'title',
                     description: 'The title of the welcome message.',
                     type: ApplicationCommandOptionType.String,
@@ -67,7 +67,12 @@ const Welcome: Command = {
                     description: 'The message you want to use to welcome users.',
                     type: ApplicationCommandOptionType.String,
                     required: true
-                }
+                },
+                {
+                    name: 'channel',
+                    description: 'Optionally set the channel you want to send this message to.',
+                    type: ApplicationCommandOptionType.Channel
+                },
             ]
         }
     ],
