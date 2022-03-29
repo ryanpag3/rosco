@@ -2,13 +2,13 @@
 title: Me
 description: 
 published: true
-date: 2022-01-28T00:19:57.108Z
+date: 2022-03-29T02:05:29.262Z
 tags: 
 editor: markdown
-dateCreated: 2022-01-27T06:01:35.097Z
+dateCreated: 2022-03-24T21:12:56.844Z
 ---
 
-# Introduction
+## Introduction
 
 Issue `/me` to get the information the bot has associated with you.
 
@@ -23,4 +23,6 @@ Issue `/me` to get the information the bot has associated with you.
 
 /me announce: True
 ```
+
+![me-example.png](/me-example.png)
 
