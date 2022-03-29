@@ -2,10 +2,10 @@
 title: Poll
 description: 
 published: true
-date: 2022-01-27T22:06:06.487Z
+date: 2022-03-29T14:39:48.118Z
 tags: command
 editor: markdown
-dateCreated: 2022-01-27T06:00:30.235Z
+dateCreated: 2022-03-24T21:13:09.754Z
 ---
 
 ## Introduction
@@ -18,7 +18,7 @@ Polls allow your users to vote on a defined topic. Upon completion, polls can be
 
 When a poll is created, buttons based on the options defined will be presented. Each user has the opportunity to vote once. Users can submit their vote by clicking on one of the options. 
 
-![screen_shot_2022-01-27_at_1.41.31_pm.png](/screen_shot_2022-01-27_at_1.41.31_pm.png =35%x)
+![screen_shot_2022-01-27_at_1.41.31_pm.png](/screen_shot_2022-01-27_at_1.41.31_pm.png =50%x)
 
 ### Opening and Closing Polls
 
@@ -48,6 +48,8 @@ Issue `/poll create` to create a poll. Polls have one `question` which is the co
 /poll create name: favorite-snack question: What is your favorite snack? option-1: chips option-2: ice cream
 ```
 
+![poll-create-example.png](/poll-create-example.png)
+
 ## `info` - Get poll info
 
 Issue `/poll info` to get information on a poll. If a poll is open, this will also attach votable option buttons to it.
@@ -61,6 +63,8 @@ Issue `/poll info` to get information on a poll. If a poll is open, this will al
 ``` bash
 /poll info name: favorite-snack
 ```
+
+![poll-info-example.png](/poll-info-example.png)
 
 ## `close` - Close a poll
 
@@ -78,6 +82,7 @@ Issue `/poll close` to close a poll. Once closed, users will be shown an error m
 /poll close name: favorite-snack
 ```
 
+![poll-close-example.png](/poll-close-example.png)
 
 ## `open` - Open a poll
 
@@ -93,6 +98,8 @@ Issue `/poll open` to open a poll. Once opened, users may begin voting again.
 /poll open name: favorite-snack
 ```
 
+![poll-open-example.png](/poll-open-example.png)
+
 ## `delete` - Delete a poll
 
 Issue `/poll delete` to delete a poll.
@@ -106,6 +113,8 @@ Issue `/poll delete` to delete a poll.
 ``` bash
 /poll delete name: favorite-snack
 ```
+
+![poll-delete-example.png](/poll-delete-example.png)
 
 ## `list` - List polls
 
@@ -126,6 +135,7 @@ Issue `/poll list` to list out polls in the server.
 /poll list page: 2 filter: snack
 ```
 
+![poll-list-example.png](/poll-list-example.png)
 
 
 
