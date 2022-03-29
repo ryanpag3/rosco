@@ -2,7 +2,8 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { DateTime, Duration } from 'luxon';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
-import prisma from '../../util/prisma';
+import logger from '../../util/logger';
+import prisma, { NotFoundError } from '../../util/prisma';
 import PrismaErrorCode from '../../util/prisma-error-code';
 
 const TimerInfo: Command = {
@@ -19,8 +20,7 @@ const TimerInfo: Command = {
                         name,
                         serverId: server?.id as string
                     }
-                },
-                rejectOnNotFound: true
+                }
             });
         } catch(e) {
             if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.NOT_FOUND)
