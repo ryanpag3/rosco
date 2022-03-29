@@ -2,10 +2,10 @@
 title: Currency
 description: 
 published: true
-date: 2022-02-01T04:38:23.206Z
+date: 2022-03-29T01:51:48.979Z
 tags: command
 editor: markdown
-dateCreated: 2022-01-27T06:02:40.184Z
+dateCreated: 2022-03-24T21:12:48.578Z
 ---
 
 ## Introduction
@@ -39,6 +39,8 @@ Issue `/currency grant` if you would like to issue currency to a user.
 /currency grant user: ryan amount: 1000
 ```
 
+![currency-grant-example.png](/currency-grant-example.png)
+
 ## `revoke` - Revoke a user currency
 
 Issue `/currency revoke` if you would like to revoke currency to a user. 
@@ -58,6 +60,8 @@ Issue `/currency revoke` if you would like to revoke currency to a user.
 /currency revoke user: ryan amount: 1000
 ```
 
+![currency-revoke-example.png](/currency-revoke-example.png)
+
 ## `log` - Audit currency events
 
 Issue `/currency log` to audit currency events.
@@ -76,6 +80,10 @@ Issue `/currency log` to audit currency events.
 
 /currency log active: False
 ```
+
+![currency-log-example.png](/currency-log-example.png)
+
+![currency-log-channel-assignment-example.png](/currency-log-channel-assignment-example.png)
 
 ## `send` - Send a user currency
 
@@ -123,6 +131,8 @@ Issue `/currency bank deposit` to deposit money into the bank.
 ``` bash
 /currency bank deposit amount: 1000
 ```
+
+
 
 
 
