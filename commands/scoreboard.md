@@ -2,10 +2,10 @@
 title: Scoreboard
 description: 
 published: true
-date: 2022-01-27T18:22:40.637Z
+date: 2022-03-29T14:51:37.304Z
 tags: command
 editor: markdown
-dateCreated: 2022-01-27T05:59:11.638Z
+dateCreated: 2022-03-24T21:13:18.210Z
 ---
 
 ## Introduction
@@ -32,6 +32,8 @@ Issue `/scoreboard create` to create a new scoreboard. Scoreboards contain one o
 /scoreboard create name: my-scoreboard scores: score1,score2,score3,score4
 ```
 
+![scoreboard-create-example.png](/scoreboard-create-example.png)
+
 ## `add-score` - Add score to scoreboard
 
 Issue `/scoreboard add-score` to assign a score to a scoreboards. Scores can be assigned to multiple scoreboards (and multiple scoreboards can have the same score).
@@ -47,6 +49,8 @@ Issue `/scoreboard add-score` to assign a score to a scoreboards. Scores can be 
 /scoreboard add-score name: my-scoreboard score-name: score1
 ```
 
+![scoreboard-add-score-example.png](/scoreboard-add-score-example.png)
+
 ## `remove-score` - Remove score from scoreboard
 
 Issue `/scoreboard remove-score` to remove a score from a scoreboard.
@@ -61,6 +65,8 @@ Issue `/scoreboard remove-score` to remove a score from a scoreboard.
 ``` bash
 /scoreboard remove-score name: my-scoreboard score-name: score1
 ```
+
+![scoreboard-remove-score-example.png](/scoreboard-remove-score-example.png)
 
 ## `update` - Update a scoreboard
 
@@ -80,6 +86,8 @@ Issue `/scoreboard update` to update your existing scoreboard with new propertie
 /scoreboard update name: my-scoreboard description: This is a new description!
 ```
 
+![scoreboard-update-example.png](/scoreboard-update-example.png)
+
 ## `delete` - Delete a scoreboard
 
 Issue `/scoreboard delete` to delete an existing scoreboard.
@@ -93,6 +101,8 @@ Issue `/scoreboard delete` to delete an existing scoreboard.
 ``` bash
 /scoreboard delete name: my-scoreboard
 ```
+
+![scoreboard-delete-example.png](/scoreboard-delete-example.png)
 
 
 
