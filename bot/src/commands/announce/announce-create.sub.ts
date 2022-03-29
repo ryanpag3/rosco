@@ -18,10 +18,15 @@ const AnnounceCreate: Command = {
 
         const abbreviatedTz = DateTime.now().setZone(server.timezone).toFormat('TTT').split(' ')[1];
 
+        const instant = DateTime.now().setZone(server.timezone);
+
         const whenDate = chrono.parseDate(when,
             {
-                timezone: abbreviatedTz
+                timezone: abbreviatedTz,
+                instant: instant.toJSDate()
             });
+
+        logger.debug(whenDate);
 
         if (!whenDate)
             throw new BotError('Could not interpret date from what was provided.');

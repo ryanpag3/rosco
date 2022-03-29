@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ .Values.bot.service.name }}
+  annotations:
+    keel.sh/policy: "force"
+    keel.sh/pollSchedule: "@every 30s"
 spec:
   selector:
     matchLabels:
