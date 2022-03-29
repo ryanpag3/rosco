@@ -1,10 +1,10 @@
-import { User } from '@prisma/client';
+import { Server, User } from '@prisma/client';
 import { CommandInteraction } from 'discord.js';
 import COMMANDS from '../recursive-commands';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 
-export const userHasPermission = async (interaction: CommandInteraction, user: User) => {
+export const userHasPermission = async (interaction: CommandInteraction, server: Server, user: User) => {
     try {
         // @ts-ignore
         if (interaction.member.permissions.has('ADMINISTRATOR') && !process.env.DISABLE_ADMIN_BYPASS) {
@@ -23,12 +23,14 @@ export const userHasPermission = async (interaction: CommandInteraction, user: U
         const permissions = await prisma.permission.findMany({
             where: {
                 commandId: module.id,
-                serverId: interaction.guild?.id as string
+                serverId: server.id as string
             }
         });
 
-        if (permissions.length === 0)
+        if (permissions.length === 0) {
+            logger.debug('oh no');
             return true;
+        }
 
         for (const permission of permissions) {
             // @ts-ignore

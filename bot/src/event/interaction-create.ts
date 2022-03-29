@@ -23,19 +23,21 @@ const onInteractionCreate = async (interaction: CommandInteraction): Promise<any
         if (interaction.isButton())
             return await onButtonPressed(interaction, user, server as Server);
 
-        if (!await userHasPermission(interaction, user)) {
+        if (!await userHasPermission(interaction, server as Server, user)) {
             return interaction.reply({
                 embeds: [
                     {
                         title: `:lock: Permission denied.`,
-                        description: `You do not have permission to run that command.`
+                        description: `You do not have permission to run that command.`,
                     }
-                ]
+                ],
+                ephemeral: true
             })
         }
 
         await handleCurrencyEvent(CurrencyAction.COMMAND, interaction);
 
+        // @ts-ignore
         await CommandHistory.addToHistory(user.id, server?.id as string, interaction, JSON.stringify(interaction.toJSON(), (key, value) => typeof value === 'bigint' ? value.toString() : value, 4));
 
         const { handler } = COMMANDS[interaction.commandName];
