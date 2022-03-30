@@ -16,7 +16,6 @@ export const initializeServer = async (guild: Guild|null) => {
             discordId: guild?.id,
         },
         include: {
-            CurrencyRule: true,
             ServerWelcomeMessage: true
         }
     });
