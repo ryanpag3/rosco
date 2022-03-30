@@ -90,39 +90,6 @@ model CommandHistory {
   commandRaw  String?
 }
 
-model CurrencyHistoryLog {
-  id             String        @id @default(uuid())
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  Server         Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  serverId       String
-  delta          Int
-  // if currency rule is set, transaction is income
-  currencyRule   CurrencyRule? @relation(fields: [currencyRuleId], references: [id])
-  currencyRuleId String?
-  Sender         User?         @relation(name: "Sender", fields: [senderId], references: [id])
-  senderId       String?
-  Receiver       User          @relation(name: "Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
-  receiverId     String
-  reaction       String?
-  messageId      String?
-
-  // a user can only react with an emoji once on a message
-  @@unique([receiverId, reaction, messageId])
-}
-
-model CurrencyRule {
-  id                 String               @id @default(uuid())
-  roleId             String
-  amount             Int
-  action             CurrencyAction
-  serverId           String
-  Server             Server               @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  userId             String?
-  User               User?                @relation(fields: [userId], references: [id], onDelete: SetNull)
-  CurrencyHistoryLog CurrencyHistoryLog[]
-}
-
 model Keyword {
   id        String        @id @default(uuid())
   createdAt DateTime      @default(now())
@@ -261,8 +228,6 @@ model Server {
   Announcement         Announcement[]
   BannedWord           BannedWord[]
   CommandHistory       CommandHistory[]
-  CurrencyHistoryLog   CurrencyHistoryLog[]
-  CurrencyRule         CurrencyRule[]
   Keyword              Keyword[]
   Permission           Permission[]
   Poll                 Poll[]
@@ -332,9 +297,6 @@ model User {
   Permission                Permission[]
   Keyword                   Keyword[]
   Stopwatch                 Stopwatch[]
-  SendCurrencyHistoryLog    CurrencyHistoryLog[] @relation("Sender")
-  ReceiveCurrencyHistoryLog CurrencyHistoryLog[] @relation("Receiver")
-  CurrencyRule              CurrencyRule[]
   UserServer                UserServer[]
   Poll                      Poll[]
   PollVote                  PollVote[]
