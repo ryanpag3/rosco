@@ -8,6 +8,7 @@ import BannedWordsList from './banned-words/automod-banned-words-list.sub';
 import CapslockDetectConfig from './capslock-detect/automod-capslock-detect-config.sub';
 import CapslockDetectDisable from './capslock-detect/automod-capslock-detect-disable.sub';
 import CapslockDetectEnable from './capslock-detect/automod-capslock-detect-enable.sub';
+import IgnoredRoleAdd from './ignored-role/add.sub';
 import LinkDetectAllowList from './link-detect/automod-link-detect-allow-list.sub';
 import LinkDetectAllow from './link-detect/automod-link-detect-allow.sub';
 import LinkDetectDeny from './link-detect/automod-link-detect-deny.sub';
@@ -17,12 +18,31 @@ import RuleAdd from './rule/automod-rule-add.sub';
 import RuleList from './rule/automod-rule-list.sub';
 import AutoModRuleRemove from './rule/automod-rule-remove.sub';
 
-
 const AutoMod: Command = {
     id: '3m928f7a-49ff-4419-9a2d-f1b72f024ba7',
     name: 'automod',
     description: 'Manage various AutoMod features.',
     options: [
+        {
+            name: 'ignored-role',
+            description: 'Manage roles to ignore for AutoMod rules.',
+            type: ApplicationCommandOptionType.SubcommandGroup,
+            options: [
+                {
+                    name: 'add',
+                    description: 'Add a role to be ignored by AutoMod.',
+                    type: ApplicationCommandOptionType.Subcommand,
+                    options: [
+                        {
+                            name: 'role',
+                            description: 'The role you want to add.',
+                            type: ApplicationCommandOptionType.Role,
+                            required: true
+                        }
+                    ]
+                }
+            ]
+        },
         {
             name: 'rule',
             description: 'Manage AutoMod rules.',
@@ -230,6 +250,12 @@ const AutoMod: Command = {
         const subcmd = interaction.options.getSubcommand();
 
         switch (subgroup) {
+            case 'ignored-role': {
+                switch (subcmd) {
+                    case 'add':
+                        return IgnoredRoleAdd.handler(interaction, user, server);
+                }
+            };
             case 'rule': {
                 switch (subcmd) {
                     case 'add':

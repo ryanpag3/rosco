@@ -1,4 +1,3 @@
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["extendedIndexes"]
@@ -215,30 +214,39 @@ model Server {
   autoModCapslockDetectEnabled Boolean @default(false)
   autoModCapslockDetectLength  Int     @default(12)
   autoModLinkDetectEnabled     Boolean @default(false)
-  announceEnabled              Boolean @default(true)
-  currencyEnabled              Boolean @default(true)
-  keywordEnabled               Boolean @default(true)
-  pollEnabled                  Boolean @default(true)
-  scoreEnabled                 Boolean @default(true)
-  scoreboardEnabled            Boolean @default(true)
-  stopwatchEnabled             Boolean @default(true)
-  timerEnabled                 Boolean @default(true)
-  welcomeEnabled               Boolean @default(true)
 
-  Announcement         Announcement[]
-  BannedWord           BannedWord[]
-  CommandHistory       CommandHistory[]
-  Keyword              Keyword[]
-  Permission           Permission[]
-  Poll                 Poll[]
-  Score                Score[]
-  Scoreboard           Scoreboard[]
-  ServerWelcomeMessage ServerWelcomeMessage[]
-  Stopwatch            Stopwatch[]
-  Timer                Timer[]
-  UserServer           UserServer[]
-  AutoModRule          AutoModRule[]
-  AllowedLink          AllowedLink[]
+  announceEnabled   Boolean @default(true)
+  currencyEnabled   Boolean @default(true)
+  keywordEnabled    Boolean @default(true)
+  pollEnabled       Boolean @default(true)
+  scoreEnabled      Boolean @default(true)
+  scoreboardEnabled Boolean @default(true)
+  stopwatchEnabled  Boolean @default(true)
+  timerEnabled      Boolean @default(true)
+  welcomeEnabled    Boolean @default(true)
+
+  Announcement             Announcement[]
+  BannedWord               BannedWord[]
+  CommandHistory           CommandHistory[]
+  Keyword                  Keyword[]
+  Permission               Permission[]
+  Poll                     Poll[]
+  Score                    Score[]
+  Scoreboard               Scoreboard[]
+  ServerWelcomeMessage     ServerWelcomeMessage[]
+  Stopwatch                Stopwatch[]
+  Timer                    Timer[]
+  UserServer               UserServer[]
+  AutoModRule              AutoModRule[]
+  AllowedLink              AllowedLink[]
+  ServerAutoModIgnoredRole ServerAutoModIgnoredRole[]
+}
+
+model ServerAutoModIgnoredRole {
+  id       String @id @default(uuid())
+  Server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId String
+  roleId   String
 }
 
 model ServerWelcomeMessage {
@@ -286,23 +294,23 @@ model Timer {
 }
 
 model User {
-  id                        String               @id @default(uuid())
-  discordId                 String               @unique @db.VarChar(32)
-  createdAt                 DateTime             @default(now())
-  updatedAt                 DateTime             @updatedAt
-  botCurrencyCount          Int                  @default(0)
-  CommandHistory            CommandHistory[]
-  Scores                    Score[]
-  Scoreboards               Scoreboard[]
-  Permission                Permission[]
-  Keyword                   Keyword[]
-  Stopwatch                 Stopwatch[]
-  UserServer                UserServer[]
-  Poll                      Poll[]
-  PollVote                  PollVote[]
-  Timer                     Timer[]
-  Announcement              Announcement[]
-  AutoModRuleUser           AutoModRuleUser[]
+  id               String            @id @default(uuid())
+  discordId        String            @unique @db.VarChar(32)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  botCurrencyCount Int               @default(0)
+  CommandHistory   CommandHistory[]
+  Scores           Score[]
+  Scoreboards      Scoreboard[]
+  Permission       Permission[]
+  Keyword          Keyword[]
+  Stopwatch        Stopwatch[]
+  UserServer       UserServer[]
+  Poll             Poll[]
+  PollVote         PollVote[]
+  Timer            Timer[]
+  Announcement     Announcement[]
+  AutoModRuleUser  AutoModRuleUser[]
 }
 
 model UserServer {
