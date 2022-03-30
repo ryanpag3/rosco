@@ -16,7 +16,8 @@ export const initializeServer = async (guild: Guild|null) => {
             discordId: guild?.id,
         },
         include: {
-            ServerWelcomeMessage: true
+            ServerWelcomeMessage: true,
+            ServerAutoModIgnoredRole: true
         }
     });
 }
