@@ -27,6 +27,14 @@ const onMessageReceived = async (message: Message) => {
 
 const validateAutoMod = async (message: Message, user: User, server: Server) => {
     try {
+        // @ts-ignore
+        if (server.ServerAutoModIgnoredRole.some((r) => {
+            return message.member?.roles.cache.has(r.roleId)
+        })) {
+            logger.trace('user has AutoMod ignore role.');
+            return true;
+        }
+
         if (await BannedWordCache.containsCachedWord(server.id, message.content)) {
             await onAutoModRuleBroken('banned-words', message, user.id, server.id);
         }
@@ -43,8 +51,10 @@ const validateAutoMod = async (message: Message, user: User, server: Server) => 
             await LinkCache.containsInvalidLink(server.id, message.content) === true) {
                 await onAutoModRuleBroken('link-detect', message, user.id, server.id);
         }
-    } catch (e) {
-        // noop
+    } catch (e: any) {
+        if (e.message.toString().contains('An AutoMod rule'))
+            return;
+        logger.error(e);
     }
 }
 
