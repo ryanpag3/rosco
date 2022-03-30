@@ -114,7 +114,7 @@ jobs:
       - name: build web app
         run: |
           docker build . -t ryanpage/rosco-web:latest
-          docker tag ryanpage/rosco-web:latest ryanpage/rosco-web:${{ github.run_number }}
+          docker tag ryanpage/rosco-web:latest ryanpage/rosco-web:${{ env.BRANCH }}-${{ github.run_number }}
           docker push ryanpage/rosco-web:${{ env.BRANCH }}-${{ github.run_number }}
           docker push ryanpage/rosco-web:latest
         working-directory: ./web

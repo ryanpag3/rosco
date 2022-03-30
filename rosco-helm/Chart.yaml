@@ -45,3 +45,6 @@ dependencies:
   - name: descheduler
     repository: https://kubernetes-sigs.github.io/descheduler/
     version: 0.23.2
+  - name: keel
+    repository: https://charts.keel.sh 
+    version: 0.9.10

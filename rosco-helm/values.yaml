@@ -71,7 +71,14 @@ ingress:
         port: 3000
       paths:
         - path: /?(.*)
-          pathType: Prefix 
+          pathType: Prefix
+    - service:
+        name: keel
+        port: 9300
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
+      
   tls:
     - hosts:
       - www.wiki.roscobot.com
@@ -119,6 +126,16 @@ grafana:
     passwordKey: password
   persistence:
     enabled: true
+
+keel:
+  helmProvider:
+    enabled: false
+  secret:
+    name: keel-secret
+    create: false
+  service:
+    enabled: true
+  
 
 serviceAccount:
   # Specifies whether helm should create a service account or not.
