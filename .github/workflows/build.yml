@@ -105,6 +105,8 @@ jobs:
       - name: get branches
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - name: build bot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           yarn install
           npx semantic-release
