@@ -156,11 +156,15 @@ const scheduleTask = async (at: Date, taskId: string, channelId: string, message
     const t = setTimeout(async () => {
         // TODO: send announcement
 
-        const channel = (await client.channels.fetch(channelId)) as TextChannel;
+        try {
+            const channel = (await client.channels.fetch(channelId)) as TextChannel;
 
-        await channel.send({
-            embeds: [ messageEmbed ]
-        })
+            await channel.send({
+                embeds: [ messageEmbed ]
+            })
+        } catch (e) {
+            // noop, we still want to clean up
+        }
 
         await onCompleted();
 
