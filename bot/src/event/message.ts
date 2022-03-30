@@ -31,7 +31,7 @@ const validateAutoMod = async (message: Message, user: User, server: Server) => 
         if (server.ServerAutoModIgnoredRole.some((r) => {
             return message.member?.roles.cache.has(r.roleId)
         })) {
-            logger.debug('user has AutoMod ignore role.');
+            logger.trace('user has AutoMod ignore role.');
             return true;
         }
 
