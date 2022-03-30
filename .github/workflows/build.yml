@@ -107,6 +107,7 @@ jobs:
       - name: build bot
         run: |
           yarn install
+          npx semantic-release
           npx tsc
           export PUSH=true; ./buildDocker.sh ryanpage/rosco latest
           export PUSH=true; ./buildDocker.sh ryanpage/rosco ${{ env.BRANCH }}-${{ github.run_number }}
