@@ -1,0 +1,329 @@
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["extendedIndexes"]
+  binaryTargets   = ["native", "linux-musl"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AllowedLink {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId  String
+  pattern   String
+
+  @@unique([serverId, pattern])
+}
+
+model Announcement {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  CreatedBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdById String?
+  Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId    String
+  channelId   String
+  announceAt  DateTime
+  message     String
+
+  @@unique([serverId, name])
+}
+
+model AutoModRule {
+  id                 String            @id @default(uuid())
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  Server             Server            @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId           String
+  module             String
+  action             String
+  duration           Int
+  violations         Int
+  cooldownPeriodSecs Int
+  AutoModRuleUser    AutoModRuleUser[]
+
+  @@unique([serverId, module, action])
+}
+
+model AutoModRuleUser {
+  id                String      @id @default(uuid())
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  User              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String
+  Rule              AutoModRule @relation(fields: [autoModRuleId], references: [id], onDelete: Cascade)
+  autoModRuleId     String
+  currentViolations Int
+  cooldownExpiresOn DateTime
+
+  @@unique([userId, autoModRuleId])
+}
+
+model BannedWord {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  word      String
+  Server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId  String
+
+  @@unique([word, serverId])
+}
+
+model CommandHistory {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId    String
+  User        User?    @relation(references: [id], onDelete: Cascade, fields: [userId])
+  userId      String
+  commandName String
+  commandRaw  String?
+}
+
+model Keyword {
+  id        String        @id @default(uuid())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  word      String
+  scoreId   String
+  Score     Score         @relation(fields: [scoreId], references: [id], onDelete: Cascade)
+  action    KeywordAction @default(UP)
+  amount    Int           @default(1)
+  serverId  String
+  Server    Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  channelId String?
+  userId    String?
+  User      User?         @relation(fields: [userId], references: [id])
+
+  @@unique([word, scoreId, serverId])
+}
+
+model Permission {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  commandId String
+  roleId    String
+  serverId  String
+  Server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  // In theory, a user could be deleted but we want to persist the Permission record.
+  userId    String?
+  User      User?    @relation(references: [id], onDelete: SetNull, fields: [userId])
+
+  @@unique([roleId, commandId, serverId])
+}
+
+model Poll {
+  id         String       @id @default(uuid())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  name       String
+  question   String
+  isOpen     Boolean      @default(true)
+  Server     Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId   String
+  messageId  String
+  CreatedBy  User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId     String?
+  PollOption PollOption[]
+  PollVote   PollVote[]
+
+  @@unique([name, serverId])
+}
+
+model PollOption {
+  id        String     @id @default(uuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Poll      Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollId    String
+  content   String
+  Votes     PollVote[]
+}
+
+model PollVote {
+  id           String     @id @default(uuid())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  Poll         Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollId       String
+  PollOption   PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+  pollOptionId String
+  CreatedBy    User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+
+  @@unique([userId, pollId])
+}
+
+model Score {
+  id          String       @id @default(uuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  name        String
+  description String?
+  color       String
+  amount      Int          @default(0)
+  serverId    String
+  Server      Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  channelId   String
+  userId      String
+  User        User         @relation(references: [id], onDelete: Cascade, fields: [userId])
+  Scoreboards Scoreboard[]
+
+  Keyword Keyword[]
+  @@unique([name, serverId])
+}
+
+model Scoreboard {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  description String?
+  serverId    String
+  Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  channelId   String
+  userId      String
+  User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
+  Scores      Score[]
+
+  @@unique([name, serverId])
+}
+
+model Server {
+  id                           String   @id @default(uuid())
+  discordId                    String   @unique @db.VarChar(32)
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+  currencyHistoryChannelId     String?
+  currencyHistoryChannelActive Boolean? @default(true)
+  currencyCount                Int      @default(0)
+  timezone                     String   @default("America/Los_Angeles")
+
+  // module toggle flags
+  autoModBannedWordsEnabled    Boolean @default(false)
+  autoModCapslockDetectEnabled Boolean @default(false)
+  autoModCapslockDetectLength  Int     @default(12)
+  autoModLinkDetectEnabled     Boolean @default(false)
+  announceEnabled              Boolean @default(true)
+  currencyEnabled              Boolean @default(true)
+  keywordEnabled               Boolean @default(true)
+  pollEnabled                  Boolean @default(true)
+  scoreEnabled                 Boolean @default(true)
+  scoreboardEnabled            Boolean @default(true)
+  stopwatchEnabled             Boolean @default(true)
+  timerEnabled                 Boolean @default(true)
+  welcomeEnabled               Boolean @default(true)
+
+  Announcement         Announcement[]
+  BannedWord           BannedWord[]
+  CommandHistory       CommandHistory[]
+  Keyword              Keyword[]
+  Permission           Permission[]
+  Poll                 Poll[]
+  Score                Score[]
+  Scoreboard           Scoreboard[]
+  ServerWelcomeMessage ServerWelcomeMessage[]
+  Stopwatch            Stopwatch[]
+  Timer                Timer[]
+  UserServer           UserServer[]
+  AutoModRule          AutoModRule[]
+  AllowedLink          AllowedLink[]
+}
+
+model ServerWelcomeMessage {
+  id        String  @id @default(uuid())
+  Server    Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId  String
+  channelId String
+  title     String
+  message   String
+  isPublic  Boolean
+  isEnabled Boolean @default(false)
+
+  @@unique([serverId, isPublic])
+}
+
+model Stopwatch {
+  id        String    @id @default(uuid())
+  Server    Server    @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId  String
+  channelId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  name      String
+  startedAt DateTime?
+  stoppedAt DateTime?
+  userId    String?
+  User      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@unique([name, serverId])
+}
+
+model Timer {
+  id             String    @id @default(uuid())
+  name           String
+  Server         Server    @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId       String
+  channelId      String
+  CreatedBy      User?     @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdById    String?
+  message        String?
+  expiresOn      DateTime?
+  pausedDuration String?
+
+  @@unique([name, serverId])
+}
+
+model User {
+  id                        String               @id @default(uuid())
+  discordId                 String               @unique @db.VarChar(32)
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime             @updatedAt
+  botCurrencyCount          Int                  @default(0)
+  CommandHistory            CommandHistory[]
+  Scores                    Score[]
+  Scoreboards               Scoreboard[]
+  Permission                Permission[]
+  Keyword                   Keyword[]
+  Stopwatch                 Stopwatch[]
+  UserServer                UserServer[]
+  Poll                      Poll[]
+  PollVote                  PollVote[]
+  Timer                     Timer[]
+  Announcement              Announcement[]
+  AutoModRuleUser           AutoModRuleUser[]
+}
+
+model UserServer {
+  id                String @id @default(uuid())
+  User              User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Server            Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  userId            String
+  serverId          String
+  currencyCount     Int    @default(0)
+  bankCurrencyCount Int    @default(0)
+
+  @@unique([userId, serverId])
+}
+
+enum CurrencyAction {
+  COMMAND
+  MESSAGE
+  REACTION
+}
+
+enum KeywordAction {
+  UP
+  DOWN
+}

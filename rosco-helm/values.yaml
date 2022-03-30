@@ -1,0 +1,191 @@
+releaseBranch: "glob:master-*"
+
+bot:
+  replicaCount: 2
+  image:
+    repository: docker.io/ryanpage/rosco
+    tag: latest
+    pullPolicy: Always
+  service:
+    name: rosco-bot
+    type: ClusterIP
+  secretName: rosco
+  env:
+    - name: LOG_LEVEL
+      value: debug
+    - name: NODE_ENV
+      value: production
+    - name: REDIS_HOST
+      value: rosco-helm-redis-master
+    - name: NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+web:
+  replicaCount: 3
+  image:
+    repository: docker.io/ryanpage/rosco-web
+    tag: latest
+    pullPolicy: Always
+  service:
+    name: rosco-web
+    type: ClusterIP
+    port: 80
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    cert-manager.io/cluster-issuer: letsencrypt-production
+  hosts:
+    - host: roscobot.com
+      service:
+        name: rosco-web
+        port: 80
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
+    - host: www.roscobot.com
+      service:
+        name: rosco-web
+        port: 80
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
+    - host: wiki.roscobot.com
+      service:
+        name: rosco-helm-wiki
+        port: 80
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
+    - host: www.wiki.roscobot.com
+      service:
+        name: rosco-helm-wiki
+        port: 80
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
+    - host: rosco.grafana.local
+      service:
+        name: rosco-helm-grafana
+        port: 3000
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
+    - service:
+        name: keel
+        port: 9300
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
+      
+  tls:
+    - hosts:
+      - www.wiki.roscobot.com
+      - wiki.roscobot.com
+      secretName: tls-secret-roscobot-wiki
+    - hosts:
+      - www.roscobot.com
+      - roscobot.com
+      secretName: tls-secret-roscobot
+
+ingress-nginx:
+  controller:
+    service:
+      annotations:
+        service.beta.kubernetes.io/do-loadbalancer-size-unit: "1"
+        service.beta.kubernetes.io/do-loadbalancer-disable-lets-encrypt-dns-records: "false"
+
+wiki:
+  replicaCount: 2
+  volumeMounts:
+  - name: wikijs-config
+    mountPath: /wiki/config.yml
+    subPath: config.yml
+  volumes:
+  - name: wikijs-config
+    configMap:
+      name: wikijs-config
+  postgresql:
+    enabled: false
+    existingSecret: wikijs
+    existingSecretKey: PASSWORD 
+    persistence:
+      enabled: false
+
+redis:
+  auth:
+    existingSecret: redis-auth
+    existingSecretPasswordKey: PASSWORD
+
+grafana:
+  replicas: 1
+  admin:
+    existingSecret: grafana-admin
+    userKey: username
+    passwordKey: password
+  persistence:
+    enabled: true
+
+keel:
+  helmProvider:
+    enabled: false
+  secret:
+    name: keel-secret
+    create: false
+  service:
+    enabled: true
+  
+
+serviceAccount:
+  # Specifies whether helm should create a service account or not.
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+imagePullSecrets:
+  - name: ryanpage-dockerhub
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+

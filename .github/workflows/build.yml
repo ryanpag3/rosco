@@ -1,0 +1,144 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'develop'
+
+jobs:
+  start-runner:
+    name: Start a self-hosted EC2 runner
+    runs-on: ubuntu-latest
+    outputs:
+      label: ${{ steps.start-ec2-runner.outputs.label }}
+      ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Start EC2 runner
+        id: start-ec2-runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: start
+          github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          ec2-image-id: ami-0de8a9e628b435259
+          ec2-instance-type: t2.large
+          subnet-id: subnet-eb4d25a0
+          security-group-id: sg-07335f4bd9769ac34
+  build:
+    name: Build
+    needs: start-runner
+    runs-on: ${{ needs.start-runner.outputs.label }}
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: setup nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - name: install deps
+        run: |
+          npm i -g yarn
+          apt-get update -y
+          sleep 60
+          apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+      - name: build bot
+        run: |
+          yarn install
+          npx tsc
+        working-directory: ./bot
+  run-tests:
+    name: Run Tests
+    needs: 
+      - start-runner
+      - build
+    runs-on: ${{ needs.start-runner.outputs.label }}
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: test_guacbot_db
+          POSTGRES_PASSWORD: adminadmin
+      redis:
+        image: redis:6-alpine
+        ports:
+          - 6379:6379
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: setup nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - name: Run Tests
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          export NODE_OPTIONS=--max_old_space_size=4096
+          yarn install
+          sleep 30
+          yarn jest
+        working-directory: ./bot
+  build-docker:
+    name: Build Docker
+    needs:
+      - start-runner
+      - build
+      - run-tests
+    runs-on: ${{ needs.start-runner.outputs.label }}
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: setup nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - name: login
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: get branches
+        run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - name: build bot
+        run: |
+          yarn install
+          npx tsc
+          export PUSH=true; ./buildDocker.sh ryanpage/rosco latest
+          export PUSH=true; ./buildDocker.sh ryanpage/rosco ${{ env.BRANCH }}-${{ github.run_number }}
+        working-directory: ./bot
+      - name: build web app
+        run: |
+          docker build . -t ryanpage/rosco-web:latest
+          docker tag ryanpage/rosco-web:latest ryanpage/rosco-web:${{ env.BRANCH }}-${{ github.run_number }}
+          docker push ryanpage/rosco-web:${{ env.BRANCH }}-${{ github.run_number }}
+          docker push ryanpage/rosco-web:latest
+        working-directory: ./web
+  stop-runner:
+    name: Stop self-hosted EC2 runner
+    needs:
+      - start-runner # required to get output from the start-runner job
+      - build
+      - run-tests
+      - build-docker
+    runs-on: ubuntu-latest
+    if: ${{ always() }} # required to stop the runner even if the error happened in the previous jobs
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Stop EC2 runner
+        uses: machulav/ec2-github-runner@v2
+        with:
+          mode: stop
+          github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          label: ${{ needs.start-runner.outputs.label }}
+          ec2-instance-id: ${{ needs.start-runner.outputs.ec2-instance-id }}
+

@@ -1,1 +1,9 @@
+out
 node_modules
+.env
+.env.test
+yarn-error.log
+bot/coverage
+bot/src/commands/commands.hash
+documentation/data
+rosco-helm/reinstallHelmChart.sh
