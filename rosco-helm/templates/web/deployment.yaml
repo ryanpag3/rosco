@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ .Values.web.service.name }} 
   annotations:
-    keel.sh/policy: {{ .Values.keelPattern }}
+    keel.sh/policy: {{ .Values.keel.globPattern }}
     keel.sh/pollSchedule: "@every 30s"
   labels:
     {{- include "rosco-helm.labels" . | nindent 4 }}

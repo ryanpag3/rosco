@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: {{ .Values.bot.service.name }}
   annotations:
-    keel.sh/policy: {{ .Values.keelPattern }}
+    keel.sh/policy: {{ .Values.keel.globPattern }}
     keel.sh/pollSchedule: "@every 30s"
 spec:
   selector:
