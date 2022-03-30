@@ -36,24 +36,12 @@ const Me: Command = {
 
         const dUser = await interaction.client.users.fetch(user.discordId); 
 
-        const [ userServer ] = user.UserServer; 
-
         return interaction.reply({
             embeds: [
                 {
                     title: `:sweat_smile: User info found`,
                     description: `Info found for user ${dUser}`,
                     fields: [
-                        {
-                            name: 'Wallet',
-                            value: userServer.currencyCount.toString(),
-                            inline: true
-                        },
-                        {
-                            name: 'Bank Account',
-                            value: userServer.bankCurrencyCount.toString(),
-                            inline: true
-                        },
                         {
                             name: 'Scores',
                             value: u?.Scores.length.toString(),

@@ -1,6 +1,5 @@
 import { Keyword, Server, User } from '@prisma/client';
 import { Message } from 'discord.js';
-import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 import * as ServerService from '../service/server';
@@ -22,8 +21,6 @@ const onMessageReceived = async (message: Message) => {
     const user = await UserService.initUser(message.member as any, server as Server);
 
     await validateAutoMod(message, user, server as Server);
-
-    await handleCurrencyEvent(CurrencyAction.MESSAGE, message);
 
     await handleKeywords(message, server);
 };

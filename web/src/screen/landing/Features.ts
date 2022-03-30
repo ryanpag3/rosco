@@ -31,18 +31,6 @@ const Features: {
         ]
     },
     {
-        image: process.env.PUBLIC_URL + 'Rosco_Feature_Currency 2.png',
-        title: 'Currency',
-        description: 'Users earn currency for engaging in your server.',
-        docUrl: docBaseUrl + '/en/commands/currency',
-        features: [
-            'Earn currency for performing server actions.',
-            'Trade currency with other users.',
-            'Store currency in a bank.',
-            'Admins can issue/revoke currency.'
-        ]
-    },
-    {
         image: process.env.PUBLIC_URL + 'Rosco_Feature_Permissions.png',
         title: 'Permissions',
         description: 'Set granular control over bot actions.',

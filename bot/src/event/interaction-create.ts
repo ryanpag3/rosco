@@ -6,7 +6,6 @@ import * as ServerService from '../service/server';
 import * as CommandHistory from '../util/command-history';
 import { userHasPermission } from '../service/permission';
 import * as UserService from '../service/user';
-import { CurrencyAction, handleCurrencyEvent } from '../service/currency';
 import { Server, User } from '@prisma/client';
 import prisma from '../util/prisma';
 import COMMANDS from '../recursive-commands';
@@ -34,8 +33,6 @@ const onInteractionCreate = async (interaction: CommandInteraction): Promise<any
                 ephemeral: true
             })
         }
-
-        await handleCurrencyEvent(CurrencyAction.COMMAND, interaction);
 
         // @ts-ignore
         await CommandHistory.addToHistory(user.id, server?.id as string, interaction, JSON.stringify(interaction.toJSON(), (key, value) => typeof value === 'bigint' ? value.toString() : value, 4));
