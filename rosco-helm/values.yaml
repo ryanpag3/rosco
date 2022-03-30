@@ -1,3 +1,5 @@
+releaseBranch: "glob:master-*"
+
 bot:
   replicaCount: 2
   image:
