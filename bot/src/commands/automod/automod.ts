@@ -9,6 +9,8 @@ import CapslockDetectConfig from './capslock-detect/automod-capslock-detect-conf
 import CapslockDetectDisable from './capslock-detect/automod-capslock-detect-disable.sub';
 import CapslockDetectEnable from './capslock-detect/automod-capslock-detect-enable.sub';
 import IgnoredRoleAdd from './ignored-role/add.sub';
+import IgnoredRoleList from './ignored-role/list.sub';
+import IgnoredRoleRemove from './ignored-role/remove.sub';
 import LinkDetectAllowList from './link-detect/automod-link-detect-allow-list.sub';
 import LinkDetectAllow from './link-detect/automod-link-detect-allow.sub';
 import LinkDetectDeny from './link-detect/automod-link-detect-deny.sub';
@@ -40,6 +42,24 @@ const AutoMod: Command = {
                             required: true
                         }
                     ]
+                },
+                {
+                    name: 'remove',
+                    description: 'Remove a role to be ignored by AutoMod.',
+                    type: ApplicationCommandOptionType.Subcommand,
+                    options: [
+                        {
+                            name: 'role',
+                            description: 'The role you want to remove.',
+                            type: ApplicationCommandOptionType.Role,
+                            required: true
+                        }
+                    ]
+                },
+                {
+                    name: 'list',
+                    description: 'List the roles being ignored by AutoMod.',
+                    type: ApplicationCommandOptionType.Subcommand
                 }
             ]
         },
@@ -254,6 +274,10 @@ const AutoMod: Command = {
                 switch (subcmd) {
                     case 'add':
                         return IgnoredRoleAdd.handler(interaction, user, server);
+                    case 'remove':
+                        return IgnoredRoleRemove.handler(interaction, user, server);
+                    case 'list':
+                        return IgnoredRoleList.handler(interaction, user, server);
                 }
             };
             case 'rule': {
