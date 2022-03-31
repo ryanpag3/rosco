@@ -1,6 +1,7 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
+import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 
 const ScoreboardScoreAdd: Command = {
@@ -11,22 +12,28 @@ const ScoreboardScoreAdd: Command = {
         const scoreName = interaction.options.getString('score-name') as string;
 
         try {
-            await prisma.scoreboard.update({
+            const score = await prisma.score.findUnique({
+                where: {
+                    name_serverId: {
+                        name: scoreName,
+                        serverId: server.id as string
+                    }
+                }
+            });
+
+            const scoreboard = await prisma.scoreboard.findUnique({
                 where: {
                     name_serverId: {
                         name,
-                        serverId: server?.id as string
+                        serverId: server.id as string
                     }
-                },
+                }
+            });
+
+            await prisma.scoreboardScore.create({
                 data: {
-                    Scores: {
-                        connect: [{
-                            name_serverId: {
-                                name: scoreName,
-                                serverId: server?.id as string
-                            }
-                        }]
-                    }
+                    scoreId: score.id,
+                    scoreboardId: scoreboard.id
                 }
             });
 

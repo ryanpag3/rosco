@@ -32,11 +32,11 @@ it('should remove a score to a valid scoreboard', async () => {
             }
         },
         include: {
-            Scores: true
+            ScoreboardScore: true
         }
     });
 
-    expect(scoreboard?.Scores.length).toBe(1);
+    expect(scoreboard?.ScoreboardScore.length).toBe(1);
 
     int = createTestInteraction('scoreboard', 'remove-score', {
         name: 'test',
@@ -53,11 +53,11 @@ it('should remove a score to a valid scoreboard', async () => {
             }
         },
         include: {
-            Scores: true
+            ScoreboardScore: true
         }
     });
 
-    expect(scoreboard?.Scores.length).toBe(0);
+    expect(scoreboard?.ScoreboardScore.length).toBe(0);
 });
 
 it('should throw an error if the score does not exist to remove', async () => {

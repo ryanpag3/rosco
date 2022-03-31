@@ -1,7 +1,9 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
+import logger from '../../util/logger';
 import prisma from '../../util/prisma';
+import Score from '../score/score';
 
 const ScoreboardScoreRemove: Command = {
     id: 'd21f0939-021b-4787-85d9-f226fa26166a',
@@ -19,30 +21,24 @@ const ScoreboardScoreRemove: Command = {
                     }
                 },
                 include: {
-                    Scores: true
+                    ScoreboardScore: {
+                        include: {
+                            Score: true
+                        }
+                    }
                 }
             });
 
-            const includesScore = scoreboard?.Scores.filter((s) => s.name === scoreName).length === 1;
+            const includesScore = scoreboard?.ScoreboardScore.filter((s) => s.Score.name === scoreName).length === 1;
 
             if (!includesScore)
                 throw new BotError(`Score is not assigned to that scoreboard.`);
 
-            await prisma.scoreboard.update({
+            await prisma.scoreboardScore.delete({
                 where: {
-                    name_serverId: {
-                        name,
-                        serverId: server?.id as string
-                    }
-                },
-                data: {
-                    Scores: {
-                        disconnect: [{
-                            name_serverId: {
-                                name: scoreName,
-                                serverId: server?.id as string
-                            }
-                        }]
+                    scoreboardId_scoreId: {
+                        scoreboardId: scoreboard.id,
+                        scoreId: scoreboard?.ScoreboardScore.filter((s) => s.Score.name === scoreName)[0]?.Score.id as string
                     }
                 }
             });
