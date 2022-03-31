@@ -4,5 +4,5 @@ import packageJson from '../../package.json';
 
 export default async function () {
     logger.info(`🥑🥑🥑 Guac Bot is online and ready for action! 🥑🥑🥑`);
-    setInterval(() => client.user?.setActivity(`v${packageJson.version}`), 10000);
+    setInterval(() => client.user?.setActivity(`v${packageJson.version} 🔹 /help 🔹`), 10000);
 }
