@@ -8,7 +8,7 @@ const WelcomeSet: Command = {
     name: 'welcome set',
     handler: async (interaction, user, server) => {
         const type = interaction.options.getString('type', true).toUpperCase();
-        const channel = interaction.options.getChannel('channel', true);
+        const channel = interaction.options.getChannel('channel');
         const title = interaction.options.getString('title', true);
         const message = interaction.options.getString('message', true);
         const isPublic = type === 'PUBLIC';
@@ -16,6 +16,9 @@ const WelcomeSet: Command = {
         // @ts-ignore
         if (!WelcomeType[type])
             throw new BotError('Invalid type is provided.');
+
+        if (type === WelcomeType.PUBLIC && !channel)
+            throw new BotError(`Channel is a required argument for setting a public welcome message.`);
 
         try {
             await prisma.serverWelcomeMessage.upsert({
@@ -27,7 +30,7 @@ const WelcomeSet: Command = {
                 },
                 create: {
                     serverId: server?.id as string,
-                    channelId: channel.id,
+                    channelId: channel?.id,
                     isPublic,
                     title,
                     message
@@ -38,28 +41,34 @@ const WelcomeSet: Command = {
                 }
             });
 
+            let fields = [
+                {
+                    name: 'public',
+                    value: (type === 'PUBLIC').toString()
+                },
+                {
+                    name: 'channel',
+                    value: channel?.name
+                },
+                {
+                    name: 'title',
+                    value: title
+                },
+                {
+                    name: 'message',
+                    value: message
+                }
+            ];
+
+            if (type !== WelcomeType.PUBLIC)
+                fields = fields.splice(1, 1);
+
             return interaction.reply({
                 embeds: [
                     {
                         title: ':pencil: :memo: Welcome message has been set!',
-                        fields: [
-                            {
-                                name: 'public',
-                                value: (type === 'PUBLIC').toString()
-                            },
-                            {
-                                name: 'channel',
-                                value: channel.name
-                            },
-                            {
-                                name: 'title',
-                                value: title
-                            },
-                            {
-                                name: 'message',
-                                value: message
-                            }
-                        ]
+                        // @ts-ignore
+                        fields
                     }
                 ]
             })

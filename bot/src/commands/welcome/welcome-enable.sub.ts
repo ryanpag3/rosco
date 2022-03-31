@@ -8,11 +8,14 @@ const WelcomeEnable: Command = {
     name: 'welcome enable',
     handler: async (interaction, user, server) => {
         const type = interaction.options.getString('type', true).toUpperCase();
-        const channel = interaction.options.getChannel('channel', true);
+        const channel = interaction.options.getChannel('channel');
 
         // @ts-ignore
         if (!WelcomeType[type])
             throw new BotError('Invalid type provided. Valid options are "public" or "private".');
+
+        if (type === WelcomeType.PUBLIC && !channel)
+            throw new BotError(`Channel is a required argument for enabling public welcome messages.`);
 
         try {
             await prisma.serverWelcomeMessage.update({
