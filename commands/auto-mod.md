@@ -2,7 +2,7 @@
 title: Auto Moderation
 description: 
 published: true
-date: 2022-03-28T05:16:33.000Z
+date: 2022-03-31T14:29:50.618Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-27T00:43:02.930Z
@@ -13,6 +13,10 @@ dateCreated: 2022-03-27T00:43:02.930Z
 Rosco's AutoMod feature is broken up into several modules. That way you can pick and choose which functionality is best for your server. 
 
 [Click here to jump to a full example](#example)
+
+### **Ignored Roles**
+
+For more information on ignoring specific roles for AutoMod, please see [here](/commands/auto-mod/ignored-role)
 
 ### **Modules**
 
@@ -32,7 +36,7 @@ When creating a rule you can specify an `action` indicating what you would like 
   - Either publicly or privately (via DM) warn a user they have broken a rule.
   - If public, you can configure which channel to post the warning in.
 - **timeout**
-  - You can indicate how long to time a user out with the `duration` property.
+  - You can indicate how long to timeout a user out with the `duration` property.
 - **mute**
   - You can indicate how long to mute a user out with the `duration` property.
 - **kick**
@@ -73,7 +77,19 @@ To remove an AutoMod rule, all you need to do is provide the `module` and `actio
 /automod rule remove module: banned-words action: warn
 ```
 
-![screen_shot_2022-03-27_at_10.14.52_pm.png](/screen_shot_2022-03-27_at_10.14.52_pm.png =75%x)
+![screen_shot_2022-03-27_at_10.14.52_pm.png](/screen_shot_2022-03-27_at_10.14.52_pm.png =60%x)
+
+##### `list` - List the rules for a module
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `module` | For more details see [modules](#modules) | `true` |
+
+```
+/automod rule list module: banned-words
+```
+
+![screen_shot_2022-03-27_at_10.19.46_pm.png](/screen_shot_2022-03-27_at_10.19.46_pm.png =60%x)
 
 ##### Example
 
