@@ -48,7 +48,10 @@ it('should enable public welcome messages', async () => {
     await onInteractionCreate(int);
 
     int = createTestInteraction('welcome', 'enable', {
-        type: 'public'
+        type: 'public',
+        channel: {
+            id: 'asdasd'
+        }, 
     });
 
     await onInteractionCreate(int);
