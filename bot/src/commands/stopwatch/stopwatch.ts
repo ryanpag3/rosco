@@ -25,7 +25,7 @@ const Stopwatch: Command = {
                     required: true
                 },
                 {
-                    name: `start-on-created`,
+                    name: `start-on-create`,
                     description: `Start the stopwatch when created.`,
                     type: ApplicationCommandOptionType.Boolean
                 }
