@@ -32,11 +32,11 @@ it('should add a score to a valid scoreboard', async () => {
             }
         },
         include: {
-            Scores: true
+            ScoreboardScore: true
         }
     });
 
-    expect(scoreboard?.Scores.length).toBe(1);
+    expect(scoreboard?.ScoreboardScore.length).toBe(1);
 });
 
 it('should throw an error if the score does not exist to add', async () => {

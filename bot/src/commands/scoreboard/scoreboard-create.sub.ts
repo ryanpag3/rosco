@@ -22,23 +22,26 @@ const ScoreboardCreate: Command = {
                 }
             });
 
-            await prisma.scoreboard.update({
+            const scoreRecords = await prisma.score.findMany({
                 where: {
-                    id: scoreboard.id
-                },
-                data: {
-                    Scores: {
-                        set: scores.map((s) => {
-                            return {
-                                name_serverId: {
-                                    name: s,
-                                    serverId: server?.id as string
-                                }
-                            }
-                        })
-                    }
+                    OR: scores.map((s) => {
+                        return { name: s }
+                    })
                 }
             });
+
+            if (scores.length !== scoreRecords.length)
+                throw new BotError(`Could not find one or more scores to insert in scoreboard. Please verify and try again.`);
+            
+            await prisma.scoreboardScore.createMany({
+                data: scoreRecords.map((s) => {
+                    return {
+                        scoreId: s.id,
+                        scoreboardId: scoreboard.id
+                    }
+                })
+            });
+
         } catch (e) {
             if (e instanceof PrismaClientKnownRequestError) {
                 if (e.code === 'P2025')

@@ -15,31 +15,57 @@ const ScoreList: Command = {
         const page = interaction.options.getInteger('page') || 1;
         const filter = interaction.options.getString('filter');
         const includeRaw = interaction.options.getBoolean('include-raw') || false;
-        const scoreboard = interaction.options.getString('scoreboard') || undefined;
+        const scoreboardName = interaction.options.getString('scoreboard') || undefined;
 
-        let Scoreboards = {};
 
-        if (scoreboard)
-            Scoreboards = {
-                // I want a list of scores that at least one belongs to the scoreboard.
-                some: {
-                    name: scoreboard
+        let scoreboard;
+        if (scoreboardName) {
+            scoreboard = await prisma.scoreboard.findUnique({
+                where: {
+                    name_serverId: {
+                        name: scoreboardName,
+                        serverId: server.id
+                    }
+                }
+            });
+        }
+
+
+        await prisma.score.findMany({
+            where: {
+                serverId: server?.id
+            },
+            include: {
+                ScoreboardScore: {
+                    include: {
+                        Score: true
+                    }
                 }
             }
+        })
+
+        let ScoreboardScore;
+        if (scoreboard) {
+            ScoreboardScore = {
+                some: {
+                    scoreboardId: scoreboard?.id
+                }
+            };
+        }
 
         const scores = await prisma.score.findMany({
             include: {
-                Scoreboards: true
+                ScoreboardScore: true
             },
             where: {
                 serverId: server?.id,
                 name: {
                     contains: filter || undefined
                 },
-                Scoreboards
+                ScoreboardScore
             },
             take: amount,
-            skip: amount * (page-1),
+            skip: amount * (page - 1),
             orderBy: {
                 amount: 'desc'
             }
@@ -98,7 +124,7 @@ const ScoreList: Command = {
                 plugins: {
                     title: {
                         display: true,
-                        text: scoreboard || 'Scores',
+                        text: scoreboard?.name || 'Scores',
                         font: {
                             family: 'Roboto',
                             size: 24
@@ -118,34 +144,33 @@ const ScoreList: Command = {
                     description: `Get details on a particular score with \`/score info <name>\`\n\n${includeRaw ? scores.map((s) => `${s.amount} - ${s.name}`).join('\n') : ''}`
                 }
             ],
-            files: [ attachment ]
+            files: [attachment]
         });
     }
 };
 
-function truncateWithEllipses(text: string, max: number) 
-{
-    return text.substr(0,max-1)+(text.length>max?'...':''); 
+function truncateWithEllipses(text: string, max: number) {
+    return text.substr(0, max - 1) + (text.length > max ? '...' : '');
 }
 
 function commarize(num: number, min?: number) {
     min = min || 1e3;
     // Alter numbers larger than 1k
     if (num >= min) {
-      var units = ["k", "M", "B", "T"];
-  
-      var order = Math.floor(Math.log(num) / Math.log(1000));
-  
-      var unitname = units[(order - 1)];
-      var num = Math.floor(num / 1000 ** order);
-  
-      // output number remainder + unitname
-      return num + unitname
+        var units = ["k", "M", "B", "T"];
+
+        var order = Math.floor(Math.log(num) / Math.log(1000));
+
+        var unitname = units[(order - 1)];
+        var num = Math.floor(num / 1000 ** order);
+
+        // output number remainder + unitname
+        return num + unitname
     }
-  
+
     // return formatted original number
     return num.toLocaleString()
-  }
-  
+}
+
 
 export default ScoreList;

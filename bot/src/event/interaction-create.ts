@@ -52,9 +52,9 @@ const onInteractionCreate = async (interaction: CommandInteraction): Promise<any
     } catch (e) {
         const supportId = uuidv4();
 
-        logger.error(`An error occured while receiving interaction.`, e);
+        logger.error(`An error occured while receiving interaction. Support ID: ${supportId}`, e);
 
-        const extraInfo = `\n\n_Need help?_\n - Run \`/help ${interaction.commandName}\` \n - [Join the support server](https://discord.gg/KwJUfbt5Wv)`;
+        const extraInfo = `\n\n_Need help?_\n - Run \`/help\` \n - [Join the support server](https://discord.gg/KwJUfbt5Wv)`;
 
         if (!(e instanceof BotError)) {
             interaction.reply({

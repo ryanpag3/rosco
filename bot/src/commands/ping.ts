@@ -11,7 +11,7 @@ const Ping: Command = {
         if (!msg)
             throw new BotError(`Could not check latency.`);
         await msg?.delete();
-        await interaction.channel?.send({ embeds: [
+        await interaction.reply({ embeds: [
             {
                 description: `Server latency is ${msg?.createdTimestamp - interaction.createdTimestamp}ms.`
             }

@@ -38,13 +38,6 @@ export const importDataFromScoreBot = async (channelId: string, user: User, serv
     }
 
     for (const score of data.scores) {
-        const b = score.ScoreBoardId ? {
-            Scoreboards: {
-                connect: {
-                    id: score.ScoreBoardId as string
-                }
-            }
-        } : undefined;
         try {
             await prisma.score.create({
                 // @ts-ignore
@@ -56,14 +49,21 @@ export const importDataFromScoreBot = async (channelId: string, user: User, serv
                     amount: score.value,
                     serverId: server.id,
                     channelId,
-                    userId: user.id,
-                    // @ts-ignore
-                    ...b
+                    userId: user.id
                 },
                 include: {
-                    Scoreboards: true
+                    ScoreboardScore: true
                 }
             });
+
+            if (score.ScoreBoardId) {
+                await prisma.scoreboardScore.create({
+                    data: {
+                        scoreboardId: score.ScoreBoardId as string,
+                        scoreId: score.id as string
+                    }
+                })
+            }
         } catch (e) {
             if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT) {
                 logger.trace(e);
