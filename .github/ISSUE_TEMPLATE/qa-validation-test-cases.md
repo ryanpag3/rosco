@@ -7,4 +7,69 @@ assignees: ''
 
 ---
 
-
+- [ ] Set Server Timezone
+- [ ] Permissions
+  - [ ] Set all permissions
+  - [ ] Set a permission
+  - [ ] Check if user has permission with role
+  - [ ] Check if user does not have permission without role
+  - [ ] Check if user has permission when no roles are set for a command
+- [ ] Announcements
+  - [ ]  create an announcement with a plain english date like "in 1 minute"
+  - [ ]  create an announcement at an exact date/time like "01/01/22 9:00AM"
+  - [ ]  Observe that announcement is sent in the correct channel at the correct time
+  - [ ]  list out announcements
+  - [ ]  delete an announcement
+- [ ]  `/bing`
+- [ ]  Stopwatch
+  - [ ]  Create a stopwatch with "start-on-created" set to false.
+  - [ ]  Run `/stopwatch info` to get the current time stamp
+  - [ ]  observe 00:00:00
+  - [ ]  Run `/stopwatch start` to start the stopwatch
+  - [ ]  Run `/stopwatch stop` to stop the stopwatch
+  - [ ]  Observe time has passed with `/stopwatch info`
+  - [ ]  list out the stopwatches
+  - [ ]  delete the stopwatch
+- [ ]  Timer
+  - [ ]  Create a timer and set the time to `00:00:01:00`
+  - [ ]  Observe that the timer goes off after 1 minute
+  - [ ]  Create another timer and set the time to `01:00:00:00` 
+  - [ ]  List out the current active timers
+  - [ ]  Delete the created timer
+- [ ] Poll
+  - [ ] Create a poll with 10 options
+  - [ ] Select all 10 options and observe the message gets updated.
+  - [ ] List out polls
+  - [ ] Close the poll
+  - [ ] Open the poll
+  - [ ] Delete the poll
+- [ ] Score
+  - [ ] Create a score
+  - [ ] Upvote a score
+  - [ ] Downvote a score
+  - [ ] Update a score
+  - [ ] List out scores
+  - [ ] Delete a score
+- [ ] Keywords
+  - [ ] Create a score
+  - [ ] Create a keyword
+  - [ ] List out keywords
+  - [ ] Check keyword detection
+  - [ ] Delete the keyword
+  - [ ] Delete the score
+- [ ] Scoreboards
+  - [ ] Create a scoreboard
+  - [ ] Add scores to scoreboar
+  - [ ] Modify scores
+  - [ ] Show scoreboard results
+  - [ ] Delete the scoreboard
+  - [ ] Confirm scores still exist
+- [ ] `/ping`
+- [ ] Welcome
+  - [ ] Set a public welcome message
+  - [ ] Set a private welcome message
+  - [ ] Invite a user to the server
+  - [ ] Observe that welcome message is shown
+  - [ ] Disable welcome message
+  - [ ] Invite a user
+  - [ ] Confirm that welcome message is not shown
