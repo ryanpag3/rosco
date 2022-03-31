@@ -2,7 +2,7 @@
 title: Announce
 description: Run various commands related to announcements.
 published: true
-date: 2022-03-29T01:45:01.118Z
+date: 2022-03-31T18:36:55.137Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:12:40.202Z
@@ -13,6 +13,8 @@ dateCreated: 2022-03-24T21:12:40.202Z
 Announcements allow you to schedule messages to be sent in the future. 
 
 Don't forget, you can configure your timezone with `/timezone` for the best user experience.
+
+**important:** In order for this functionality to work correctly, the bot must have permission to send messages to the channel announcing *to*.
 
 ## `create` - Create an announcement
 
