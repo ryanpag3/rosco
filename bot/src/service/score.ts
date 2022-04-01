@@ -1,6 +1,8 @@
 import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
+import PrismaErrorCode from '../util/prisma-error-code';
 
 export const create = async (data: Prisma.ScoreCreateInput) => {
     try {
@@ -8,14 +10,9 @@ export const create = async (data: Prisma.ScoreCreateInput) => {
             data
         });
     } catch (e) {
-        if (!(e instanceof Prisma.PrismaClientKnownRequestError)) {
-            throw e;
-        } else {
-            if (e.code === 'P2002') {
-                throw new BotError(`A score already exists in this server with that name.`);
-            }
-            throw e;
-        }
+        if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
+            throw new BotError(`A score already exists in this server with that name.`);
+        throw e;
     }
 }
 
