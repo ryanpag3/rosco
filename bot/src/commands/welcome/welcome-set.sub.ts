@@ -61,7 +61,7 @@ const WelcomeSet: Command = {
             ];
 
             if (type !== WelcomeType.PUBLIC)
-                fields = fields.splice(1, 1);
+                fields.splice(1, 1);
 
             return interaction.reply({
                 embeds: [
