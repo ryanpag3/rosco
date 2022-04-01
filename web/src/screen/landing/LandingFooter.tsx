@@ -9,7 +9,7 @@ const LandingFooter = () => {
       <Container>
           <RedditIcon onClick={() => window.open("https://reddit.com/r/roscobot", "_blank")}/>
           {/* <TwitterIcon/> */}
-          <DiscordIcon onClick={() => window.open("https://discord.gg/FH5trS4TS9", "_blank")}/>
+          <DiscordIcon onClick={() => window.open("https://discord.gg/Ax9ZsdawMb", "_blank")}/>
           <HeaderNavLink to="/privacy-policy">Privacy Policy</HeaderNavLink>
       </Container>
   )

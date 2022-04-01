@@ -19,7 +19,7 @@ const InviteMenu = () => {
           onClick={() => setDisplayInviteConfirmModal(true)}
         />
         <TryItYourselfAnchor
-            onClick={() => window.open("https://discord.gg/YVcXfJWEhA", "_blank")}
+            onClick={() => window.open("https://discord.gg/Ax9ZsdawMb", "_blank")}
         >Or try it yourself first</TryItYourselfAnchor>
     </Container>
   )
