@@ -1,6 +1,8 @@
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
+import PrismaErrorCode from '../../util/prisma-error-code';
 import { WelcomeType } from './welcome';
 
 const WelcomeDisable: Command = {
@@ -26,6 +28,8 @@ const WelcomeDisable: Command = {
                 }
             });
         } catch (e) {
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.NOT_FOUND)
+                throw new BotError(`Please set a welcome message with \`/welcome set\` before enabling/disabling welcome messages.`);
             // Can't think of a scenario where want to let them know.
             throw e;
         }
