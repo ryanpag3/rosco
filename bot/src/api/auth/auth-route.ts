@@ -1,3 +1,5 @@
+import * as AuthController from './auth-controller';
+
 const AuthRoutes = [
     {
         method: 'GET',
@@ -5,12 +7,21 @@ const AuthRoutes = [
         schema: {
             description: 'Login with Discord credentials.',
             response: {
-                200: {
-                    type: 'redirect',
-                    description: 'Will redirect to Discord authentication portal.'
-                }
+                301: {}
             }
-        }
+        },
+        handler: AuthController.login
+    },
+    {
+        method: 'GET',
+        url: '/callback',
+        schema: {
+            description:  'Handle authorization callback from Discord.',
+            response: {
+                301: {}
+            }
+        },
+        handler: AuthController.callback
     }
 ];
 
