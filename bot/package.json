@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "watch": "nodemon src/index.ts",
+    "watch": "nodemon src/index.ts & nodemon src/api/index.ts",
     "w": "yarn watch",
     "jest": "NODE_ENV=test jest --runInBand --coverage --forceExit",
     "j": "NODE_ENV=test jest --runInBand --forceExit",
@@ -27,6 +27,8 @@
     "discord.js": "^13.6.0",
     "dotenv": "^15.0.0",
     "execa": "^5",
+    "fastify": "^3.27.4",
+    "fastify-swagger": "^5.1.0",
     "folder-hash": "^4.0.1",
     "ioredis": "^4.28.3",
     "log4js": "^6.4.1",
