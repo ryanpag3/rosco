@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
+import { delay } from 'bluebird';
 import { execSync } from 'child_process';
-import { join } from 'path';
+import fs from 'fs';
+import path, { join } from 'path';
 import { URL } from 'url';
 import { v4 } from 'uuid';
 
@@ -28,14 +30,18 @@ export const prisma = new PrismaClient({
     }
 });
 
-beforeEach(() => {
+beforeEach(async () => {
     execSync(`${prismaBinary} db push`, {
         env: {
             ...process.env,
             DATABASE_URL: generateDatabaseURL(schemaId),
         },
     });
-});
+
+    while (!fs.existsSync(path.join(__dirname, '..', '..', '..', 'node_modules', '.prisma', 'client', 'index.js'))) {
+        await delay(50);
+    }
+}, 10000);
 afterEach(async () => {
     await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE;`);
     await prisma.$disconnect();
