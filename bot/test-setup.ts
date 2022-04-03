@@ -1,6 +1,6 @@
-// require('dotenv').config({
-//     path: '.env.test'
-// });
+require('dotenv').config({
+    path: '.env.test'
+});
 import execa from 'execa';
 import logger from './src/util/logger';
 import prisma from './src/util/prisma';
