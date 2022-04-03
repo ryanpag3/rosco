@@ -4,51 +4,48 @@ require('dotenv').config({
 import execa from 'execa';
 import logger from './src/util/logger';
 import prisma from './src/util/prisma';
-import redis from './src/util/redis';
+// import redis from './src/util/redis';
+import redis from 'redis-mock';
 
-beforeAll(async () => {
+jest.mock('./src/util/prisma.ts');
+jest.mock('redis', () => redis);
+
+
+// beforeAll(async () => {
     
-    let stdout = await execa.command('yarn migrate reset --force');
-    logger.trace(stdout);
+//     let stdout = await execa.command('yarn migrate reset --force');
+//     logger.trace(stdout);
 
-    stdout = await execa.command('yarn migrate deploy');
-    logger.trace(stdout);
+//     stdout = await execa.command('yarn migrate deploy');
+//     logger.trace(stdout);
 
-    try {
-        await redis.connect();
-    } catch (e) {
-        // noop
-    }
-}, 30000);
-
-beforeEach(async () => {
-    //@ts-ignore
-    for (const { tablename } of await prisma.$queryRaw`SELECT tablename FROM pg_tables WHERE schemaname='public'`) {
-        if (tablename !== '_prisma_migrations' && !tablename.startsWith('_')) {
-            // @ts-ignore
-            await prisma[camelize(tablename)].deleteMany({where: {}});
-            logger.trace(`truncated ${tablename}`);
-        } 
-    }
-
-    try {
-        await redis.connect();
-    } catch (e) {
-        // noop
-    }
-});
-
-afterEach(async () => {
-    await prisma.$disconnect();
-});
-
-// afterAll(async () => {
-//     await delay(10000);
 //     try {
-//         await redis.quit()
+//         await redis.connect();
 //     } catch (e) {
 //         // noop
-// }}, 15000);
+//     }
+// }, 30000);
+
+beforeEach(async () => {
+    // //@ts-ignore
+    // for (const { tablename } of await prisma.$queryRaw`SELECT tablename FROM pg_tables WHERE schemaname='public'`) {
+    //     if (tablename !== '_prisma_migrations' && !tablename.startsWith('_')) {
+    //         // @ts-ignore
+    //         await prisma[camelize(tablename)].deleteMany({where: {}});
+    //         logger.trace(`truncated ${tablename}`);
+    //     } 
+    // }
+
+    // try {
+    //     await redis.connect();
+    // } catch (e) {
+    //     // noop
+    // }
+});
+
+// afterEach(async () => {
+//     await prisma.$disconnect();
+// });
 
 function camelize(str: string) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
