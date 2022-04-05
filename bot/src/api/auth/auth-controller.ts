@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { RouteHandlerMethod } from 'fastify';
 import { stringify } from 'querystring';
-import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 import Cookies from '../util/cookies';
-import DiscordApi from '../util/discord-api';
+import * as jwt from '../util/jwt';
 
 /**
  * Initiate an oauth authorization code flow with Discord
@@ -48,7 +47,7 @@ export const callback: RouteHandlerMethod = async (request, reply) => {
         return reply.status(400).send(`Please verify your Discord account login email before proceeding.`);
     }
 
-    const updatedUser = await prisma.user.upsert({
+    await prisma.user.upsert({
         where: {
             discordId: user.id
         },
@@ -63,9 +62,13 @@ export const callback: RouteHandlerMethod = async (request, reply) => {
         }
     });
 
+    const token = jwt.create({ discordId: user.id });
+
     reply
-        .setCookie(Cookies.IS_AUTHENTICATED, user.id, {
+        .setCookie(Cookies.IS_AUTHENTICATED, 'true')
+        .setCookie(Cookies.JWT, token, {
+            secure: true,
             httpOnly: true
         })
-        .send(200);
+        .redirect(process.env.WEB_APP_ADDRESS as string);
 }

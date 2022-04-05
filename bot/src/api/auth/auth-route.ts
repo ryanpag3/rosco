@@ -1,3 +1,4 @@
+import logger from '../../util/logger';
 import * as AuthController from './auth-controller';
 
 const AuthRoutes = [
@@ -22,6 +23,18 @@ const AuthRoutes = [
             }
         },
         handler: AuthController.callback
+    },
+    {
+        method: 'GET',
+        url: '/test',
+        schema: {
+            description: 'test'
+        },
+        preHandler: [
+            'verifyJWT'
+        ],
+        // @ts-ignore
+        handler: (res, reply) => reply.send(200)
     }
 ];
 

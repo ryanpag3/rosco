@@ -5,7 +5,7 @@ import { FastifyCookieOptions } from 'fastify-cookie';
 import logger from '../util/logger';
 import prisma from '../util/prisma';
 import SwaggerConfig from './swagger';
-import { verifyDiscordAuth, verifyLoggedIn } from './util/auth';
+import { verifyDiscordAuth, verifyJWT, verifyLoggedIn } from './util/auth';
 import Cookies from './util/cookies';
 import DiscordApi from './util/discord-api';
 
@@ -24,6 +24,7 @@ export default async (fastify: FastifyInstance) => {
 
     fastify.decorate('verifyDiscordAuth', verifyDiscordAuth);
     fastify.decorate('verifyLoggedIn', verifyLoggedIn);
+    fastify.decorate('verifyJWT', verifyJWT);
 
     // this must be called locally to ensure the server instance is properly decorated
     const routes = require('./route').default;

@@ -13,8 +13,10 @@ const Header = () => {
                 onClick={() => window.open("https://discord.gg/Ax9ZsdawMb", "_blank")}
             >Support</HeaderNavLink>
             {/* <HeaderNavLink to="/status">Status</HeaderNavLink>
-          <HeaderNavLink to="/roadmap">Roadmap</HeaderNavLink>
-          <HeaderNavLink to="/login">Login</HeaderNavLink> */}
+          <HeaderNavLink to="/roadmap">Roadmap</HeaderNavLink>*/}
+          <HeaderNavLink to="/"
+            onClick={() => window.open((process.env.REACT_APP_API_URL) + '/login', '_self')}
+          >Login</HeaderNavLink> 
         </Container>
     )
 }
