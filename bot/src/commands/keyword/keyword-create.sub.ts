@@ -16,6 +16,7 @@ const KeywordCreate: Command = {
         const amount = interaction.options.getInteger('amount');
         const channel = interaction.options.getChannel('channel');
         const filterOnUser = interaction.options.getUser('user');
+        const role = interaction.options.getRole('role');
 
         if (action && action !== 'UP' && action !== 'DOWN')
             throw new BotError(`Invalid action provided. Only \`UP\` or \`DOWN\` are allowed.`);
@@ -58,7 +59,8 @@ const KeywordCreate: Command = {
                     channelId: channel?.id,
                     amount: amount || undefined,
                     action: action as KeywordAction || undefined,
-                    userId: inDbUser?.id
+                    userId: inDbUser?.id,
+                    roleId: role?.id
                 }
             });
 
