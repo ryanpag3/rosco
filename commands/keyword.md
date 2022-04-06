@@ -2,7 +2,7 @@
 title: Keyword
 description: 
 published: true
-date: 2022-03-29T02:03:26.398Z
+date: 2022-04-06T16:14:32.828Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:12:52.742Z
@@ -24,6 +24,7 @@ Issue `/keyword create` to create a keyword and assign it to a score. Keywords c
 | `amount` | Set the amount to increase or decrease when the keyword is found. | `false` |
 | `channel` | Set the keyword detection to be limited to this channel. | `false` |
 | `user` | Set the keyword detection to be limited to this user. | `false` |
+| `role` | Set the keyword detectionto be limited to this role. | `false` |
 
 ### Examples
 
