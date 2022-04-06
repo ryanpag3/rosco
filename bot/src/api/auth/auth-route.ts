@@ -1,3 +1,4 @@
+import { fastify } from '..';
 import * as AuthController from './auth-controller';
 
 const AuthRoutes = [
@@ -22,6 +23,17 @@ const AuthRoutes = [
             }
         },
         handler: AuthController.callback
+    },
+    {
+        method: 'GET',
+        url: '/logout',
+        schema: {
+            description: 'Logout of the application.'
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: AuthController.logout
     }
 ];
 

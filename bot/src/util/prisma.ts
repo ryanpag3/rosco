@@ -16,11 +16,16 @@ const prisma = new PrismaClient({
     }
 });
 
-if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
+const timeoutPeriod = 30000;
+let isOnTimeout = false;
+if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test' && isOnTimeout === false) {
     const { sortPrismaSchema } = require('prisma-schema-sorter');
-
     sortPrismaSchema(path.join(__dirname, '../../prisma/schema.prisma'))
-        .then(() => logger.debug('prisma schema sorted'));
+        .then(() => {
+            isOnTimeout = true;
+            setTimeout(() => isOnTimeout = false, timeoutPeriod);    
+            logger.trace('prisma schema sorted')
+        });
 }
 
 export default prisma;
