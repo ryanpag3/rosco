@@ -1,49 +1,71 @@
 import { User } from '@prisma/client';
-import axios, { AxiosResponse } from 'axios';
-import { DateTime } from 'luxon';
+import Axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { stringify } from 'querystring';
 import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 
+
+
 export default class DiscordApi {
     private user: User;
     private accessToken: string | undefined;
+    private axios: AxiosInstance;
 
     constructor(user: User) {
         this.user = user;
 
         if (!this.user.refreshToken)
             throw new Error(`A valid refresh token is required to use Discord API.`);
+
+        this.axios = Axios.create({
+            baseURL: 'https://discordapp.com/api/v9'
+        })
     }
 
     getMe = async (): Promise<{
-       id: string;
-       username: string;
-       avatar: string;
-       discriminator: string;
-       public_flags: number;
-       flags: number;
-       banner: string|null;
-       banner_color: string|null;
-       accent_color: string|null;
-       locale: string;
-       mfa_enabled: boolean;
-       email: string;
-       verified: boolean; 
-    }> => {
-        const { data } = await this.performRequest(async () => axios.get(
-            'https://discordapp.com/api/v9/users/@me',
-            {
+        id: string;
+        username: string;
+        avatar: string;
+        discriminator: string;
+        public_flags: number;
+        flags: number;
+        banner: string | null;
+        banner_color: string | null;
+        accent_color: string | null;
+        locale: string;
+        mfa_enabled: boolean;
+        email: string;
+        verified: boolean;
+    }|undefined> => {
+        logger.info('get me request');
+        const { data } = await this.performRequest(async () =>
+            await this.axios.get('/users/@me', {
                 headers: {
                     Authorization: `Bearer ${this.accessToken}`
                 }
-            }), 0);
+            }));
+        return data;
+    }
 
+    getMyGuilds = async (): Promise<{
+        id: string;
+        name: string;
+        icon: string|null;
+        owner: boolean;
+        permissions: string;
+        features: string[];
+    }[]> => {
+        const { data } = await this.performRequest(async () =>
+            await this.axios.get('/users/@me/guilds', {
+                headers: {
+                    Authorization: `Bearer ${this.accessToken}`
+                }
+            }));
         return data;
     }
 
     performRequest = async (apiRequest: () => Promise<AxiosResponse<any, any>>,
-        attempts: number, maxAttempts: number = 1): Promise<AxiosResponse<any, any>> => {
+        attempts: number = 0, maxAttempts: number = 1): Promise<AxiosResponse<any, any>> => {
         try {
             logger.trace(`discord api request attempt ${attempts} of ${maxAttempts}`);
             if (!this.accessToken)
@@ -60,7 +82,8 @@ export default class DiscordApi {
     }
 
     refreshAccessToken = async () => {
-        const { data } = await axios.post(`https://discord.com/api/v9/oauth2/token`, stringify({
+        logger.debug('refreshing user token ' + this.user.refreshToken);
+        const { data } = await this.axios.post(`/oauth2/token`, stringify({
             client_id: process.env.DISCORD_CLIENT_ID,
             client_secret: process.env.DISCORD_CLIENT_SECRET,
             grant_type: 'refresh_token',
@@ -70,6 +93,8 @@ export default class DiscordApi {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
+        logger.debug('refreshed user token ' + this.user.refreshToken);
+
 
         this.accessToken = data.access_token;
 
@@ -81,5 +106,9 @@ export default class DiscordApi {
                 refreshToken: data.refresh_token
             }
         })
+    }
+
+    getAccessToken = () => {
+        return this.accessToken;
     }
 }

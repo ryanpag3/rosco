@@ -72,3 +72,10 @@ export const callback: RouteHandlerMethod = async (request, reply) => {
         })
         .redirect(process.env.WEB_APP_ADDRESS as string);
 }
+
+export const logout: RouteHandlerMethod = async (request, reply) => {
+    return reply
+        .clearCookie(Cookies.JWT)
+        .clearCookie(Cookies.IS_AUTHENTICATED)
+        .send(200);
+}

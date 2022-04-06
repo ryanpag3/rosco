@@ -1,4 +1,4 @@
-import logger from '../../util/logger';
+import { fastify } from '..';
 import * as AuthController from './auth-controller';
 
 const AuthRoutes = [
@@ -26,15 +26,14 @@ const AuthRoutes = [
     },
     {
         method: 'GET',
-        url: '/test',
+        url: '/logout',
         schema: {
-            description: 'test'
+            description: 'Logout of the application.'
         },
-        preHandler: [
-            'verifyJWT'
-        ],
-        // @ts-ignore
-        handler: (res, reply) => reply.send(200)
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: AuthController.logout
     }
 ];
 

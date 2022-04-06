@@ -5,7 +5,9 @@ import jwt from 'jsonwebtoken';
  * @param payload 
  */
 export const create = (payload: any): string => {
-    return jwt.sign(payload, process.env.JWT_SECRET as string);
+    return jwt.sign(payload, process.env.JWT_SECRET as string, {
+        expiresIn: '1d'
+    });
 }
 
 /**

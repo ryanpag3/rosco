@@ -20,7 +20,7 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
     const { sortPrismaSchema } = require('prisma-schema-sorter');
 
     sortPrismaSchema(path.join(__dirname, '../../prisma/schema.prisma'))
-        .then(() => logger.debug('prisma schema sorted'));
+        .then(() => logger.trace('prisma schema sorted'));
 }
 
 export default prisma;
