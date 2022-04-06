@@ -47,6 +47,11 @@ const Keyword: Command = {
                     name: 'user',
                     description: 'Optionally limit the keyword detection to a specific user.',
                     type: ApplicationCommandOptionType.User
+                },
+                {
+                    name: 'role',
+                    description: 'Optionally limit the keyword detection to a specific role.',
+                    type: ApplicationCommandOptionType.Role
                 }
             ]
         },

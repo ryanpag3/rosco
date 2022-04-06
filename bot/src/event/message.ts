@@ -75,6 +75,10 @@ const handleKeywords = async (message: Message, server: Server|any) => {
 
         const action = k.action === 'UP' ? 'increment' : 'decrement';
 
+        if (k.roleId !== null && !message.member?.roles.cache.has(k.roleId)) {
+            continue;
+        }
+
         try {
             const s = await prisma.score.update({
                 where: {
