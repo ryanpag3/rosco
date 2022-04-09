@@ -12,13 +12,11 @@ const App = () => {
   const [me, setMe] = useState(undefined as any);
 
   useEffect(() => {
-    console.log(getCookie(Cookies.IS_AUTHENTICATED));
     getMe();
   }, [me === undefined]);
 
   async function getMe() {
     const data = await MeApi.getMe();
-    console.log(data);
     setMe(data);
   }
 
@@ -28,7 +26,7 @@ const App = () => {
         <Route path="/" element={<LandingScreen />} />
         {
           getCookie(Cookies.IS_AUTHENTICATED) === 'true' && me !== undefined ?
-            <Route path="/app" element={<Dashboard me={me} />} /> :
+            <Route path="/dashboard" element={<Dashboard me={me} />} /> :
             null
         }
       </Routes>
