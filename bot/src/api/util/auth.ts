@@ -1,4 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
+import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 import Cookies from './cookies';
 import * as jwt from './jwt';
@@ -6,8 +7,9 @@ import * as jwt from './jwt';
 export const verifyJWT = async (request: FastifyRequest, reply: FastifyReply) => {
     const token = request.cookies[Cookies.JWT];
 
-    if (!token)
+    if (!token) {
         return await sendUnauthorized(reply)
+    }
 
     const { discordId } = jwt.validateJWT(token);
 
@@ -17,8 +19,9 @@ export const verifyJWT = async (request: FastifyRequest, reply: FastifyReply) =>
         }
     });
 
-    if (!user)
+    if (!user) {
         return await sendUnauthorized(reply);
+    }
 
     // @ts-ignore
     request.user = user;

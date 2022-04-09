@@ -1,5 +1,4 @@
 import { RouteHandlerMethod } from 'fastify';
-import logger from '../../util/logger';
 import DiscordApi from '../util/discord-api';
 
 /**
@@ -9,7 +8,9 @@ export const getMe: RouteHandlerMethod = async (request, reply) => {
     const { user } = request as any; 
     const dApi = new DiscordApi(user);
     const me = await dApi.getMe();
-    return reply.send(JSON.stringify(me));
+    return reply.send({
+        username: `${me?.username}#${me?.discriminator}`
+    });
 }
 
 export const getMyGuilds: RouteHandlerMethod = async (request, reply) => {

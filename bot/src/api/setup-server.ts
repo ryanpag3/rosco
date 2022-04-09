@@ -15,6 +15,13 @@ export default async (fastify: FastifyInstance) => {
     await fastify.register(require('fastify-auth'));
     fastify.decorate('verifyJWT', verifyJWT);
 
+    logger.debug(`setting up cors`);
+    await fastify.register(require('fastify-cors'), {
+        credentials: true,
+        origin: true,
+        exposedHeaders: true
+    });
+
     // this must be called locally to ensure the server instance is properly decorated
     const routes = require('./route').default;
 

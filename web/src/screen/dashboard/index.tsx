@@ -1,22 +1,16 @@
+import ScreenTopBar from 'component/ScreenTopBar';
 import React, { useEffect, useState } from 'react'
 import axios from 'util/axios';
 import Screen from '../../component/Screen';
 
-const Dashboard = () => {
-  const [me, setMe] = useState(undefined as any);
-  
-  useEffect(() => {
-    getMe();
-  })
+const Dashboard = ({ me }: {
+  me: any
+}) => {
 
-  async function getMe() {
-    const { data } = await axios.get('/me');
-    setMe(JSON.stringify(data));    
-  }
 
   return (
     <Screen>
-
+      <ScreenTopBar me={me}/>
     </Screen>
   )
 }

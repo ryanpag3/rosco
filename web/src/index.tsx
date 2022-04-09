@@ -2,27 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LandingScreen from './screen/landing/LandingScreen';
-import Dashboard from 'screen/dashboard';
-
-const subdomain = window.location.host.split('.')[0];
+import App from 'App';
 
 ReactDOM.render(
   <React.StrictMode>
-    {
-      subdomain === 'app' ?
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-          </Routes>
-        </BrowserRouter> :
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingScreen />} />
-          </Routes>
-        </BrowserRouter>
-    }
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );

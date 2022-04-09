@@ -1,4 +1,6 @@
 import { fastify } from '..';
+import SwaggerErrorDescription from '../util/swagger-error-description';
+import SwaggerType from '../util/swagger-type';
 import * as MeController from './me-controller';
 
 const MeRoutes: any = [
@@ -8,7 +10,17 @@ const MeRoutes: any = [
         schema: {
             description: 'Get information about the currently logged in user.',
             response: {
-                200: {}
+                200: {
+                    description: 'Info on the currently logged in user.',
+                    type: SwaggerType.OBJECT,
+                    properties: {
+                        username: { type: SwaggerType.STRING }
+                    }
+                },
+                500: {
+                    description: SwaggerErrorDescription.INTERNAL_SERVER_ERROR,
+                    type: SwaggerType.NULL
+                }
             }
         },
         preHandler: (fastify as any).auth([
