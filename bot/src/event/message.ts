@@ -37,6 +37,7 @@ const validateAutoMod = async (message: Message, user: User, server: Server) => 
             return true;
         }
 
+        
         if (await BannedWordCache.containsCachedWord(server.id, message.content)) {
             await onAutoModRuleBroken('banned-words', message, user.id, server.id);
         }
