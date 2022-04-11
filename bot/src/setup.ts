@@ -23,7 +23,7 @@ export default async function (client: Client) {
         logger.info('schema migrated');
     } catch (e) {
         logger.error(e);
-        process.exit(1); 
+        process.exit(1);
     }
 
     await KeywordCache.baselineFromDatabase();
