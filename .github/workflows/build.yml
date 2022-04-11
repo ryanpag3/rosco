@@ -139,7 +139,7 @@ jobs:
         run: |
           curl \
             -H "Content-Type: application/json" \
-            -d '{ "username": "Rosco Updates", "content": "${{ github.event.release.body }}"' \
+            -d '{ "username": "Rosco Updates", "content": "${{ github.event.release.body }}"}' \
             $DISCORD_WEBHOOK
 
   stop-runner:
