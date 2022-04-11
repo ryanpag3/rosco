@@ -5,6 +5,7 @@ import fs from 'fs';
 import path, { join } from 'path';
 import { URL } from 'url';
 import { v4 } from 'uuid';
+import PrismaErrorCode from '../prisma-error-code';
 
 const generateDatabaseURL = (schema: string) => {
     if (!process.env.DATABASE_URL) {
