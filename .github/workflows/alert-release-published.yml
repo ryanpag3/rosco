@@ -8,7 +8,6 @@ jobs:
   after-release:
     runs-on: ubuntu-latest
     steps:
-    - run: echo "Name: ${{ github.event.release.name }} Description: ${{ github.event.release.body }}"
     - name: POST to webhook
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
