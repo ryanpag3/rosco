@@ -2,7 +2,7 @@
 title: Keyword
 description: 
 published: true
-date: 2022-04-06T16:14:32.828Z
+date: 2022-04-11T02:03:11.222Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:12:52.742Z
@@ -10,7 +10,7 @@ dateCreated: 2022-03-24T21:12:52.742Z
 
 ## Introduction
 
-Keywords allow you to trigger [score](/commands/score) behavior based off of customizable events.
+Keywords allow you to trigger [score](/commands/scores) behavior based off of customizable events.
 
 ## `create` - Create a keyword
 
