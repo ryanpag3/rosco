@@ -123,25 +123,6 @@ jobs:
           docker push ryanpage/rosco-web:${{ env.BRANCH }}-${{ github.run_number }}
           docker push ryanpage/rosco-web:latest
         working-directory: ./web
-  send-release-announcement:
-    name: Send release send-release-announcement
-    needs:
-      - start-runner
-      - build
-      - run-tests
-      - build-docker
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/beta'
-    steps:
-      - name: POST to webhook
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        run: |
-          curl \
-            -H "Content-Type: application/json" \
-            -d '{ "username": "Rosco Updates", "content": "${{ github.event.release.body }}"}' \
-            $DISCORD_WEBHOOK
-
   stop-runner:
     name: Stop self-hosted EC2 runner
     needs:
