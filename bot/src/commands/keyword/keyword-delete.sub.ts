@@ -13,7 +13,6 @@ const KeywordDelete: Command = {
         const word = interaction.options.getString('keyword', true);
         const scoreName = interaction.options.getString('score-name', true);
         const action = interaction.options.getString('action');
-        const amount = interaction.options.getInteger('amount');
         const channel = interaction.options.getChannel('channel');
         const filterOnUser = interaction.options.getUser('user');
         const role = interaction.options.getRole('role');
@@ -53,7 +52,6 @@ const KeywordDelete: Command = {
                     scoreId: score?.id as string,
                     serverId: server?.id as string,
                     channelId: channel?.id,
-                    amount: amount || undefined,
                     action: action as KeywordAction || undefined,
                     userId: inDbUser?.id,
                     roleId: role?.id
