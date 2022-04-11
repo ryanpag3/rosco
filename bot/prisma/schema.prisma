@@ -105,8 +105,6 @@ model Keyword {
   userId    String?
   User      User?         @relation(fields: [userId], references: [id])
   roleId    String?
-
-  @@unique([word, scoreId, serverId])
 }
 
 model Permission {
