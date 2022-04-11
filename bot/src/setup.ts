@@ -18,7 +18,7 @@ import KeywordCache from './service/keyword-cache';
 import BannedWordCache from './service/banned-word-cache';
 
 export default async function (client: Client) {
-    try {
+    try { 
         await execa.command('yarn migrate deploy');
         logger.info('schema migrated');
     } catch (e) {
