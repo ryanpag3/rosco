@@ -218,6 +218,7 @@ model Server {
   currencyHistoryChannelActive Boolean? @default(true)
   currencyCount                Int      @default(0)
   timezone                     String   @default("America/Los_Angeles")
+  botToBotMessagesEnabled      Boolean  @default(false)
 
   // module toggle flags
   autoModBannedWordsEnabled    Boolean @default(false)

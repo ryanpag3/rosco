@@ -13,10 +13,12 @@ const onMessageReceived = async (message: Message) => {
     if (message.type === 'APPLICATION_COMMAND')
         return;
 
-    if (message.member?.user.bot)
-        return;
-
+    // if performance is hit, we can always cache server flags in redis
+    // and move this below the if gate
     const server = await ServerService.initializeServer(message.guild);
+
+    if (message.member?.user.bot && server?.botToBotMessagesEnabled === false)
+        return;
 
     const user = await UserService.initUser(message.member as any, server as Server);
 
