@@ -1,3 +1,10 @@
+# [1.1.0-beta.33](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.32...v1.1.0-beta.33) (2022-04-12)
+
+
+### Bug Fixes
+
+* env var syntax fix ([7b0c998](https://github.com/ryanpag3/guac-bot/commit/7b0c99807f8937dd9699e4e5ce4eeac311adfbac))
+
 # [1.1.0-beta.32](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.31...v1.1.0-beta.32) (2022-04-12)
 
 
