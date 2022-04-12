@@ -16,3 +16,4 @@ for (const [i, line] of lines.entries()) {
 }
 
 console.log(output);
+
