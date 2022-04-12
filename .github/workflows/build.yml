@@ -45,13 +45,12 @@ jobs:
       - name: install deps
         run: |
           npm i -g yarn
-          # apt-get update -y
-          # sleep 60
-          # apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+          apt-get update -y
+          apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
       - name: build bot
         run: |
-          # yarn install
-          # npx tsc
+          yarn install
+          npx tsc
         working-directory: ./bot
   run-tests:
     name: Run Tests
@@ -83,10 +82,9 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           export NODE_OPTIONS=--max_old_space_size=4096
-          # rm -rf ./node_modules
-          # yarn install
-          # sleep 30
-          # yarn jest
+          rm -rf ./node_modules
+          yarn install
+          yarn jest
         working-directory: ./bot
   build-docker:
     name: Build Docker
