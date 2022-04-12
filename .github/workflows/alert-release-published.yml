@@ -1,0 +1,19 @@
+name: After Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  after-release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: POST to webhook
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      run: |
+        echo "${{ github.event.release.body }}"
+        curl \
+          -H "Content-Type: application/json" \
+          -d '{ "username": "Rosco Updates", "content": "${{ github.event.release.body }}"}' \
+          $DISCORD_WEBHOOK

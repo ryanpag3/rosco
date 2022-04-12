@@ -8,7 +8,7 @@
   "scripts": {
     "watch": "nodemon src/index.ts",
     "w": "yarn watch",
-    "jest": "NODE_ENV=test jest --maxWorkers=4 --coverage --forceExit",
+    "jest": "NODE_ENV=test jest --maxConcurrency=3 --maxWorkers=4 --coverage --forceExit",
     "j": "NODE_ENV=test jest --forceExit",
     "migrate": "npx prisma migrate"
   },
@@ -43,6 +43,8 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
     "@types/bluebird": "^3.5.36",
     "@types/folder-hash": "^4.0.1",
     "@types/ioredis": "^4.28.7",
