@@ -10,9 +10,15 @@ if(!content)
 const lines = content.toString().split('\n');
 
 let output = '';
-for (const [i, line] of lines.entries()) {
+for (let [i, line] of lines.entries()) {
     if (line.startsWith('# [') && i !== 0)
         break;
+
+    if (line.startsWith('###')) {
+        line = line.slice(4, line.length).trim();
+        line = `**${line}**`;
+    }
+
     output += line + '\\n';
 }
 
