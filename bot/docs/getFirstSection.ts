@@ -13,7 +13,7 @@ let output = '';
 for (const [i, line] of lines.entries()) {
     if (line.startsWith('# [') && i !== 0)
         break;
-    output += removeLink(line) + '\n';
+    output += removeLink(line) + '\\n';
 }
 
 function removeLink(line: string) {
