@@ -9,7 +9,7 @@ if(!content)
 
 const lines = content.toString().split('\n');
 
-let output = '';
+let output = ':notepad_spiral:\\n\\n';
 for (let [i, line] of lines.entries()) {
     if (line.startsWith('# [')) {
         if (i !== 0)
