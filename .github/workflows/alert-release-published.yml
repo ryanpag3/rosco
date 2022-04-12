@@ -18,6 +18,7 @@ jobs:
         npm i -g yarn
         yarn install
         echo "NOTES='$(npx ts-node docs/getFirstSection.ts)'" >> $GITHUB_ENV
+        echo $NOTES
         curl \
           -H "Content-Type: application/json" \
           -d '{ "username": "Rosco Updates", "content": "${{ env.NOTES }}"}' \
