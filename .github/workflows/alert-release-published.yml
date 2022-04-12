@@ -15,7 +15,7 @@ jobs:
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       run: |
-        echo "NOTES=(npx ts-node docs/getFirstSection.ts)" >> $GITHUB_ENV
+        echo "NOTES=$(npx ts-node docs/getFirstSection.ts)" >> $GITHUB_ENV
         curl \
           -H "Content-Type: application/json" \
           -d '{ "username": "Rosco Updates", "content": "${{ env.NOTES }}"}' \
