@@ -8,12 +8,15 @@ jobs:
   after-release:
     runs-on: ubuntu-latest
     steps:
+    - name: checkout code
+      uses: actions/checkout@v2
     - name: POST to webhook
+      working-directory: ./bot
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       run: |
-        echo "${{ github.event.release.body }}"
+        NOTES=(npx ts-node docs/getFirstSection.ts)
         curl \
           -H "Content-Type: application/json" \
-          -d '{ "username": "Rosco Updates", "content": "${{ github.event.release.body }}"}' \
+          -d '{ "username": "Rosco Updates", "content": "$NOTES"}' \
           $DISCORD_WEBHOOK
