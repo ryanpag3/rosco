@@ -11,6 +11,11 @@ const lines = content.toString().split('\n');
 
 let output = ':notepad_spiral:\\n\\n';
 for (let [i, line] of lines.entries()) {
+    if (line.startsWith('*')) {
+        line = line.slice(1, line.length);
+        line = `- ${line}`;
+    }
+
     if (line.startsWith('# [')) {
         if (i !== 0)
             break;
@@ -21,11 +26,6 @@ for (let [i, line] of lines.entries()) {
     if (line.startsWith('###')) {
         line = line.slice(4, line.length).trim();
         line = `**${line}**`;
-    }
-
-    if (line.startsWith('*')) {
-        line = line.slice(1, line.length);
-        line = `- ${line}`;
     }
 
     output += removeLink(line) + '\\n';
