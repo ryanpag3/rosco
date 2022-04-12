@@ -16,6 +16,7 @@ for (let [i, line] of lines.entries()) {
     if (i === 0) {
         line = `**${line}**`
     } else if (line.startsWith('*')) {
+        line = line.slice(1, line.length);
         line = `:small_blue_diamond: ${line}`;
     } else {
         line = `**${line}**`;
