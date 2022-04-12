@@ -12,7 +12,7 @@ jobs:
       env:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       run: |
-        echo "${{ github.event.release.body }}" 
+        echo "${{ github.event.release.body }}"
         curl \
           -H "Content-Type: application/json" \
           -d '{ "username": "Rosco Updates", "content": "${{ github.event.release.body }}"}' \
