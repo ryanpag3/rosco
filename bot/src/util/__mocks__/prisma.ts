@@ -32,7 +32,7 @@ export const prisma = new PrismaClient({
 });
 
 beforeEach(async () => {
-    execSync(`${prismaBinary} db push`, {
+    execSync(`${prismaBinary} db push --skip-generate`, {
         env: {
             ...process.env,
             DATABASE_URL: generateDatabaseURL(schemaId),
