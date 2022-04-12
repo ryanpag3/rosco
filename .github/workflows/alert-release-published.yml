@@ -17,8 +17,7 @@ jobs:
       run: |
         npm i -g yarn
         yarn install
-        echo "NOTES='$(npx ts-node docs/getFirstSection.ts | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g')'" >> $GITHUB_ENV
-        echo 'EOF' >> $GITHUB_ENV
+        echo "NOTES='$(npx ts-node docs/getFirstSection.ts)EOF'" >> $GITHUB_ENV
         echo $NOTES
         curl \
           -H "Content-Type: application/json" \
