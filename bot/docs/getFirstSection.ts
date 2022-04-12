@@ -11,15 +11,24 @@ const lines = content.toString().split('\n');
 
 let output = '';
 for (let [i, line] of lines.entries()) {
-    if (line.startsWith('# [') && i !== 0)
-        break;
+    if (line.startsWith('# [')) {
+        if (i !== 0)
+            break;
+        line = line.slice(1, line.length).trim();
+        line = `**${line}**`;
+    }
 
     if (line.startsWith('###')) {
         line = line.slice(4, line.length).trim();
         line = `**${line}**`;
     }
 
-    output += line + '\\n';
+    if (line.startsWith('*')) {
+        line = line.slice(1, line.length);
+        line = `- ${line}`;
+    }
+
+    output += removeLink(line) + '\\n';
 }
 
 function removeLink(line: string) {
