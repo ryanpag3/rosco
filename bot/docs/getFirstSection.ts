@@ -11,24 +11,17 @@ const lines = content.toString().split('\n');
 
 let output = ':notepad_spiral:\\n\\n';
 for (let [i, line] of lines.entries()) {
-    if (line.startsWith('*')) {
-        line = line.slice(1, line.length);
-        line = `- ${line}`;
-    }
+    line = removeLink(line);
 
-    if (line.startsWith('# [')) {
-        if (i !== 0)
-            break;
-        line = line.slice(1, line.length).trim();
+    if (i === 0) {
+        line = `**${line}**`
+    } else if (line.startsWith('*')) {
+        line = `:small_blue_diamond: ${line}`;
+    } else {
         line = `**${line}**`;
     }
 
-    if (line.startsWith('###')) {
-        line = line.slice(4, line.length).trim();
-        line = `**${line}**`;
-    }
-
-    output += removeLink(line) + '\\n';
+    output += line + '\\n';
 }
 
 function removeLink(line: string) {
