@@ -1,3 +1,10 @@
+# [1.1.0-beta.16](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.15...v1.1.0-beta.16) (2022-04-12)
+
+
+### Bug Fixes
+
+* parse the changelog correctly ([f20f2cb](https://github.com/ryanpag3/guac-bot/commit/f20f2cb324f349f630933b8ea2882d0dab3e58cd))
+
 # [1.1.0-beta.15](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.14...v1.1.0-beta.15) (2022-04-12)
 
 
