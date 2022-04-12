@@ -18,5 +18,5 @@ jobs:
         NOTES=(npx ts-node docs/getFirstSection.ts)
         curl \
           -H "Content-Type: application/json" \
-          -d '{ "username": "Rosco Updates", "content": "$NOTES"}' \
+          -d '{ "username": "Rosco Updates", "content": "${NOTES}"}' \
           $DISCORD_WEBHOOK
