@@ -15,6 +15,6 @@ for (const [i, line] of lines.entries()) {
     output += line + '\n';
 }
 
-console.log(encodeURIComponent(output));
+console.log(output);
 
 
