@@ -16,6 +16,7 @@ jobs:
         DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       run: |
         export NOTES=(npx ts-node docs/getFirstSection.ts)
+        echo $NOTES
         curl \
           -H "Content-Type: application/json" \
           -d '{ "username": "Rosco Updates", "content": "$NOTES"}' \
