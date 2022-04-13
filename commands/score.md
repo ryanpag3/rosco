@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-03-29T00:02:35.883Z
+date: 2022-04-13T15:32:16.378Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:13:14.026Z
@@ -23,6 +23,14 @@ Issue `/score create` to create a new score.
 | `amount` | Set the initial value of the score upon creation. | `false` |
 | `color` | Set the color of the bar when `/score list` is run. Defaults to a random color. | `false` |
 
+### Create Multiple
+
+You can quickly create multiple scores by simple defining several names seperated by a comma `,`. 
+
+For example, by setting the `name` argument to `test,test2,test3` this will create three scores automatically.
+
+All scores created this way will be defined with the same `description` and `amount`. Colors will be automatically generated.
+
 ### Examples
 
 ``` bash
@@ -31,6 +39,8 @@ Issue `/score create` to create a new score.
 
 # with optional arguments
 /score create name: test description: This is my score! amount: 100 color: #000000
+
+/score create name test,test2,test3,test4 description: This is how to create multiple! amount: 10
 ```
 
 ![score-create-example.png](/score-create-example.png)
