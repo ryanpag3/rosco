@@ -76,3 +76,21 @@ it('should create a valid channel score', async () => {
     expect(score).not.toBeUndefined();
 });
 
+it('should create multiple scores', async () => {
+    const int = createTestInteraction('score', 'create', {
+        name: 'test,test2,test3,test4,test5',
+        description: 'description',
+        amount: 1
+    });
+    
+    const r = await onCommandReceived(int);
+
+    const scores = await prisma.score.findMany({
+        where: {
+            serverId: r.server.id
+        }
+    });
+
+    expect(scores.length).toBe(5);
+})
+
