@@ -14,6 +14,9 @@ const onInteractionCreate = async (interaction: CommandInteraction): Promise<any
     try {
         if (!interaction.isButton() && !interaction.isCommand() )
             return;
+
+        if (!interaction.guild || !interaction.channel)
+            throw new Error('Cannot process interaction without valid guild and channel.');
     
         const server = await ServerService.initializeServer(interaction.guild);
 
