@@ -1,3 +1,10 @@
+# [1.1.0-beta.47](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.46...v1.1.0-beta.47) (2022-04-13)
+
+
+### Bug Fixes
+
+* the correct build version should now show on bot activity ([ae1bacb](https://github.com/ryanpag3/guac-bot/commit/ae1bacbfbc976e29047e1532d8725047fd66c8e0))
+
 # [1.1.0-beta.46](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.45...v1.1.0-beta.46) (2022-04-12)
 
 
