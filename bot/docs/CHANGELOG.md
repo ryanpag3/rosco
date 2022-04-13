@@ -1,3 +1,10 @@
+# [1.1.0-beta.48](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.47...v1.1.0-beta.48) (2022-04-13)
+
+
+### Features
+
+* Added support for creating multiple scores in one create command ([0e80a1d](https://github.com/ryanpag3/guac-bot/commit/0e80a1d433cb66a8f75183902cd3c98c8cf1f1fa))
+
 # [1.1.0-beta.47](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.46...v1.1.0-beta.47) (2022-04-13)
 
 
