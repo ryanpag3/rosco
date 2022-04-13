@@ -1,68 +1,64 @@
-import { Command } from '../../../types/command';
-import BotError from '../../util/bot-error';
-import * as ScoreService from '../../service/score';
+import { CommandInteraction, CacheType } from 'discord.js';
 import randomColor from 'randomcolor';
+import { Command } from 'src/../../types/command';
+import * as ScoreService from '../../service/score';
 
 const ScoreCreate: Command = {
     id: 'd770504e-08e7-487b-af3c-e610fcc289f1',
     name: 'score create',
-    description: 'Create a score.',
-    examples: ``,
-    // options for this subcommand are located in score.ts
-    options: {},
     handler: async (interaction, user, server) => {
-        const name = interaction.options.getString('name');
+        const name = interaction.options.getString('name', true);
         const description = interaction.options.getString('description');
         const amount = interaction.options.getInteger('amount') || 0;
-        const color = interaction.options.getString('color') || randomColor();
+        const scoreNamesSplit = name.split(',');
+        let color = interaction.options.getString('color');
 
-        if (!name)
-            throw new BotError(`Name is a required field.`);
+        let colors = [];
+        for (const name of scoreNamesSplit) {
+            if (!color) 
+                color = randomColor();
+            
+            await ScoreService.create({
+                name,
+                description,
+                amount,
+                // @ts-ignore
+                serverId: server?.id as string,
+                channelId: interaction.channel?.id as string,
+                color,
+                userId: user.id
+            });
+            colors.push(color);
+        }
 
-        if (name.includes(','))
-            throw new BotError(`Name contains invalid characters. [,]`)
+        const fields =  [
+            {
+                name: 'name(s)',
+                value: scoreNamesSplit.join(', ')
+            },
+            {
+                name: 'description',
+                value: description || 'No description provided.'
+            },
+            {
+                name: 'amount',
+                value: amount.toString()
+            }, 
+            {
+                name: 'color',
+                value: colors.join(', ')
+            } 
+        ]
 
-        if (!interaction.channel || !interaction.guild)
-            throw new Error(`Invalid interaction found.`);
-
-        await ScoreService.create({
-            name,
-            description,
-            amount,
-            // @ts-ignore
-            serverId: server?.id,
-            channelId: interaction.channel?.id,
-            color,
-            // @ts-ignore
-            userId: user.id
-        });
-
-        await interaction.reply({
+        return interaction.reply({
             embeds: [
                 {
-                    title: `:boom: A new score has been created.`,
-                    description: `Here are the details`,
-                    fields: [
-                        {
-                            name: 'name',
-                            value: name
-                        },
-                        {
-                            name: 'description',
-                            value: description || 'No description provided.'
-                        },
-                        {
-                            name: 'amount',
-                            value: amount.toString()
-                        },
-                        {
-                            name: 'color',
-                            value: color
-                        }
-                    ]
+                    title: `:boom: ${scoreNamesSplit.length} score has been created.`,
+                    description: 'Here are the details of your new score(s).',
+                    fields
                 }
             ]
-        });
+        })
     }
 };
 

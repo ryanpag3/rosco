@@ -5,6 +5,7 @@ import fs from 'fs';
 import path, { join } from 'path';
 import { URL } from 'url';
 import { v4 } from 'uuid';
+import PrismaErrorCode from '../prisma-error-code';
 
 const generateDatabaseURL = (schema: string) => {
     if (!process.env.DATABASE_URL) {
@@ -31,7 +32,7 @@ export const prisma = new PrismaClient({
 });
 
 beforeEach(async () => {
-    execSync(`${prismaBinary} db push`, {
+    execSync(`${prismaBinary} db push --skip-generate`, {
         env: {
             ...process.env,
             DATABASE_URL: generateDatabaseURL(schemaId),

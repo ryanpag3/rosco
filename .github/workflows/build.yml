@@ -46,7 +46,6 @@ jobs:
         run: |
           npm i -g yarn
           apt-get update -y
-          sleep 60
           apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
       - name: build bot
         run: |
@@ -85,7 +84,6 @@ jobs:
           export NODE_OPTIONS=--max_old_space_size=4096
           rm -rf ./node_modules
           yarn install
-          sleep 30
           yarn jest
         working-directory: ./bot
   build-docker:
@@ -108,7 +106,7 @@ jobs:
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - name: build bot
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
         run: |
           yarn install
           npx semantic-release

@@ -51,17 +51,30 @@ const KeywordCreate: Command = {
         }
 
         try {
+            if (!server)
+                throw new Error(`Server instance not instantiated. Keyword functionality has been disabled.`);
+
+            const data = {
+                word,
+                scoreId: score?.id as string,
+                serverId: server?.id as string,
+                channelId: channel?.id,
+                amount: amount || undefined,
+                action: action as KeywordAction || undefined,
+                userId: inDbUser?.id,
+                roleId: role?.id
+            }; 
+
+            const existingKeyword = await prisma.keyword.findFirst({
+                where: data,
+                rejectOnNotFound: false
+            });
+
+            if (existingKeyword)
+                throw new BotError(`A keyword already exists with that configuration.`);
+
             const keywordRecord = await prisma.keyword.create({
-                data: {
-                    word,
-                    scoreId: score?.id as string,
-                    serverId: server?.id as string,
-                    channelId: channel?.id,
-                    amount: amount || undefined,
-                    action: action as KeywordAction || undefined,
-                    userId: inDbUser?.id,
-                    roleId: role?.id
-                }
+                data
             });
 
             await KeywordCache.cacheRecord(keywordRecord);
@@ -75,8 +88,6 @@ const KeywordCreate: Command = {
                 ]
             })
         } catch (e) {
-            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
-                throw new BotError(`A keyword already exists with that configuration.`);
             throw e;
         }
     }

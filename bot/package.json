@@ -8,7 +8,7 @@
   "scripts": {
     "watch": "nodemon src/index.ts & nodemon src/api/index.ts",
     "w": "yarn watch",
-    "jest": "NODE_ENV=test jest --maxWorkers=4 --coverage --forceExit",
+    "jest": "NODE_ENV=test jest --coverage --forceExit",
     "j": "NODE_ENV=test jest --forceExit",
     "migrate": "npx prisma migrate"
   },
@@ -45,12 +45,15 @@
     "randomstring": "^1.2.2",
     "redis": "^4.0.3",
     "redlock": "^5.0.0-beta.1",
+    "remove-markdown": "^0.3.0",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
     "@types/bluebird": "^3.5.36",
     "@types/folder-hash": "^4.0.1",
     "@types/ioredis": "^4.28.7",
@@ -62,6 +65,7 @@
     "@types/randomstring": "^1.1.8",
     "@types/redis-mock": "^0.17.1",
     "@types/redlock": "^4.0.3",
+    "@types/remove-markdown": "^0.3.1",
     "@types/uuid": "^8.3.4",
     "jest": "^27.4.7",
     "nodemon": "^2.0.15",
