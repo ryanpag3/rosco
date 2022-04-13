@@ -1,3 +1,10 @@
+# [1.1.0-beta.49](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.48...v1.1.0-beta.49) (2022-04-13)
+
+
+### Bug Fixes
+
+* Fixed an internal server error getting thrown when permissions have been set on the bot-to-bot command ([e56e83a](https://github.com/ryanpag3/guac-bot/commit/e56e83a1e7cc00a9493a941ad55082c44f8b1685))
+
 # [1.1.0-beta.48](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.47...v1.1.0-beta.48) (2022-04-13)
 
 
