@@ -1,3 +1,10 @@
+# [1.1.0-beta.50](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.49...v1.1.0-beta.50) (2022-04-14)
+
+
+### Bug Fixes
+
+* fix keyword command to filter on server ([7ab7774](https://github.com/ryanpag3/guac-bot/commit/7ab77746ce6dc6df05f444445e22df80d2784e51))
+
 # [1.1.0-beta.49](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.48...v1.1.0-beta.49) (2022-04-13)
 
 
