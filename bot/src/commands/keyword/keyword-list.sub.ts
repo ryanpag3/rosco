@@ -34,6 +34,7 @@ const KeywordList: Command = {
                 word: {
                     contains: keyword
                 },
+                serverId: server?.id,
                 scoreId: score?.id
             },
             include: {
