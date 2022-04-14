@@ -1,3 +1,10 @@
+# [1.1.0-beta.51](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.50...v1.1.0-beta.51) (2022-04-14)
+
+
+### Bug Fixes
+
+* If multiple keywords are defined, only the valid ones will trigger an action. ([0c158d3](https://github.com/ryanpag3/guac-bot/commit/0c158d3601a941d4be303bdd6d2cd41bc94a545e))
+
 # [1.1.0-beta.50](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.49...v1.1.0-beta.50) (2022-04-14)
 
 
