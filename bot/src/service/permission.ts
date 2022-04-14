@@ -28,7 +28,6 @@ export const userHasPermission = async (interaction: CommandInteraction, server:
         });
 
         if (permissions.length === 0) {
-            logger.debug('oh no');
             return true;
         }
 

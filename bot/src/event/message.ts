@@ -66,11 +66,11 @@ const handleKeywords = async (message: Message, server: Server|any) => {
     const containsKeyword = await KeywordCache.containsCachedWord(server.id, message.content);
 
     if (!containsKeyword) {
-        logger.debug('message does not contain keyword');
+        logger.trace('message does not contain keyword');
         return;
     }
 
-    const keywords: Keyword[] = await KeywordCache.getCachedRecords(server.id) as Keyword[];
+    const keywords: Keyword[] = await KeywordCache.getMatchingCachedRecords(server.id, message.content) as Keyword[];
 
     for (const k of keywords) {
         if (k.channelId && k.channelId !== message.channel?.id)
