@@ -10,18 +10,13 @@ const BotToBot: Command = {
         {
             name: 'enable',
             description: 'Enable bot-to-bot communication for this server.',
-            type: ApplicationCommandOptionType.Subcommand
-        },
-        {
-            name: 'disable',
-            description: 'Disable bot-to-bot communication for this server.',
-            type: ApplicationCommandOptionType.Subcommand
+            type: ApplicationCommandOptionType.Boolean,
+            required: true
         }
     ],
     handler: async (interaction, user, server) => {
-        const subcommand = interaction.options.getSubcommand();
-        const isEnabled = subcommand === 'enable';
-
+        const isEnabled = interaction.options.getBoolean('enable', true);
+    
         try {
             await prisma.server.update({
                 where: {
@@ -34,7 +29,7 @@ const BotToBot: Command = {
         } catch (e) {
             throw e;
         }
-
+    
         return interaction.reply({
             embeds: [
                 {

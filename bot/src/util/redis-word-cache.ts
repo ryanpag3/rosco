@@ -71,10 +71,23 @@ export default class RedisWordCache {
         return redis.get(this.buildRedisKey(serverId, id));
     };
 
+    /**
+     * Get cached records that contain a cached word
+     */
+    getMatchingCachedRecords = async (serverId: string, content: string) => {
+        const cachedRecords = await this.getCachedRecords(serverId);
+        let validWords = [];
+        for (const record of cachedRecords) {
+            if (await this.cachedWordFoundInContent(record.word, content))
+                validWords.push(record);
+        }
+        return validWords;
+    }
+
     getCachedRecords = async (serverId: string) => {
         const keys = await redis.keys(this.buildRedisKey(serverId, '*'));
 
-        logger.debug(`${keys.length} records to retrieve from the cache.`);
+        logger.trace(`${keys.length} records to retrieve from the cache.`);
 
         const records = [];
 
