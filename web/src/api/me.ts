@@ -6,3 +6,8 @@ export const getMe = async (): Promise<{
     const { data } = await axios.get(`/me`);
     return data;
 }
+
+export const getMyServers = async (): Promise<any> => {
+    const { data } = await axios.get(`/me/guilds`);
+    return data;
+}

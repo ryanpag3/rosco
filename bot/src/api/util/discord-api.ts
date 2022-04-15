@@ -1,22 +1,16 @@
 import { User } from '@prisma/client';
-import Axios, { AxiosInstance, AxiosResponse } from 'axios';
+import Axios, { AxiosInstance } from 'axios';
+import { DateTime } from 'luxon';
 import { stringify } from 'querystring';
 import logger from '../../util/logger';
-import prisma from '../../util/prisma';
-
-
+import redis from '../../util/redis';
 
 export default class DiscordApi {
     private user: User;
-    private accessToken: string | undefined;
     private axios: AxiosInstance;
 
     constructor(user: User) {
         this.user = user;
-
-        if (!this.user.refreshToken)
-            throw new Error(`A valid refresh token is required to use Discord API.`);
-
         this.axios = Axios.create({
             baseURL: 'https://discordapp.com/api/v9'
         })
@@ -36,54 +30,65 @@ export default class DiscordApi {
         mfa_enabled: boolean;
         email: string;
         verified: boolean;
-    }|undefined> => {
-        logger.info('get me request');
-        const { data } = await this.performRequest(async () =>
-            await this.axios.get('/users/@me', {
-                headers: {
-                    Authorization: `Bearer ${this.accessToken}`
-                }
-            }));
+    } | undefined> => {
+        logger.trace(`get me request by ${this.user.id}`);
+        const accessToken = await this.getAccessToken();
+        const { data } = await this.axios.get('/users/@me', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
         return data;
     }
 
     getMyGuilds = async (): Promise<{
         id: string;
         name: string;
-        icon: string|null;
+        icon: string | null;
         owner: boolean;
         permissions: string;
         features: string[];
     }[]> => {
-        const { data } = await this.performRequest(async () =>
-            await this.axios.get('/users/@me/guilds', {
-                headers: {
-                    Authorization: `Bearer ${this.accessToken}`
-                }
-            }));
+        logger.trace(`get my guilds request by ${this.user.id}`);
+        const accessToken = await this.getAccessToken();
+        const { data } = await this.axios.get('/users/@me/guilds', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
         return data;
     }
 
-    performRequest = async (apiRequest: () => Promise<AxiosResponse<any, any>>,
-        attempts: number = 0, maxAttempts: number = 1): Promise<AxiosResponse<any, any>> => {
-        try {
-            logger.trace(`discord api request attempt ${attempts} of ${maxAttempts}`);
-            if (!this.accessToken)
-                await this.refreshAccessToken();
-            return await apiRequest();
-        } catch (e) {
-            if (attempts > maxAttempts) {
-                logger.error(e);
-                throw new Error(`Could not make Discord API request within ${maxAttempts} attempts. Bailing!`);
-            }
-            await this.refreshAccessToken();
-            return await this.performRequest(() => apiRequest(), ++attempts, maxAttempts);
+    /**
+     * Get the access token from the cache and refresh it if need be.
+     */
+    getAccessToken = async () => {
+        let token = await redis.get(this.getCacheId());
+
+        if (token) {
+            token = JSON.parse(token);
         }
+
+        if (!token || DateTime.now() > DateTime.fromJSDate((token as any).expiresAt)) {
+            token = await this.refreshAuth() as any;
+        }
+
+        logger.trace(`got access token for ${this.user.id}`);
+
+        return (token as any).accessToken;
     }
 
-    refreshAccessToken = async () => {
-        logger.debug('refreshing user token ' + this.user.refreshToken);
-        const { data } = await this.axios.post(`/oauth2/token`, stringify({
+    /**
+     * Exchange the current refresh token for a new refresh token & access token.
+     */
+    refreshAuth = async () => {
+        const { data }: {
+            data: {
+                refresh_token: string;
+                access_token: string;
+                expires_in: number;
+            }
+        } = await this.axios.post(`/oauth2/token`, stringify({
             client_id: process.env.DISCORD_CLIENT_ID,
             client_secret: process.env.DISCORD_CLIENT_SECRET,
             grant_type: 'refresh_token',
@@ -93,22 +98,32 @@ export default class DiscordApi {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-        logger.debug('refreshed user token ' + this.user.refreshToken);
 
+        const token = {
+            accessToken: data.access_token,
+            expiresAt: DateTime.now().plus({
+                milliseconds: data.expires_in
+            }).toJSDate()
+        };
 
-        this.accessToken = data.access_token;
+        this.cacheAccessToken(token);
 
-        await prisma.user.update({
-            where: {
-                id: this.user.id
-            },
-            data: {
-                refreshToken: data.refresh_token
-            }
-        })
+        logger.debug(`refreshed auth for ${this.user.id}`);
+
+        return token;
     }
 
-    getAccessToken = () => {
-        return this.accessToken;
+    /**
+     * Cache the access token in Redis so all nodes can use it.
+     */
+    cacheAccessToken = async (token: {
+        accessToken: string;
+        expiresAt: Date;
+    }) => {
+        return redis.set(this.getCacheId(), JSON.stringify(token));
+    }
+
+    getCacheId = () => {
+        return `discord.${this.user.id}.accessToken`;
     }
 }
