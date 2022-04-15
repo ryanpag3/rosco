@@ -12,7 +12,7 @@ export default class DiscordApi {
     constructor(user: User) {
         this.user = user;
         this.axios = Axios.create({
-            baseURL: 'https://discordapp.com/api/v9'
+            baseURL: 'https://discordapp.com/api'
         })
     }
 
@@ -33,7 +33,7 @@ export default class DiscordApi {
     } | undefined> => {
         logger.trace(`get me request by ${this.user.id}`);
         const accessToken = await this.getAccessToken();
-        const { data } = await this.axios.get('/users/@me', {
+        const { data } = await this.axios.get('/v9/users/@me', {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -51,13 +51,24 @@ export default class DiscordApi {
     }[]> => {
         logger.trace(`get my guilds request by ${this.user.id}`);
         const accessToken = await this.getAccessToken();
-        const { data } = await this.axios.get('/users/@me/guilds', {
+        const { data } = await this.axios.get('/v9/users/@me/guilds', {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
         });
         return data;
     }
+
+     getGuild = async (id: string) => {
+         logger.info(`getting guild with id ${id}`);
+         const accessToken = await this.getAccessToken();
+         const { data } = await this.axios.get(`/guilds/${id}`, {
+            headers: {
+                Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
+            }
+        });
+        return data; 
+     }
 
     /**
      * Get the access token from the cache and refresh it if need be.

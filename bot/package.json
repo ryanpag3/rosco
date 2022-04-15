@@ -10,7 +10,8 @@
     "w": "yarn watch",
     "jest": "NODE_ENV=test jest --coverage --forceExit",
     "j": "NODE_ENV=test jest --forceExit",
-    "migrate": "npx prisma migrate"
+    "migrate": "npx prisma migrate",
+    "sort-schema": "npx prisma-schema-sorter sort --schema=\"./prisma/schema.prisma\""
   },
   "dependencies": {
     "@discordjs/builders": "^0.11.0",

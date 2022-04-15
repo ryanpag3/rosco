@@ -5,10 +5,7 @@ import prisma from '../../util/prisma';
 import Cookies from '../util/cookies';
 import * as jwt from '../util/jwt';
 
-/**
- * Initiate an oauth authorization code flow with Discord
- */
-export const login: RouteHandlerMethod = async (request, reply) => {
+export const getLoginUrl = () => {
     const scopes = ['identify', 'email', 'guilds'].join(' ');
 
     const params = new URLSearchParams({
@@ -17,7 +14,15 @@ export const login: RouteHandlerMethod = async (request, reply) => {
         redirect_uri: process.env.DISCORD_REDIRECT_URI,
         scope: scopes
     } as any);
-    reply.redirect(`https://discordapp.com/oauth2/authorize?${params}`);
+
+    return `https://discordapp.com/oauth2/authorize?${params}`;
+}
+
+/**
+ * Initiate an oauth authorization code flow with Discord
+ */
+export const login: RouteHandlerMethod = async (request, reply) => {
+    reply.redirect(getLoginUrl());
 }
 
 export const callback: RouteHandlerMethod = async (request, reply) => {

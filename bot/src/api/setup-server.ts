@@ -18,7 +18,29 @@ export default async (fastify: FastifyInstance) => {
     logger.debug(`setting up cors`);
     await fastify.register(require('fastify-cors'), {
         credentials: true,
-        origin: true,
+        // @ts-ignore
+        origin: (origin, cb) => {
+            if (!origin) 
+                return cb(null, false);
+            
+            const hostname = new URL(origin).hostname;
+            if (hostname === 'localhost') {
+                cb(null, true);
+                return;
+            }
+
+            if (hostname === 'discord') {
+                cb(null, true);
+                return;
+            }
+
+            if (hostname === 'roscobot') {
+                cb(null, true);
+                return;
+            }
+
+            cb(null, false);
+        },
         exposedHeaders: true
     });
 
@@ -33,8 +55,9 @@ export default async (fastify: FastifyInstance) => {
             try {
                 return await oldHandler(req, res);
             } catch (e) {
-                logger.error(`Uncaught exception from handler`, e);
-                return res.send(500);
+                logger.error(`Uncaught exception from handler`, (e as any).message);
+                logger.trace(e);
+                throw new Error();
             }
         }
 
