@@ -27,7 +27,8 @@ const ServerSelect = () => {
         servers = servers.map((s: any) => {
             return {
                 value: s.name,
-                label: s.name
+                label: s.name,
+                icon: s.icon
             }
         })
         setIsLoading(false);
@@ -40,9 +41,14 @@ const ServerSelect = () => {
                 placeholder='Select Server'
                 styles={SelectStyle}
                 components={{
+                    SingleValue: ({ children, ...rest}) => (
+                        <components.SingleValue {...rest}>
+                           <ServerIcon src={(rest.data as any).icon}/> {children} 
+                        </components.SingleValue>
+                    ),
                     Option: ({ children, ...rest }) => (
                         <components.Option {...rest}>
-                            (pic) {children}
+                            <ServerIcon src={(rest.data as any).icon}/> {children}
                         </components.Option>
                     )
                 }}
@@ -67,7 +73,7 @@ const SelectStyle: StylesConfig = {
         fontFamily: 'nunito',
         border: 0,
         boxShadow: 'none',
-        minWidth: '18em',
+        minWidth: '20em',
         backgroundColor
     }),
     dropdownIndicator: (provided, state) => ({
@@ -81,7 +87,9 @@ const SelectStyle: StylesConfig = {
     singleValue: (provided, state) => ({
         ...provided,
         color: textColor,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        display: 'flex',
+        alignItems: 'center'
     }),
     container: (provided, state) => ({
         ...provided,
@@ -102,8 +110,16 @@ const SelectStyle: StylesConfig = {
         backgroundColor: state.isFocused ?
             focusedBackgroundColor : backgroundColor,
         color: textColor,
-        fontWeight: state.isFocused ? 'bold' : 'normal'
+        fontWeight: state.isFocused ? 'bold' : 'normal',
+        display: 'flex',
+        alignItems: 'center'
     })
 }
+
+const ServerIcon = styled.img`
+    width: 2em;
+    border-radius: .35em;
+    margin-right: .5em;
+`;
 
 export default ServerSelect
