@@ -40,7 +40,11 @@ const App = () => {
           <Route path="/" element={<LandingScreen />} />
           {
             getCookie(Cookies.IS_AUTHENTICATED) === 'true' && me !== undefined ?
-              <Route path="/dashboard" element={<Dashboard me={me} />} /> :
+              <React.Fragment>
+                <Route path="/dashboard" element={<Dashboard me={me} server={selectedServer.server}/>}/>
+                <Route path="/dashboard/:serverId" element={<Dashboard me={me} server={selectedServer.server}/>}/>
+              </React.Fragment>
+              :
               null
           }
         </Routes>

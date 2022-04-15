@@ -22,7 +22,6 @@ const Container = styled(Row)`
     padding: 1em;
     align-items: center;
     flex-wrap: wrap;
-    position: absolute;
     width: 100%;
     min-height: 2em;
     background-color: #252525;
