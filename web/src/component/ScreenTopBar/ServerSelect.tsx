@@ -28,7 +28,8 @@ const ServerSelect = () => {
             return {
                 value: s.name,
                 label: s.name,
-                icon: s.icon
+                icon: s.icon,
+                id: s.id
             }
         })
         setIsLoading(false);
@@ -55,6 +56,7 @@ const ServerSelect = () => {
                                     </components.Option>
                                 )
                             }}
+                            value={server}
                             options={options}
                             isLoading={isLoading}
                             onChange={(val) => setSelectedServer(val)}
