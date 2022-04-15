@@ -6,12 +6,11 @@ import LandingScreen from 'screen/landing/LandingScreen';
 import * as MeApi from 'api/me';
 import Cookies, { getCookie } from 'util/cookies';
 import { SelectedServerContext } from 'context/selected-server-context';
-
-const subdomain = window.location.host.split('.')[0];
+import LocalStorageKey from 'util/localstorage-key';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
-    server: undefined,
+    server: getCachedSelectedServer(),
     setSelectedServer: (server: string) => setSelectedServer({
       ...selectedServer,
       server: server as any
@@ -23,9 +22,10 @@ const App = () => {
     getMe();
   }, [me === undefined]);
 
-  useEffect(() => {
-    console.log(selectedServer);
-  }, [ selectedServer ])
+  function getCachedSelectedServer() {
+    const raw = localStorage.getItem(LocalStorageKey.SELECTED_SERVER);
+    return raw ? JSON.parse(raw) : undefined;
+  }
 
   async function getMe() {
     const data = await MeApi.getMe();

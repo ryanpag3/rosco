@@ -2,6 +2,7 @@ import { SelectedServerContext } from 'context/selected-server-context';
 import React, { useEffect, useState } from 'react'
 import Select, { components, StylesConfig } from 'react-select'
 import styled from 'styled-components'
+import LocalStorageKey from 'util/localstorage-key';
 import * as MeApi from '../../api/me';
 
 
@@ -59,7 +60,13 @@ const ServerSelect = () => {
                             value={server}
                             options={options}
                             isLoading={isLoading}
-                            onChange={(val) => setSelectedServer(val)}
+                            onChange={(val) => {
+                                localStorage.setItem(
+                                    LocalStorageKey.SELECTED_SERVER, 
+                                    JSON.stringify(val)
+                                );
+                                setSelectedServer(val)
+                            }}
                         />
                     </Container>
                 )
