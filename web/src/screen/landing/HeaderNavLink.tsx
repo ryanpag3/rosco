@@ -12,7 +12,7 @@ const HeaderNavLink = (props: {
   )
 }
 
-const StyledText = styled.text`
+const StyledText = styled.span`
     text-transform: uppercase;
     font-size: .9em;
 

@@ -58,7 +58,7 @@ const Container = styled(Column)`
     }
 `;
 
-const FeatureCardText = styled.text`
+const FeatureCardText = styled.span`
     color: black;
 `;
 

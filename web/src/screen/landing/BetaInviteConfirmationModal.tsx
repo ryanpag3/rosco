@@ -61,7 +61,7 @@ const ModalTitle = styled.h1`
   font-size: 1.5em;
 `;
 
-const ModalDescription = styled.text`
+const ModalDescription = styled.span`
   color: black;
   text-align: center;
   padding: .35em;

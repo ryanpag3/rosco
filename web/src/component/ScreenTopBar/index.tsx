@@ -35,7 +35,7 @@ const PushToRight = styled(Row)`
     flex-grow: 1;
 `;
 
-const UserTag = styled.text`
+const UserTag = styled.span`
 
 `;
 

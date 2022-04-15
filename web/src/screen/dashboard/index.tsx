@@ -12,19 +12,21 @@ const Dashboard = ({ me, server }: {
   const params = useParams();
   const navigate = useNavigate();
 
-  if ((!params.serverId && server.id) || (params.serverId !== server.id && server.id)) {
-    navigate(`/dashboard/${server.id}`);
-  }
+  useEffect(() => {
+    if ((!params.serverId && server.id) || (params.serverId !== server.id && server.id)) {
+      navigate(`/dashboard/${server.id}`);
+    }
+  }, [server]);
 
   return (
     <Screen>
-      <ScreenTopBar me={me}/>
+      <ScreenTopBar me={me} />
       <Text>{JSON.stringify(server)}</Text>
     </Screen>
   )
 }
 
-const Text = styled.text`
+const Text = styled.span`
   color: white;
 `;
 
