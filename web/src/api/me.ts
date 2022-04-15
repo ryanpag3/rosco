@@ -8,6 +8,10 @@ export const getMe = async (): Promise<{
 }
 
 export const getMyServers = async (): Promise<any> => {
-    const { data } = await axios.get(`/me/guilds`);
+    const { data } = await axios.get(`/me/guilds`, {
+        params: {
+            canManage: true
+        }
+    });
     return data;
 }

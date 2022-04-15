@@ -33,6 +33,12 @@ const MeRoutes: any = [
         url: '/me/guilds',
         schema: {
             description: 'Get the current user guilds.',
+            params: {
+                type: 'object',
+                properties: {
+                    canManage: { type: 'boolean' }
+                }
+            },
             response: {
                 200: {}
             }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Select, { components, StylesConfig } from 'react-select'
-import AsyncSelect from 'react-select/async';
 import styled from 'styled-components'
 import * as MeApi from '../../api/me';
 
@@ -117,6 +116,7 @@ const SelectStyle: StylesConfig = {
 }
 
 const ServerIcon = styled.img`
+    min-width: 2em;
     width: 2em;
     border-radius: .35em;
     margin-right: .5em;
