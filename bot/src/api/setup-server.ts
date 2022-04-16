@@ -57,7 +57,7 @@ export default async (fastify: FastifyInstance) => {
             } catch (e) {
                 logger.error(`Uncaught exception from handler`, (e as any).message);
                 logger.trace(e);
-                throw new Error();
+                return res.status(500).send();
             }
         }
 

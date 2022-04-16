@@ -6,8 +6,9 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "watch": "nodemon src/index.ts & nodemon src/api/index.ts",
+    "watch": "nodemon src/index.ts",
     "w": "yarn watch",
+    "wapi": "nodemon src/api/index.ts",
     "jest": "NODE_ENV=test jest --coverage --forceExit",
     "j": "NODE_ENV=test jest --forceExit",
     "migrate": "npx prisma migrate",

@@ -60,9 +60,11 @@ export default class DiscordApi {
     }
 
      getGuild = async (id: string) => {
-         logger.info(`getting guild with id ${id}`);
-         const accessToken = await this.getAccessToken();
+         logger.trace(`getting guild with id ${id}`);
          const { data } = await this.axios.get(`/guilds/${id}`, {
+            params: {
+                with_counts: true
+            },
             headers: {
                 Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
             }

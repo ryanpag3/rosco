@@ -1,5 +1,6 @@
 import { SelectedServerContext } from 'context/selected-server-context';
 import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import Select, { components, StylesConfig } from 'react-select'
 import styled from 'styled-components'
 import LocalStorageKey from 'util/localstorage-key';
@@ -7,9 +8,12 @@ import * as MeApi from '../../api/me';
 
 
 const ServerSelect = () => {
+    const params = useParams();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
     const [isInit, setIsInit] = useState(false);
+    const [serverId, setServerId] = useState(params.serverId);
 
     useEffect(() => {
         if (isInit === true)
@@ -40,6 +44,18 @@ const ServerSelect = () => {
     return (
         <SelectedServerContext.Consumer>
             {({ server, setSelectedServer }) => {
+                if (serverId) {
+                    const [ s ] = options.filter((s: any) => s.id === serverId);
+                    server = s;
+                    if (s && (server as any).id !== (s as any).id) {
+                        setSelectedServer(s);
+                    }
+                } else if (server && !params.serverId) {
+                    server = undefined;
+                    setSelectedServer(undefined);
+                }
+
+
                 return (
                     <Container>
                         <Select
@@ -61,6 +77,8 @@ const ServerSelect = () => {
                             options={options}
                             isLoading={isLoading}
                             onChange={(val) => {
+                                navigate('/dashboard/' + (val as any).id);
+                                setServerId(undefined);
                                 localStorage.setItem(
                                     LocalStorageKey.SELECTED_SERVER, 
                                     JSON.stringify(val)

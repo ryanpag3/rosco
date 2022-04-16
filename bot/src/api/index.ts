@@ -1,5 +1,6 @@
+import path from 'path';
 require('dotenv').config({
-    path: '../../.env'
+    path: path.join(__dirname, '../../.env')
 });
 
 import Fastify from 'fastify';
