@@ -1,4 +1,6 @@
 import { getGuild } from 'api/guild';
+import NavSideBar from 'component/NavSideBar';
+import Row from 'component/Row';
 import ScreenTopBar from 'component/ScreenTopBar';
 import React, { useEffect } from 'react'
 import { Outlet, Route, Routes, useNavigate, useParams } from 'react-router-dom';
@@ -37,14 +39,16 @@ const Dashboard = ({ me, server, setSelectedServer }: {
   return (
     <Screen>
       <ScreenTopBar me={me} />
-      <Text>{JSON.stringify(server)}</Text>
-      <Outlet/>
+      <OutletContainer>
+        <NavSideBar/>
+        <Outlet/>
+      </OutletContainer>
     </Screen>
   )
 }
 
-const Text = styled.span`
-  color: white;
+const OutletContainer = styled(Row)`
+  flex-grow: 1;
 `;
 
 export default Dashboard

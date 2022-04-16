@@ -8,6 +8,7 @@ import Cookies, { getCookie } from 'util/cookies';
 import { SelectedServerContext } from 'context/selected-server-context';
 import LocalStorageKey from 'util/localstorage-key';
 import styled from 'styled-components';
+import Home from 'screen/home';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -46,7 +47,11 @@ const App = () => {
                     server={selectedServer.server} setSelectedServer={selectedServer.setSelectedServer}/>}/>
                 <Route path="/dashboard/:serverId" element={<Dashboard me={me} 
                     server={selectedServer.server} setSelectedServer={selectedServer.setSelectedServer}/>}>
-                      <Route path="test" element={<Container>testing</Container>}></Route>
+                      {
+                        selectedServer.server ? 
+                        <Route path="home" element={<Home/>}></Route> :
+                        <Route path="*" element={null}/>
+                      }
                 </Route>
               </React.Fragment>
               :
