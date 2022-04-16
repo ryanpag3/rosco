@@ -37,7 +37,6 @@ const ServerSelect = () => {
                 id: s.id
             }
         })
-        setIsLoading(false);
         return servers;
     }
 
@@ -50,6 +49,8 @@ const ServerSelect = () => {
                     if (s && (server as any).id !== (s as any).id) {
                         setSelectedServer(s);
                     }
+                    setIsLoading(false);
+                    console.log('done loading');
                 } else if (server && !params.serverId) {
                     server = undefined;
                     setSelectedServer(undefined);

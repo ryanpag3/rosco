@@ -1,7 +1,7 @@
 import { getGuild } from 'api/guild';
 import ScreenTopBar from 'component/ScreenTopBar';
 import React, { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import LocalStorageKey from 'util/localstorage-key';
 import Screen from '../../component/Screen';
@@ -38,6 +38,7 @@ const Dashboard = ({ me, server, setSelectedServer }: {
     <Screen>
       <ScreenTopBar me={me} />
       <Text>{JSON.stringify(server)}</Text>
+      <Outlet/>
     </Screen>
   )
 }

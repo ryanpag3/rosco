@@ -7,6 +7,7 @@ import * as MeApi from 'api/me';
 import Cookies, { getCookie } from 'util/cookies';
 import { SelectedServerContext } from 'context/selected-server-context';
 import LocalStorageKey from 'util/localstorage-key';
+import styled from 'styled-components';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -44,7 +45,9 @@ const App = () => {
                 <Route path="/dashboard" element={<Dashboard me={me} 
                     server={selectedServer.server} setSelectedServer={selectedServer.setSelectedServer}/>}/>
                 <Route path="/dashboard/:serverId" element={<Dashboard me={me} 
-                    server={selectedServer.server} setSelectedServer={selectedServer.setSelectedServer}/>}/>
+                    server={selectedServer.server} setSelectedServer={selectedServer.setSelectedServer}/>}>
+                      <Route path="test" element={<Container>testing</Container>}></Route>
+                </Route>
               </React.Fragment>
               :
               null
@@ -55,5 +58,10 @@ const App = () => {
 
   )
 }
+
+const Container = styled.div`
+  color: black;
+  background-color: pink;
+`;
 
 export default App;
