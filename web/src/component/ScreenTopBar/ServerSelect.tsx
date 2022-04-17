@@ -57,7 +57,6 @@ const ServerSelect = () => {
                     setSelectedServer(undefined);
                 }
 
-
                 return (
                     <Container>
                         <Select

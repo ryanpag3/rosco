@@ -1,4 +1,3 @@
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["extendedIndexes"]
@@ -179,8 +178,8 @@ model Score {
   User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
 
   Keyword         Keyword[]
-  @@unique([name, serverId])
   ScoreboardScore ScoreboardScore[]
+  @@unique([name, serverId])
 }
 
 model Scoreboard {
@@ -251,6 +250,16 @@ model Server {
   AutoModRule              AutoModRule[]
   AllowedLink              AllowedLink[]
   ServerAutoModIgnoredRole ServerAutoModIgnoredRole[]
+  ServerManagerRole        ServerManagerRole[]
+}
+
+model ServerManagerRole {
+  id       String @id @default(uuid())
+  Server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId String
+  roleId   String
+
+  @@unique([serverId, roleId])
 }
 
 model ServerAutoModIgnoredRole {

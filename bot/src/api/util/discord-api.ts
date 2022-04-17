@@ -58,6 +58,15 @@ export default class DiscordApi {
         });
         return data;
     }
+    
+    getGuildMember = async (guildId: string, userDiscordId: string) => {
+        const { data } = await this.axios.get(`/guilds/${guildId}/members/${userDiscordId}`, {
+            headers: {
+                Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
+            }
+        });
+        return data;
+    }
 
      getGuild = async (id: string) => {
          logger.trace(`getting guild with id ${id}`);

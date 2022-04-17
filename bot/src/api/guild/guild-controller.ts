@@ -1,5 +1,7 @@
+import { getTimezone } from 'countries-and-timezones';
 import { RouteHandlerMethod } from 'fastify';
 import logger from '../../util/logger';
+import prisma from '../../util/prisma';
 import DiscordApi from '../util/discord-api';
 
 /**
@@ -7,10 +9,10 @@ import DiscordApi from '../util/discord-api';
  */
 export const getGuild: RouteHandlerMethod = async (request, reply) => {
     const { user } = request as any;
-    const { id } = request.params as any;
+    const { guildId } = request.params as any;
     try {
         const api = new DiscordApi(user);
-        let guild = await api.getGuild(id);
+        let guild = await api.getGuild(guildId);
         reply.headers({
             'Content-Type': 'application/json'
         }).send(JSON.stringify(guild));
@@ -20,3 +22,22 @@ export const getGuild: RouteHandlerMethod = async (request, reply) => {
         throw e;
     }
 }
+
+export const updateGuildTimezone: RouteHandlerMethod = async (request, reply) => {
+    const { guildId } = request.params as any;
+    const { timezone } = request.query as any;
+
+    if (!getTimezone(timezone))
+        return reply.status(400).send(`Invalid timezone provided.`);
+
+    await prisma.server.update({
+        where: {
+            discordId: guildId
+        },
+        data: {
+            timezone
+        }
+    });
+
+    reply.status(200).send();
+};
