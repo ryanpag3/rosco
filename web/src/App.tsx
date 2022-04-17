@@ -23,8 +23,10 @@ const App = () => {
   const [me, setMe] = useState(undefined as any);
 
   useEffect(() => {
+    if (me)
+      return;
     getMe();
-  }, [me === undefined]);
+  }, [me]);
 
   function getCachedSelectedServer() {
     const raw = localStorage.getItem(LocalStorageKey.SELECTED_SERVER);

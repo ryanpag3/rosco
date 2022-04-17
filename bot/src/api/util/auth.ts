@@ -1,43 +1,49 @@
+import { Permissions } from 'discord.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import client from '../..';
 import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 import Cookies from './cookies';
-import DiscordApi from './discord-api';
-import DiscordPermission from './discord-permission';
 import * as jwt from './jwt';
 
 export const verifyJWT = async (request: FastifyRequest, reply: FastifyReply) => {
-    const token = request.cookies[Cookies.JWT];
+    try {
+        const token = request.cookies[Cookies.JWT];
 
-    if (!token) {
-        return await sendUnauthorized(reply)
-    }
-
-    const { discordId } = jwt.validateJWT(token);
-
-    const user = await prisma.user.findUnique({
-        where: {
-            discordId
+        if (!token) {
+            return await sendUnauthorized(reply)
         }
-    });
 
-    if (!user) {
-        return await sendUnauthorized(reply);
-    }
+        const { discordId } = jwt.validateJWT(token);
 
-    // @ts-ignore
-    request.user = user;
+        const user = await prisma.user.findUnique({
+            where: {
+                discordId
+            }
+        });
 
-    const { guildId } = request.params as any;
+        if (!user) {
+            return await sendUnauthorized(reply);
+        }
 
-    /**
-     * Make sure the user is an admin for the guild to authenticate the request.
-     */
-    if (guildId) {
-        const api = new DiscordApi(user)
-        const [ guild ] = (await api.getMyGuilds()).filter((guild) => guild.id === guildId)
-        if (!DiscordPermission.has(guild.permissions, DiscordPermission.ADMINISTRATOR))
-            return reply.status(401).send();
+        // @ts-ignore
+        request.user = user;
+
+        const { guildId } = request.params as any;
+
+        /**
+         * Make sure the user is an admin for the guild to authenticate the request.
+         */
+        if (guildId) {
+            const guild = await client.guilds.fetch(guildId);
+            const member = await guild.members.fetch(user.discordId);
+            if (!member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+                return reply.status(401).send();
+            }
+        }
+    } catch (e) {
+        logger.error(e);
+        throw e;
     }
 }
 

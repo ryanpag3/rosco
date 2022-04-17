@@ -58,7 +58,17 @@ export default class DiscordApi {
         });
         return data;
     }
-    
+
+    getMyGuildMember = async (guildId: string) => {
+        const accessToken = await this.getAccessToken();
+        const { data } = await this.axios.get(`/v9/users/@me/guilds/${guildId}/member`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        return data;
+    }
+
     getGuildMember = async (guildId: string, userDiscordId: string) => {
         const { data } = await this.axios.get(`/guilds/${guildId}/members/${userDiscordId}`, {
             headers: {
@@ -68,18 +78,27 @@ export default class DiscordApi {
         return data;
     }
 
-     getGuild = async (id: string) => {
-         logger.trace(`getting guild with id ${id}`);
-         const { data } = await this.axios.get(`/guilds/${id}`, {
+    getGuild = async (id: string, asUser: boolean = false) => {
+        logger.trace(`getting guild with id ${id}`);
+        let headers = {
+            Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
+        }
+        
+        if (asUser) {
+            const accessToken = await this.getAccessToken();
+            headers = {
+                Authorization: `Bearer ${accessToken}`
+            };
+        }
+
+        const { data } = await this.axios.get(`/v9/guilds/${id}`, {
             params: {
                 with_counts: true
             },
-            headers: {
-                Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
-            }
+            headers
         });
-        return data; 
-     }
+        return data;
+    }
 
     /**
      * Get the access token from the cache and refresh it if need be.
@@ -147,5 +166,14 @@ export default class DiscordApi {
 
     getCacheId = () => {
         return `discord.${this.user.id}.accessToken`;
+    }
+
+    /**
+     * Reset access token. 
+     * 
+     * Useful in cases where the API rejected us and we didn't expect it.
+     */
+    clearAccessToken = async () => {
+        return redis.unlink(this.getCacheId());
     }
 }

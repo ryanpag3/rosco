@@ -19,6 +19,7 @@ export const getGuild: RouteHandlerMethod = async (request, reply) => {
     } catch (e) {
         if ((e as any).message.includes('status code 403'))
             return reply.status(403).send();
+        logger.error(e);
         throw e;
     }
 }

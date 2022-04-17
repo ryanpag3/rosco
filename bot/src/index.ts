@@ -46,8 +46,10 @@ process.on('uncaughtException', (error) => {
 
 async function main() {
     try {
-        logger.debug('setting up bot');
-        await setup(client);
+        if (process.env.IS_API !== 'true') {
+            logger.debug('setting up bot');
+            await setup(client);
+        }
         logger.debug('logging into Discord')
         await client.login(process.env.DISCORD_TOKEN);
     } catch (e) {

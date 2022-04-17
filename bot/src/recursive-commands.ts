@@ -34,6 +34,6 @@ const parseCommandsRecursively = (commandsObj: any, currDir: string) => {
     }
 }
 
-const COMMANDS: any = parseCommands();
+const COMMANDS: any = process.env.IS_API !== 'true' ? parseCommands() : {};
 
 export default COMMANDS;

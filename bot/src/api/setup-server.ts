@@ -3,6 +3,7 @@ import { FastifyCookieOptions } from 'fastify-cookie';
 import logger from '../util/logger';
 import SwaggerConfig from './swagger';
 import { verifyJWT } from './util/auth';
+import DiscordApi from './util/discord-api';
 
 export default async (fastify: FastifyInstance) => {
     await fastify.register(require('fastify-swagger'), SwaggerConfig as any);
@@ -53,11 +54,14 @@ export default async (fastify: FastifyInstance) => {
         // @ts-ignore
         route.handler = async (req, res) => {
             try {
+                logger.debug(req.url);
                 return await oldHandler(req, res);
             } catch (e) {
-                logger.error(`Uncaught exception from handler`, (e as any).message);
+                logger.error(`Uncaught exception from handler: ${req.url}`, (e as any).message);
                 logger.trace(e);
-                return res.status(500).send();
+                await res.status(500).send();
+                const api = new DiscordApi(req.user);
+                await api.clearAccessToken();
             }
         }
 

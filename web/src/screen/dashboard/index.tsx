@@ -29,6 +29,10 @@ const Dashboard = ({ me, server, setSelectedServer }: {
     getGuild(server.id)
       .then((r) => console.log(r))
       .catch((e) => {
+        console.log(e);
+        if (!e.toString().includes(403))
+          return;
+          
         setSelectedServer(undefined);
         navigate('/dashboard');
         localStorage.removeItem(LocalStorageKey.SELECTED_SERVER);

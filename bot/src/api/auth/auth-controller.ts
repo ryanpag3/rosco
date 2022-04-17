@@ -6,7 +6,7 @@ import Cookies from '../util/cookies';
 import * as jwt from '../util/jwt';
 
 export const getLoginUrl = () => {
-    const scopes = ['identify', 'email', 'guilds'].join(' ');
+    const scopes = ['identify', 'email', 'guilds', 'guilds.members.read'].join(' ');
 
     const params = new URLSearchParams({
         response_type: 'code',
