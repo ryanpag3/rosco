@@ -9,6 +9,7 @@ import { SelectedServerContext } from 'context/selected-server-context';
 import LocalStorageKey from 'util/localstorage-key';
 import styled from 'styled-components';
 import Home from 'screen/home';
+import GettingStarted from 'screen/getting-started';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -50,7 +51,7 @@ const App = () => {
                       {
                         selectedServer.server ? 
                         <Route path="home" element={<Home/>}></Route> :
-                        <Route path="*" element={null}/>
+                        null
                       }
                 </Route>
               </React.Fragment>

@@ -78,7 +78,7 @@ const ServerSelect = () => {
                             options={options}
                             isLoading={isLoading}
                             onChange={(val) => {
-                                navigate('/dashboard/' + (val as any).id);
+                                navigate('/dashboard/' + (val as any).id + '/home');
                                 setServerId(undefined);
                                 localStorage.setItem(
                                     LocalStorageKey.SELECTED_SERVER, 
