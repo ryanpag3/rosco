@@ -3,6 +3,7 @@ import Column from 'component/Column';
 import Row from 'component/Row';
 import styled from 'styled-components';
 import InviteButton from './InviteButton';
+import Colors from 'util/colors';
 
 const BetaInviteConfirmationModal = (props: {
   onClose: () => void;
@@ -37,7 +38,7 @@ const Container = styled(Column)`
   position: absolute;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  background-color: ${Colors.BACKGROUND_LIGHT};
   width: 20em;
   height: 17em;
   padding: .5em;
@@ -57,12 +58,12 @@ const TopRow = styled(Row)`
 const ModalTitle = styled.h1`
   margin: 0;
   padding: 0;
-  color: black;
+  color: ${Colors.TEXT_DARK};
   font-size: 1.5em;
 `;
 
 const ModalDescription = styled.span`
-  color: black;
+  color: ${Colors.TEXT_DARK};
   text-align: center;
   padding: .35em;
   font-size: 1em;

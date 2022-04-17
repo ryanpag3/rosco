@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import Select, { components, StylesConfig } from 'react-select'
 import styled from 'styled-components'
+import Colors from 'util/colors';
 import LocalStorageKey from 'util/localstorage-key';
 import * as MeApi from '../../api/me';
 
@@ -100,9 +101,9 @@ const Container = styled.div`
     margin-left: 1em;
 `;
 
-const backgroundColor = '#f0f0f0';
-const focusedBackgroundColor = '#ffffff';
-const textColor = '#000000';
+const backgroundColor = Colors.DROPDOWN_BACKGROUND_LIGHT;
+const focusedBackgroundColor = Colors.BACKGROUND_LIGHT;
+const textColor = Colors.TEXT_DARK;
 
 const SelectStyle: StylesConfig = {
     control: (provided, state) => ({
@@ -130,7 +131,7 @@ const SelectStyle: StylesConfig = {
     }),
     container: (provided, state) => ({
         ...provided,
-        color: 'black',
+        color: Colors.TEXT_DARK,
         borderColor: 'black',
         fontSize: '.85em'
     }),

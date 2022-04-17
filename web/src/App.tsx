@@ -10,6 +10,7 @@ import LocalStorageKey from 'util/localstorage-key';
 import styled from 'styled-components';
 import Home from 'screen/home';
 import GettingStarted from 'screen/getting-started';
+import Config from 'screen/config';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -49,8 +50,12 @@ const App = () => {
                 <Route path="/dashboard/:serverId" element={<Dashboard me={me} 
                     server={selectedServer.server} setSelectedServer={selectedServer.setSelectedServer}/>}>
                       {
-                        selectedServer.server ? 
-                        <Route path="home" element={<Home/>}></Route> :
+                        selectedServer.server ?
+                        <React.Fragment>
+                          <Route path="home" element={<Home/>}></Route>
+                          <Route path="config" element={<Config/>}></Route>
+                        </React.Fragment>
+                        :
                         null
                       }
                 </Route>
@@ -64,10 +69,5 @@ const App = () => {
 
   )
 }
-
-const Container = styled.div`
-  color: black;
-  background-color: pink;
-`;
 
 export default App;

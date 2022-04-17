@@ -2,6 +2,7 @@ import Row from 'component/Row';
 import React from 'react'
 import { FaDiscord, FaRedditAlien, FaTwitter } from 'react-icons/fa';
 import styled from 'styled-components';
+import Colors from 'util/colors';
 import HeaderNavLink from './HeaderNavLink';
 
 const LandingFooter = () => {
@@ -28,7 +29,7 @@ const RedditIcon = styled(FaRedditAlien)`
     cursor: pointer;
 
     :hover {
-        color: #c4c4c4;
+        color: ${Colors.TEXT_LIGHT_HOVER};
     }
 `;
 
@@ -38,7 +39,7 @@ const TwitterIcon = styled(FaTwitter)`
     cursor: pointer;
 
     :hover {
-        color: #c4c4c4;
+        color: ${Colors.TEXT_LIGHT_HOVER};
     }
 `;
 
@@ -49,7 +50,7 @@ const DiscordIcon = styled(FaDiscord)`
     cursor: pointer;
 
     :hover {
-        color: #c4c4c4;
+        color: ${Colors.TEXT_LIGHT_HOVER};
     }
 `;
 

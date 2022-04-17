@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Colors from 'util/colors';
 
 const Screen = (props: any) => {
   return (
@@ -11,7 +12,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: #535353;
+    background-color: ${Colors.BACKGROUND_DARK};
     min-height: 100%;
     max-width: 100%;
 `;

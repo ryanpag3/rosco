@@ -2,6 +2,7 @@ import Column from 'component/Column';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import Colors from 'util/colors';
 
 const FeatureCard = (props: {
     image: string;
@@ -41,7 +42,7 @@ const FeatureCard = (props: {
 const Container = styled(Column)`
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: ${Colors.BACKGROUND_LIGHT};
     width: 14em;
     height: 22em;
     border-radius: 2em;
@@ -59,7 +60,7 @@ const Container = styled(Column)`
 `;
 
 const FeatureCardText = styled.span`
-    color: black;
+    color: ${Colors.TEXT_DARK};
 `;
 
 const Title = styled(FeatureCardText)`
@@ -93,7 +94,7 @@ const FeaturesColumn = styled(Column)`
 `;
 
 const FeaturesUl = styled.ul`
-    color: black;
+    color: ${Colors.TEXT_DARK};
     padding-left: 1em;
     padding-right: 1em;
     font-size: .9em;
@@ -105,7 +106,7 @@ const Feature = styled.li`
 `;
 
 const DocAnchor = styled.a`
-    color: #1c76fe;
+    color: ${Colors.ANCHOR_LIGHT};
     margin: 1em;
     cursor: pointer;
     z-index: 1;

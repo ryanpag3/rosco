@@ -2,6 +2,7 @@ import React from 'react';
 import Row from 'component/Row';
 import styled from 'styled-components';
 import ServerSelect from './ServerSelect';
+import Colors from 'util/colors';
 
 const ScreenTopBar = (props: {
     me: {
@@ -24,7 +25,7 @@ const Container = styled(Row)`
     flex-wrap: wrap;
     width: 100%;
     min-height: 2em;
-    background-color: #252525;
+    background-color: ${Colors.BACKGROUND_DARKER};
 `;
 
 const Logo = styled.img`

@@ -3,6 +3,7 @@ import Screen from 'component/Screen'
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import Colors from 'util/colors'
 
 const NavSideBar = () => {
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ const NavSideBar = () => {
 const Container = styled(Column)`
   min-width: 10em;
   padding-left: 2em;
-  background-color: #3f3f3f;
+  background-color: ${Colors.BACKGROUND_MEDIUM};
 `;
 
 const Title = styled.h2`
@@ -53,7 +54,7 @@ const SectionSubheader = styled.h4`
 `;
 
 const StyledLink = styled(Link)`
-  color: white;
+  color: ${Colors.TEXT_LIGHT};
 `;
 
 export default NavSideBar
