@@ -23,21 +23,22 @@ const Dashboard = ({ me, server, setSelectedServer }: {
   }, [server]);
 
   useEffect(() => {
-    if (!server)
+    if (!server || server.isSelected === true)
       return;
     
     getGuild(server.id)
-      .then((r) => console.log(r))
+      .then((s) => {
+        s.isSelected = true;
+        setSelectedServer(s)
+      })
       .catch((e) => {
-        console.log(e);
         if (!e.toString().includes(403))
           return;
-          
         setSelectedServer(undefined);
         navigate('/dashboard');
         localStorage.removeItem(LocalStorageKey.SELECTED_SERVER);
         window.location.href = "https://discord.com/oauth2/authorize?client_id=955851785346613248&scope=bot%20applications.commands&permissions=8&response_type=code&redirect_uri=https%3A%2F%2Froscobot.com";
-    })
+    });
   }, [ server ]);
 
   return (

@@ -24,6 +24,7 @@ const ServerSelect = () => {
             .then((data) => {
                 setIsInit(true);
                 setOptions(data)
+                setIsLoading(false);
             });
     }, [isInit]);
 
@@ -50,8 +51,6 @@ const ServerSelect = () => {
                     if (s && (server as any).id !== (s as any).id) {
                         setSelectedServer(s);
                     }
-                    setIsLoading(false);
-                    console.log('done loading');
                 } else if (server && !params.serverId) {
                     server = undefined;
                     setSelectedServer(undefined);

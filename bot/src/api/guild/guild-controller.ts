@@ -12,10 +12,21 @@ export const getGuild: RouteHandlerMethod = async (request, reply) => {
     const { guildId } = request.params as any;
     try {
         const api = new DiscordApi(user);
-        let guild = await api.getGuild(guildId);
+        let guildRes = await api.getGuild(guildId);
+        const guild = await prisma.server.findUnique({
+            where: {
+                discordId: guildId
+            }
+        });
+
         reply.headers({
             'Content-Type': 'application/json'
-        }).send(JSON.stringify(guild));
+        }).send(JSON.stringify({
+            id: guildRes.id,
+            name: guildRes.name,
+            label: guildRes.name,
+            timezone: guild.timezone
+        }));
     } catch (e) {
         if ((e as any).message.includes('status code 403'))
             return reply.status(403).send();
