@@ -7,10 +7,9 @@ import * as MeApi from 'api/me';
 import Cookies, { getCookie } from 'util/cookies';
 import { SelectedServerContext } from 'context/selected-server-context';
 import LocalStorageKey from 'util/localstorage-key';
-import styled from 'styled-components';
 import Home from 'screen/home';
-import GettingStarted from 'screen/getting-started';
 import Config from 'screen/config';
+import Permissions from 'screen/permissions';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -56,6 +55,7 @@ const App = () => {
                         <React.Fragment>
                           <Route path="home" element={<Home/>}></Route>
                           <Route path="config" element={<Config/>}></Route>
+                          <Route path="permissions" element={<Permissions/>}/>
                         </React.Fragment>
                         :
                         null

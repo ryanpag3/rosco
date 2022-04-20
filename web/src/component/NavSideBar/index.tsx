@@ -16,7 +16,7 @@ const NavSideBar = () => {
 
         <SectionHeader>Configuration</SectionHeader>
         <StyledLink to="config">Main</StyledLink>
-        <StyledLink to="">Permissions</StyledLink>
+        <StyledLink to="permissions">Permissions</StyledLink>
 
         <SectionHeader>Modules</SectionHeader>
 

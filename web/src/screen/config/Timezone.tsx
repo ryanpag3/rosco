@@ -10,6 +10,7 @@ const Timezone = (props: {
   server: any;
 }) => {
   const [timezone, setTimezone] = useState(undefined as any);
+  const [isChanged, setIsChanged] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const timezones = Object.keys(ct.getAllTimezones());
 
@@ -24,7 +25,7 @@ const Timezone = (props: {
   }, [ props.server.timezone ])
 
   useEffect(() => {
-    if (!props.server || !timezone?.value)
+    if (!isChanged || !props.server || !timezone?.value)
       return;
     GuildApi.updateTimezone(props.server.id, timezone?.value)
       .then();
@@ -47,6 +48,7 @@ const Timezone = (props: {
         value={timezone}
         onChange={(val: any) => {
           setTimezone(val);
+          setIsChanged(true);
         }}
       />
     </Section>
