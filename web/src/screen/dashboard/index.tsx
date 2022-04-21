@@ -54,7 +54,7 @@ const Dashboard = ({ me, server, setSelectedServer }: {
 
 const StyledScreen = styled(Screen)`
   overflow: hidden;
-  height: 100vh;
+  height: 90vh;
   width: 100vw;
   padding: 0;
 `;
@@ -62,7 +62,8 @@ const StyledScreen = styled(Screen)`
 const OutletContainer = styled(Row)`
   // accounts for scroll bar
   min-width: 101vw;
-  min-height: 100vh;
+  max-width: 101vw;
+  max-height: 100vh;
   overflow-y: scroll;
 `;
 

@@ -73,7 +73,8 @@ export const getPermissions: RouteHandlerMethod = async (request, reply) => {
     const mappedFromDb: any = {};
 
     permissions.forEach((permission) => {
-        mappedFromDb[permission.commandId] = permission;
+        if (!mappedFromDb[permission.commandId]) mappedFromDb[permission.commandId] = [];
+        mappedFromDb[permission.commandId].push(permission) 
     });
 
     const permissionList = Object.keys(COMMANDS).map((key) => {
@@ -81,13 +82,19 @@ export const getPermissions: RouteHandlerMethod = async (request, reply) => {
         const roles: any = [];
         
         if (mappedFromDb[cmd.id]) {
-            const guild = client.guilds.cache.find((guild) => guild.id === guildId);
-            const role = guild?.roles.cache.find((role) => role.id === mappedFromDb[cmd.id].roleId);
-            logger.debug(`found saved permission, resolved role to ${role}`);
-            roles.push({
-                id: role?.id,
-                name: role?.name
-            });
+            for (const p of mappedFromDb[cmd.id]) {
+                const guild = client.guilds.cache.find((guild) => guild.id === guildId);
+                const role = guild?.roles.cache.find((role) => role.id === p.roleId);
+                logger.debug(`found saved permission, resolved role to ${JSON.stringify(role, null, 4)}`);
+                roles.push({
+                    id: role?.id,
+                    name: role?.name,
+                    color: role?.color !== 0 ? 
+                                "#" + role?.color.toString(16).padStart(6, '0') 
+                                : 
+                                undefined
+                });
+            }
         }
 
         return {

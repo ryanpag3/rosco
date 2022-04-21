@@ -12,11 +12,10 @@
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "axios": "^0.26.1",
-    "carbon-components": "^10.56.0",
-    "carbon-components-react": "^8.1.0",
     "countries-and-timezones": "^3.3.0",
     "dotenv": "^16.0.0",
     "react": "^17.0.2",
+    "react-data-table-component": "^7.5.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.2",
@@ -52,8 +51,6 @@
     ]
   },
   "devDependencies": {
-    "@types/carbon-components": "^10.27.1",
-    "@types/carbon-components-react": "^7.55.0",
     "@types/styled-components": "^5.1.24"
   }
 }
