@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import * as GuildApi from 'api/guild';
 
 import {
   DataTable,
@@ -9,63 +10,65 @@ import {
   TableBody,
   TableCell,
 } from 'carbon-components-react';
-
-const rows = [
-  {
-    id: 'a',
-    name: 'Load balancer 1',
-    status: 'Disabled',
-  },
-  {
-    id: 'b',
-    name: 'Load balancer 2',
-    status: 'Starting',
-  },
-  {
-    id: 'c',
-    name: 'Load balancer 3',
-    status: 'Active',
-  },
-];
+import Column from 'component/Column';
+import styled from 'styled-components';
 
 const headers = [
   {
     key: 'name',
-    header: 'Name',
+    header: 'Name'
   },
   {
-    key: 'status',
-    header: 'Status',
-  },
+    key: 'roleNames',
+    header: 'Allowed Roles'
+  }
 ];
 
-const PermissionTable = () => {
+const PermissionTable = ({ server }: any) => {
+  const [permissions, setPermissions] = useState([]);
+
+  useEffect(() => {
+    if (permissions.length !== 0)
+      return;
+
+    GuildApi.getPermissions(server.id)
+      .then((permissions) => setPermissions(permissions))
+      .catch((e) => console.error(e));
+  });
+
   return (
-    <DataTable rows={rows} headers={headers}>
-      {({ rows, headers, getTableProps, getHeaderProps, getRowProps }: any) => (
-        <Table {...getTableProps()}>
-          <TableHead>
-            <TableRow>
-              {headers.map((header: any) => (
-                <TableHeader {...getHeaderProps({ header })}>
-                  {header.header}
-                </TableHeader>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row: any) => (
-              <TableRow {...getRowProps({ row })}>
-                {row.cells.map((cell: any) => (
-                  <TableCell key={cell.id}>{cell.value}</TableCell>
+    <Container>
+      <DataTable rows={permissions} headers={headers}>
+        {({ rows, headers, getTableProps, getHeaderProps, getRowProps }: any) => (
+          <Table {...getTableProps()}>
+            <TableHead>
+              <TableRow>
+                {headers.map((header: any) => (
+                  <TableHeader {...getHeaderProps({ header })}>
+                    {header.header}
+                  </TableHeader>
                 ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      )}
-    </DataTable>
+            </TableHead>
+            <TableBody>
+              {rows.map((row: any) => (
+                <TableRow {...getRowProps({ row })}>
+                  {row.cells.map((cell: any) => (
+                    <TableCell key={cell.id}>{cell.value}</TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </DataTable>
+    </Container>
+
   )
 }
+
+const Container = styled(Column)`
+
+`;
 
 export default PermissionTable

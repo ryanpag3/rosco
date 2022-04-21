@@ -31,6 +31,21 @@ const GuildRoutes = [
             (fastify as any).verifyJWT
         ]), 
         handler: GuildController.updateGuildTimezone
+    },
+    {
+        method: 'GET',
+        url: '/guild/:guildId/permissions',
+        schema: {
+            description: 'An array of permission objects with allowed roles.',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: GuildController.getPermissions
     }
 ];
 

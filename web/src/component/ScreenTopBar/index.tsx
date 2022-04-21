@@ -24,7 +24,7 @@ const Container = styled(Row)`
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
-    min-height: 2em;
+    min-height: 4.5em;
     background-color: ${Colors.BACKGROUND_DARKER};
 `;
 

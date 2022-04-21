@@ -11,10 +11,11 @@ const Screen = (props: any) => {
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     background-color: ${Colors.BACKGROUND_DARK};
     min-height: 100%;
-    max-width: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
 `;
 
 export default Screen

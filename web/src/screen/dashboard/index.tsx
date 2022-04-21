@@ -42,18 +42,32 @@ const Dashboard = ({ me, server, setSelectedServer }: {
   }, [ server ]);
 
   return (
-    <Screen>
+    <StyledScreen>
       <ScreenTopBar me={me} />
       <OutletContainer>
         <NavSideBar/>
-        <Outlet/>
+        <StyledOutlet/>
       </OutletContainer>
-    </Screen>
+    </StyledScreen>
   )
 }
 
+const StyledScreen = styled(Screen)`
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  padding: 0;
+`;
+
 const OutletContainer = styled(Row)`
-  flex-grow: 1;
+  // accounts for scroll bar
+  min-width: 101vw;
+  min-height: 100vh;
+  overflow-y: scroll;
+`;
+
+const StyledOutlet = styled(Outlet)`
+
 `;
 
 export default Dashboard

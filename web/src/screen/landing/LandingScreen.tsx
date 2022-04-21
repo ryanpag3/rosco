@@ -13,7 +13,7 @@ import LandingFooter from './LandingFooter'
 
 const LandingScreen = () => {
   return (
-    <Screen>
+    <StyledScreen>
         <Stage>
           <Header/>
           <ContentColumn>
@@ -25,11 +25,13 @@ const LandingScreen = () => {
         <FeatureCardStage/>
         <CommunityStage/>
         <LandingFooter/>
-    </Screen>
+    </StyledScreen>
   )
 }
 
-
+const StyledScreen = styled(Screen)`
+  width: 100vw;
+`;
 
 const ContentColumn = styled(Column)`
   width: 100%;

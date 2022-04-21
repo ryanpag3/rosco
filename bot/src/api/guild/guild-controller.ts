@@ -3,6 +3,8 @@ import { RouteHandlerMethod } from 'fastify';
 import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 import DiscordApi from '../util/discord-api';
+import COMMANDS from '../../recursive-commands';
+import client from '../..';
 
 /**
  * Get guild metadata
@@ -53,3 +55,53 @@ export const updateGuildTimezone: RouteHandlerMethod = async (request, reply) =>
 
     reply.status(200).send();
 };
+
+/**
+ * Send the list of permissions with applicable set permissions.
+ */
+export const getPermissions: RouteHandlerMethod = async (request, reply) => {
+    const { guildId } = request.params as any;
+
+    const permissions = await prisma.permission.findMany({
+        where: {
+            Server: {
+                discordId: guildId
+            }
+        }
+    });
+
+    const mappedFromDb: any = {};
+
+    permissions.forEach((permission) => {
+        mappedFromDb[permission.commandId] = permission;
+    });
+
+    const permissionList = Object.keys(COMMANDS).map((key) => {
+        const cmd = COMMANDS[key];
+        const roles: any = [];
+        
+        if (mappedFromDb[cmd.id]) {
+            const guild = client.guilds.cache.find((guild) => guild.id === guildId);
+            const role = guild?.roles.cache.find((role) => role.id === mappedFromDb[cmd.id].roleId);
+            logger.debug(`found saved permission, resolved role to ${role}`);
+            roles.push({
+                id: role?.id,
+                name: role?.name
+            });
+        }
+
+        return {
+            id: cmd.id,
+            name: cmd.name,
+            roles
+        }
+    });
+
+    if (permissionList.length === 0) {
+        return reply.status(500).send();
+    }
+
+    return reply.status(200).headers({
+        'Content-Type': 'application/json'
+    }).send(JSON.stringify(permissionList));
+}
