@@ -1,7 +1,6 @@
 import React from 'react'
 import Row from 'component/Row';
 import styled from 'styled-components';
-import Colors from 'util/colors';
 
 const RoleCell = (props: {
     permissionId: string;
