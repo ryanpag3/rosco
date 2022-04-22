@@ -17,19 +17,29 @@ const customStyles: any = {
   },
   head: {
     style: {
-      fontSize: '1.2em',
+      fontSize: '1em',
       fontWeight: 'bold'
+    }
+  },
+  headRow: {
+    style: {
+      // backgroundColor: '#7e7e7e',
+
+      borderBottomStyle: 'solid',
+      borderBottomWidth: '3px',
+      borderBottomColor: '#858585' 
     }
   },
   rows: {
     style: {
       fontFamily: 'nunito',
-      fontSize: '1.1em',
+      fontSize: '.9em',
       backgroundColor: Colors.BACKGROUND_DARK,
+      minHeight: '2.75em',
       '&:not(:last-of-type)': {
         borderBottomStyle: 'solid',
         borderBottomWidth: '1px',
-        borderBottomColor: Colors.BACKGROUND_DARKER
+        borderBottomColor: '#808080'
       }
     },
     highlightOnHoverStyle: {

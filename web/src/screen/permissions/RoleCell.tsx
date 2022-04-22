@@ -16,7 +16,7 @@ const RoleCell = (props: {
 
 const Container = styled(Row)`
   background-color: ${(props: any) => props?.role?.color || '#7b7b7b'};
-  padding: .18em .5em;
+  padding: .1em .3em;
   border-radius: .3em;
   font-weight: bold;
   margin: 0 .25em;

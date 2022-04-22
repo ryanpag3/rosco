@@ -4,10 +4,12 @@ import styled, { css } from 'styled-components'
 import { FiRefreshCw } from 'react-icons/fi';
 import Colors from 'util/colors';
 import { FaCog } from 'react-icons/fa';
+import SearchInput from './SearchInput';
 
 const TableActions = () => {
   return (
       <Container>
+          <SearchInput/>
           <ConfigCog/>
           <RefreshIcon/>
       </Container>
@@ -19,8 +21,8 @@ const Container = styled(Row)`
 `;
 
 const IconStyle = css`
-    font-size: 1em;
-    margin: .5em;
+    font-size: .85em;
+    margin: .5em .75em;
     cursor: pointer;
     color: ${Colors.TEXT_MEDIUM};
 
