@@ -3,8 +3,6 @@ import Row from 'component/Row';
 import styled from 'styled-components';
 
 const RoleCell = (props: {
-    permissionId: string;
-    removeRole: (permissionId: string, roleId: string) => void;
     role: {
         id: string;
         name: string;
@@ -12,14 +10,14 @@ const RoleCell = (props: {
     }
 }) => {
   return (
-    <Container onClick={() => props.removeRole(props.permissionId, props.role.id)} {...props as any}>{props.role.name}</Container>
+    <Container {...props as any}>{props.role.name}</Container>
   )
 }
 
 const Container = styled(Row)`
   background-color: ${(props: any) => props?.role?.color || '#7b7b7b'};
-  padding: .25em 1em;
-  border-radius: .25em;
+  padding: .18em .5em;
+  border-radius: .3em;
   font-weight: bold;
   margin: 0 .25em;
 `;

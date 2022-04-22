@@ -10,6 +10,7 @@ const Colors = {
     TEXT_DARK: '#000000',
     TEXT_LIGHT_HOVER: '#c4c4c4',
     TEXT_LIGHT: '#FFFFFF',
+    TEXT_MEDIUM: '#b5b5b5'
 };
 
 export default Colors;

@@ -5,10 +5,16 @@ import styled from 'styled-components';
 import Colors from 'util/colors';
 import RoleCell from './RoleCell';
 import Row from 'component/Row';
+import TableActions from './TableActions';
 
 
 
 const customStyles: any = {
+  header: {
+    style: {
+      minHeight: '1.5em'
+    }
+  },
   head: {
     style: {
       fontSize: '1.2em',
@@ -18,13 +24,16 @@ const customStyles: any = {
   rows: {
     style: {
       fontFamily: 'nunito',
-      fontSize: '1em',
+      fontSize: '1.1em',
       backgroundColor: Colors.BACKGROUND_DARK,
       '&:not(:last-of-type)': {
         borderBottomStyle: 'solid',
         borderBottomWidth: '1px',
         borderBottomColor: Colors.BACKGROUND_DARKER
       }
+    },
+    highlightOnHoverStyle: {
+      backgroundColor: Colors.BACKGROUND_MEDIUM
     }
   }
 }
@@ -39,7 +48,7 @@ const PermissionTable = ({ server }: any) => {
       permission.roles = permission.roles.filter((role: any) => role.id !== roleId);
       return permission;
     });
-    
+
     setPermissions([...newPerms]);
   }
 
@@ -57,8 +66,6 @@ const PermissionTable = ({ server }: any) => {
         return (
           <RoleContainer>{row.roles.map((r: any, i: number) => (
             <RoleCell
-              removeRole={removeRole}
-              permissionId={row.id}
               role={r} />))}
           </RoleContainer>
         )
@@ -78,6 +85,9 @@ const PermissionTable = ({ server }: any) => {
   return <StyledDataTable
     fixedHeader
     selectableRows
+    highlightOnHover
+    pointerOnHover
+    actions={<TableActions/>}
     theme="dark"
     onColumnOrderChange={(nextOrder) => console.log(nextOrder)}
     onSort={(column, sortDirection) => {

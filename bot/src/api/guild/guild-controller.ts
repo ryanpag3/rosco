@@ -88,7 +88,7 @@ export const getPermissions: RouteHandlerMethod = async (request, reply) => {
                 logger.debug(`found saved permission, resolved role to ${JSON.stringify(role, null, 4)}`);
                 roles.push({
                     id: role?.id,
-                    name: role?.name,
+                    name: `@${role?.name}`,
                     color: role?.color !== 0 ? 
                                 "#" + role?.color.toString(16).padStart(6, '0') 
                                 : 
