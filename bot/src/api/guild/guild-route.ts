@@ -46,6 +46,22 @@ const GuildRoutes = [
             (fastify as any).verifyJWT
         ]),
         handler: GuildController.getPermissions
+    },
+    {
+        method: 'GET',
+        url: '/guild/:guildId/roles',
+        schema: {
+            description: 'Get an array of roles for the specified guild.',
+            response: {
+                200: {},
+                400: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: GuildController.getGuildRoles
     }
 ];
 

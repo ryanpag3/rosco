@@ -24,3 +24,15 @@ export const getPermissions = async (id: string) => {
     });
     return data;
 }
+
+export const getRoles = async (id: string) => {
+    const { data } = await axios.get(`/guild/${id}/roles`, {
+        headers: {
+            'Content-Type': 'application/json' 
+        }
+    });
+
+    console.log(data);
+
+    return data; 
+}

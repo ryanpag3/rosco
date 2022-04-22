@@ -6,22 +6,31 @@ import Colors from 'util/colors';
 import { FaCog } from 'react-icons/fa';
 import SearchInput from './SearchInput';
 import UpdatePermissionsModal from './UpdatePermissionsModal';
+import { SelectedServerContext } from 'context/selected-server-context';
 
 const TableActions = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   return (
-      <Container>
-          <SearchInput/>
-          <ConfigCog
-            onClick={() => setShowUpdateModal(true)}
-          />
-          <UpdatePermissionsModal
-            showDialog={showUpdateModal}
-            setShowDialog={setShowUpdateModal}
-          />
-          <RefreshIcon/>
-      </Container>
+    <SelectedServerContext.Consumer>
+      {
+        ({ server }) => (
+          <Container>
+            <SearchInput />
+            <ConfigCog
+              onClick={() => setShowUpdateModal(true)}
+            />
+            <UpdatePermissionsModal
+              server={server}
+              showDialog={showUpdateModal}
+              setShowDialog={setShowUpdateModal}
+            />
+            <RefreshIcon />
+          </Container>
+        )
+      }
+    </SelectedServerContext.Consumer>
+
   )
 }
 

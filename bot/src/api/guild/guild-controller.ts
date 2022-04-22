@@ -112,3 +112,18 @@ export const getPermissions: RouteHandlerMethod = async (request, reply) => {
         'Content-Type': 'application/json'
     }).send(JSON.stringify(permissionList));
 }
+
+
+export const getGuildRoles: RouteHandlerMethod = async (request, reply) => {
+    const { guildId } = request.params as any;
+
+    const guild = client.guilds.cache.find((guild) => guild.id === guildId);
+
+    if (!guild)
+        return reply.status(400).send();
+
+    const roles = guild.roles.cache.toJSON();
+    return reply.status(200).headers({
+        'Content-Type': 'application/json'
+    }).send(JSON.stringify(roles));
+}
