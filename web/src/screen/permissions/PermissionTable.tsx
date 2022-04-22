@@ -7,8 +7,6 @@ import RoleCell from './RoleCell';
 import Row from 'component/Row';
 import TableActions from './TableActions';
 
-
-
 const customStyles: any = {
   header: {
     style: {
@@ -23,11 +21,9 @@ const customStyles: any = {
   },
   headRow: {
     style: {
-      // backgroundColor: '#7e7e7e',
-
       borderBottomStyle: 'solid',
       borderBottomWidth: '3px',
-      borderBottomColor: '#858585' 
+      borderBottomColor: '#858585'
     }
   },
   rows: {

@@ -1,16 +1,25 @@
 import Row from 'component/Row';
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { FiRefreshCw } from 'react-icons/fi';
 import Colors from 'util/colors';
 import { FaCog } from 'react-icons/fa';
 import SearchInput from './SearchInput';
+import UpdatePermissionsModal from './UpdatePermissionsModal';
 
 const TableActions = () => {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+
   return (
       <Container>
           <SearchInput/>
-          <ConfigCog/>
+          <ConfigCog
+            onClick={() => setShowUpdateModal(true)}
+          />
+          <UpdatePermissionsModal
+            showDialog={showUpdateModal}
+            setShowDialog={setShowUpdateModal}
+          />
           <RefreshIcon/>
       </Container>
   )
