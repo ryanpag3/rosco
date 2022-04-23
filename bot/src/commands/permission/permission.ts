@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
-import PermissionList from './permission-list.sub';
+import PermissionList from './list.sub';
 import PermissionSetAll from './permission-set-all.sub';
 import PermissionSet from './permission-set.sub';
 import PermissionUnsetAll from './permission-unset-all.sub';
