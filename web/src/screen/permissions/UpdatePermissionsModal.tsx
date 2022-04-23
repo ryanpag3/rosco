@@ -15,6 +15,7 @@ const UpdatePermissionsModal = (props: {
   showDialog: boolean;
   setShowDialog: (showDialog: boolean) => void;
   selectedCommands: any[];
+  refresh: () => void;
 }) => {
   const [roles, setRoles] = useState([] as any);
   const [selectedRoles, setSelectedRoles] = useState([] as any);
@@ -35,8 +36,9 @@ const UpdatePermissionsModal = (props: {
   }, [ roles ]);
 
   const submit = async () => {
-    const res = await GuildApi.setPermissions(props.server.id, selectedRoles, props.selectedCommands);
-    console.log(res);
+    await GuildApi.setPermissions(props.server.id, selectedRoles, props.selectedCommands);
+    props.refresh();
+    props.setShowDialog(false);
   }
 
   return (

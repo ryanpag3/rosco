@@ -10,6 +10,7 @@ import { SelectedServerContext } from 'context/selected-server-context';
 
 const TableActions = (props: {
   selectedCommands: any[];
+  refresh: () => void;
 }) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
@@ -27,8 +28,11 @@ const TableActions = (props: {
               server={server}
               showDialog={showUpdateModal}
               setShowDialog={setShowUpdateModal}
+              refresh={props.refresh}
             />
-            <RefreshIcon />
+            <RefreshIcon 
+              onClick={() => props.refresh()}
+            />
           </Container>
         )
       }

@@ -10,17 +10,10 @@ import TableActions from './TableActions';
 const PermissionTable = ({ server }: any) => {
   const [permissions, setPermissions] = useState([] as any);
   const [selectedRows, setSelectedRows] = useState([] as any);
+  const [timeToRefresh, setTimeToRefresh] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const removeRole = (permissionId: string, roleId: string) => {
-    const newPerms = permissions.map((permission: any) => {
-      if (permission.id !== permissionId)
-        return permission;
-      permission.roles = permission.roles.filter((role: any) => role.id !== roleId);
-      return permission;
-    });
-
-    setPermissions([...newPerms]);
-  }
+  const refresh = () => setTimeToRefresh(!timeToRefresh);
 
   const headers = [
     {
@@ -44,11 +37,15 @@ const PermissionTable = ({ server }: any) => {
   ];
 
   useEffect(() => {
-    if (permissions.length !== 0)
+    if (permissions.length !== 0 && !timeToRefresh)
       return;
-
+    setIsLoading(true);
     GuildApi.getPermissions(server.id)
-      .then((permissions) => setPermissions(permissions))
+      .then((permissions) => {
+        setIsLoading(false);
+        setTimeToRefresh(false);
+        setPermissions(permissions)
+      })
       .catch((e: any) => console.error(e));
   });
 
@@ -58,6 +55,7 @@ const PermissionTable = ({ server }: any) => {
     highlightOnHover
     pointerOnHover
     actions={<TableActions
+      refresh={refresh}
       selectedCommands={selectedRows}
     />}
     theme="dark"
@@ -66,6 +64,7 @@ const PermissionTable = ({ server }: any) => {
       console.log(column);
       console.log(sortDirection);
     }}
+    progressPending={isLoading}
     customStyles={customStyles}
     columns={headers}
     data={permissions}
@@ -74,7 +73,7 @@ const PermissionTable = ({ server }: any) => {
 };
 
 const StyledDataTable = styled(DataTable)`
-  max-height: 100%;
+  min-height: 100%;
 `;
 
 const RoleContainer = styled(Row)`
@@ -84,7 +83,8 @@ const RoleContainer = styled(Row)`
 const customStyles: any = {
   header: {
     style: {
-      minHeight: '1.5em'
+      height: '1.5em',
+      maxHeight: '1.5em'
     }
   },
   head: {
@@ -120,6 +120,12 @@ const customStyles: any = {
     style: {
       width: '10em',
       backgroundColor: 'transparent'
+    }
+  },
+  progress: {
+    style: {
+      alignItems: 'center',
+      justifyContent:  'center'
     }
   }
 }
