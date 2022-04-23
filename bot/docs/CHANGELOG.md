@@ -1,3 +1,10 @@
+# [1.1.0-beta.52](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.51...v1.1.0-beta.52) (2022-04-23)
+
+
+### Bug Fixes
+
+* [#130](https://github.com/ryanpag3/guac-bot/issues/130) when running  with several roles assigned to each command, the bot will no longer throw an internal server error ([db68c99](https://github.com/ryanpag3/guac-bot/commit/db68c996c84b8ce2aefcb506fed7354116f1cc4d))
+
 # [1.1.0-beta.51](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.50...v1.1.0-beta.51) (2022-04-14)
 
 
