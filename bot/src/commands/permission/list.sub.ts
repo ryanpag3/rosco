@@ -24,7 +24,7 @@ const PermissionList: Command = {
                     description: `**Command** - **Allowed Roles**\n${Object.values(p).map((perm: any) => {
                         const [ command ]: any = Object.values(COMMANDS)
                                                        .filter((c: any) => c.id === perm.commandId);
-                        return `**${command?.name}** - ${perm.roles.map((r: any) => r.name).join(', ')}`; 
+                        return `**${command?.name}** - ${perm.roles.map((r: any) => r?.name).join(', ')}`; 
                     })
                     .sort().join('\n')}`
                 }
