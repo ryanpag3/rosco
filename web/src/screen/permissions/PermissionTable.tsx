@@ -7,45 +7,9 @@ import RoleCell from './RoleCell';
 import Row from 'component/Row';
 import TableActions from './TableActions';
 
-const customStyles: any = {
-  header: {
-    style: {
-      minHeight: '1.5em'
-    }
-  },
-  head: {
-    style: {
-      fontSize: '1em',
-      fontWeight: 'bold'
-    }
-  },
-  headRow: {
-    style: {
-      borderBottomStyle: 'solid',
-      borderBottomWidth: '3px',
-      borderBottomColor: '#858585'
-    }
-  },
-  rows: {
-    style: {
-      fontFamily: 'nunito',
-      fontSize: '.9em',
-      backgroundColor: Colors.BACKGROUND_DARK,
-      minHeight: '2.75em',
-      '&:not(:last-of-type)': {
-        borderBottomStyle: 'solid',
-        borderBottomWidth: '1px',
-        borderBottomColor: '#808080'
-      }
-    },
-    highlightOnHoverStyle: {
-      backgroundColor: Colors.BACKGROUND_MEDIUM
-    }
-  }
-}
-
 const PermissionTable = ({ server }: any) => {
   const [permissions, setPermissions] = useState([] as any);
+  const [selectedRows, setSelectedRows] = useState([] as any);
 
   const removeRole = (permissionId: string, roleId: string) => {
     const newPerms = permissions.map((permission: any) => {
@@ -93,7 +57,9 @@ const PermissionTable = ({ server }: any) => {
     selectableRows
     highlightOnHover
     pointerOnHover
-    actions={<TableActions/>}
+    actions={<TableActions
+      selectedCommands={selectedRows}
+    />}
     theme="dark"
     onColumnOrderChange={(nextOrder) => console.log(nextOrder)}
     onSort={(column, sortDirection) => {
@@ -103,6 +69,7 @@ const PermissionTable = ({ server }: any) => {
     customStyles={customStyles}
     columns={headers}
     data={permissions}
+    onSelectedRowsChange={(selected) => setSelectedRows(selected.selectedRows)}
   />
 };
 
@@ -113,5 +80,48 @@ const StyledDataTable = styled(DataTable)`
 const RoleContainer = styled(Row)`
 
 `;
+
+const customStyles: any = {
+  header: {
+    style: {
+      minHeight: '1.5em'
+    }
+  },
+  head: {
+    style: {
+      fontSize: '1em',
+      fontWeight: 'bold'
+    }
+  },
+  headRow: {
+    style: {
+      borderBottomStyle: 'solid',
+      borderBottomWidth: '3px',
+      borderBottomColor: '#858585'
+    }
+  },
+  rows: {
+    style: {
+      fontFamily: 'nunito',
+      fontSize: '.9em',
+      backgroundColor: Colors.BACKGROUND_DARK,
+      minHeight: '2.75em',
+      '&:not(:last-of-type)': {
+        borderBottomStyle: 'solid',
+        borderBottomWidth: '1px',
+        borderBottomColor: '#808080'
+      }
+    },
+    highlightOnHoverStyle: {
+      backgroundColor: Colors.BACKGROUND_MEDIUM
+    }
+  },
+  contextMenu: {
+    style: {
+      width: '10em',
+      backgroundColor: 'transparent'
+    }
+  }
+}
 
 export default PermissionTable;

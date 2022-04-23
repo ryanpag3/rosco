@@ -8,7 +8,9 @@ import SearchInput from './SearchInput';
 import UpdatePermissionsModal from './UpdatePermissionsModal';
 import { SelectedServerContext } from 'context/selected-server-context';
 
-const TableActions = () => {
+const TableActions = (props: {
+  selectedCommands: any[];
+}) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   return (
@@ -21,6 +23,7 @@ const TableActions = () => {
               onClick={() => setShowUpdateModal(true)}
             />
             <UpdatePermissionsModal
+              selectedCommands={props.selectedCommands}
               server={server}
               showDialog={showUpdateModal}
               setShowDialog={setShowUpdateModal}

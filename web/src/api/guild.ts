@@ -25,6 +25,17 @@ export const getPermissions = async (id: string) => {
     return data;
 }
 
+export const setPermissions = async (guildId: string, roles: any[], commands: any[]) => {
+    return axios.post(`/guild/${guildId}/permission`, {
+        roles,
+        commands
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
+
 export const getRoles = async (id: string) => {
     const { data } = await axios.get(`/guild/${id}/roles`, {
         headers: {

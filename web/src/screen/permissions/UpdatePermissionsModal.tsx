@@ -14,6 +14,7 @@ const UpdatePermissionsModal = (props: {
   server: any;
   showDialog: boolean;
   setShowDialog: (showDialog: boolean) => void;
+  selectedCommands: any[];
 }) => {
   const [roles, setRoles] = useState([] as any);
   const [selectedRoles, setSelectedRoles] = useState([] as any);
@@ -33,6 +34,11 @@ const UpdatePermissionsModal = (props: {
       })));
   }, [ roles ]);
 
+  const submit = async () => {
+    const res = await GuildApi.setPermissions(props.server.id, selectedRoles, props.selectedCommands);
+    console.log(res);
+  }
+
   return (
       <Container>
         <StyledDialog
@@ -47,17 +53,22 @@ const UpdatePermissionsModal = (props: {
               placeholder="Select Roles"
               styles={SelectStyle}
               options={roles}
-              onChange={(val: any) => setSelectedRoles(val)}
+              onChange={(val: any) => setSelectedRoles(val.map((v: any) => {
+                return {
+                  id: v.id,
+                  name: v.name
+                }
+              }))}
             />
-            {/* <button onClick={() => props.setShowDialog(false)}>close</button> */}
-
             <FormButtonRow>
               <CancelButton
                 onClick={() => props.setShowDialog(false)}
               >
                 Cancel
               </CancelButton>
-              <SubmitButton>
+              <SubmitButton
+                onClick={() => submit()}
+              >
                 Submit
               </SubmitButton>
             </FormButtonRow>

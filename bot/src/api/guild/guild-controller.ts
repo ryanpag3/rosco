@@ -74,25 +74,26 @@ export const getPermissions: RouteHandlerMethod = async (request, reply) => {
 
     permissions.forEach((permission) => {
         if (!mappedFromDb[permission.commandId]) mappedFromDb[permission.commandId] = [];
-        mappedFromDb[permission.commandId].push(permission) 
+        mappedFromDb[permission.commandId].push(permission)
     });
 
     const permissionList = Object.keys(COMMANDS).map((key) => {
         const cmd = COMMANDS[key];
         const roles: any = [];
-        
+
         if (mappedFromDb[cmd.id]) {
             for (const p of mappedFromDb[cmd.id]) {
                 const guild = client.guilds.cache.find((guild) => guild.id === guildId);
                 const role = guild?.roles.cache.find((role) => role.id === p.roleId);
-                logger.debug(`found saved permission, resolved role to ${JSON.stringify(role, null, 4)}`);
+                logger.trace(`found saved permission, resolved role to ${JSON.stringify(role, null, 4)}`);
                 roles.push({
                     id: role?.id,
-                    name: `@${role?.name}`,
-                    color: role?.color !== 0 ? 
-                                "#" + role?.color.toString(16).padStart(6, '0') 
-                                : 
-                                undefined
+                    // handle cases like @everyone
+                    name: !role?.name.startsWith(`@`) ? `@${role?.name}` : role?.name,
+                    color: role?.color !== 0 ?
+                        "#" + role?.color.toString(16).padStart(6, '0')
+                        :
+                        undefined
                 });
             }
         }
@@ -111,6 +112,69 @@ export const getPermissions: RouteHandlerMethod = async (request, reply) => {
     return reply.status(200).headers({
         'Content-Type': 'application/json'
     }).send(JSON.stringify(permissionList));
+}
+
+export const setPermissions: RouteHandlerMethod = async (request, reply) => {
+    const { guildId } = request.params as any;
+
+    const body: {
+        roles: {
+            name: string;
+            label: string;
+            id: string;
+        }[],
+        commands: {
+            id: string;
+            name: string;
+        }[]
+    } = request.body as any;
+
+    const server = await prisma.server.findUnique({
+        where: {
+            discordId: guildId
+        }
+    });
+
+    if (!server) {
+        logger.error(`Could not set permissions. Server does not exist.`);
+        return reply.status(500).send();
+    }
+
+    logger.trace(`Cleaning up existing permissions for ${body.commands.map(c => c.name).join(', ')} on server ${server.id}`);
+    await prisma.permission.deleteMany({
+        where: {
+            serverId: server.id, 
+            OR: body.commands.map((c) => {
+                return {
+                    commandId: c.id
+                }
+            })
+        }
+    });
+
+    for (const command of body.commands) {
+        if (!COMMANDS[command.name])
+            return reply.status(400).send();
+    }
+
+    let data: any[] = [];
+    for (const command of body.commands) {
+        data = [...data, ...body.roles.map((role) => {
+            return {
+                roleId: role.id,
+                serverId: server.id,
+                userId: (request as any).user.id,
+                commandId: command.id
+            }
+        })];
+        logger.trace(`Setting ${data.length} permissions to ${command.name} for server ${server.id}`)
+    }
+
+    await prisma.permission.createMany({
+        data
+    });
+    logger.debug(`Set ${data.length} permissions for server ${server.id}`);
+    return reply.status(200).send();
 }
 
 

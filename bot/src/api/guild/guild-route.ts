@@ -48,6 +48,21 @@ const GuildRoutes = [
         handler: GuildController.getPermissions
     },
     {
+        method: 'POST',
+        url: '/guild/:guildId/permission',
+        schema: {
+            description: 'Create one or more permission definitions.',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: GuildController.setPermissions
+    },
+    {
         method: 'GET',
         url: '/guild/:guildId/roles',
         schema: {
