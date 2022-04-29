@@ -1,3 +1,15 @@
+# [1.1.0-beta.53](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.52...v1.1.0-beta.53) (2022-04-29)
+
+
+### Bug Fixes
+
+* add a unique 'name' field to keywords allowing easier management of existing keywords ([8dc738e](https://github.com/ryanpag3/guac-bot/commit/8dc738ec1fe68253342a16629281b300bfaf1cba))
+
+
+### Features
+
+* add ability to announce when a keyword has been triggered ([7938768](https://github.com/ryanpag3/guac-bot/commit/7938768d5b4451698722abf5fb13bcb69e5c2d16))
+
 # [1.1.0-beta.52](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.51...v1.1.0-beta.52) (2022-04-23)
 
 
