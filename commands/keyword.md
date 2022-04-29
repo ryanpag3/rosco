@@ -2,7 +2,7 @@
 title: Keyword
 description: 
 published: true
-date: 2022-04-29T23:42:37.274Z
+date: 2022-04-29T23:44:29.224Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:12:52.742Z
@@ -81,8 +81,7 @@ Issue `/keyword list` to list out current keywords.
 
 /keyword list keyword: test score-name: my-score
 ```
-
-![keyword-list-example.png](/keyword-list-example.png)
+![screen_shot_2022-04-29_at_4.42.55_pm.png](/screen_shot_2022-04-29_at_4.42.55_pm.png)
 
 
 
