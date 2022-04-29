@@ -17,6 +17,12 @@ const Keyword: Command = {
             type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
+                    name: 'name',
+                    description: 'Specify a unique name for this keyword definition.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
                     name: 'keyword',
                     description: 'The keyword or phrase to check.',
                     type: ApplicationCommandOptionType.String,
@@ -52,6 +58,11 @@ const Keyword: Command = {
                     name: 'role',
                     description: 'Optionally limit the keyword detection to a specific role.',
                     type: ApplicationCommandOptionType.Role
+                },
+                {
+                    name: 'announce-channel',
+                    description: 'If set, Rosco will announce when this keyword is triggered.',
+                    type: ApplicationCommandOptionType.Channel
                 }
             ]
         },
@@ -61,36 +72,10 @@ const Keyword: Command = {
             type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
-                    name: 'keyword',
-                    description: 'The keyword or phrase to check.',
+                    name: 'name',
+                    description: 'The name of the keyword to delete.',
                     type: ApplicationCommandOptionType.String,
                     required: true
-                },
-                {
-                    name: 'score-name',
-                    description: 'The name of the score to assign the keyword to.',
-                    type: ApplicationCommandOptionType.String,
-                    required: true
-                },
-                {
-                    name: 'action',
-                    description: 'Which action was defined for the keyword you are deleting.',
-                    type: ApplicationCommandOptionType.String
-                },
-                {
-                    name: 'channel',
-                    description: 'Which channel the keyword is assigned to. (Optional)',
-                    type: ApplicationCommandOptionType.Channel
-                },
-                {
-                    name: 'user',
-                    description: 'Which user the keyword is assigned to. (Optional)',
-                    type: ApplicationCommandOptionType.User
-                },
-                {
-                    name: 'role',
-                    description: 'Which role the keyword is assigned to. (Optional)',
-                    type: ApplicationCommandOptionType.Role
                 }
             ]
         },
