@@ -2,7 +2,7 @@
 title: Keyword
 description: 
 published: true
-date: 2022-04-11T02:03:11.222Z
+date: 2022-04-29T23:42:37.274Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:12:52.742Z
@@ -18,6 +18,7 @@ Issue `/keyword create` to create a keyword and assign it to a score. Keywords c
 
 | Argument | Description | Required |
 |----------|-------------|----------|
+| `name` | A unique name identifying the keyword. | `true` |
 | `keyword` | The keyword or phrase that will trigger the event. | `true` |
 | `score-name` | The name of the score that will be changed upon event firing. | `true` |
 | `action` | Which action to take on the score when the keyword is found. Valid options are `UP` or `DOWN`. Default value is `UP`. | `false` |
@@ -25,18 +26,19 @@ Issue `/keyword create` to create a keyword and assign it to a score. Keywords c
 | `channel` | Set the keyword detection to be limited to this channel. | `false` |
 | `user` | Set the keyword detection to be limited to this user. | `false` |
 | `role` | Set the keyword detectionto be limited to this role. | `false` |
+| `announce-channel` | When a keyword is detected, Rosco will announce it to this channel. | `false` |
 
 ### Examples
 
 ``` bash
 # increase the score "test" by 5 every time "hello" is said in the chat
-/keyword create keyword: hello score-name: test amount: 5
+/keyword create name: hello-test keyword: hello score-name: test amount: 5
 
 # decrease the score "1234" by 20 every time "abc" is typed in the chat
-/keyword create keyword: abc score-name: 1234 amount: 20 action: DOWN
+/keyword create name: test keyword: abc score-name: 1234 amount: 20 action: DOWN
 
 # increase the score "ryan" by 1 every time ryan types "ryan"
-/keyword create keyword: ryan score-name: ryan user: ryan
+/keyword create name: ryan-test keyword: ryan score-name: ryan user: ryan
 ```
 
 ![keyword-create-example.png](/keyword-create-example.png)
@@ -45,15 +47,16 @@ Issue `/keyword create` to create a keyword and assign it to a score. Keywords c
 
 Issue `/keyword delete` to delete a keyword for a score.
 
+**important:** You must provide the same parameters that you provided to the `create` command. Failure to provide the *exact* parameters will result in the keyword failing to delete OR potentially deleting the wrong keyword.
+
 | Argument | Description | Required |
 |----------|-------------|----------|
-| `keyword` | The keyword or phrase you would like to delete. | `true` |
-| `score-name` | The score that you would like to delete the keyword for. | `true` |
+| `name` | The unique name of the keyword. | `true` |
 
 ### Examples
 
 ``` bash
-/keyword delete keyword: hello score-name: test
+/keyword delete name: test
 ```
 
 ![keyword-delete-example.png](/keyword-delete-example.png)
