@@ -17,6 +17,12 @@ const Keyword: Command = {
             type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
+                    name: 'name',
+                    description: 'Specify a unique name for this keyword definition.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
                     name: 'keyword',
                     description: 'The keyword or phrase to check.',
                     type: ApplicationCommandOptionType.String,
@@ -52,6 +58,11 @@ const Keyword: Command = {
                     name: 'role',
                     description: 'Optionally limit the keyword detection to a specific role.',
                     type: ApplicationCommandOptionType.Role
+                },
+                {
+                    name: 'announce-channel',
+                    description: 'If set, Rosco will announce when this keyword is triggered.',
+                    type: ApplicationCommandOptionType.Channel
                 }
             ]
         },
