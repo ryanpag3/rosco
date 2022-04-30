@@ -1,3 +1,10 @@
+# [1.1.0-beta.57](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.56...v1.1.0-beta.57) (2022-04-30)
+
+
+### Bug Fixes
+
+* when a keyword already exists with a specified name, Rosco will now throw a descriptive error instead of an internal server error ([4e1e3fc](https://github.com/ryanpag3/guac-bot/commit/4e1e3fca3db18bf0256b78676eafc1e64179a4a0))
+
 # [1.1.0-beta.56](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.55...v1.1.0-beta.56) (2022-04-30)
 
 
