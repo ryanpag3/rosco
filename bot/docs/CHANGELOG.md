@@ -1,3 +1,15 @@
+# [1.1.0-beta.55](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.54...v1.1.0-beta.55) (2022-04-30)
+
+
+### Bug Fixes
+
+* fix database schema migration ([584a843](https://github.com/ryanpag3/guac-bot/commit/584a84334464782f5f24382b4387470e45a4848b))
+
+
+### Reverts
+
+* Revert "Revert "cut a release"" ([e461502](https://github.com/ryanpag3/guac-bot/commit/e4615028322b7e70a9cc98229264cec474a3b933))
+
 # [1.1.0-beta.54](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.53...v1.1.0-beta.54) (2022-04-30)
 
 
