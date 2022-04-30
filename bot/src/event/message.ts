@@ -110,7 +110,7 @@ const handleKeywords = async (message: Message, server: Server | any) => {
                                 },
                                 {
                                     name: 'name',
-                                    value: k.name,
+                                    value: (k as any).name,
                                 }
                             ]
                         }
