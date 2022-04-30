@@ -10,7 +10,6 @@ const KeywordCreate: Command = {
     id: '6ec5e902-f482-48a5-879e-7427b8ba5a20',
     name: 'keyword create',
     handler: async (interaction, user, server) => {
-        const name = interaction.options.getString('name', true);
         const word = interaction.options.getString('keyword', true);
         const scoreName = interaction.options.getString('score-name', true);
         const action = interaction.options.getString('action');
@@ -18,7 +17,6 @@ const KeywordCreate: Command = {
         const channel = interaction.options.getChannel('channel');
         const filterOnUser = interaction.options.getUser('user');
         const role = interaction.options.getRole('role');
-        const announceChannel = interaction.options.getChannel('announce-channel');
 
         if (action && action !== 'UP' && action !== 'DOWN')
             throw new BotError(`Invalid action provided. Only \`UP\` or \`DOWN\` are allowed.`);
@@ -57,7 +55,6 @@ const KeywordCreate: Command = {
                 throw new Error(`Server instance not instantiated. Keyword functionality has been disabled.`);
 
             const data = {
-                name,
                 word,
                 scoreId: score?.id as string,
                 serverId: server?.id as string,
@@ -65,8 +62,7 @@ const KeywordCreate: Command = {
                 amount: amount || undefined,
                 action: action as KeywordAction || undefined,
                 userId: inDbUser?.id,
-                roleId: role?.id,
-                announceChannelId: announceChannel?.id
+                roleId: role?.id
             }; 
 
             const existingKeyword = await prisma.keyword.findFirst({
