@@ -69,14 +69,6 @@ const KeywordCreate: Command = {
                 announceChannelId: announceChannel?.id
             }; 
 
-            const existingKeyword = await prisma.keyword.findFirst({
-                where: data,
-                rejectOnNotFound: false
-            });
-
-            if (existingKeyword)
-                throw new BotError(`A keyword already exists with that configuration.`);
-
             const keywordRecord = await prisma.keyword.create({
                 data
             });
@@ -92,6 +84,8 @@ const KeywordCreate: Command = {
                 ]
             })
         } catch (e) {
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
+                throw new BotError(`A keyword already exists with that name.`);
             throw e;
         }
     }
