@@ -1,3 +1,10 @@
+# [1.1.0-beta.56](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.55...v1.1.0-beta.56) (2022-04-30)
+
+
+### Bug Fixes
+
+* minor update to address crashes ([f9c642d](https://github.com/ryanpag3/guac-bot/commit/f9c642d8bebada876b144680885daffe6abfe21c))
+
 # [1.1.0-beta.55](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.54...v1.1.0-beta.55) (2022-04-30)
 
 
