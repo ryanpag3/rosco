@@ -1,3 +1,10 @@
+# [1.1.0-beta.54](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.53...v1.1.0-beta.54) (2022-04-30)
+
+
+### Bug Fixes
+
+* get Rosco working again ([236ca0f](https://github.com/ryanpag3/guac-bot/commit/236ca0f2e2fbc08e82e634f40f56699f16a11cfe))
+
 # [1.1.0-beta.53](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.52...v1.1.0-beta.53) (2022-04-29)
 
 
