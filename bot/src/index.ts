@@ -40,8 +40,9 @@ process.on('SIGTERM', async () => {
 });
 
 process.on('uncaughtException', (error) => {
+    logger.error(error);
     // make sure the process exits if we hit a compilation error, so ts-node-dev can restart on next change
-    if (error.message.includes('Compilation error in') || error.message.includes('Unable to compile')) process.exit(0);
+    if (error.message.includes('Compilation error in') || error.message.includes('Unable to compile')) process.exit(1);
 });
 
 async function main() {
@@ -50,8 +51,10 @@ async function main() {
             logger.debug('setting up bot');
             await setup(client);
         }
+
         logger.debug('logging into Discord')
         await client.login(process.env.DISCORD_TOKEN);
+        logger.debug('logged into Discord');
     } catch (e) {
         logger.error(e);
         process.exit(1);

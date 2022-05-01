@@ -1,7 +1,7 @@
 import Row from 'component/Row';
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
-import { FiRefreshCw } from 'react-icons/fi';
+import { FiRefreshCw, FiHelpCircle } from 'react-icons/fi';
 import Colors from 'util/colors';
 import { FaCog } from 'react-icons/fa';
 import SearchInput from './SearchInput';
@@ -33,6 +33,9 @@ const TableActions = (props: {
             <RefreshIcon 
               onClick={() => props.refresh()}
             />
+            <HelpIcon
+            
+            />
           </Container>
         )
       }
@@ -51,14 +54,19 @@ const IconStyle = css`
     cursor: pointer;
     color: ${Colors.TEXT_MEDIUM};
 
-    /* :hover {
-        color: ${Colors.TEXT_LIGHT_HOVER};
-    } */
+    :hover {
+        color: white;
+    }
 `;
 
 const RefreshIcon = styled(FiRefreshCw)`
     ${IconStyle}
 `;
+
+const HelpIcon = styled(FiHelpCircle)`
+  ${IconStyle}
+`;
+
 
 const ConfigCog = styled(FaCog)`
     ${IconStyle}

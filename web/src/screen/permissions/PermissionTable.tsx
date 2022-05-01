@@ -84,7 +84,10 @@ const customStyles: any = {
   header: {
     style: {
       height: '1.5em',
-      maxHeight: '1.5em'
+      maxHeight: '1.5em',
+      borderBottomStyle: 'solid',
+      borderBottomWidth: '1px',
+      borderBottomColor: '#858585' 
     }
   },
   head: {
@@ -96,7 +99,7 @@ const customStyles: any = {
   headRow: {
     style: {
       borderBottomStyle: 'solid',
-      borderBottomWidth: '3px',
+      borderBottomWidth: '1px',
       borderBottomColor: '#858585'
     }
   },

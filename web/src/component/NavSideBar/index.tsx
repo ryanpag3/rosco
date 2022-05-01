@@ -36,6 +36,7 @@ const Container = styled(Column)`
   min-width: 10em;
   padding-left: 2em;
   background-color: ${Colors.BACKGROUND_MEDIUM};
+  border-right: solid 1px #858585;
 `;
 
 const Title = styled.h2`
