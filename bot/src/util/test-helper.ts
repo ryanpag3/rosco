@@ -107,7 +107,8 @@ export function createTestInteraction(commandName: string,
                 cache: {
                     find: (role: any) => {
                         return {
-                            id: '1'
+                            id: '1',
+                            toJSON: () => {}
                         }
                     }
                 }

@@ -90,20 +90,22 @@ model CommandHistory {
 }
 
 model Keyword {
-  id        String        @id @default(uuid())
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  word      String
-  scoreId   String
-  Score     Score         @relation(fields: [scoreId], references: [id], onDelete: Cascade)
-  action    KeywordAction @default(UP)
-  amount    Int           @default(1)
-  serverId  String
-  Server    Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  channelId String?
-  userId    String?
-  User      User?         @relation(fields: [userId], references: [id])
-  roleId    String?
+  id                String        @id @default(uuid())
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  name              String?        @unique @default(uuid())
+  word              String
+  scoreId           String
+  Score             Score         @relation(fields: [scoreId], references: [id], onDelete: Cascade)
+  action            KeywordAction @default(UP)
+  amount            Int           @default(1)
+  serverId          String
+  Server            Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  channelId         String?
+  userId            String?
+  User              User?         @relation(fields: [userId], references: [id])
+  roleId            String?
+  announceChannelId String?
 }
 
 model Permission {
