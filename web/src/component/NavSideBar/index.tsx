@@ -33,6 +33,7 @@ const NavSideBar = () => {
 }
 
 const Container = styled(Column)`
+  min-height: 100vh;
   min-width: 10em;
   padding-left: 2em;
   background-color: ${Colors.BACKGROUND_MEDIUM};

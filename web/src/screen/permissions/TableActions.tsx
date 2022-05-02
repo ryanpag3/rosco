@@ -53,7 +53,7 @@ const Container = styled(Row)`
 
 const IconStyle = css`
     font-size: .85em;
-    margin: .5em .75em;
+    margin: .2em .75em;
     cursor: pointer;
     color: ${Colors.TEXT_MEDIUM};
 
