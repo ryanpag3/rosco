@@ -4,10 +4,13 @@ import React from 'react'
 import styled from 'styled-components'
 import Colors from 'util/colors'
 
-const SearchInput = () => {
+const SearchInput = (props: {
+  onChangeText: (search: any) => void;
+}) => {
   return (
     <Container>
         <StyledSearchInput
+            onChange={props.onChangeText}
             placeholder="Filter"
         />        
     </Container>

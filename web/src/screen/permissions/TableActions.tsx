@@ -11,6 +11,7 @@ import { SelectedServerContext } from 'context/selected-server-context';
 const TableActions = (props: {
   selectedCommands: any[];
   refresh: () => void;
+  onFilterChanged: (filter: any) => void;
 }) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
@@ -19,7 +20,9 @@ const TableActions = (props: {
       {
         ({ server }) => (
           <Container>
-            <SearchInput />
+            <SearchInput 
+              onChangeText={props.onFilterChanged}
+            />
             <ConfigCog
               onClick={() => setShowUpdateModal(true)}
             />

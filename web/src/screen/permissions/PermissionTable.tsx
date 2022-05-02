@@ -12,8 +12,11 @@ const PermissionTable = ({ server }: any) => {
   const [selectedRows, setSelectedRows] = useState([] as any);
   const [timeToRefresh, setTimeToRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [filter, setFilter] = useState(undefined as any); 
 
   const refresh = () => setTimeToRefresh(!timeToRefresh);
+
+  const onFilterChanged = (filter: any) => setFilter(filter.target.value)
 
   const headers = [
     {
@@ -55,6 +58,7 @@ const PermissionTable = ({ server }: any) => {
     highlightOnHover
     pointerOnHover
     actions={<TableActions
+      onFilterChanged={onFilterChanged}
       refresh={refresh}
       selectedCommands={selectedRows}
     />}
@@ -67,7 +71,11 @@ const PermissionTable = ({ server }: any) => {
     progressPending={isLoading}
     customStyles={customStyles}
     columns={headers}
-    data={permissions}
+    data={permissions.filter((p: any) => {
+      if (!filter || filter === '')
+        return true;
+      return p.name.includes(filter);      
+    })}
     onSelectedRowsChange={(selected) => setSelectedRows(selected.selectedRows)}
   />
 };
