@@ -139,7 +139,8 @@ const SelectStyle: StylesConfig = {
     }),
     menu: (provided, state) => ({
         ...provided,
-        backgroundColor
+        backgroundColor,
+        zIndex: 3
     }),
     option: (provided, state) => ({
         ...provided,

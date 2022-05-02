@@ -1,33 +1,32 @@
 import Column from 'component/Column'
-import Screen from 'component/Screen'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Colors from 'util/colors'
 
 const NavSideBar = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <Container>
-        <Title>Table of Contents</Title>
-        <StyledLink to="home">Home</StyledLink>
-        <StyledLink to="">Documentation</StyledLink>
+      <Title>Table of Contents</Title>
+      <StyledLink to="home">Home</StyledLink>
+      <StyledLink to="">Documentation</StyledLink>
 
-        <SectionHeader>Configuration</SectionHeader>
-        <StyledLink to="config">Main</StyledLink>
-        <StyledLink to="permissions">Permissions</StyledLink>
+      <SectionHeader>Configuration</SectionHeader>
+      <StyledLink to="config">Main</StyledLink>
+      <StyledLink to="permissions">Permissions</StyledLink>
 
-        <SectionHeader>Modules</SectionHeader>
+      <SectionHeader>Modules</SectionHeader>
 
-        <SectionSubheader>AutoMod</SectionSubheader>
-        <StyledLink to="">Config</StyledLink>
-        <StyledLink to=""></StyledLink>
+      <SectionSubheader>AutoMod</SectionSubheader>
+      <StyledLink to="">Config</StyledLink>
+      <StyledLink to=""></StyledLink>
 
-        <SectionSubheader>Scores</SectionSubheader>
-        <StyledLink to="scores">Manage Scores</StyledLink>
-        <StyledLink to="keywords">Keywords</StyledLink>
-        <StyledLink to="scoreboards">Scoreboards</StyledLink>
+      <SectionSubheader>Scores</SectionSubheader>
+      <StyledLink to="scores">Manage Scores</StyledLink>
+      <StyledLink to="keywords">Keywords</StyledLink>
+      <StyledLink to="scoreboards">Scoreboards</StyledLink>
     </Container>
   )
 }
