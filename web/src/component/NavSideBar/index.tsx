@@ -18,15 +18,15 @@ const NavSideBar = () => {
       <StyledLink to="permissions">Permissions</StyledLink>
 
       <SectionHeader>Modules</SectionHeader>
-
       <SectionSubheader>AutoMod</SectionSubheader>
-      <StyledLink to="">Config</StyledLink>
-      <StyledLink to=""></StyledLink>
-
-      <SectionSubheader>Scores</SectionSubheader>
-      <StyledLink to="scores">Manage Scores</StyledLink>
-      <StyledLink to="keywords">Keywords</StyledLink>
-      <StyledLink to="scoreboards">Scoreboards</StyledLink>
+      <IndentedLink to="">Banned Words</IndentedLink>
+      <IndentedLink to="" style={{ marginBottom: '.6em' }}>Link Detection</IndentedLink>
+      <StyledLink to="scores">Score</StyledLink>
+      <StyledLink to="keywords">Keyword</StyledLink>
+      <StyledLink to="scoreboards">Scoreboard</StyledLink>
+      <StyledLink to="polls">Poll</StyledLink> 
+      <StyledLink to="stopwatch">Stopwatch</StyledLink>
+      <StyledLink to="timer">Timer</StyledLink>
     </Container>
   )
 }
@@ -56,6 +56,11 @@ const SectionSubheader = styled.h4`
 
 const StyledLink = styled(Link)`
   color: ${Colors.TEXT_LIGHT};
+  margin-bottom: .2em;
+`;
+
+const IndentedLink = styled(StyledLink)`
+  margin-left: .4em;
 `;
 
 export default NavSideBar
