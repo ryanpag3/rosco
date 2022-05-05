@@ -1,14 +1,14 @@
 import { FastifyInstance } from 'fastify';
-import { FastifyCookieOptions } from 'fastify-cookie';
+import { FastifyCookieOptions } from '@fastify/cookie';
 import logger from '../util/logger';
 import SwaggerConfig from './swagger';
 import { verifyJWT } from './util/auth';
 import DiscordApi from './util/discord-api';
 
 export default async (fastify: FastifyInstance) => {
-    await fastify.register(require('fastify-swagger'), SwaggerConfig as any);
+    await fastify.register(require('@fastify/swagger'), SwaggerConfig as any);
 
-    await fastify.register(require('fastify-cookie'), {
+    await fastify.register(require('@fastify/cookie'), {
         secret: process.env.COOKIE_SECRET || 'iwinagainlewstherin',
         parseOptions: {}
     } as FastifyCookieOptions);

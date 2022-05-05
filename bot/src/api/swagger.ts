@@ -1,5 +1,5 @@
 import { FastifyRegisterOptions } from 'fastify';
-import { SwaggerOptions } from 'fastify-swagger';
+import { SwaggerOptions } from '@fastify/swagger';
 
 const SwaggerConfig: SwaggerOptions = {
     routePrefix: '/documentation',
