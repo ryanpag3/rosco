@@ -10,6 +10,7 @@ import LocalStorageKey from 'util/localstorage-key';
 import Home from 'screen/home';
 import Config from 'screen/config';
 import Permissions from 'screen/permissions';
+import BannedWords from 'screen/banned-words';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -56,6 +57,7 @@ const App = () => {
                           <Route path="home" element={<Home/>}></Route>
                           <Route path="config" element={<Config/>}></Route>
                           <Route path="permissions" element={<Permissions/>}/>
+                          <Route path="auto-mod/banned-words" element={<BannedWords/>}/>
                         </React.Fragment>
                         :
                         null
