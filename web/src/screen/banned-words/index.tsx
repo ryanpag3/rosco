@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AutoModScreen from 'component/AutoModScreen'
 import styled from 'styled-components';
 import * as AutoModApi from 'api/automod';
@@ -11,8 +11,10 @@ const BannedWords = (props: any) => {
       {
         ({ server }: any) => (<StyledAutoModScreen
           moduleName="Banned Words"
-          onToggle={(isToggled: boolean) => 
-                      AutoModApi.toggleBannedWords(server.id, isToggled).then()}
+          onToggle={(isToggled: boolean) =>{ 
+                      console.log(server);
+                      return AutoModApi.toggleBannedWords(server.id, isToggled).then()}
+                    }
         >
         </StyledAutoModScreen>)
       }

@@ -24,10 +24,10 @@ export const getGuild: RouteHandlerMethod = async (request, reply) => {
         reply.headers({
             'Content-Type': 'application/json'
         }).send(JSON.stringify({
+            ...guild,
             id: guildRes.id,
             name: guildRes.name,
-            label: guildRes.name,
-            timezone: guild.timezone
+            label: guildRes.name
         }));
     } catch (e) {
         if ((e as any).message.includes('status code 403'))
