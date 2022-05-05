@@ -58,7 +58,7 @@ const EnabledLabel = styled.span`
   margin-right: .5em;
 `;
 
-const StyledSwitch = styled(Switch)`
+const StyledSwitch = styled(Switch as any)`
   margin-right: 1.5em;
 `;
 
