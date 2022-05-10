@@ -39,6 +39,8 @@ process.on('SIGTERM', async () => {
     }
 });
 
+process.on('unhandledException', (error) => logger.error(error));
+
 process.on('uncaughtException', (error) => {
     logger.error(error);
     // make sure the process exits if we hit a compilation error, so ts-node-dev can restart on next change

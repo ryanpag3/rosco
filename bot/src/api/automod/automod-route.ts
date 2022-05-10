@@ -16,6 +16,21 @@ const AutoModRoutes = [
             (fastify as any).verifyJWT
         ]),
         handler: AutoModController.toggleBannedWordsModule    
+    },
+    {
+        method: 'POST',
+        url: '/automod/:guildId/banned-words',
+        schema: {
+            description: 'Set the banned words for a server.',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: AutoModController.setBannedWords
     }
 ];
 

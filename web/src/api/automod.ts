@@ -10,3 +10,15 @@ export const toggleBannedWords = async (guildId: string, isEnabled: boolean) => 
         }
     });
 }
+
+
+export const setBannedWords = async (guildId: string, words: string[]) => {
+    return axios.post(`/automod/${guildId}/banned-words`, null, {
+        params: {
+            words: encodeURIComponent(words.join(','))
+        },
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}

@@ -23,3 +23,12 @@ export const toggleBannedWordsModule: RouteHandlerMethod = async (request, reply
     }
     return reply.status(500).send();
 }
+
+export const setBannedWords: RouteHandlerMethod = async (request, reply) => {
+    const { user } = request as any;
+    const { guildId } = request.params as any;
+    let { words } = request.query as any;
+    words = decodeURIComponent(words).split(',');
+    
+    return reply.status(200).send();
+}

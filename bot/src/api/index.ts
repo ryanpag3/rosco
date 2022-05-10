@@ -9,6 +9,12 @@ import setupServer from './setup-server';
 
 export const fastify = Fastify();
 
+process.on('uncaughtException', (error) => {
+    logger.error(error);
+    // make sure the process exits if we hit a compilation error, so ts-node-dev can restart on next change
+    if (error.message.includes('Compilation error in') || error.message.includes('Unable to compile')) process.exit(1);
+});
+
 const start = async () => {
     try {
         const port = process.env.FASTIFY_PORT || 3000;
