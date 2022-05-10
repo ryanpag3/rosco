@@ -12,8 +12,7 @@ const SetBannedWordsInput = (props: {
   const [words, setWords] = useState([] as any);
 
   useEffect(() => {
-    console.log(words);
-    AutoModApi.setBannedWords(props.server.id, words).then();
+    AutoModApi.setBannedWords(props.server.id, words.map((v: any) => v.value)).then();
   }, [ words ])
 
   return (
@@ -21,8 +20,9 @@ const SetBannedWordsInput = (props: {
       <CreatableSelect
         isMulti
         isClearable
-        onChange={(newValue: MultiValue<unknown>, actionMeta: ActionMeta<unknown>) => setWords(newValue.map((v: any) => v.value))}
+        onChange={(newValue: MultiValue<unknown>, actionMeta: ActionMeta<unknown>) => setWords(newValue)}
         styles={{...SelectStyle, ...CreatableStyle }}
+        options={words}
       />
     </Container>
   )
