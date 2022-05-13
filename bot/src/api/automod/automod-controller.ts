@@ -28,8 +28,7 @@ export const toggleBannedWordsModule: RouteHandlerMethod = async (request, reply
 export const setBannedWords: RouteHandlerMethod = async (request, reply) => {
     const { guildId } = request.params as any;
     let { words } = request.query as any;
-    words = decodeURIComponent(words).split(',');
-
+    words = decodeURIComponent(words).split(',').filter((w) => w !== '');
     try {
         const s = await prisma.server.findUnique({
             where: {

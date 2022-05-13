@@ -22,7 +22,7 @@ const AutoModScreen = (props: {
       return isChecked; 
     }
 
-    return props.isToggled;
+    return props.isToggled || false;
   }
 
   return (

@@ -9,27 +9,41 @@ import * as AutoModApi from 'api/automod';
 const SetBannedWordsInput = (props: {
   server: any;
 }) => {
+  const [isInit, setIsInit] = useState(false)
   const [words, setWords] = useState([] as any);
 
   useEffect(() => {
+    if (isInit === true)
+      return;
+
     AutoModApi.getBannedWordsData(props.server.id)
       .then((data) => {
-        console.log(data);
-      })    
-  })
+        setWords(data.data.words.map((w: string) => {
+          return {
+            label: w,
+            value: w
+          }
+        }))
+        setIsInit(true);
+      });
+  });
 
-  useEffect(() => {
-    AutoModApi.setBannedWords(props.server.id, words.map((v: any) => v.value)).then();
-  }, [ words ])
+  async function submitWords(words: MultiValue<unknown>) {
+    console.log(words);
+    AutoModApi.setBannedWords(props.server.id, words.length === 0 ? [] : words.map((v: any) => v.value))
+      .then();
+    setWords(words);
+  }
 
   return (
     <Container>
       <CreatableSelect
         isMulti
         isClearable
-        onChange={(newValue: MultiValue<unknown>, actionMeta: ActionMeta<unknown>) => setWords(newValue)}
-        styles={{...SelectStyle, ...CreatableStyle }}
+        onChange={submitWords}
+        styles={{ ...SelectStyle, ...CreatableStyle }}
         options={words}
+        value={words}
       />
     </Container>
   )
