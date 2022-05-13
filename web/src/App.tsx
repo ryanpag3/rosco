@@ -11,6 +11,7 @@ import Home from 'screen/home';
 import Config from 'screen/config';
 import Permissions from 'screen/permissions';
 import BannedWords from 'screen/banned-words';
+import LinkDetect from 'screen/link-detect';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -58,6 +59,7 @@ const App = () => {
                           <Route path="config" element={<Config/>}></Route>
                           <Route path="permissions" element={<Permissions/>}/>
                           <Route path="auto-mod/banned-words" element={<BannedWords/>}/>
+                          <Route path="auto-mod/link-detect" element={<LinkDetect/>}/>
                         </React.Fragment>
                         :
                         null

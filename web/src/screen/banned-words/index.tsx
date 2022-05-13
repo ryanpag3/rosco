@@ -17,7 +17,7 @@ const BannedWords = (props: any) => {
             server={server}
             isToggled={server.autoModBannedWordsEnabled}
             onToggle={(isToggled: boolean) => {
-              return AutoModApi.toggleBannedWords(server.id, isToggled).then()
+              return AutoModApi.toggleModule(server.id, 'banned-words', isToggled).then()
             }}>
 
               <StyledSection

@@ -3,10 +3,18 @@ import BannedWordCache from '../../service/banned-word-cache';
 import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 
-export const toggleBannedWordsModule: RouteHandlerMethod = async (request, reply) => {
+export const toggleModule: RouteHandlerMethod = async (request, reply) => {
     const { user } = request as any;
-    const { guildId } = request.params as any;
+    const { guildId, module } = request.params as any;
     const { isEnabled } = request.query as any;
+
+    const modules: any = {
+        'banned-words': 'autoModBannedWordsEnabled',
+        'link-detect': 'autoModLinkDetectEnabled'
+    };
+
+    if (!modules[module])
+        return reply.status(400).send('Invalid module.');
 
     try {
         await prisma.server.update({
@@ -14,7 +22,7 @@ export const toggleBannedWordsModule: RouteHandlerMethod = async (request, reply
                 discordId: guildId
             },
             data: {
-                autoModBannedWordsEnabled: isEnabled === 'true'
+                [modules[module]]: isEnabled === 'true'
             }
         });
 
