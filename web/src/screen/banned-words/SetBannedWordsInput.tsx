@@ -50,7 +50,8 @@ const SetBannedWordsInput = (props: {
 }
 
 const Container = styled(Column)`
-
+  max-width: 30em;
+  margin-left: 2em;
 `;
 
 const CreatableStyle: StylesConfig = {
