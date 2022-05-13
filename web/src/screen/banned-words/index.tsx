@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import * as AutoModApi from 'api/automod';
 import { SelectedServerContext } from 'context/selected-server-context';
 import SetBannedWordsInput from './SetBannedWordsInput';
+import Section from 'component/Section';
 
 const BannedWords = (props: any) => {
 
@@ -18,10 +19,14 @@ const BannedWords = (props: any) => {
             onToggle={(isToggled: boolean) => {
               return AutoModApi.toggleBannedWords(server.id, isToggled).then()
             }}>
-              {console.log(server)}
-            <SetBannedWordsInput
-              server={server}
-            />
+
+              <StyledSection
+                description="Add values here to ban words in your server."
+              >
+                <SetBannedWordsInput
+                server={server}
+                />  
+              </StyledSection>
           </StyledAutoModScreen>)
       }
     </SelectedServerContext.Consumer>
@@ -30,6 +35,10 @@ const BannedWords = (props: any) => {
 
 const StyledAutoModScreen = styled(AutoModScreen)`
 
+`;
+
+const StyledSection = styled(Section)`
+  max-width: 30em;
 `;
 
 export default BannedWords
