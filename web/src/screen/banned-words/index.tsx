@@ -13,9 +13,12 @@ const BannedWords = (props: any) => {
         ({ server }: any) => (
           <StyledAutoModScreen
             moduleName="Banned Words"
+            server={server}
+            isToggled={server.autoModBannedWordsEnabled}
             onToggle={(isToggled: boolean) => {
               return AutoModApi.toggleBannedWords(server.id, isToggled).then()
             }}>
+              {console.log(server)}
             <SetBannedWordsInput
               server={server}
             />

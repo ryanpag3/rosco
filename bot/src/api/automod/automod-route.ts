@@ -31,6 +31,21 @@ const AutoModRoutes = [
             (fastify as any).verifyJWT
         ]),
         handler: AutoModController.setBannedWords
+    },
+    {
+        method: 'GET',
+        url: '/automod/:guildId/banned-words',
+        schema: {
+            description: 'Get the banned-words data for a guild.',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: AutoModController.getBannedWordsData
     }
 ];
 

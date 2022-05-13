@@ -12,6 +12,13 @@ const SetBannedWordsInput = (props: {
   const [words, setWords] = useState([] as any);
 
   useEffect(() => {
+    AutoModApi.getBannedWordsData(props.server.id)
+      .then((data) => {
+        console.log(data);
+      })    
+  })
+
+  useEffect(() => {
     AutoModApi.setBannedWords(props.server.id, words.map((v: any) => v.value)).then();
   }, [ words ])
 

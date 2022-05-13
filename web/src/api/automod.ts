@@ -22,3 +22,11 @@ export const setBannedWords = async (guildId: string, words: string[]) => {
         }
     });
 }
+
+export const getBannedWordsData = async (guildId: string) => {
+    return axios.get(`/automod/${guildId}/banned-words`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}

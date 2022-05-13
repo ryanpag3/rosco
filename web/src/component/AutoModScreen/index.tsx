@@ -6,32 +6,43 @@ import Switch from 'react-switch';
 
 const AutoModScreen = (props: {
   moduleName: string;
+  isToggled: boolean;
   onToggle: (isToggled: boolean) => void;
   [x: string|number|symbol]: unknown;
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(undefined as any);
+  
+  function updateChecked(checked: boolean) {
+    setIsChecked(checked);
+    props.onToggle(checked);
+  }
 
-  useEffect(() => {
-    if (!props.onToggle)
-      return;
-    
-    props.onToggle(isChecked);
-  }, [ isChecked ])
+  function getChecked() {
+    if (isChecked !== undefined) {
+      return isChecked; 
+    }
+
+    return props.isToggled;
+  }
 
   return (
     <StyledScreen {...props}>
-      <Header>
-        <ModuleName>{props.moduleName}</ModuleName>
-        <EmptySpace />
-        <EnabledLabel>
-          Enabled
-        </EnabledLabel>
-        <StyledSwitch
-          onChange={setIsChecked}
-          checked={isChecked}
-        />
-      </Header>
-      {props.children}
+      {props.server &&
+        <React.Fragment>
+          <Header>
+            <ModuleName>{props.moduleName}</ModuleName>
+            <EmptySpace />
+            <EnabledLabel>
+              Enabled
+            </EnabledLabel>
+            <StyledSwitch
+              onChange={updateChecked}
+              checked={getChecked()}
+            />
+          </Header>
+          {props.children}
+        </React.Fragment>
+      }
     </StyledScreen>
   )
 }
