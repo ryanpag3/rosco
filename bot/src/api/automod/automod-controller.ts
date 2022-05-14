@@ -11,7 +11,8 @@ export const toggleModule: RouteHandlerMethod = async (request, reply) => {
 
     const modules: any = {
         'banned-words': 'autoModBannedWordsEnabled',
-        'link-detect': 'autoModLinkDetectEnabled'
+        'link-detect': 'autoModLinkDetectEnabled',
+        'capslock-detect': 'autoModCapslockDetectEnabled'
     };
 
     if (!modules[module])
@@ -167,5 +168,53 @@ export const setAllowedLinks: RouteHandlerMethod = async (request, reply) => {
     }
 
     return reply.status(500).send();
+}
 
+export const getCapslockSpamConfig: RouteHandlerMethod = async (request, reply) => {
+    const { guildId } = request.params as any;
+    
+    try {
+        const s = await prisma.server.findUnique({
+            where: {
+                discordId: guildId
+            }
+        });
+
+        return reply.status(200).headers({
+            'Content-Type': 'application/json'
+        }).send(JSON.stringify({
+            enabled: s.autoModCapslockDetectEnabled,
+            length: s.autoModCapslockDetectLength
+        }));
+    } catch (e) {
+        logger.error(e);
+    }
+
+    return reply.status(500).send();
+}
+
+export const setCapslockSpamLength: RouteHandlerMethod = async (request, reply) => {
+    const { guildId } = request.params as any;
+    let { length } = request.query as any;
+ 
+    try {
+        length = Number.parseInt(length);
+
+        // TODO: add validation
+
+        await prisma.server.update({
+            where: {
+                discordId: guildId
+            },
+            data: {
+                autoModCapslockDetectLength: length
+            }
+        });
+        
+        return reply.status(200).send();
+    } catch (e) {
+        logger.error(e);
+    }
+
+    return reply.status(500).send();
 }

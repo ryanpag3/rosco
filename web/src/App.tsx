@@ -61,7 +61,7 @@ const App = () => {
                           <Route path="permissions" element={<Permissions/>}/>
                           <Route path="auto-mod/banned-words" element={<BannedWords/>}/>
                           <Route path="auto-mod/link-detect" element={<LinkDetect/>}/>
-                          <Route path="auto-mod/capslock-detect" element={<CapslockDetect/>}/>
+                          <Route path="auto-mod/capslock-detect" element={<CapslockDetect server={selectedServer.server} />} />
                         </React.Fragment>
                         :
                         null

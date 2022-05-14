@@ -76,6 +76,36 @@ const AutoModRoutes = [
             (fastify as any).verifyJWT
         ]),
         handler: AutoModController.setAllowedLinks
+    },
+    {
+        method: 'GET',
+        url: '/automod/:guildId/capslock-detect',
+        schema: {
+            description: 'Get capslock detect configuration',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: AutoModController.getCapslockSpamConfig
+    },
+    {
+        method: 'POST',
+        url: '/automod/:guildId/capslock-detect/length',
+        schema: {
+            description: 'Update capslock detect length',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: AutoModController.setCapslockSpamLength
     }
 ];
 

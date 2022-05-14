@@ -46,3 +46,22 @@ export const setLinkDetect = async (guildId: string, links: string[]) => {
         }
     });
 }
+
+export const getCapslockSpamConfig = async (guildId: string) => {
+    return axios.get(`/automod/${guildId}/capslock-detect`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
+
+export const setCapslockSpamLength = async (guildId: string, length: number) => {
+    return axios.post(`/automod/${guildId}/capslock-detect/length`, null, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        params: {
+            length
+        }
+    })
+}

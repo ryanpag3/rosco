@@ -5,11 +5,28 @@ import Input from 'component/Input'
 import Row from 'component/Row'
 import Section from 'component/Section'
 import { SelectedServerContext } from 'context/selected-server-context'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-const CapslockDetect = () => {
+const CapslockDetect = (props: any) => {
+  const [isInit, setIsInit] = useState(false);
   const [length, setLength] = useState(0);
+
+  useEffect(() => {
+    if (isInit)
+      return;
+
+    AutoModApi.getCapslockSpamConfig(props.server.id)
+      .then((d) => {
+        setLength(d.data.length);
+        setIsInit(true);
+      })
+  })
+
+  async function onSave(guildId: string) {
+    await AutoModApi.setCapslockSpamLength(guildId, length);
+    alert('Length updated');
+  }
 
   function updateLength (evt: any) {
     const res = isValidInput(evt);
@@ -60,7 +77,9 @@ const CapslockDetect = () => {
                 onChange={(e: any) => updateLength(e)}
               />
               <ButtonRow>
-                <SubmitButton>Save</SubmitButton>
+                <SubmitButton
+                  onClick={() => onSave(server.id)}
+                >Save</SubmitButton>
               </ButtonRow>              
             </StyledSection>
           </StyledAutoModScreen>)
