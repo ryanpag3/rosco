@@ -69,7 +69,7 @@ const CapslockDetect = (props: any) => {
             }}>
 
             <StyledSection
-              description="Set the maximum length of consecutive capital letters allowed."
+              description="Set the maximum length of consecutive capital letters allowed. (i.e AAAAAA)"
             >
               <StyledInput
                 type="number"

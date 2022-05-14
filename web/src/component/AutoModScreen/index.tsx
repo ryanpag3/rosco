@@ -33,7 +33,7 @@ const AutoModScreen = (props: {
             <ModuleName>{props.moduleName}</ModuleName>
             <EmptySpace />
             <EnabledLabel>
-              Enabled
+              Enable
             </EnabledLabel>
             <StyledSwitch
               onChange={updateChecked}
