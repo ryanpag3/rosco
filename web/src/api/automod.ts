@@ -38,3 +38,11 @@ export const getLinkDetectData = async (guildId: string) => {
         }
     });
 }
+
+export const setLinkDetect = async (guildId: string, links: string[]) => {
+    return axios.post(`/automod/${guildId}/link-detect`, links, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}

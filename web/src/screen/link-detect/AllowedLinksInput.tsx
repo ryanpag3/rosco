@@ -27,6 +27,8 @@ const AllowedLinksInput = (props: any) => {
     })
   
     async function submit(links: MultiValue<unknown>) {
+        AutoModApi.setLinkDetect(props.server.id, links.map((l: any) => l.value))
+          .then();
         setLinks(links);
     }
   

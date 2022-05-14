@@ -1,5 +1,6 @@
 import { RouteHandlerMethod } from 'fastify';
 import BannedWordCache from '../../service/banned-word-cache';
+import LinkCache from '../../service/link-cache';
 import logger from '../../util/logger';
 import prisma from '../../util/prisma';
 
@@ -97,7 +98,7 @@ export const getBannedWordsData: RouteHandlerMethod = async (request, reply) => 
     } catch (e) {
         logger.error(e);
     }
-    
+
     return reply.status(500).send();
 }
 
@@ -125,4 +126,46 @@ export const getAllowedLinks: RouteHandlerMethod = async (request, reply) => {
     }
 
     return reply.status(500).send();
+}
+
+export const setAllowedLinks: RouteHandlerMethod = async (request, reply) => {
+    const { guildId } = request.params as any;
+    const body: any = request.body;
+
+    try {
+        const s = await prisma.server.findUnique({
+            where: {
+                discordId: guildId
+            }
+        });
+
+        const r = await prisma.$transaction(
+            [
+                prisma.allowedLink.deleteMany({
+                    where: {
+                        serverId: s.id
+                    }
+                }),
+                ...body.map((l: string) => {
+                    return prisma.allowedLink.create({
+                        data: {
+                            serverId: s.id,
+                            pattern: l
+                        }
+                    })
+                })
+            ]
+        );
+
+        r.shift();
+
+        await LinkCache.baselineFromDatabase();
+
+        return reply.status(200).send();
+    } catch (e) {
+        logger.error(e);
+    }
+
+    return reply.status(500).send();
+
 }

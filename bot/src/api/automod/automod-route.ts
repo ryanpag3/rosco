@@ -61,6 +61,21 @@ const AutoModRoutes = [
             (fastify as any).verifyJWT
         ]),
         handler: AutoModController.getAllowedLinks
+    },
+    {
+        method: 'POST',
+        url: '/automod/:guildId/link-detect',
+        schema: {
+            description: 'Update links for server.',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: AutoModController.setAllowedLinks
     }
 ];
 
