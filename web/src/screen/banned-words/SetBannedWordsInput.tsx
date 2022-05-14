@@ -29,7 +29,6 @@ const SetBannedWordsInput = (props: {
   });
 
   async function submitWords(words: MultiValue<unknown>) {
-    console.log(words);
     AutoModApi.setBannedWords(props.server.id, words.length === 0 ? [] : words.map((v: any) => v.value))
       .then();
     setWords(words);

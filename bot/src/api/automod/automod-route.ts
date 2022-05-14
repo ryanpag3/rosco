@@ -46,6 +46,21 @@ const AutoModRoutes = [
             (fastify as any).verifyJWT
         ]),
         handler: AutoModController.getBannedWordsData
+    },
+    {
+        method: 'GET',
+        url: '/automod/:guildId/link-detect',
+        schema: {
+            description: 'Get the link-detect data for a guild.',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: AutoModController.getAllowedLinks
     }
 ];
 

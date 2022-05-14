@@ -100,3 +100,29 @@ export const getBannedWordsData: RouteHandlerMethod = async (request, reply) => 
     
     return reply.status(500).send();
 }
+
+export const getAllowedLinks: RouteHandlerMethod = async (request, reply) => {
+    const { guildId } = request.params as any;
+
+    try {
+        const server = await prisma.server.findUnique({
+            where: {
+                discordId: guildId
+            },
+            include: {
+                AllowedLink: true
+            }
+        });
+
+        return reply.status(200).headers({
+            'Content-Type': 'application/json'
+        }).send(JSON.stringify({
+            enabled: server.autoModLinkDetectEnabled,
+            links: server.AllowedLink.map((l) => l.pattern)
+        }));
+    } catch (e) {
+        logger.error(e);
+    }
+
+    return reply.status(500).send();
+}

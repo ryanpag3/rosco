@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components';
 import * as AutoModApi from 'api/automod';
 import Section from 'component/Section';
+import AllowedLinksInput from './AllowedLinksInput';
 
 const index = () => {
   return (
@@ -19,7 +20,9 @@ const index = () => {
                     }}
                 >
                     <StyledSection>
-                        
+                        <AllowedLinksInput
+                          server={server}
+                        />
                     </StyledSection>
                 </StyledAutoModScreen>                
             )

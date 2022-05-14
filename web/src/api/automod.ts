@@ -30,3 +30,11 @@ export const getBannedWordsData = async (guildId: string) => {
         }
     });
 }
+
+export const getLinkDetectData = async (guildId: string) => {
+    return axios.get(`/automod/${guildId}/link-detect`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
