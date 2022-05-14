@@ -20,6 +20,7 @@ const NavSideBar = () => {
       <SectionHeader>Modules</SectionHeader>
       <SectionSubheader>AutoMod</SectionSubheader>
       <IndentedLink to="auto-mod/banned-words">Banned Words</IndentedLink>
+      <IndentedLink to="auto-mod/capslock-detect">Capslock Spam</IndentedLink>
       <IndentedLink to="auto-mod/link-detect" style={{ marginBottom: '.6em' }}>Link Detection</IndentedLink>
       <StyledLink to="scores">Score</StyledLink>
       <StyledLink to="keywords">Keyword</StyledLink>

@@ -12,6 +12,7 @@ import Config from 'screen/config';
 import Permissions from 'screen/permissions';
 import BannedWords from 'screen/banned-words';
 import LinkDetect from 'screen/link-detect';
+import CapslockDetect from 'screen/capslock-detect';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -60,6 +61,7 @@ const App = () => {
                           <Route path="permissions" element={<Permissions/>}/>
                           <Route path="auto-mod/banned-words" element={<BannedWords/>}/>
                           <Route path="auto-mod/link-detect" element={<LinkDetect/>}/>
+                          <Route path="auto-mod/capslock-detect" element={<CapslockDetect/>}/>
                         </React.Fragment>
                         :
                         null
