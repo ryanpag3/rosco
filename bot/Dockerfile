@@ -61,7 +61,7 @@ COPY --from=build /lib /lib
 
 COPY ./prisma ./prisma
 
-COPY ./out/minified .
+COPY ./out/ .
 
 COPY entrypoint.sh ./entrypoint.sh
 

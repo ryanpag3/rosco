@@ -6278,7 +6278,7 @@ uglify-js@^3.1.4:
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.15.4.tgz#fa95c257e88f85614915b906204b9623d4fa340d"
   integrity sha512-vMOPGDuvXecPs34V74qDKk4iJ/SN4vL3Ow/23ixafENYvtrNvtbcgUeugTcUGRGsOF/5fU8/NYSL5Hyb3l1OJA==
 
-uglifyjs-folder@^3.0.0:
+uglifyjs-folder@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/uglifyjs-folder/-/uglifyjs-folder-3.1.2.tgz#0ce19f0f8f2d55bf5c65bd7489746261c1b53c7e"
   integrity sha512-AVdor76HDTud8QkopnZpUSs7WeSkxfL0f8SGxRLhAvC0WSLbcslcDWTgCVw5D2RBQpEs35tNrb09ZJe1vI6ZsA==
