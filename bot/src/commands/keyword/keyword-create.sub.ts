@@ -5,6 +5,7 @@ import KeywordCache from '../../service/keyword-cache';
 import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
 import PrismaErrorCode from '../../util/prisma-error-code';
+import * as UserService from '../../service/user';
 
 const KeywordCreate: Command = {
     id: '6ec5e902-f482-48a5-879e-7427b8ba5a20',
@@ -41,11 +42,7 @@ const KeywordCreate: Command = {
         let inDbUser;
         try {
             if (filterOnUser) {
-                inDbUser = await prisma.user.findUnique({
-                    where: {
-                        discordId: user.id
-                    }
-                });
+                inDbUser = await UserService.initUser({ user: filterOnUser } as any, server);
             }
         } catch (e) {
             if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.NOT_FOUND)
