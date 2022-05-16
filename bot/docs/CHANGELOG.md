@@ -1,3 +1,10 @@
+# [1.1.0-beta.58](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.57...v1.1.0-beta.58) (2022-05-16)
+
+
+### Bug Fixes
+
+* user keywords should now work properly ([8f21878](https://github.com/ryanpag3/guac-bot/commit/8f21878cf32818428f7d8920a7a7c1604170897c))
+
 # [1.1.0-beta.57](https://github.com/ryanpag3/guac-bot/compare/v1.1.0-beta.56...v1.1.0-beta.57) (2022-04-30)
 
 
