@@ -66,20 +66,37 @@ const handleKeywords = async (message: Message, server: Server | any) => {
     const containsKeyword = await KeywordCache.containsCachedWord(server.id, message.content);
 
     if (!containsKeyword) {
-        logger.trace('message does not contain keyword');
+        logger.debug('message does not contain keyword');
         return;
     }
 
     const keywords: Keyword[] = await KeywordCache.getMatchingCachedRecords(server.id, message.content) as Keyword[];
 
+    logger.debug(`keywords length: ${keywords.length}`);
     for (const k of keywords) {
-        if (k.channelId && k.channelId !== message.channel?.id)
+        if (k.channelId && k.channelId !== message.channel?.id) {
+            logger.debug(`skipping because channel IDs dont match`)
             continue;
+        }
 
         const action = k.action === 'UP' ? 'increment' : 'decrement';
 
         if (k.roleId !== null && !message.member?.roles.cache.has(k.roleId)) {
+            logger.debug(`skipping because role IDs do not match`);
             continue;
+        }
+
+        if (k.userId !== null) {
+            const user = await prisma.user.findUnique({
+                where: {
+                    id: k.userId
+                }
+            });
+            
+            if (!user || user.discordId !== message.member?.id) {
+                logger.debug(`Ignoring keyword because it was not triggered by user.`);
+                continue;
+            }
         }
 
         try {
