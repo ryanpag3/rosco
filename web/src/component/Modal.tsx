@@ -7,13 +7,25 @@ import Colors from 'util/colors';
 const Modal = (props: {
     isOpen: boolean
 }|any) => {
+  const dialogProps = {
+    isOpen: props.isOpen,
+    onDismiss: props.onDismiss
+  };
+
+  let contentProps = {
+    ...props
+  };
+
+  delete contentProps.isOpen;
+  delete contentProps.onDismiss;
+
   return (
     <Container>
       <StyledDialog
-        {...props}
+        {...dialogProps}
       >
         <DialogContentContainer
-          {...props}
+          {...contentProps}
         >
           {props.children}
         </DialogContentContainer>
