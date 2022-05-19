@@ -1,4 +1,4 @@
-import Dialog, { DialogContent, DialogOverlay } from '@reach/dialog';
+import { DialogContent, DialogOverlay } from '@reach/dialog';
 import Column from 'component/Column'
 import { SelectedServerContext } from 'context/selected-server-context';
 import React, { useEffect, useState } from 'react'

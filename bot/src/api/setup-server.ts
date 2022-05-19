@@ -13,11 +13,11 @@ export default async (fastify: FastifyInstance) => {
         parseOptions: {}
     } as FastifyCookieOptions);
 
-    await fastify.register(require('fastify-auth'));
+    await fastify.register(require('@fastify/auth'));
     fastify.decorate('verifyJWT', verifyJWT);
 
     logger.debug(`setting up cors`);
-    await fastify.register(require('fastify-cors'), {
+    await fastify.register(require('@fastify/cors'), {
         credentials: true,
         // @ts-ignore
         origin: (origin, cb) => {

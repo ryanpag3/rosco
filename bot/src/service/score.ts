@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, Server } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import BotError from '../util/bot-error';
 import prisma from '../util/prisma';
@@ -57,4 +57,67 @@ export const del = async (where: Prisma.ScoreWhereInput) => {
     return prisma.score.deleteMany({
         where
     });
+}
+
+export const list = async (
+    server: Server, 
+    page: number = 1,
+    amount: number = 10,
+    filter?: string|null, 
+    scoreboardName?: string
+) => {
+    let scoreboard;
+    if (scoreboardName) {
+        scoreboard = await prisma.scoreboard.findUnique({
+            where: {
+                name_serverId: {
+                    name: scoreboardName,
+                    serverId: server.id
+                }
+            }
+        });
+    }
+
+
+    await prisma.score.findMany({
+        where: {
+            serverId: server?.id
+        },
+        include: {
+            ScoreboardScore: {
+                include: {
+                    Score: true
+                }
+            }
+        }
+    })
+
+    let ScoreboardScore;
+    if (scoreboard) {
+        ScoreboardScore = {
+            some: {
+                scoreboardId: scoreboard?.id
+            }
+        };
+    }
+
+    const scores = await prisma.score.findMany({
+        include: {
+            ScoreboardScore: true
+        },
+        where: {
+            serverId: server?.id,
+            name: {
+                contains: filter || undefined
+            },
+            ScoreboardScore
+        },
+        take: amount,
+        skip: amount * (page - 1),
+        orderBy: {
+            amount: 'desc'
+        }
+    });
+
+    return scores;
 }

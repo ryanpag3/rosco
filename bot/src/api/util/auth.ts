@@ -40,6 +40,14 @@ export const verifyJWT = async (request: FastifyRequest, reply: FastifyReply) =>
             if (!member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
                 return reply.status(401).send();
             }
+            const server = await prisma.server.findUnique({
+                where: {
+                    discordId: guild.id
+                }
+            });
+
+            // @ts-ignore
+            request.server = server;
         }
     } catch (e) {
         logger.error(e);
