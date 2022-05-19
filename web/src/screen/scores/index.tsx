@@ -21,6 +21,7 @@ const Scores = (props: any) => {
   function onModalDismissed() {
     setSelectedScore(undefined);
     setShowUpdateModal(false);
+    setIsInit(false);
   }
 
   const TableColumns: TableColumn<any>[] = [
@@ -79,6 +80,7 @@ const Scores = (props: any) => {
                 data={scores}
               />
               <UpdateScoreModal
+                server={server}
                 isOpen={showUpdateModal}
                 onDismiss={onModalDismissed}
                 score={selectedScore}

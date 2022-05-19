@@ -4,50 +4,91 @@ import Column from 'component/Column';
 import Input from 'component/Input';
 import Modal from 'component/Modal';
 import Row from 'component/Row';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import Colors from 'util/colors';
+import * as ScoreApi from 'api/score';
+import { isJSDocNamepathType } from 'typescript';
 
 const UpdateScoreModal = (props: {
+  server: any;
   score?: any;
   isOpen: boolean;
-  onDismiss: (dismissed: boolean) => void;
+  onDismiss: (isShown: boolean) => void;
 }) => {
+  console.log(props.score);
+
+  const [score, setScore] = useState(props.score);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  async function onSubmit() {
+    await ScoreApi.updateScore(props.server.id, props.score?.id, {
+      name: score.name,
+      description: score.description,
+      color: score.color,
+      amount: Number.parseInt(score.amount)
+    });
+  }
+  
+  function onDismiss() {
+    setScore(undefined);
+    props.onDismiss(false)
+  }
 
   return (
     <Container>
       <StyledModal
         isOpen={props.isOpen}
-        onDismiss={() => props.onDismiss(false)}
+        onDismiss={onDismiss}
       >
         <ModalHeader>Update Score</ModalHeader>
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log('submit');
+            onSubmit()
+              .then(() => {
+                setIsSubmitted(true);
+                onDismiss()
+              });
           }}
         >
           <Label>
             <LabelSpan>Name</LabelSpan>
-            <StyledInput type="text" value={props.score?.name}/>
+            <StyledInput 
+              type="text" 
+              value={score?.name || props.score?.name}
+              onChange={(e: any) => setScore({...score, ...{ name: e.target.value }})}
+              />
           </Label>
           <Label>
             <LabelSpan>Description</LabelSpan>
-            <StyledInput type="text" value={props.score?.description}/>
+            <StyledInput 
+              type="text" 
+              value={score?.description || props.score?.description}
+              onChange={(e: any) => setScore({...score, ...{ description: e.target.value }})}
+            />
           </Label>
           <Label>
             <LabelSpan>Amount</LabelSpan>
-            <StyledInput type="text" value={props.score?.amount}/>
+            <StyledInput 
+              type="text" 
+              value={score?.amount || props.score?.amount}
+              onChange={(e: any) => setScore({...score, ...{ amount: e.target.value }})}
+            />
           </Label>
           <Label>
             <LabelSpan>Color</LabelSpan>
-            <StyledInput type="text" value={props.score?.color}/>
+            <StyledInput 
+              type="text" 
+              value={score?.color || props.score?.color}
+              onChange={(e: any) => setScore({...score, ...{ color: e.target.value }})}
+            />
           </Label>
           <ButtonRow>
             <CancelButton type="cancel"
               onClick={(e: any) => {
                 e.preventDefault();
-                props.onDismiss(true);
+                onDismiss();
               }}
             >
               Cancel
