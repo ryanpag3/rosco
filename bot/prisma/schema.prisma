@@ -176,9 +176,9 @@ model Score {
   amount      Int      @default(0)
   serverId    String
   Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  channelId   String
-  userId      String
-  User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
+  channelId   String?
+  userId      String?
+  User        User?     @relation(references: [id], onDelete: Cascade, fields: [userId])
 
   Keyword         Keyword[]
   ScoreboardScore ScoreboardScore[]

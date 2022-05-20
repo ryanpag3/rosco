@@ -28,7 +28,12 @@ const CreateUpdateScoreModal = (props: {
         amount: Number.parseInt(score.amount)
       });
     } else {
-      // create
+      await ScoreApi.createScore(props.server.id, {
+        name: score.name,
+        description: score.description,
+        color: score.color,
+        amount: Number.parseInt(score.amount)
+      });
     }
   }
 

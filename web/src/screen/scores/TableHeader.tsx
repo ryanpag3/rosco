@@ -7,7 +7,6 @@ import CreateUpdateScoreModal from './CreateUpdateScoreModal';
 
 const TableHeader = (props: any) => {
   const [showCreateModal, setShowCreateModal] = useState(false);
-  
 
   return (
       <Container>
@@ -15,7 +14,10 @@ const TableHeader = (props: any) => {
                 action="Create"
                 server={props.server}
                 isOpen={showCreateModal}
-                onDismiss={() => setShowCreateModal(false)}
+                onDismiss={() => {
+                  setShowCreateModal(false)
+                  props.onDismiss();
+                }}
             />
           <AddIcon
             onClick={() => setShowCreateModal(true)}

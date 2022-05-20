@@ -20,6 +20,7 @@ const Scores = (props: any) => {
   }
 
   function onModalDismissed() {
+    console.log(`on modal dismissed`);
     setSelectedScore(undefined);
     setShowUpdateModal(false);
     setIsInit(false);
@@ -60,10 +61,10 @@ const Scores = (props: any) => {
     
     ScoreApi.list(props.server.id)
       .then((scores) => {
-        setScores(scores.data);
+        setScores([...scores.data]);
         setIsInit(true);
       });
-  });
+  }, [ isInit ]);
 
   return (
     <SelectedServerContext.Consumer>
@@ -75,7 +76,10 @@ const Scores = (props: any) => {
                 highlightOnHover
                 pointerOnHover
                 theme="dark"
-                actions={<TableHeader server={server}/>}
+                actions={<TableHeader 
+                  server={server}
+                  onDismiss={onModalDismissed}
+                  />}
                 onRowClicked={(row: any) => onScoreClicked(row)}
                 customStyles={TableStyle}
                 columns={TableColumns}

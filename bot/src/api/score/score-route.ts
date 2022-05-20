@@ -31,6 +31,21 @@ const ScoreRoutes = [
             (fastify as any).verifyJWT
         ]),
         handler: ScoreController.updateScore
+    },
+    {
+        method: 'POST',
+        url: `/guild/:guildId/score`,
+        schema: {
+            description: 'Create a score',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: ScoreController.createScore 
     }
 ];
 

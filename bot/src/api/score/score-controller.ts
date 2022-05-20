@@ -1,5 +1,6 @@
 
 import { RouteHandlerMethod } from 'fastify';
+import randomColor from 'randomcolor';
 import * as ScoreService from '../../service/score';
 import logger from '../../util/logger';
 import prisma from '../../util/prisma';
@@ -45,6 +46,38 @@ export const updateScore: RouteHandlerMethod = async (request, reply) => {
             data: updateData
         });
         
+        return reply.status(200).send();
+    } catch (e) {
+        logger.error(e);
+    }
+
+    return reply.status(500).send();
+}
+
+export const createScore: RouteHandlerMethod = async (request, reply) => {
+    let {
+        name,
+        description,
+        amount,
+        color
+    } = request.body as any;
+
+    amount = amount ? amount : 0;
+    color = color ? color: randomColor(); 
+
+    try {
+        const s = await prisma.score.create({
+            data: {
+                serverId: (request as any).server.id,
+                name,
+                description,
+                amount,
+                color
+            }
+        });
+
+        logger.info(s);
+
         return reply.status(200).send();
     } catch (e) {
         logger.error(e);

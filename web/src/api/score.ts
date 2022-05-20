@@ -33,3 +33,19 @@ export const updateScore = async (
         }
     });
 }
+
+export const createScore = async (
+    guildId: string,
+    data: {
+        name: string;
+        description?: string;
+        color?: string;
+        amount?: number;   
+    }
+) => {
+    return axios.post(`/guild/${guildId}/score`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
