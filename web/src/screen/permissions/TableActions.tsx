@@ -7,6 +7,7 @@ import { FaCog } from 'react-icons/fa';
 import SearchInput from './SearchInput';
 import UpdatePermissionsModal from './UpdatePermissionsModal';
 import { SelectedServerContext } from 'context/selected-server-context';
+import TableHeaderIconStyle from 'component/TableHeaderIconStyle';
 
 const TableActions = (props: {
   selectedCommands: any[];
@@ -51,28 +52,19 @@ const Container = styled(Row)`
 
 `;
 
-const IconStyle = css`
-    font-size: .85em;
-    margin: .2em .75em;
-    cursor: pointer;
-    color: ${Colors.TEXT_MEDIUM};
 
-    :hover {
-        color: white;
-    }
-`;
 
 const RefreshIcon = styled(FiRefreshCw)`
-    ${IconStyle}
+    ${TableHeaderIconStyle}
 `;
 
 const HelpIcon = styled(FiHelpCircle)`
-  ${IconStyle}
+  ${TableHeaderIconStyle}
 `;
 
 
 const ConfigCog = styled(FaCog)`
-    ${IconStyle}
+    ${TableHeaderIconStyle}
 `;
 
 export default TableActions

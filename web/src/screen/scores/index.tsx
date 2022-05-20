@@ -5,7 +5,8 @@ import * as ScoreApi from 'api/score';
 import { SelectedServerContext } from 'context/selected-server-context';
 import { TableColumn, TableStyles } from 'react-data-table-component';
 import Table from 'component/Table';
-import UpdateScoreModal from './UpdateScoreModal';
+import CreateUpdateScoreModal from './CreateUpdateScoreModal';
+import TableHeader from './TableHeader';
 
 const Scores = (props: any) => {
   const [isInit, setIsInit] = useState(false);
@@ -74,12 +75,14 @@ const Scores = (props: any) => {
                 highlightOnHover
                 pointerOnHover
                 theme="dark"
+                actions={<TableHeader server={server}/>}
                 onRowClicked={(row: any) => onScoreClicked(row)}
                 customStyles={TableStyle}
                 columns={TableColumns}
                 data={scores}
               />
-              <UpdateScoreModal
+              <CreateUpdateScoreModal
+                action="Upgrade"
                 server={server}
                 isOpen={showUpdateModal}
                 onDismiss={onModalDismissed}
@@ -96,7 +99,15 @@ const StyledScreen = styled(Screen)`
 `;
 
 const TableStyle: TableStyles = {
-
+  header: {
+    style: {
+      height: '1.5em',
+      maxHeight: '1.5em',
+      borderBottomStyle: 'solid',
+      borderBottomWidth: '1px',
+      borderBottomColor: '#858585' 
+    }
+  }
 };
 
 export default Scores
