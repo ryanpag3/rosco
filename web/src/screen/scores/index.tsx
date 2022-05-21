@@ -5,7 +5,6 @@ import * as ScoreApi from 'api/score';
 import { SelectedServerContext } from 'context/selected-server-context';
 import { TableColumn, TableStyles } from 'react-data-table-component';
 import Table from 'component/Table';
-import CreateUpdateScoreModal from './CreateUpdateScoreModal';
 import TableHeader from './TableHeader';
 import ScoreModal from './ScoreModal';
 

@@ -3,26 +3,26 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import { FaPlus } from 'react-icons/fa';
 import TableHeaderIconStyle from 'component/TableHeaderIconStyle';
-import CreateUpdateScoreModal from './CreateUpdateScoreModal';
+import ScoreModal from './ScoreModal';
 
 const TableHeader = (props: any) => {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   return (
-      <Container>
-          <CreateUpdateScoreModal
-                action="Create"
-                server={props.server}
-                isOpen={showCreateModal}
-                onDismiss={() => {
-                  setShowCreateModal(false)
-                  props.onDismiss();
-                }}
-            />
-          <AddIcon
-            onClick={() => setShowCreateModal(true)}
-          />
-      </Container>
+    <Container>
+      <ScoreModal
+        action="Create"
+        server={props.server}
+        isOpen={showCreateModal}
+        onDismiss={() => {
+          setShowCreateModal(false)
+          props.onDismiss();
+        }}
+      />
+      <AddIcon
+        onClick={() => setShowCreateModal(true)}
+      />
+    </Container>
   )
 }
 

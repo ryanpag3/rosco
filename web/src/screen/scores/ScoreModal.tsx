@@ -3,9 +3,10 @@ import Column from 'component/Column'
 import LabelledInput from 'component/LabelledInput'
 import Modal from 'component/Modal'
 import Row from 'component/Row'
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { HexColorPicker } from 'react-colorful'
 import styled, { css } from 'styled-components'
+import * as ScoreApi from 'api/score';
 
 const ScoreModal = (props: {
   action: "Create" | "Update";
@@ -15,14 +16,34 @@ const ScoreModal = (props: {
   onDismiss: () => void;
 }) => {
   const [score, setScore] = useState(props.score);
-  
 
   function cancel() {
-
+    dismiss();
   }
 
-  function submit() {
+  async function submit() {
+    if (props.action.toLowerCase() === "update") {
+      await ScoreApi.updateScore(props.server.id, props.score?.id, {
+        name: score.name,
+        description: score.description,
+        color: score.color,
+        amount: Number.parseInt(score.amount)
+      });
+    } else {
+      await ScoreApi.createScore(props.server.id, {
+        name: score.name,
+        description: score.description,
+        color: score.color,
+        amount: Number.parseInt(score.amount)
+      });
+    }
 
+    dismiss();
+  }
+
+  function dismiss() {
+    setScore(undefined);
+    props.onDismiss();
   }
 
   return (
