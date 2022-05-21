@@ -4,11 +4,12 @@ import Input from './Input';
 
 const LabelledInput = (props: {
   label: string;
+  value: string;
   labelStyle?: FlattenSimpleInterpolation;
   spanStyle?: FlattenSimpleInterpolation;
   inputStyle?: FlattenSimpleInterpolation;
   inputOverride?: any;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
 }) => {
   return (
     <StyledLabel
@@ -25,7 +26,8 @@ const LabelledInput = (props: {
       <StyledInput
         // @ts-ignore
         inputStyle={props.inputStyle}
-        onChange={(e: any) => props.onChange(e.target.value)}
+        value={props.value}
+        onChange={(e: any) => props.onChange ? props.onChange(e.target.value): null}
       />
       }
     </StyledLabel>

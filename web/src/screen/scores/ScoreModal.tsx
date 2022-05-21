@@ -3,7 +3,7 @@ import Column from 'component/Column'
 import LabelledInput from 'component/LabelledInput'
 import Modal from 'component/Modal'
 import Row from 'component/Row'
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { HexColorPicker } from 'react-colorful'
 import styled, { css } from 'styled-components'
 
@@ -14,48 +14,72 @@ const ScoreModal = (props: {
   isOpen: boolean;
   onDismiss: () => void;
 }) => {
+  const [score, setScore] = useState(props.score);
+  
+
+  function cancel() {
+
+  }
+
+  function submit() {
+
+  }
+
   return (
     <Container>
-      <StyledModal>
+      <StyledModal
+        isOpen={props.isOpen}
+        onDismiss={props.onDismiss}
+      >
         <Header>{props.action} Score</Header>
         <Content>
           <Column>
             <StyledRow>
               <LabelledInput
                 label="Name"
+                value={score?.name || props.score?.name}
                 labelStyle={LabelStyle}
                 inputStyle={NameInputStyle}
-                onChange={(value) => console.log(value)} />
+                onChange={(value) => setScore({ ...score, ...{ name: value }})} />
             </StyledRow>
 
             <StyledRow>
               <LabelledInput
                 label="Description"
+                value={score?.description || props.score?.description}
                 labelStyle={LabelStyle}
                 inputStyle={DescriptionInputStyle}
-                onChange={(value) => console.log(value)}
+                onChange={(value) => setScore({ ...score, ...{ description: value }})}
               />
             </StyledRow>
 
             <StyledRow>
               <LabelledInput
                 label="Amount"
+                value={score?.amount || props.score?.amount}
                 labelStyle={LabelStyle}
                 inputStyle={AmountInputStyle}
-                onChange={(value) => console.log(value)}
+                onChange={(value) => setScore({ ...score, ...{ amount: value }})}
               />
               <LabelledInput
                 label="Color"
+                value="" // unused
                 labelStyle={LabelStyle}
                 inputStyle={InputStyle}
-                onChange={(value) => console.log(value)}
-                inputOverride={<HexColorPicker />}
+                inputOverride={<HexColorPicker 
+                  color={score?.color || props.score?.color}
+                  onChange={(color) => setScore({ ...score, ...{ color }})}
+                />}
               />
             </StyledRow>
           </Column>
           <ButtonRow>
-              <CancelButton>Cancel</CancelButton>
-              <SubmitButton>Submit</SubmitButton>
+              <CancelButton
+                onClick={cancel}
+              >Cancel</CancelButton>
+              <SubmitButton
+                onClick={submit}
+              >Submit</SubmitButton>
             </ButtonRow>
         </Content>
       </StyledModal>
