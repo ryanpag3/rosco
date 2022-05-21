@@ -7,6 +7,7 @@ import { TableColumn, TableStyles } from 'react-data-table-component';
 import Table from 'component/Table';
 import CreateUpdateScoreModal from './CreateUpdateScoreModal';
 import TableHeader from './TableHeader';
+import ScoreModal from './ScoreModal';
 
 const Scores = (props: any) => {
   const [isInit, setIsInit] = useState(false);
@@ -85,13 +86,20 @@ const Scores = (props: any) => {
                 columns={TableColumns}
                 data={scores}
               />
-              <CreateUpdateScoreModal
-                action="Upgrade"
+              <ScoreModal
+                action="Update"
                 server={server}
                 isOpen={showUpdateModal}
                 onDismiss={onModalDismissed}
                 score={selectedScore}
               />
+              {/* <CreateUpdateScoreModal
+                action="Upgrade"
+                server={server}
+                isOpen={showUpdateModal}
+                onDismiss={onModalDismissed}
+                score={selectedScore}
+              /> */}
           </StyledScreen>
         )}
     </SelectedServerContext.Consumer>

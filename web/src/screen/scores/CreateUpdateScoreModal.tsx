@@ -1,4 +1,4 @@
-import { DialogContent, DialogOverlay } from '@reach/dialog';
+
 import Button from 'component/Button';
 import Column from 'component/Column';
 import Input from 'component/Input';
@@ -7,6 +7,7 @@ import Row from 'component/Row';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import * as ScoreApi from 'api/score';
+import { HexColorInput, HexColorPicker } from 'react-colorful';
 const CreateUpdateScoreModal = (props: {
   action: string;
   server: any;
@@ -85,10 +86,9 @@ const CreateUpdateScoreModal = (props: {
           </Label>
           <Label>
             <LabelSpan>Color</LabelSpan>
-            <StyledInput
-              type="text"
-              value={score?.color || props.score?.color}
-              onChange={(e: any) => setScore({ ...score, ...{ color: e.target.value } })}
+            <HexColorPicker
+              color={score?.color || props.score?.color}
+              onChange={(color) => setScore({ ...score, ...{ color } })}
             />
           </Label>
           <ButtonRow>
