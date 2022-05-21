@@ -13,6 +13,9 @@ const Scores = (props: any) => {
   const [scores, setScores] = useState([] as any);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedScore, setSelectedScore] = useState();
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(10);
+  const [isLoading, setIsLoading] = useState(false);
 
   function onScoreClicked(row: any) {
     setSelectedScore(row);
@@ -56,15 +59,20 @@ const Scores = (props: any) => {
   ]
 
   useEffect(() => {
-    if (isInit)
-      return;
-    
-    ScoreApi.list(props.server.id)
-      .then((scores) => {
-        setScores([...scores.data]);
-        setIsInit(true);
-      });
-  }, [ isInit ]);
+    handlePageChange(1);
+  }, []);
+
+  async function handlePerRowsChange(newPerPage: number, page: number) {
+    const { data } = await ScoreApi.list(props.server.id, page, newPerPage);
+    setScores(data.scores);
+    setPerPage(newPerPage);
+  }
+
+  async function handlePageChange(page: number) {
+    const { data } = await ScoreApi.list(props.server.id, page, perPage);
+    setScores(data.scores);
+    setTotalRows(data.total);
+  }
 
   return (
     <SelectedServerContext.Consumer>
@@ -75,6 +83,12 @@ const Scores = (props: any) => {
                 fixedHeader
                 highlightOnHover
                 pointerOnHover
+                pagination
+                paginationRowsPerPageOptions={[10, 15]}
+                paginationServer
+                paginationTotalRows={totalRows}
+                onChangeRowsPerPage={handlePerRowsChange}
+                onChangePage={handlePageChange}
                 theme="dark"
                 actions={<TableHeader 
                   server={server}
@@ -84,6 +98,7 @@ const Scores = (props: any) => {
                 customStyles={TableStyle}
                 columns={TableColumns}
                 data={scores}
+                
               />
               <ScoreModal
                 action="Update"
@@ -92,13 +107,6 @@ const Scores = (props: any) => {
                 onDismiss={onModalDismissed}
                 score={selectedScore}
               />
-              {/* <CreateUpdateScoreModal
-                action="Upgrade"
-                server={server}
-                isOpen={showUpdateModal}
-                onDismiss={onModalDismissed}
-                score={selectedScore}
-              /> */}
           </StyledScreen>
         )}
     </SelectedServerContext.Consumer>

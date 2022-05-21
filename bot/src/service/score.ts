@@ -100,6 +100,15 @@ export const list = async (
             }
         };
     }
+    const total = await prisma.score.count({
+        where: {
+            serverId: server?.id,
+            name: {
+                contains: filter || undefined
+            },
+            ScoreboardScore
+        }
+    });
 
     const scores = await prisma.score.findMany({
         include: {
@@ -119,5 +128,8 @@ export const list = async (
         }
     });
 
-    return scores;
+    return {
+        total,
+        scores
+    };
 }
