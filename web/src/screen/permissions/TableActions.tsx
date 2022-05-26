@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 import { FiRefreshCw, FiHelpCircle } from 'react-icons/fi';
 import Colors from 'util/colors';
 import { FaCog } from 'react-icons/fa';
-import SearchInput from './SearchInput';
+import SearchInput from '../../component/SearchInput';
 import UpdatePermissionsModal from './UpdatePermissionsModal';
 import { SelectedServerContext } from 'context/selected-server-context';
 import TableHeaderIconStyle from 'component/TableHeaderIconStyle';
@@ -22,7 +22,7 @@ const TableActions = (props: {
         ({ server }) => (
           <Container>
             <SearchInput 
-              onChangeText={props.onFilterChanged}
+              onChange={props.onFilterChanged}
             />
             <ConfigCog
               onClick={() => setShowUpdateModal(true)}

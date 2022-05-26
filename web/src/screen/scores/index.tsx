@@ -16,6 +16,7 @@ const Scores = (props: any) => {
   const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
+  const [filter, setFilter] = useState(undefined as any);
 
   function onScoreClicked(row: any) {
     setSelectedScore(row);
@@ -62,14 +63,19 @@ const Scores = (props: any) => {
     handlePageChange(1);
   }, []);
 
+  useEffect(() => {
+    const t = setTimeout(() => handlePageChange(1), 500)
+    return () => clearTimeout(t);
+  }, [ filter ]);
+
   async function handlePerRowsChange(newPerPage: number, page: number) {
-    const { data } = await ScoreApi.list(props.server.id, page, newPerPage);
+    const { data } = await ScoreApi.list(props.server.id, page, newPerPage, filter);
     setScores(data.scores);
     setPerPage(newPerPage);
   }
 
   async function handlePageChange(page: number) {
-    const { data } = await ScoreApi.list(props.server.id, page, perPage);
+    const { data } = await ScoreApi.list(props.server.id, page, perPage, filter);
     setScores(data.scores);
     setTotalRows(data.total);
   }
@@ -93,6 +99,7 @@ const Scores = (props: any) => {
                 actions={<TableHeader 
                   server={server}
                   onDismiss={onModalDismissed}
+                  onFilterChanged={(text: string) => setFilter(text)}
                   />}
                 onRowClicked={(row: any) => onScoreClicked(row)}
                 customStyles={TableStyle}
@@ -118,6 +125,11 @@ const StyledScreen = styled(Screen)`
 `;
 
 const TableStyle: TableStyles = {
+  table: {
+    style: {
+      
+    }
+  },
   header: {
     style: {
       height: '1.5em',

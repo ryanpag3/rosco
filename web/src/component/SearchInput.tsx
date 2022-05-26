@@ -5,12 +5,12 @@ import styled from 'styled-components'
 import Colors from 'util/colors'
 
 const SearchInput = (props: {
-  onChangeText: (search: any) => void;
+  onChange: (search: any) => void;
 }) => {
   return (
     <Container>
         <StyledSearchInput
-            onChange={props.onChangeText}
+            onChange={props.onChange}
             placeholder="Filter"
         />        
     </Container>
