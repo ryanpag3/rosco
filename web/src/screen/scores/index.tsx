@@ -1,144 +1,77 @@
-import Screen from 'component/Screen'
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import * as ScoreApi from 'api/score';
-import { SelectedServerContext } from 'context/selected-server-context';
-import { TableColumn, TableStyles } from 'react-data-table-component';
-import Table from 'component/Table';
-import TableHeader from './TableHeader';
-import ScoreModal from './ScoreModal';
+import React from 'react';
+import { Column, Table, Grid, WindowScroller } from 'react-virtualized';
+import ColumnDiv from 'component/Column';
+import styled from 'styled-components';
+
+const sampleData = [
+    {
+      id: 'c86162c4-ea6a-4156-b1cb-5f8cb014295e',
+      createdAt: '2022-05-20T23:36:04.964Z',
+      updatedAt: '2022-05-21T18:54:15.139Z',
+      name: 'xvcbxcvb1111',
+      description: '111111',
+      color: '#1e3b84',
+      amount: 0,
+      serverId: '09737e82-92cb-4b16-9f3b-74d29841d2d9',
+      channelId: null,
+      userId: null,
+      ScoreboardScore: []
+    },
+    {
+      id: 'b3eec680-a38d-498f-b977-7048a3c15cf0',
+      createdAt: '2022-05-20T23:34:29.210Z',
+      updatedAt: '2022-05-21T18:22:01.420Z',
+      name: 'tttttttt',
+      description: 'testing',
+      color: '#d80003',
+      amount: 0,
+      serverId: '09737e82-92cb-4b16-9f3b-74d29841d2d9',
+      channelId: null,
+      userId: null,
+      ScoreboardScore: []
+    }
+];
 
 const Scores = (props: any) => {
-  const [isInit, setIsInit] = useState(false);
-  const [scores, setScores] = useState([] as any);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [selectedScore, setSelectedScore] = useState();
-  const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(10);
-  const [isLoading, setIsLoading] = useState(false);
-  const [filter, setFilter] = useState(undefined as any);
 
-  function onScoreClicked(row: any) {
-    setSelectedScore(row);
-    setShowUpdateModal(true);
-  }
-
-  function onModalDismissed() {
-    console.log(`on modal dismissed`);
-    setSelectedScore(undefined);
-    setShowUpdateModal(false);
-    setIsInit(false);
-  }
-
-  const TableColumns: TableColumn<any>[] = [
-    {
-      name: 'Created At',
-      sortable: true,
-      selector: (row: any) => {
-        const d = new Date(row.createdAt);
-        return `${d.toLocaleString()}`
-      },
-      grow: .15
-    },
-    {
-      name: 'Amount',
-      sortable: true,
-      selector: (row: any) => row.amount,
-      grow: .1
-    },
-    {
-      name: 'Name',
-      sortable: true,
-      selector: (row: any) => row.name,
-      grow: .25
-    },
-    {
-      name: 'Description',
-      selector: (row: any) => row.description,
-      grow: 1
-    }
-  ]
-
-  useEffect(() => {
-    handlePageChange(1);
-  }, []);
-
-  useEffect(() => {
-    const t = setTimeout(() => handlePageChange(1), 500)
-    return () => clearTimeout(t);
-  }, [ filter ]);
-
-  async function handlePerRowsChange(newPerPage: number, page: number) {
-    const { data } = await ScoreApi.list(props.server.id, page, newPerPage, filter);
-    setScores(data.scores);
-    setPerPage(newPerPage);
-  }
-
-  async function handlePageChange(page: number) {
-    const { data } = await ScoreApi.list(props.server.id, page, perPage, filter);
-    setScores(data.scores);
-    setTotalRows(data.total);
-  }
-
-  return (
-    <SelectedServerContext.Consumer>
-      {
-        ({ server }: any) => (
-          <StyledScreen>
-              <Table
-                fixedHeader
-                highlightOnHover
-                pointerOnHover
-                pagination
-                paginationRowsPerPageOptions={[10, 15]}
-                paginationServer
-                paginationTotalRows={totalRows}
-                onChangeRowsPerPage={handlePerRowsChange}
-                onChangePage={handlePageChange}
-                theme="dark"
-                actions={<TableHeader 
-                  server={server}
-                  onDismiss={onModalDismissed}
-                  onFilterChanged={(text: string) => setFilter(text)}
-                  />}
-                onRowClicked={(row: any) => onScoreClicked(row)}
-                customStyles={TableStyle}
-                columns={TableColumns}
-                data={scores}
-                
-              />
-              <ScoreModal
-                action="Update"
-                server={server}
-                isOpen={showUpdateModal}
-                onDismiss={onModalDismissed}
-                score={selectedScore}
-              />
-          </StyledScreen>
-        )}
-    </SelectedServerContext.Consumer>
-  )
-}
-
-const StyledScreen = styled(Screen)`
-
-`;
-
-const TableStyle: TableStyles = {
-  table: {
-    style: {
-      
-    }
-  },
-  header: {
-    style: {
-      height: '1.5em',
-      maxHeight: '1.5em',
-      borderBottomStyle: 'solid',
-      borderBottomWidth: '1px',
-      borderBottomColor: '#858585' 
-    }
-  }
+    return (
+        // @ts-ignore
+        <WindowScroller>
+            {({height, width, isScrolling, onChildScroll, scrollTop}) => (
+                // @ts-ignore
+                <Table
+                    autoHeight
+                    height={height}
+                    width={width}
+                    isScrolling={isScrolling}
+                    onScroll={onChildScroll}
+                    scrollTop={scrollTop}
+                    rowCount={sampleData.length}
+                    rowGetter={({ index }) => {
+                        let obj = sampleData[index];
+                        const d = new Date(obj.createdAt);
+                        obj.createdAt = `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
+                        return sampleData[index]
+                    }}
+                    headerHeight={50}
+                    rowHeight={40}
+                >
+                    {/* @ts-ignore */}
+                    <Column label="Created At" dataKey="createdAt" width={150}/>
+                    {/* @ts-ignore */}
+                    <Column label="Amount" dataKey="amount" width={100}/>
+                    {/* @ts-ignore */}
+                    <Column label="Name" dataKey="name" minWidth={100}/>
+                    {/* @ts-ignore */}
+                    <Column label="Description" dataKey="description" minWidth={150} flexGrow={1}/>
+                </Table>
+            )}
+        </WindowScroller>
+    )
 };
 
-export default Scores
+const Container = styled(ColumnDiv)`
+    height: 100vh;
+`;
+
+export default Scores;
