@@ -60,10 +60,10 @@ export const del = async (where: Prisma.ScoreWhereInput) => {
 }
 
 export const list = async (
-    server: Server, 
-    page: number = 1,
-    amount: number = 10,
-    filter?: string|null, 
+    server: Server,
+    take: number = 10,
+    skip: number = 0,
+    filter?: string|null,
     scoreboardName?: string
 ) => {
     let scoreboard;
@@ -121,8 +121,8 @@ export const list = async (
             },
             ScoreboardScore
         },
-        take: amount,
-        skip: amount * (page - 1),
+        take,
+        skip,
         orderBy: {
             amount: 'desc'
         }
@@ -132,4 +132,14 @@ export const list = async (
         total,
         scores
     };
+}
+
+export const listByPage = async (
+    server: Server, 
+    page: number = 1,
+    amount: number = 10,
+    filter?: string|null, 
+    scoreboardName?: string
+) => {
+     return list(server, amount, amount * (page - 1), filter, scoreboardName);
 }

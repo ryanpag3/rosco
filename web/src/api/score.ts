@@ -1,6 +1,23 @@
 import axios from 'util/axios';
 
 export const list = async (
+    guildId: string,
+    take: number = 10,
+    skip: number = 0,
+    filter?: string,
+    scoreboard?: string
+) => {
+    return axios.get(`/guild/${guildId}/score`, {
+        params: {
+            take,
+            skip,
+            filter,
+            scoreboard
+        }
+    });
+}
+
+export const listByPage = async (
     guildId: string, 
     page: number = 1, 
     amount: number = 10, 

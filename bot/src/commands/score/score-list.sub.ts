@@ -17,7 +17,7 @@ const ScoreList: Command = {
         const includeRaw = interaction.options.getBoolean('include-raw') || false;
         const scoreboardName = interaction.options.getString('scoreboard') || undefined;
 
-        const { scores } = await ScoreService.list(server, page, amount, filter, scoreboardName)
+        const { scores } = await ScoreService.listByPage(server, page, amount, filter, scoreboardName)
 
         const height = 35 * scores.length + 125;
         const width = 1000;

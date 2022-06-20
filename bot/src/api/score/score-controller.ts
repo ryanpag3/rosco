@@ -9,6 +9,8 @@ export const getScores: RouteHandlerMethod = async (request, reply) => {
     let {
         page,
         amount,
+        take,
+        skip,
         filter,
         scoreboard
     } = request.query as any;
@@ -17,8 +19,16 @@ export const getScores: RouteHandlerMethod = async (request, reply) => {
     amount = amount ? Number.parseInt(amount) : amount;
 
     try {
-        const scores = await ScoreService.list(request.server as any, page, amount, filter, scoreboard);
-        logger.info(scores);
+        let scores;
+        if (take && skip) {
+            scores = await ScoreService.list(request.server as any, take, skip, filter, scoreboard);
+        } else if (page !== undefined && amount !== undefined) {
+            scores = await ScoreService.listByPage(request.server as any, page, amount, filter, scoreboard);
+        } else {
+            throw new Error(`Invalid pagination provided.`);
+        }
+        
+        logger.debug(scores);
         return reply.status(200).send(JSON.stringify(scores));
     } catch (e) {
         logger.error(e);

@@ -1,7 +1,13 @@
-import React from 'react';
-import { Column, Table, Grid, WindowScroller } from 'react-virtualized';
+import React, { useState } from 'react';
+import { 
+    Column, 
+    Table, 
+    WindowScroller, 
+    InfiniteLoader 
+} from 'react-virtualized';
 import ColumnDiv from 'component/Column';
 import styled from 'styled-components';
+import * as ScoreApi from 'api/score';
 
 const sampleData = [
     {
@@ -33,38 +39,71 @@ const sampleData = [
 ];
 
 const Scores = (props: any) => {
+    const [ data, setData ] = useState([] as any[]);
+    const [ totalRowCount, setTotalRowCount ] = useState(0);
+    const [filter, setFilter] = useState();
+
+    async function loadMoreRows({ 
+        startIndex, 
+        stopIndex 
+    }: { startIndex: number, stopIndex: number }) {
+        const newData = await ScoreApi.list(
+            props.server.id as any,
+            stopIndex - startIndex,
+            startIndex,
+            filter
+        );
+        console.log(newData);
+        // @ts-ignore
+        setData([...data, ...newData.data]);
+    }
+
+    function isRowLoaded({ index }: any) {
+        return !!data[index];
+    }
 
     return (
         // @ts-ignore
         <WindowScroller>
             {({height, width, isScrolling, onChildScroll, scrollTop}) => (
-                // @ts-ignore
-                <Table
-                    autoHeight
-                    height={height}
-                    width={width}
-                    isScrolling={isScrolling}
-                    onScroll={onChildScroll}
-                    scrollTop={scrollTop}
-                    rowCount={sampleData.length}
-                    rowGetter={({ index }) => {
-                        let obj = sampleData[index];
-                        const d = new Date(obj.createdAt);
-                        obj.createdAt = `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
-                        return sampleData[index]
-                    }}
-                    headerHeight={50}
-                    rowHeight={40}
-                >
-                    {/* @ts-ignore */}
-                    <Column label="Created At" dataKey="createdAt" width={150}/>
-                    {/* @ts-ignore */}
-                    <Column label="Amount" dataKey="amount" width={100}/>
-                    {/* @ts-ignore */}
-                    <Column label="Name" dataKey="name" minWidth={100}/>
-                    {/* @ts-ignore */}
-                    <Column label="Description" dataKey="description" minWidth={150} flexGrow={1}/>
-                </Table>
+            // @ts-ignore
+             <InfiniteLoader
+                isRowLoaded={isRowLoaded}
+                loadMoreRows={loadMoreRows}
+                rowCount={totalRowCount}
+              >
+                {({ onRowsRendered, registerChild }) => (
+                    // @ts-ignore
+                    <Table
+                        autoHeight
+                        height={height}
+                        width={width}
+                        onRowsRendered={onRowsRendered}
+                        ref={registerChild}
+                        isScrolling={isScrolling}
+                        onScroll={onChildScroll}
+                        scrollTop={scrollTop}
+                        rowCount={sampleData.length}
+                        rowGetter={({ index }) => {
+                            let obj = sampleData[index];
+                            const d = new Date(obj.createdAt);
+                            obj.createdAt = `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
+                            return sampleData[index]
+                        }}
+                        headerHeight={50}
+                        rowHeight={40}
+                    >
+                        {/* @ts-ignore */}
+                        <Column label="Created At" dataKey="createdAt" width={150}/>
+                        {/* @ts-ignore */}
+                        <Column label="Amount" dataKey="amount" width={100}/>
+                        {/* @ts-ignore */}
+                        <Column label="Name" dataKey="name" minWidth={100}/>
+                        {/* @ts-ignore */}
+                        <Column label="Description" dataKey="description" minWidth={150} flexGrow={1}/>
+                    </Table>
+                )}
+              </InfiniteLoader>
             )}
         </WindowScroller>
     )
