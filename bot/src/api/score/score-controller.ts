@@ -15,12 +15,14 @@ export const getScores: RouteHandlerMethod = async (request, reply) => {
         scoreboard
     } = request.query as any;
 
+    skip = skip ? Number.parseInt(skip) : skip;
+    take = take ? Number.parseInt(take) : take;
     page = page ? Number.parseInt(page) : page;
     amount = amount ? Number.parseInt(amount) : amount;
 
     try {
         let scores;
-        if (take && skip) {
+        if (take !== undefined && skip !== undefined) {
             scores = await ScoreService.list(request.server as any, take, skip, filter, scoreboard);
         } else if (page !== undefined && amount !== undefined) {
             scores = await ScoreService.listByPage(request.server as any, page, amount, filter, scoreboard);

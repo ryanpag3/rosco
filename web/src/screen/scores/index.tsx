@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Column, 
     Table, 
@@ -43,19 +43,30 @@ const Scores = (props: any) => {
     const [ totalRowCount, setTotalRowCount ] = useState(0);
     const [filter, setFilter] = useState();
 
+    useEffect(() => {
+        if (data.length !== 0)
+            return;
+        loadMoreRows({
+            startIndex: 0,
+            stopIndex: 10
+        }).then();
+    });
+
     async function loadMoreRows({ 
         startIndex, 
         stopIndex 
     }: { startIndex: number, stopIndex: number }) {
-        const newData = await ScoreApi.list(
+        console.log('load more rows');
+        const res = await ScoreApi.list(
             props.server.id as any,
-            stopIndex - startIndex,
+            stopIndex - startIndex + 1,
             startIndex,
             filter
         );
-        console.log(newData);
+
+        setTotalRowCount(res.data.total);
         // @ts-ignore
-        setData([...data, ...newData.data]);
+        setData([...data, ...res.data.scores]);
     }
 
     function isRowLoaded({ index }: any) {
@@ -83,12 +94,12 @@ const Scores = (props: any) => {
                         isScrolling={isScrolling}
                         onScroll={onChildScroll}
                         scrollTop={scrollTop}
-                        rowCount={sampleData.length}
+                        rowCount={data.length}
                         rowGetter={({ index }) => {
-                            let obj = sampleData[index];
+                            let obj = data[index];
                             const d = new Date(obj.createdAt);
                             obj.createdAt = `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
-                            return sampleData[index]
+                            return obj;
                         }}
                         headerHeight={50}
                         rowHeight={40}
