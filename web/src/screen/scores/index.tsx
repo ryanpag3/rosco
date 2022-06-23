@@ -8,9 +8,12 @@ import {
 } from 'react-virtualized';
 import * as ScoreApi from 'api/score';
 import ScoreModal from './ScoreModal';
+import TableHeader from './TableHeader';
+import styled from 'styled-components';
+import RoscoColumn from 'component/Column';
+import Row from 'component/Row';
 
 const Scores = (props: any) => {
-    const [tableRef, setTableRef] = useState();
     const [data, setData] = useState([] as any[]);
     const [totalRowCount, setTotalRowCount] = useState(0);
     const [filter, setFilter] = useState();
@@ -89,7 +92,11 @@ const Scores = (props: any) => {
     }
 
     return (
-        <React.Fragment>
+        <Container>
+            <HeaderRow>
+                <EmptySpace/>
+                <TableHeader/>
+            </HeaderRow>
             {/* @ts-ignore */}
             <WindowScroller>
                 {({ height, width, isScrolling, onChildScroll, scrollTop }) => (
@@ -149,8 +156,20 @@ const Scores = (props: any) => {
                 onDismiss={onModalDismissed}
                 score={selectedScore}
             />
-        </React.Fragment>
+        </Container>
     )
 };
+
+const Container = styled(RoscoColumn)`
+
+`;
+
+const HeaderRow = styled(Row)`
+    width: 85%;
+`;
+
+const EmptySpace = styled.div`
+    flex-grow: 1;
+`;
 
 export default Scores;
