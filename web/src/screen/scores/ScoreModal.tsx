@@ -13,7 +13,7 @@ const ScoreModal = (props: {
   server: any;
   score?: any;
   isOpen: boolean;
-  onDismiss: () => void;
+  onDismiss: (score: any) => void;
 }) => {
   const [score, setScore] = useState(props.score);
 
@@ -43,7 +43,7 @@ const ScoreModal = (props: {
 
   function dismiss() {
     setScore(undefined);
-    props.onDismiss();
+    props.onDismiss(score);
   }
 
   return (
@@ -61,7 +61,7 @@ const ScoreModal = (props: {
                 value={score?.name || props.score?.name}
                 labelStyle={LabelStyle}
                 inputStyle={NameInputStyle}
-                onChange={(value) => setScore({ ...score, ...{ name: value }})} />
+                onChange={(value) => setScore({ ...props.score, ...{ name: value }})} />
             </StyledRow>
 
             <StyledRow>
@@ -70,7 +70,7 @@ const ScoreModal = (props: {
                 value={score?.description || props.score?.description}
                 labelStyle={LabelStyle}
                 inputStyle={DescriptionInputStyle}
-                onChange={(value) => setScore({ ...score, ...{ description: value }})}
+                onChange={(value) => setScore({ ...props.score, ...{ description: value }})}
               />
             </StyledRow>
 
@@ -80,7 +80,7 @@ const ScoreModal = (props: {
                 value={score?.amount || props.score?.amount}
                 labelStyle={LabelStyle}
                 inputStyle={AmountInputStyle}
-                onChange={(value) => setScore({ ...score, ...{ amount: value }})}
+                onChange={(value) => setScore({ ...props.score, ...{ amount: value }})}
               />
               <LabelledInput
                 label="Color"
