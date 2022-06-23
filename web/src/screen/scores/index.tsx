@@ -3,18 +3,20 @@ import {
     Column,
     Table,
     WindowScroller,
-    InfiniteLoader
+    InfiniteLoader,
+    SortDirection
 } from 'react-virtualized';
-import ColumnDiv from 'component/Column';
-import styled from 'styled-components';
 import * as ScoreApi from 'api/score';
 import ScoreModal from './ScoreModal';
 
 const Scores = (props: any) => {
+    const [tableRef, setTableRef] = useState();
     const [data, setData] = useState([] as any[]);
     const [totalRowCount, setTotalRowCount] = useState(0);
     const [filter, setFilter] = useState();
     const [selectedScore, setSelectedScore] = useState(undefined as any);
+    const [sortKey, setSortKey] = useState('amount');
+    const [sortDirection, setSortDirection] = useState(SortDirection.DESC as any);
 
     useEffect(() => {
         if (data.length !== 0)
@@ -51,10 +53,39 @@ const Scores = (props: any) => {
         setSelectedScore(rowData);
     }
 
+    function onHeaderClick( clickInfo: any ) {
+        if (clickInfo.dataKey !== sortKey) {
+            setSortKey(clickInfo.dataKey);
+        } else if (sortDirection === SortDirection.DESC) {
+            setSortDirection(SortDirection.ASC);
+        } else {
+            setSortDirection(SortDirection.DESC);
+        }
+    }
+
     function onModalDismissed(score: any) {
         setSelectedScore(undefined as any);
         data[score.index] = score;
         setData([...data]);
+    }
+
+    function sortData({ defaultSortDirection, event, sortBy, sortDirection }: any) {
+        console.log(sortBy);
+
+        const sorted = data.sort((a: any, b: any) => {
+            const dir = sortDirection === SortDirection.ASC ? -1 : 1;
+            const propA = a[sortBy];
+            const propB = b[sortBy];
+
+            if (propA < propB)
+                return 1 * dir;
+            if (propA > propB)
+                return -1 * dir;
+
+            return 0;
+        });
+
+        setData(sorted);
     }
 
     return (
@@ -89,9 +120,13 @@ const Scores = (props: any) => {
                                 headerHeight={50}
                                 rowHeight={40}
                                 onRowClick={onRowClick}
+                                onHeaderClick={onHeaderClick}
                                 rowStyle={{
                                     cursor: 'default'
                                 }}
+                                sort={sortData}
+                                sortBy={sortKey}
+                                sortDirection={sortDirection}
                             >
                                 {/* @ts-ignore */}
                                 <Column label="Created At" dataKey="createdAt" width={200} />
@@ -117,9 +152,5 @@ const Scores = (props: any) => {
         </React.Fragment>
     )
 };
-
-const Container = styled(ColumnDiv)`
-    height: 100vh;
-`;
 
 export default Scores;
