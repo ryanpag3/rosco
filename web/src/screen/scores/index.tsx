@@ -12,14 +12,23 @@ import TableHeader from './TableHeader';
 import styled from 'styled-components';
 import RoscoColumn from 'component/Column';
 import Row from 'component/Row';
+import DashboardScreen from 'component/DashboardScreen';
 
 const Scores = (props: any) => {
     const [data, setData] = useState([] as any[]);
     const [totalRowCount, setTotalRowCount] = useState(0);
-    const [filter, setFilter] = useState();
+    const [filter, setFilter] = useState(undefined as any);
     const [selectedScore, setSelectedScore] = useState(undefined as any);
     const [sortKey, setSortKey] = useState('amount');
     const [sortDirection, setSortDirection] = useState(SortDirection.DESC as any);
+
+    useEffect(() => {
+        loadMoreRows({
+            startIndex: 0,
+            stopIndex: 10
+        }, true);
+    }, [ filter ]);
+
 
     useEffect(() => {
         if (data.length !== 0)
@@ -33,8 +42,7 @@ const Scores = (props: any) => {
     async function loadMoreRows({
         startIndex,
         stopIndex
-    }: { startIndex: number, stopIndex: number }) {
-        console.log('load more rows');
+    }: { startIndex: number, stopIndex: number }, override: boolean = false) {
         const res = await ScoreApi.list(
             props.server.id as any,
             stopIndex - startIndex + 1,
@@ -43,8 +51,11 @@ const Scores = (props: any) => {
         );
 
         setTotalRowCount(res.data.total);
+
+        const newData = override ? [ ...res.data.scores ] : [...data, ...res.data.scores];
+
         // @ts-ignore
-        setData([...data, ...res.data.scores]);
+        setData(newData);
     }
 
     function isRowLoaded({ index }: any) {
@@ -95,7 +106,9 @@ const Scores = (props: any) => {
         <Container>
             <HeaderRow>
                 <EmptySpace/>
-                <TableHeader/>
+                <TableHeader
+                    onFilterChanged={(filter: string) => setFilter(filter)}
+                />
             </HeaderRow>
             {/* @ts-ignore */}
             <WindowScroller>
@@ -160,12 +173,12 @@ const Scores = (props: any) => {
     )
 };
 
-const Container = styled(RoscoColumn)`
+const Container = styled(DashboardScreen)`
 
 `;
 
 const HeaderRow = styled(Row)`
-    width: 85%;
+    width: 100%;
 `;
 
 const EmptySpace = styled.div`
