@@ -15,9 +15,9 @@ const TableHeader = (props: any) => {
         action="Create"
         server={props.server}
         isOpen={showCreateModal}
-        onDismiss={() => {
+        onModalDismissed={(score) => {
           setShowCreateModal(false)
-          props.onDismiss();
+          props.onDismiss(score);
         }}
       />
       <SearchInput

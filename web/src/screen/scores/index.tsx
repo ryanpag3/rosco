@@ -79,8 +79,7 @@ const Scores = (props: any) => {
 
     function onModalDismissed(score: any) {
         setSelectedScore(undefined as any);
-        data[score.index] = score;
-        setData([...data]);
+        upsertScoreToData(score);
     }
 
     function sortData({ defaultSortDirection, event, sortBy, sortDirection }: any) {
@@ -102,11 +101,31 @@ const Scores = (props: any) => {
         setData(sorted);
     }
 
+    function upsertScoreToData(score: any) {
+        console.log(data);
+        let updatedData = data;
+        let isUpdate = false;
+        for (let i = 0; i < data.length; i++) {
+            if (score.name === data[i].name) {
+                updatedData[i] = score;
+                isUpdate = true;
+                break;
+            }
+        }
+
+        if (!isUpdate)
+            updatedData = [score, ...data];
+        
+        setData([ ...updatedData ]);
+    }
+
     return (
         <Container>
             <HeaderRow>
                 <EmptySpace/>
                 <TableHeader
+                    server={props.server}
+                    onDismiss={(score: any) => upsertScoreToData(score)}
                     onFilterChanged={(filter: string) => setFilter(filter)}
                 />
             </HeaderRow>
@@ -166,7 +185,7 @@ const Scores = (props: any) => {
                 action="Update"
                 server={props.server}
                 isOpen={selectedScore !== undefined}
-                onDismiss={onModalDismissed}
+                onModalDismissed={onModalDismissed}
                 score={selectedScore}
             />
         </Container>

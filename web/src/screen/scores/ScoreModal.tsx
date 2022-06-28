@@ -13,7 +13,7 @@ const ScoreModal = (props: {
   server: any;
   score?: any;
   isOpen: boolean;
-  onDismiss: (score: any) => void;
+  onModalDismissed: (score: any) => void;
 }) => {
   const [score, setScore] = useState(props.score);
 
@@ -42,15 +42,23 @@ const ScoreModal = (props: {
   }
 
   function dismiss() {
+
+    props.onModalDismissed({
+      name: score.name,
+      description: score.description,
+      color: score.color,
+      amount: Number.parseInt(score.amount),
+      createdAt: score.createdAt || new Date()
+    });
+
     setScore(undefined);
-    props.onDismiss(score);
   }
 
   return (
     <Container>
       <StyledModal
         isOpen={props.isOpen}
-        onDismiss={props.onDismiss}
+        onDismiss={props.onModalDismissed}
       >
         <Header>{props.action} Score</Header>
         <Content>
@@ -61,7 +69,7 @@ const ScoreModal = (props: {
                 value={score?.name || props.score?.name}
                 labelStyle={LabelStyle}
                 inputStyle={NameInputStyle}
-                onChange={(value) => setScore({ ...props.score, ...{ name: value }})} />
+                onChange={(value) => setScore({ ...props.score, ...score, ...{ name: value } })} />
             </StyledRow>
 
             <StyledRow>
@@ -70,7 +78,7 @@ const ScoreModal = (props: {
                 value={score?.description || props.score?.description}
                 labelStyle={LabelStyle}
                 inputStyle={DescriptionInputStyle}
-                onChange={(value) => setScore({ ...props.score, ...{ description: value }})}
+                onChange={(value) => setScore({ ...props.score, ...score, ...{ description: value } })}
               />
             </StyledRow>
 
@@ -80,28 +88,28 @@ const ScoreModal = (props: {
                 value={score?.amount || props.score?.amount}
                 labelStyle={LabelStyle}
                 inputStyle={AmountInputStyle}
-                onChange={(value) => setScore({ ...props.score, ...{ amount: value }})}
+                onChange={(value) => setScore({ ...props.score, ...score, ...{ amount: value } })}
               />
               <LabelledInput
                 label="Color"
                 value="" // unused
                 labelStyle={LabelStyle}
                 inputStyle={InputStyle}
-                inputOverride={<HexColorPicker 
+                inputOverride={<HexColorPicker
                   color={score?.color || props.score?.color}
-                  onChange={(color) => setScore({ ...score, ...{ color }})}
+                  onChange={(color) => setScore({ ...props.score, ...score, ...{ color } })}
                 />}
               />
             </StyledRow>
           </Column>
           <ButtonRow>
-              <CancelButton
-                onClick={cancel}
-              >Cancel</CancelButton>
-              <SubmitButton
-                onClick={submit}
-              >Submit</SubmitButton>
-            </ButtonRow>
+            <CancelButton
+              onClick={cancel}
+            >Cancel</CancelButton>
+            <SubmitButton
+              onClick={submit}
+            >Submit</SubmitButton>
+          </ButtonRow>
         </Content>
       </StyledModal>
     </Container>
