@@ -30,10 +30,16 @@ const TableHeader = (props: any) => {
   )
 }
 
-const Container = styled(Row)``;
+const Container = styled(Row)`
+  align-items: center;
+  padding-top: .1em;
+`;
 
 const AddIcon = styled(FaPlus)`
     ${TableHeaderIconStyle}
+    padding-top: .2em;
+    font-size: 1.2em;
+    margin-right: 1em;
 `;
 
 export default TableHeader
