@@ -10,7 +10,7 @@ const ScoreCreate: Command = {
         const name = interaction.options.getString('name', true);
         const description = interaction.options.getString('description');
         const amount = interaction.options.getInteger('amount') || 0;
-        const scoreNamesSplit = name.split(',');
+        const scoreNamesSplit = name.split(',').map(n => n.trim());
         let color = interaction.options.getString('color');
 
         let colors = [];

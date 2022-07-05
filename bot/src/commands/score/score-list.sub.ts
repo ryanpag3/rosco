@@ -78,7 +78,7 @@ const ScoreList: Command = {
         const stream = chartJsNodeCanvas.renderToStream({
             type: 'bar',
             data: {
-                labels: scores.map(s => `${truncateWithEllipses(s.name, 15)} | ${s.amount}`),
+                labels: scores.map(s => `"${truncateWithEllipses(s.name, 15)}" | ${s.amount}`),
                 datasets: [
                     {
                         data: scores.map(s => s.amount),
