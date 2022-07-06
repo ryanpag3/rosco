@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-07-06T15:24:40.643Z
+date: 2022-07-06T15:34:24.029Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:13:14.026Z
@@ -101,16 +101,19 @@ Issue `/score delete` to delete a previously [created](/commands/score#create-cr
 
 ### Names with empty spaces 
 
-A small number of users may have been affected by a bug where their score names were corrupted with leading or trailing spaces. To fix this, you should run the delete command with `"` double quotation marks around it.
+A small number of users may have been affected by a bug where their score names were corrupted with leading or trailing spaces. While the original issue has been fixed to not cause more corruption, you should run the delete command with `"` double quotation marks around it to remove the bad scores.
 
 **note:** If you have scores with quotes already around it, you should wrap them with another set of quotes.
 
 Example
 
 ``` bash
+# with leading and trailing spaces
 /score delete name: " test "
 
 # with existing quotes
+/score delete name: " "test" "
+
 /score delete name: ""test""
 ```
 
