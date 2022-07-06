@@ -1,3 +1,10 @@
+# [1.4.0-beta.2](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2022-07-06)
+
+
+### Bug Fixes
+
+* add ability to delete scores with a corrupted name ([5957a69](https://github.com/ryanpag3/guac-bot/commit/5957a696b823cd48b4dfb9b980041819798cee33))
+
 # [1.4.0-beta.1](https://github.com/ryanpag3/guac-bot/compare/v1.3.2...v1.4.0-beta.1) (2022-07-05)
 
 
