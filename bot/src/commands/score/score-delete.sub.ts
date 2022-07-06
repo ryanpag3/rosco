@@ -12,7 +12,12 @@ const ScoreDelete: Command = {
     // options are handled in score.ts since this is a subcommand
     options: {},
     handler: async (interaction, _user, server) => {
-        const name = interaction.options.getString('name', true);
+        let name = interaction.options.getString('name', true);
+
+        // if a user is attempting to fix a corrupted name that includes leading or trailing whitespace
+        if (name.startsWith("\" ") || name.endsWith(" \"")) {
+            name = name.replace(/^"(.*)"$/, '$1');
+        }
 
         try {
             await prisma.score.delete({
