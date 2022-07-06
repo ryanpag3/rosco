@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-04-13T15:32:16.378Z
+date: 2022-07-06T15:19:19.237Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:13:14.026Z
@@ -90,6 +90,17 @@ Issue `/score delete` to delete a previously [created](/commands/score#create-cr
 | Argument | Description | Required |
 |----------|-------------|----------|
 | `name` | The unique name of the score. | `true` |
+
+
+### Names with empty spaces 
+
+A small number of users may have been affected by a bug where their score names were corrupted with leading or trailing spaces. To fix this, you should run the delete command with `"` double quotation marks around it.
+
+Example
+
+```
+/score delete name: " test "
+```
 
 ### Examples
 
