@@ -25,10 +25,10 @@ const Scores = (props: any) => {
   })
 
   const columnDefs = [
-      { field: 'createdAt', headerName: 'Created At', sortable: true },
+      { field: 'createdAt', headerName: 'Created At', sortable: true, filter: 'agDateColumnFilter' },
       { field: 'color', headerName: 'Color', sortable: true },
-      { field: 'name', headerName: 'Name', editable: true, sortable: true },
-      { field: 'amount', headerName: 'Amount', editable: true, sortable: true }
+      { field: 'name', headerName: 'Name', editable: true, sortable: true, filter: 'agTextColumnFilter' },
+      { field: 'amount', headerName: 'Amount', editable: true, sortable: true, filter: 'agNumberColumnFilter' }
   ];
 
   return (
@@ -46,8 +46,6 @@ const Scores = (props: any) => {
                   [event.colDef.field as string]: event.colDef.field === 'amount' ? 
                                                   Number.parseInt(event.newValue) : event.newValue
                 };
-
-                console.log(updated);
 
                 await ScoreApi.updateScore(props.server.id, event.data.id, updated);
               }}
