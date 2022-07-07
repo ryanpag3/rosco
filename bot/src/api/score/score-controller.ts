@@ -39,6 +39,29 @@ export const getScores: RouteHandlerMethod = async (request, reply) => {
     return reply.status(500).send();
 }
 
+/**
+ * I wrote pagination for this but I suspect users won't have enough scores for it to matter.
+ * 
+ * We may need to readdress this later.
+ */
+export const getAllScores: RouteHandlerMethod = async (request, reply) => {
+    let {
+        filter,
+        scoreboard
+    } = request.query as any;
+
+    try {
+        const { total } = await ScoreService.list(request.server as any, 1, 0, filter, scoreboard);
+        const { scores } = await ScoreService.list(request.server as any, total, 0, filter, scoreboard);
+        logger.debug(scores);
+        return reply.status(200).send(JSON.stringify(scores))
+    } catch (e) {
+        logger.error(e);
+    }
+
+    return reply.status(500).send();
+}
+
 export const updateScore: RouteHandlerMethod = async (request, reply) => {
     const { scoreId } = request.params as any;
 

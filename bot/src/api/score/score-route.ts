@@ -18,6 +18,21 @@ const ScoreRoutes = [
         handler: ScoreController.getScores
     },
     {
+        method: 'GET',
+        url: '/guild/:guildId/score/all',
+        schema: {
+            description: 'Get guild scores',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: ScoreController.getAllScores
+    }, 
+    {
         method: 'PATCH',
         url: `/guild/:guildId/score/:scoreId`,
         schema: {

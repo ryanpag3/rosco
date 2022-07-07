@@ -34,6 +34,19 @@ export const listByPage = async (
    });
 }
 
+export const listAll = async (
+    guildId: string,
+    filter?: string,
+    scoreboard?: string
+) => {
+    return axios.get(`/guild/${guildId}/score/all`, {
+        params: {
+            filter,
+            scoreboard
+        }
+    }); 
+}
+
 export const updateScore = async (
     guildId: string,
     scoreId: string,
