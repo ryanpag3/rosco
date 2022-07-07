@@ -6,6 +6,7 @@ import * as ScoreApi from 'api/score';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+import { CellValueChangedEvent, RowDataChangedEvent, RowDataUpdatedEvent } from 'ag-grid-community';
 
 const Scores = (props: any) => {
   const [data, setData] = useState([] as any);
@@ -18,10 +19,7 @@ const Scores = (props: any) => {
 
     ScoreApi.listAll(props.server.id, filter, undefined)
       .then(({ data }) => {
-          console.log(data);  
-        
           setData(data);
-
           setIsLoaded(true);
       });
   })
@@ -40,6 +38,19 @@ const Scores = (props: any) => {
               // @ts-ignore
               columnDefs={columnDefs}
               rowData={data}
+              onCellValueChanged={async (event: CellValueChangedEvent) => {
+                let updatedData = data;
+                updatedData[event.rowIndex as number] = event.data;
+                setData(updatedData);
+                const updated = {
+                  [event.colDef.field as string]: event.colDef.field === 'amount' ? 
+                                                  Number.parseInt(event.newValue) : event.newValue
+                };
+
+                console.log(updated);
+
+                await ScoreApi.updateScore(props.server.id, event.data.id, updated);
+              }}
           />
       </Container>
   );
