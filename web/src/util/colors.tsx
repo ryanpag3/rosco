@@ -7,6 +7,8 @@ const Colors = {
     BACKGROUND_MEDIUM: '#3f3f3f',
     BUTTON_INVITE_HOVER: '#bef0ff',
     BUTTON_INVITE: '#A3DCEE',
+    BUTTON_GREEN: '#6ec279',
+    BUTTON_GREEN_HOVER: '#79e971',
     DROPDOWN_BACKGROUND_LIGHT: '#f0f0f0',
     TEXT_DARK: '#000000',
     TEXT_LIGHT_HOVER: '#c4c4c4',

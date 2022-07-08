@@ -3,40 +3,40 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { AgGridReact } from 'ag-grid-react';
 import * as ScoreApi from 'api/score';
+import { CellValueChangedEvent } from 'ag-grid-community';
+import Button from 'component/Button';
+import { FaPlus } from 'react-icons/fa';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
-import { CellValueChangedEvent, RowDataChangedEvent, RowDataUpdatedEvent } from 'ag-grid-community';
+import Colors from 'util/colors';
+import Tooltip from 'component/Tooltip';
+import ReactTooltip from 'react-tooltip';
+import { dateComparator } from 'util/date';
+import ColumnDefs from './column-defs';
+
 
 const Scores = (props: any) => {
   const [data, setData] = useState([] as any);
-  const [filter, setFilter] = useState(undefined as any);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if(isLoaded)
       return;
 
-    ScoreApi.listAll(props.server.id, filter, undefined)
+    ScoreApi.listAll(props.server.id)
       .then(({ data }) => {
           setData(data);
           setIsLoaded(true);
       });
   })
 
-  const columnDefs = [
-      { field: 'createdAt', headerName: 'Created At', sortable: true, filter: 'agDateColumnFilter' },
-      { field: 'color', headerName: 'Color', sortable: true },
-      { field: 'name', headerName: 'Name', editable: true, sortable: true, filter: 'agTextColumnFilter' },
-      { field: 'amount', headerName: 'Amount', editable: true, sortable: true, filter: 'agNumberColumnFilter' }
-  ];
-
   return (
       <Container>
           <AgGridReact
               className="ag-theme-alpine-dark"
               // @ts-ignore
-              columnDefs={columnDefs}
+              columnDefs={ColumnDefs}
               rowData={data}
               onCellValueChanged={async (event: CellValueChangedEvent) => {
                 let updatedData = data;
@@ -50,6 +50,17 @@ const Scores = (props: any) => {
                 await ScoreApi.updateScore(props.server.id, event.data.id, updated);
               }}
           />
+          <CreateButton
+            hint="asdasdasd"
+            data-tip
+            data-for="createScore"
+          >
+            <PlusIcon/>
+          </CreateButton>
+          {/* @ts-ignore */}
+          <ReactTooltip id="createScore" place="left" type="light" effect="solid" delayShow={300}>
+              <span>Create a new score.</span>
+          </ReactTooltip>
       </Container>
   );
 }
@@ -57,6 +68,25 @@ const Scores = (props: any) => {
 const Container = styled(Column)`
     height: 100%;
     width: 100%;
+`;
+
+const CreateButton = styled(Button)`
+  height: 3em;
+  width: 3em;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+  background-color: ${Colors.BUTTON_GREEN};
+
+  :hover {
+    background-color: ${Colors.BUTTON_GREEN_HOVER};
+  }
+`;
+
+const PlusIcon = styled(FaPlus)`
+  font-size: 1.75em;
+  color: ${Colors.TEXT_DARK};
 `;
 
 export default Scores;
