@@ -48,7 +48,8 @@ const ScoreModal = (props: {
       description: score.description,
       color: score.color,
       amount: Number.parseInt(score.amount),
-      createdAt: score.createdAt || new Date()
+      createdAt: score.createdAt || new Date(),
+      updatedAt: score.updatedAt || new Date()
     });
 
     setScore(undefined);

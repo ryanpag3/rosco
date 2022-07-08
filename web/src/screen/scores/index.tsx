@@ -14,11 +14,13 @@ import Tooltip from 'component/Tooltip';
 import ReactTooltip from 'react-tooltip';
 import { dateComparator } from 'util/date';
 import ColumnDefs from './column-defs';
+import ScoreModal from './ScoreModal';
 
 
 const Scores = (props: any) => {
   const [data, setData] = useState([] as any);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   useEffect(() => {
     if(isLoaded)
@@ -54,6 +56,7 @@ const Scores = (props: any) => {
             hint="asdasdasd"
             data-tip
             data-for="createScore"
+            onClick={() => setShowCreateModal(true)}
           >
             <PlusIcon/>
           </CreateButton>
@@ -61,6 +64,16 @@ const Scores = (props: any) => {
           <ReactTooltip id="createScore" place="left" type="light" effect="solid" delayShow={300}>
               <span>Create a new score.</span>
           </ReactTooltip>
+
+          <ScoreModal
+            action="Create"
+            server={props.server}
+            onModalDismissed={(score) => {
+              setShowCreateModal(false);
+              setData([score, ...data]);
+            }}
+            isOpen={showCreateModal}
+          />
       </Container>
   );
 }
