@@ -72,6 +72,9 @@ export const updateScore: RouteHandlerMethod = async (request, reply) => {
             if (!(request.body as any)[key])
                 continue;
             updateData[key] = (request.body as any)[key];
+            if (key === 'name') {
+                updateData[key] = updateData[key].trim();
+            }
         }
 
         await prisma.score.update({
@@ -101,6 +104,7 @@ export const createScore: RouteHandlerMethod = async (request, reply) => {
     color = color ? color: randomColor(); 
 
     try {
+        name = name.trim();
         const s = await prisma.score.create({
             data: {
                 serverId: (request as any).server.id,
@@ -110,9 +114,6 @@ export const createScore: RouteHandlerMethod = async (request, reply) => {
                 color
             }
         });
-
-        logger.info(s);
-
         return reply.status(200).send();
     } catch (e) {
         logger.error(e);

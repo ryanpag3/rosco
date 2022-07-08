@@ -39,7 +39,7 @@ export const getGuild: RouteHandlerMethod = async (request, reply) => {
 
 export const updateGuildTimezone: RouteHandlerMethod = async (request, reply) => {
     const { guildId } = request.params as any;
-    const { timezone } = request.query as any;
+    let { timezone } = request.query as any;
 
     if (!getTimezone(timezone))
         return reply.status(400).send(`Invalid timezone provided.`);

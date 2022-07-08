@@ -70,7 +70,10 @@ const Scores = (props: any) => {
             server={props.server}
             onModalDismissed={(score) => {
               setShowCreateModal(false);
-              setData([score, ...data]);
+
+              if (score) {
+                setData([score, ...data]);
+              }
             }}
             isOpen={showCreateModal}
           />

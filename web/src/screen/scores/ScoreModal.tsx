@@ -18,7 +18,8 @@ const ScoreModal = (props: {
   const [score, setScore] = useState(props.score);
 
   function cancel() {
-    dismiss();
+    props.onModalDismissed(undefined as any);
+    setScore(undefined); 
   }
 
   async function submit() {
