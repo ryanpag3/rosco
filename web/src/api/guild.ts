@@ -43,7 +43,5 @@ export const getRoles = async (id: string) => {
         }
     });
 
-    console.log(data);
-
     return data; 
 }

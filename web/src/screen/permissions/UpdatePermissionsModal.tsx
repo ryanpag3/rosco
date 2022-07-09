@@ -26,7 +26,6 @@ const UpdatePermissionsModal = (props: {
 
     GuildApi.getRoles(props.server.id)
       .then((roles) => setRoles(roles.map((r: any) => {
-        console.log(r);
         return {
           value: r.name,
           label: r.name,

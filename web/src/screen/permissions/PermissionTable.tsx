@@ -63,11 +63,6 @@ const PermissionTable = ({ server }: any) => {
       selectedCommands={selectedRows}
     />}
     theme="dark"
-    onColumnOrderChange={(nextOrder) => console.log(nextOrder)}
-    onSort={(column, sortDirection) => {
-      console.log(column);
-      console.log(sortDirection);
-    }}
     progressPending={isLoading}
     customStyles={customStyles}
     columns={headers}
