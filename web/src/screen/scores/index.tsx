@@ -6,15 +6,14 @@ import * as ScoreApi from 'api/score';
 import { CellClickedEvent, CellValueChangedEvent, ColDef } from 'ag-grid-community';
 import Button from 'component/Button';
 import { FaPlus, FaTrash } from 'react-icons/fa';
-
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import Colors from 'util/colors';
 import ReactTooltip from 'react-tooltip';
 import ScoreModal from './ScoreModal';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 import { dateComparator } from 'util/date';
 
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 
 const Scores = (props: any) => {
   const gridRef = useRef();

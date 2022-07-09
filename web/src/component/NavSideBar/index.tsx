@@ -5,13 +5,10 @@ import styled from 'styled-components'
 import Colors from 'util/colors'
 
 const NavSideBar = () => {
-  const navigate = useNavigate();
-
   return (
     <Container>
       <Title>Table of Contents</Title>
       <StyledLink to="home">Home</StyledLink>
-      <StyledLink to="">Documentation</StyledLink>
 
       <SectionHeader>Configuration</SectionHeader>
       <StyledLink to="config">Main</StyledLink>
@@ -22,18 +19,13 @@ const NavSideBar = () => {
       <IndentedLink to="auto-mod/banned-words">Banned Words</IndentedLink>
       <IndentedLink to="auto-mod/capslock-detect">Capslock Spam</IndentedLink>
       <IndentedLink to="auto-mod/link-detect" style={{ marginBottom: '.6em' }}>Link Detection</IndentedLink>
-      <StyledLink to="scores">Score</StyledLink>
-      <StyledLink to="keywords">Keyword</StyledLink>
-      <StyledLink to="scoreboards">Scoreboard</StyledLink>
-      <StyledLink to="polls">Poll</StyledLink> 
-      <StyledLink to="stopwatch">Stopwatch</StyledLink>
-      <StyledLink to="timer">Timer</StyledLink>
+      <StyledLink to="scores">Scores</StyledLink>
     </Container>
   )
 }
 
 const Container = styled(Column)`
-  min-height: 100vh;
+  height: 100%;
   min-width: 10em;
   padding-left: 2em;
   background-color: ${Colors.BACKGROUND_MEDIUM};

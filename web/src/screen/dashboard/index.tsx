@@ -63,7 +63,7 @@ const OutletContainer = styled(Row)`
   // accounts for scroll bar
   min-width: 101vw;
   max-width: 101vw;
-  /* min-height: 100vh; */
+  min-height: 100vh;
   max-height: 100vh;
   overflow-y: scroll;
 `;
