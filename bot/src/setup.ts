@@ -46,9 +46,9 @@ export default async function (client: Client) {
 
     client.on('messageCreate', async (message: Message) => onMessageReceived(message));
 
-    client.on('messageReactionAdd', async (reaction, user) => onMessageActionAdd(reaction, user));
+    client.on('messageReactionAdd', async (reaction, user) => onMessageActionAdd(reaction as any, user as any));
     
-    client.on('messageReactionRemove', async (reaction, user) => onMessageReactionRemove(reaction, user));
+    client.on('messageReactionRemove', async (reaction, user) => onMessageReactionRemove(reaction as any, user as any));
 
     client.on('guildMemberAdd', async (member) => onGuildMemberAdd(member));
 }
