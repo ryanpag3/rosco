@@ -121,3 +121,36 @@ export const createScore: RouteHandlerMethod = async (request, reply) => {
 
     return reply.status(500).send();
 }
+
+export const deleteScore: RouteHandlerMethod = async (request, reply) => {
+    const { scoreId } = request.params as any;
+    const { server } = request as any;
+
+    try {
+        const score = await prisma.score.findUnique({
+            where: {
+                id: scoreId
+            },
+            include: {
+                Server: true
+            }
+        });
+
+        if (score.serverId !== server.id) {
+            logger.error(`Could not delete the score ${scoreId} because originating server ID did not match.`);
+            return reply.status(401).send();
+        }
+
+        await prisma.score.delete({
+            where: {
+                id: scoreId
+            }
+        });
+
+        return reply.status(200).send();
+    } catch (e) {
+        logger.error(e);
+    }
+
+    return reply.status(500).send();
+}

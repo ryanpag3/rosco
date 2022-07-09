@@ -61,7 +61,22 @@ const ScoreRoutes = [
             (fastify as any).verifyJWT
         ]),
         handler: ScoreController.createScore 
-    }
+    }, 
+    {
+        method: 'DELETE',
+        url: `/guild/:guildId/score/:scoreId`,
+        schema: {
+            description: 'Delete a score.',
+            response: {
+                200: {},
+                500: {}
+            }
+        },
+        preHandler: (fastify as any).auth([
+            (fastify as any).verifyJWT
+        ]),
+        handler: ScoreController.deleteScore
+    },
 ];
 
 export default ScoreRoutes;

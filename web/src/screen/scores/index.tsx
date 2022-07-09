@@ -1,26 +1,27 @@
 import Column from 'component/Column';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { AgGridReact } from 'ag-grid-react';
 import * as ScoreApi from 'api/score';
-import { CellValueChangedEvent } from 'ag-grid-community';
+import { CellClickedEvent, CellValueChangedEvent, ColDef } from 'ag-grid-community';
 import Button from 'component/Button';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 import Colors from 'util/colors';
-import Tooltip from 'component/Tooltip';
 import ReactTooltip from 'react-tooltip';
-import { dateComparator } from 'util/date';
-import ColumnDefs from './column-defs';
 import ScoreModal from './ScoreModal';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
+import { dateComparator } from 'util/date';
 
 
 const Scores = (props: any) => {
+  const gridRef = useRef();
   const [data, setData] = useState([] as any);
   const [isLoaded, setIsLoaded] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [scoreToDelete, setScoreToDelete] = useState(undefined as any);
 
   useEffect(() => {
     if(isLoaded)
@@ -31,13 +32,77 @@ const Scores = (props: any) => {
           setData(data);
           setIsLoaded(true);
       });
-  })
+  });
+
+  const ColumnDefs: ColDef[] = [
+    {
+        field: 'createdAt', 
+        headerName: 'Created At', 
+        sortable: true, 
+        filter: 'agDateColumnFilter',
+        cellRenderer: ({ data }: any) => {
+            const d = new Date(data.createdAt);
+            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
+        },
+        valueGetter: (params: any) => {
+            return new Date(params.data.createdAt)
+        },
+        comparator: (valueA: any, valueB: any) => {
+            return dateComparator(valueA, valueB);
+        }
+    },
+    {
+        field: 'updatedAt', 
+        headerName: 'Updated At', 
+        sortable: true, 
+        filter: 'agDateColumnFilter',
+        cellRenderer: ({ data }: any) => {
+            const d = new Date(data.updatedAt);
+            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
+        },
+        valueGetter: (params: any) => {
+            return new Date(params.data.updatedAt)
+        },
+        comparator: (valueA: any, valueB: any) => {
+            return dateComparator(valueA, valueB);
+        }
+    },
+    { 
+        field: 'amount', 
+        headerName: 'Amount', 
+        editable: true, sortable: true, 
+        filter: 'agNumberColumnFilter'
+    },
+    { 
+        field: 'name', 
+        headerName: 'Name', 
+        editable: true, 
+        sortable: true, 
+        filter: 'agTextColumnFilter' 
+    },    
+    { 
+        field: 'color', 
+        headerName: 'Color', 
+        sortable: true 
+    },
+    {
+        headerName: '',
+        cellRenderer: (e: any) => {
+            return (<TrashIcon/>)
+        },
+        onCellClicked: (e: CellClickedEvent) => {
+            e.node.setRowSelectable(false);
+            setScoreToDelete({ ...e.data, index: e.rowIndex });
+        },
+        width: 50,
+    }
+  ]; 
 
   return (
       <Container>
           <AgGridReact
+              ref={gridRef as any}
               className="ag-theme-alpine-dark"
-              // @ts-ignore
               columnDefs={ColumnDefs}
               rowData={data}
               onCellValueChanged={async (event: CellValueChangedEvent) => {
@@ -53,7 +118,6 @@ const Scores = (props: any) => {
               }}
           />
           <CreateButton
-            hint="asdasdasd"
             data-tip
             data-for="createScore"
             onClick={() => setShowCreateModal(true)}
@@ -70,12 +134,25 @@ const Scores = (props: any) => {
             server={props.server}
             onModalDismissed={(score) => {
               setShowCreateModal(false);
-
               if (score) {
                 setData([score, ...data]);
               }
             }}
             isOpen={showCreateModal}
+          />
+
+          <DeleteConfirmationModal
+            server={props.server}
+            score={scoreToDelete}
+            isOpen={scoreToDelete !== undefined}
+            onDismiss={(isSubmitted: boolean) => {
+              if (isSubmitted) {
+                const copy = [...data];              
+                copy.splice(scoreToDelete.index, 1);
+                setData(copy);
+              }
+              setScoreToDelete(undefined);
+            }}
           />
       </Container>
   );
@@ -103,6 +180,11 @@ const CreateButton = styled(Button)`
 const PlusIcon = styled(FaPlus)`
   font-size: 1.75em;
   color: ${Colors.TEXT_DARK};
+`;
+
+const TrashIcon = styled(FaTrash)`
+    color: ${Colors.TEXT_MEDIUM};
+    cursor: pointer;
 `;
 
 export default Scores;

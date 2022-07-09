@@ -64,6 +64,13 @@ export const updateScore = async (
     });
 }
 
+export const deleteScore = async (
+    guildId: string,
+    scoreId: string
+) => {
+    return axios.delete(`/guild/${guildId}/score/${scoreId}`);
+} 
+
 export const createScore = async (
     guildId: string,
     data: {
