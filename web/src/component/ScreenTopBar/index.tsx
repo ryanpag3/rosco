@@ -3,6 +3,7 @@ import Row from 'component/Row';
 import styled from 'styled-components';
 import ServerSelect from './ServerSelect';
 import Colors from 'util/colors';
+import logo from './android-chrome-192x192.png';
 
 const ScreenTopBar = (props: {
     me: {
@@ -11,7 +12,7 @@ const ScreenTopBar = (props: {
 }) => {
   return (
       <Container>
-          <Logo src={process.env.PUBLIC_URL + 'android-chrome-192x192.png'}/>
+          <Logo src={logo}/>
           <ServerSelect/>
           <PushToRight/>
           <UserTag>{props.me.username}</UserTag>
