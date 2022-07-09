@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Screen from 'component/Screen'
 import Header from './Header'
 import styled from 'styled-components'

@@ -49,6 +49,18 @@ export const verifyJWT = async (request: FastifyRequest, reply: FastifyReply) =>
             // @ts-ignore
             request.server = server;
         }
+
+        // refresh token
+        const newToken = jwt.create({ discordId: user.discordId });
+        reply.setCookie(Cookies.IS_AUTHENTICATED, 'true', 
+            {
+                path: '/'
+            })
+            .setCookie(Cookies.JWT, newToken, {
+                secure: true,
+                httpOnly: true,
+                path: '/'
+            });
     } catch (e) {
         logger.error(e);
         throw e;

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate, unstable_HistoryRouter as HistoryBrowser } from 'react-router-dom';
 import Dashboard from 'screen/dashboard';
 import LandingScreen from 'screen/landing/LandingScreen';
 import * as MeApi from 'api/me';
@@ -14,6 +14,7 @@ import BannedWords from 'screen/banned-words';
 import LinkDetect from 'screen/link-detect';
 import CapslockDetect from 'screen/capslock-detect';
 import Scores from 'screen/scores';
+import history from 'util/history';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -44,7 +45,7 @@ const App = () => {
   return (
     // @ts-ignore
     <SelectedServerContext.Provider value={selectedServer}>
-      <BrowserRouter>
+      <HistoryBrowser history={history}>
         <Routes>
           <Route path="/" element={<LandingScreen />} />
           {
@@ -74,9 +75,8 @@ const App = () => {
               null
           }
         </Routes>
-      </BrowserRouter>
+      </HistoryBrowser>
     </SelectedServerContext.Provider>
-
   )
 }
 

@@ -6,8 +6,17 @@ require('dotenv').config({
 import Fastify from 'fastify';
 import logger from '../util/logger';
 import setupServer from './setup-server';
+import Cookies from './util/cookies';
 
 export const fastify = Fastify();
+
+fastify.addHook('onResponse', async (request, reply) => {
+    if (reply.statusCode !== 200) {
+        reply.clearCookie(Cookies.IS_AUTHENTICATED).clearCookie(Cookies.JWT);
+    }
+    
+    return reply;
+});
 
 process.on('uncaughtException', (error) => {
     logger.error(error);

@@ -53,7 +53,7 @@ export const getAllScores: RouteHandlerMethod = async (request, reply) => {
     try {
         const { total } = await ScoreService.list(request.server as any, 1, 0, filter, scoreboard);
         const { scores } = await ScoreService.list(request.server as any, total, 0, filter, scoreboard);
-        logger.debug(scores);
+        
         return reply.status(200).send(JSON.stringify(scores))
     } catch (e) {
         logger.error(e);

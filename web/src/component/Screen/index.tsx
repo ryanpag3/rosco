@@ -4,7 +4,9 @@ import Colors from 'util/colors';
 
 const Screen = (props: any) => {
   return (
-    <Container {...props}>{props.children}</Container>
+      <Container {...props}>
+        {props.children}
+      </Container>
   )
 }
 
