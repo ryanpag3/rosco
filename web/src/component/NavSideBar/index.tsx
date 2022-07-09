@@ -1,3 +1,4 @@
+import Button from 'component/Button'
 import Column from 'component/Column'
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -20,6 +21,12 @@ const NavSideBar = () => {
       <IndentedLink to="auto-mod/capslock-detect">Capslock Spam</IndentedLink>
       <IndentedLink to="auto-mod/link-detect" style={{ marginBottom: '.6em' }}>Link Detection</IndentedLink>
       <StyledLink to="scores">Scores</StyledLink>
+      <StyledButton
+        onClick={() => window.open('https://github.com/RoscoBot/support/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=')}
+      >Feature Request</StyledButton>
+     <StyledButton
+        onClick={() => window.open('https://github.com/RoscoBot/support/issues/new?assignees=&labels=bug&template=bug_report.md&title=')}
+      >Bug Report</StyledButton> 
     </Container>
   )
 }
@@ -45,6 +52,14 @@ const SectionSubheader = styled.h4`
   margin-bottom: .25em;
   margin-left: .25em;
   margin-top: .5em;
+`;
+
+const StyledButton = styled.a`
+  cursor: pointer;
+  text-decoration: underline;
+  background: none;
+  color: ${Colors.TEXT_LIGHT};
+  margin-bottom: .2em;
 `;
 
 const StyledLink = styled(Link)`
