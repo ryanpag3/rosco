@@ -31,7 +31,7 @@ const ScreenTopBar = (props: {
             <UserTag>{props.me.username}</UserTag>
             <LogoutButton
                 onClick={logout}
-            ><LogoutIcon />&nbsp;Logout</LogoutButton>
+            ><LogoutIcon />&nbsp;logout</LogoutButton>
         </Container>
     )
 }
