@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import { NavigateFunction, NavigateOptions } from 'react-router-dom';
 import history from './history';
+import LocalStorageKey from './localstorage-key';
 
 const axios = Axios.create({
     baseURL: process.env.REACT_APP_API_URL || 'https://api.roscobot.com',
@@ -22,8 +23,8 @@ axios.interceptors.response.use(
      */
     function(error) {
         if (error.response.status === 401) {
+            localStorage.unset(LocalStorageKey.SELECTED_SERVER);
             alert('An authentication error has occured. Navigating back to landing screen.');
-            
             history.replace('/');
         }
     });

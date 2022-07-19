@@ -11,7 +11,7 @@ const SelectStyle: StylesConfig = {
       fontFamily: 'nunito',
       border: 0,
       boxShadow: 'none',
-      color: Colors.TEXT_DARK,
+      color: Colors.TEXT_DARK
     }),
     dropdownIndicator: (provided, state) => ({
       ...provided,

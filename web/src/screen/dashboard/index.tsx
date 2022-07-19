@@ -1,9 +1,9 @@
 import { getGuild } from 'api/guild';
-import NavSideBar from 'component/NavSideBar';
+import ProSideBar from 'component/ProSideBar';
 import Row from 'component/Row';
 import ScreenTopBar from 'component/ScreenTopBar';
 import React, { useEffect } from 'react'
-import { Outlet, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import LocalStorageKey from 'util/localstorage-key';
 import Screen from '../../component/Screen';
@@ -45,7 +45,8 @@ const Dashboard = ({ me, server, setSelectedServer }: {
     <StyledScreen>
       <ScreenTopBar me={me} />
       <OutletContainer>
-        <NavSideBar/>
+        {/* <NavSideBar/> */}
+        <ProSideBar/>
         <StyledOutlet/>
       </OutletContainer>
     </StyledScreen>
