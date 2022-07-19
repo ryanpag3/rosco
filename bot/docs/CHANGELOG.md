@@ -1,3 +1,10 @@
+# [1.4.0-beta.3](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.2...v1.4.0-beta.3) (2022-07-19)
+
+
+### Bug Fixes
+
+* add additional logging to allow better debugging of poll issue ([6e9d8a5](https://github.com/ryanpag3/guac-bot/commit/6e9d8a56c6799942e596c73c415dbb844b7ef062))
+
 # [1.4.0-beta.2](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2022-07-06)
 
 
