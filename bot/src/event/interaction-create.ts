@@ -12,8 +12,10 @@ import COMMANDS from '../recursive-commands';
 
 const onInteractionCreate = async (interaction: CommandInteraction): Promise<any> => {
     try {
-        if (!interaction.isButton() && !interaction.isCommand() )
+        if (!interaction.isButton() && !interaction.isCommand() ) {
+            logger.debug('ignoring interaction created due to it not being a button or command.');
             return;
+        }
 
         if (!interaction.guild || !interaction.channel)
             throw new Error('Cannot process interaction without valid guild and channel.');
@@ -97,6 +99,8 @@ const onButtonPressed = async (interaction: ButtonInteraction, user: User, serve
 }
 
 const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, _server: Server) => {
+    logger.debug(`poll button pressed.`);
+    
     const pollOption = await prisma.pollOption.findUnique({
         where: {
             id: interaction.customId
