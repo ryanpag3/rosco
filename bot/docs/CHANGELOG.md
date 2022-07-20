@@ -1,3 +1,10 @@
+# [1.4.0-beta.4](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.3...v1.4.0-beta.4) (2022-07-20)
+
+
+### Bug Fixes
+
+* update polls to use newer Discord API ([e08382d](https://github.com/ryanpag3/guac-bot/commit/e08382d0825ec089468eb8caeece2849b58c67e1))
+
 # [1.4.0-beta.3](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.2...v1.4.0-beta.3) (2022-07-19)
 
 
