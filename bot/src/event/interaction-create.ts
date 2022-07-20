@@ -12,6 +12,9 @@ import COMMANDS from '../recursive-commands';
 
 const onInteractionCreate = async (interaction: CommandInteraction): Promise<any> => {
     try {
+        logger.debug('interaction created.');
+
+
         if (!interaction.isButton() && !interaction.isCommand() ) {
             logger.debug('ignoring interaction created due to it not being a button or command.');
             return;
@@ -90,7 +93,9 @@ const onInteractionCreate = async (interaction: CommandInteraction): Promise<any
 
 const onButtonPressed = async (interaction: ButtonInteraction, user: User, server: Server) => {
     // @ts-ignore
-    const command = interaction.message.interaction?.commandName;
+    const command = interaction.message.interaction?.commandName.split(' ')[0];
+
+    logger.debug(`on button pressed. ${command}`);
 
     switch(command) {
         case 'poll':
