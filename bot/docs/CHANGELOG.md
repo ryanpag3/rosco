@@ -1,3 +1,10 @@
+# [1.4.0-beta.5](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.4...v1.4.0-beta.5) (2022-07-21)
+
+
+### Bug Fixes
+
+* fixed an issue where new scoreboard commands may incidentally update the wrong ones ([c593d0c](https://github.com/ryanpag3/guac-bot/commit/c593d0c07101eaad9ca6f96d09840c1cd16d8178))
+
 # [1.4.0-beta.4](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.3...v1.4.0-beta.4) (2022-07-20)
 
 
