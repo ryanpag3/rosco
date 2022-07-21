@@ -1,7 +1,13 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { MessageAttachment } from 'discord.js';
 import { Command } from '../../../types/command';
+<<<<<<< HEAD
 import * as ScoreService from '../../service/score';
+import BotError from '../../util/bot-error';
+=======
+import BotError from '../../util/bot-error';
+import prisma from '../../util/prisma';
+>>>>>>> c593d0c07101eaad9ca6f96d09840c1cd16d8178
 
 const ScoreList: Command = {
     id: '502ab15e-a961-497a-a5be-282ebcda4c5a',
@@ -16,6 +22,10 @@ const ScoreList: Command = {
         const filter = interaction.options.getString('filter');
         const includeRaw = interaction.options.getBoolean('include-raw') || false;
         const scoreboardName = interaction.options.getString('scoreboard') || undefined;
+
+        if (amount > 20) {
+            throw new BotError(`The maximum number of scores per page is 20.`);
+        }
 
         const { scores } = await ScoreService.listByPage(server, page, amount, filter, scoreboardName)
 
