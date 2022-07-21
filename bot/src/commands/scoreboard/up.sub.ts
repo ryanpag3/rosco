@@ -30,6 +30,7 @@ const ScoreboardUp: Command = {
         try {
             await prisma.score.updateMany({
                 where: {
+                    serverId: server.id,
                     ScoreboardScore: {
                         some: {
                             Scoreboard: {
