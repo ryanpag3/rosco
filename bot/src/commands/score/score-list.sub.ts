@@ -1,6 +1,7 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { MessageAttachment } from 'discord.js';
 import { Command } from '../../../types/command';
+import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
 
 const ScoreList: Command = {
@@ -16,6 +17,11 @@ const ScoreList: Command = {
         const filter = interaction.options.getString('filter');
         const includeRaw = interaction.options.getBoolean('include-raw') || false;
         const scoreboardName = interaction.options.getString('scoreboard') || undefined;
+
+
+        if (amount > 20) {
+            throw new BotError(`The maximum number of scores per page is 20.`);
+        }
 
 
         let scoreboard;
