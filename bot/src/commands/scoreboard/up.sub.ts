@@ -10,7 +10,7 @@ const ScoreboardUp: Command = {
     handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name', true);
         const amount = interaction.options.getNumber('amount') || 1;
-
+ 
         try {
             await prisma.scoreboard.findUnique({
                 where: {
