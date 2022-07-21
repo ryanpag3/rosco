@@ -2,7 +2,7 @@
 title: Scoreboard
 description: 
 published: true
-date: 2022-03-29T14:51:37.304Z
+date: 2022-07-21T16:49:28.174Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:13:18.210Z
@@ -103,6 +103,48 @@ Issue `/scoreboard delete` to delete an existing scoreboard.
 ```
 
 ![scoreboard-delete-example.png](/scoreboard-delete-example.png)
+
+## `list` - List out scoreboards
+
+Issue `/scoreboard list` to list out current scoreboards.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `page` | The page of the list you want to view. | `false` |
+
+### Examples
+
+``` bash
+/scoreboard list
+```
+
+## `up` - Increase all scores in a scoreboard
+
+Issue `/scoreboard up` to increase scores in a scoreboard.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `amount` | The amount you want to increase all scores in a scoreboard. | `false` |
+
+### Examples
+
+``` bash
+/scoreboard up amount: 10
+```
+
+## `down` - Decrease all scores in a scoreboard
+
+Issue `/scoreboard down` to decrease all scores in a scoreboard.
+
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `amount` | The amount you want to decrease all scores in a scoreboard. | `false` |
+
+### Examples
+
+``` bash
+/scoreboard down amount: 10
+```
 
 
 
