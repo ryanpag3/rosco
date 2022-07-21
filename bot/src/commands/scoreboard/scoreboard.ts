@@ -2,6 +2,7 @@ import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Application } from 'discord.js';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
+import ScoreboardDown from './down.sub';
 import ScoreboardList from './list.sub';
 import ScoreboardCreate from './scoreboard-create.sub';
 import ScoreboardDelete from './scoreboard-delete.sub';
@@ -135,6 +136,29 @@ const Scoreboard: Command = {
                     description: 'The name of the scoreboard to increase.',
                     type: ApplicationCommandOptionType.String,
                     required: true
+                },
+                {
+                    name: 'amount',
+                    description: 'The amount to increase.',
+                    type: ApplicationCommandOptionType.Number
+                }
+            ]
+        },
+        {
+            name: 'down',
+            description: 'Decrease all scores in a scoreboard.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the scoreboard to decrease.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'amount',
+                    description: 'The amount to decrease.',
+                    type: ApplicationCommandOptionType.Number
                 }
             ]
         }
@@ -156,6 +180,8 @@ const Scoreboard: Command = {
                 return ScoreboardScoreRemove.handler(interaction, user, server);
             case 'up':
                 return ScoreboardUp.handler(interaction, user, server);
+            case 'down':
+                return ScoreboardDown.handler(interaction, user, server);
             default:
                 throw new BotError(`Invalid scoreboard subcommand issued.`);
         }

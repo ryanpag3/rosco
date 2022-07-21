@@ -4,9 +4,9 @@ import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
 import PrismaErrorCode from '../../util/prisma-error-code';
 
-const ScoreboardUp: Command = {
+const ScoreboardDown: Command = {
     id: '8dde714d-9d33-4f79-8ed8-4942a9eb6185',
-    name: 'scoreboard up',
+    name: 'scoreboard down',
     handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name', true);
         const amount = interaction.options.getNumber('amount') || 1;
@@ -40,7 +40,7 @@ const ScoreboardUp: Command = {
                 },
                 data: {
                     amount: {
-                        increment: amount
+                        decrement: amount
                     }
                 }
             });
@@ -51,12 +51,12 @@ const ScoreboardUp: Command = {
         return interaction.reply({
             embeds: [
                 {
-                    title: `:arrow_up: Scoreboard scores increased.`,
-                    description: `All scores in scoreboard **${name}** have been increased.\n\nUse \`/score list scoreboard: <name>\` to view them.`
+                    title: `:arrow_up: Scoreboard scores decreased.`,
+                    description: `All scores in scoreboard **${name}** have been decreased.\n\nUse \`/score list scoreboard: <name>\` to view them.`
                 }
             ]
         })
     }
 };
 
-export default ScoreboardUp;
+export default ScoreboardDown;
