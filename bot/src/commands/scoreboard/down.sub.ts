@@ -5,7 +5,7 @@ import prisma from '../../util/prisma';
 import PrismaErrorCode from '../../util/prisma-error-code';
 
 const ScoreboardDown: Command = {
-    id: '8dde714d-9d33-4f79-8ed8-4942a9eb6185',
+    id: 'b4f8e079-7507-44f4-8f4e-f7c0d646dae5',
     name: 'scoreboard down',
     handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name', true);
