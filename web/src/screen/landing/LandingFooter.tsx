@@ -3,6 +3,7 @@ import React from 'react'
 import { FaDiscord, FaRedditAlien, FaTwitter } from 'react-icons/fa';
 import styled from 'styled-components';
 import Colors from 'util/colors';
+import CookieConsent from 'react-cookie-consent';
 import HeaderNavLink from './HeaderNavLink';
 
 const LandingFooter = () => {
@@ -12,6 +13,11 @@ const LandingFooter = () => {
           {/* <TwitterIcon/> */}
           <DiscordIcon onClick={() => window.open("https://discord.gg/Ax9ZsdawMb", "_blank")}/>
           <HeaderNavLink to="/privacy-policy">Privacy Policy</HeaderNavLink>
+          {/* @ts-ignore */}
+          <CookieConsent
+            location="bottom"
+            buttonText="I understand."
+          >This website uses cookies for essential functionality. Click "I understand" to accept.</CookieConsent>
       </Container>
   )
 }
