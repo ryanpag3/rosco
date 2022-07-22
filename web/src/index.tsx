@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import "@reach/dialog/styles.css";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LandingScreen from './screen/landing/LandingScreen';
+import App from 'App';
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <App/>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingScreen/>}/>
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>,
+    <App/>,
   document.getElementById('root')
 );
 

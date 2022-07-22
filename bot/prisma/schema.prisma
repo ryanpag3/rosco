@@ -176,9 +176,9 @@ model Score {
   amount      Int      @default(0)
   serverId    String
   Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  channelId   String
-  userId      String
-  User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
+  channelId   String?
+  userId      String?
+  User        User?     @relation(references: [id], onDelete: Cascade, fields: [userId])
 
   Keyword         Keyword[]
   ScoreboardScore ScoreboardScore[]
@@ -255,6 +255,16 @@ model Server {
   AutoModRule              AutoModRule[]
   AllowedLink              AllowedLink[]
   ServerAutoModIgnoredRole ServerAutoModIgnoredRole[]
+  ServerManagerRole        ServerManagerRole[]
+}
+
+model ServerManagerRole {
+  id       String @id @default(uuid())
+  Server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId String
+  roleId   String
+
+  @@unique([serverId, roleId])
 }
 
 model ServerAutoModIgnoredRole {
@@ -323,23 +333,25 @@ model TurfwarCoordinate {
 }
 
 model User {
-  id                String              @id @default(uuid())
-  discordId         String              @unique @db.VarChar(32)
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  botCurrencyCount  Int                 @default(0)
-  CommandHistory    CommandHistory[]
-  Scores            Score[]
-  Scoreboards       Scoreboard[]
-  Permission        Permission[]
-  Keyword           Keyword[]
-  Stopwatch         Stopwatch[]
-  UserServer        UserServer[]
-  Poll              Poll[]
-  PollVote          PollVote[]
-  Timer             Timer[]
-  Announcement      Announcement[]
-  AutoModRuleUser   AutoModRuleUser[]
+  id               String            @id @default(uuid())
+  discordId        String            @unique @db.VarChar(32)
+  email            String?
+  refreshToken     String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  botCurrencyCount Int               @default(0)
+  CommandHistory   CommandHistory[]
+  Scores           Score[]
+  Scoreboards      Scoreboard[]
+  Permission       Permission[]
+  Keyword          Keyword[]
+  Stopwatch        Stopwatch[]
+  UserServer       UserServer[]
+  Poll             Poll[]
+  PollVote         PollVote[]
+  Timer            Timer[]
+  Announcement     Announcement[]
+  AutoModRuleUser  AutoModRuleUser[]
   TurfwarCoordinate TurfwarCoordinate[]
 }
 
