@@ -14,12 +14,6 @@ const TurfWar: Command = {
             type: ApplicationCommandOptionType.Subcommand,
             options: [
                 {
-                    name: 'color',
-                    description: 'The color of the square on the map.',
-                    type: ApplicationCommandOptionType.String,
-                    required: true
-                },
-                {
                     name: 'x-coord',
                     description: 'The coordinate on the map for the X-axis (horizontal).',
                     type: ApplicationCommandOptionType.Number,
@@ -30,6 +24,11 @@ const TurfWar: Command = {
                     description: 'The coordinate on the map for Y-axis (vertical).',
                     type: ApplicationCommandOptionType.Number,
                     required: true
+                },
+                {
+                    name: 'color',
+                    description: 'The color of the square on the map.',
+                    type: ApplicationCommandOptionType.String
                 }
             ]
         }
