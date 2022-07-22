@@ -1,4 +1,3 @@
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["extendedIndexes"]
@@ -182,6 +181,7 @@ model Score {
 
   Keyword         Keyword[]
   ScoreboardScore ScoreboardScore[]
+
   @@unique([name, serverId])
 }
 
@@ -198,6 +198,7 @@ model Scoreboard {
   User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
 
   ScoreboardScore ScoreboardScore[]
+
   @@unique([name, serverId])
 }
 
@@ -308,24 +309,37 @@ model Timer {
   @@unique([name, serverId])
 }
 
+model TurfwarCoordinate {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  color       String
+  X           Int
+  Y           Int
+  CreatedBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdById String?
+
+  @@unique([X, Y])
+}
+
 model User {
-  id               String            @id @default(uuid())
-  discordId        String            @unique @db.VarChar(32)
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  botCurrencyCount Int               @default(0)
-  CommandHistory   CommandHistory[]
-  Scores           Score[]
-  Scoreboards      Scoreboard[]
-  Permission       Permission[]
-  Keyword          Keyword[]
-  Stopwatch        Stopwatch[]
-  UserServer       UserServer[]
-  Poll             Poll[]
-  PollVote         PollVote[]
-  Timer            Timer[]
-  Announcement     Announcement[]
-  AutoModRuleUser  AutoModRuleUser[]
+  id                String              @id @default(uuid())
+  discordId         String              @unique @db.VarChar(32)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  botCurrencyCount  Int                 @default(0)
+  CommandHistory    CommandHistory[]
+  Scores            Score[]
+  Scoreboards       Scoreboard[]
+  Permission        Permission[]
+  Keyword           Keyword[]
+  Stopwatch         Stopwatch[]
+  UserServer        UserServer[]
+  Poll              Poll[]
+  PollVote          PollVote[]
+  Timer             Timer[]
+  Announcement      Announcement[]
+  AutoModRuleUser   AutoModRuleUser[]
+  TurfwarCoordinate TurfwarCoordinate[]
 }
 
 model UserServer {
