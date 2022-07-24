@@ -1,3 +1,10 @@
+# [1.4.0-beta.6](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.5...v1.4.0-beta.6) (2022-07-24)
+
+
+### Features
+
+* added ability to add multiple scores at once to a scoreboard ([8741250](https://github.com/ryanpag3/guac-bot/commit/8741250408dfc7f076b5bec7db57afef4cc86101))
+
 # [1.4.0-beta.5](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.4...v1.4.0-beta.5) (2022-07-21)
 
 
