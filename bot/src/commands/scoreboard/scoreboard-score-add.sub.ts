@@ -43,6 +43,7 @@ const ScoreboardScoreAdd: Command = {
     }
 };
 
+
 const addScoreToScoreboard = async (serverId: string, scoreboardId: string, scoreName: string) => {
     try {
         const score = await prisma.score.findUnique({
