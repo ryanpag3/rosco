@@ -66,7 +66,7 @@ const addScoreToScoreboard = async (serverId: string, scoreboardId: string, scor
             }
         });
     } catch(e) {
-        if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
+        if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT)
             throw new BotError(`The score **${scoreName}** has already been added to that scoreboard.`);
             
         throw e;

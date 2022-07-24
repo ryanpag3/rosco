@@ -31,7 +31,7 @@ const RuleAdd: Command = {
                 }
             });
         } catch (e) {
-            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT)
                 throw new BotError(`A rule has already been defined for **${module}** with action **${action}**. Please delete before defining a new one.`);
             throw e;
         }

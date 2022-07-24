@@ -18,7 +18,7 @@ const IgnoredRoleAdd: Command = {
                 }
             });
         } catch(e) {
-            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT)
                 throw new BotError('Role is already being ignored by AutoMod.');
             throw e;
         }
