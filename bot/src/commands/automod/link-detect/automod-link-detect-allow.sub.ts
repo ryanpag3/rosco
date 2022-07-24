@@ -21,7 +21,7 @@ const LinkDetectAllow: Command = {
 
             await LinkCache.cacheRecord(r);
         } catch (e) {
-            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT)
                 throw new BotError('This pattern has already been added to the allow list.');
             throw e;
         }

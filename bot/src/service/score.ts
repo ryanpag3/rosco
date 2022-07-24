@@ -10,7 +10,7 @@ export const create = async (data: Prisma.ScoreCreateInput) => {
             data
         });
     } catch (e) {
-        if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
+        if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT)
             throw new BotError(`A score already exists in this server with that name.`);
         throw e;
     }

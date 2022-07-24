@@ -30,7 +30,7 @@ const TimerCreate: Command = {
                 }
             });
         } catch (e) {
-            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT)
                 throw new BotError('A timer already exists with that name.');
             throw e;
         }

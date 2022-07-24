@@ -43,7 +43,7 @@ const AnnounceCreate: Command = {
                 }
             })
         } catch (e) {
-            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT)
                 throw new BotError('An announcement with that name already exists.');
             throw e;
         }
