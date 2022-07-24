@@ -1,8 +1,11 @@
 import React from 'react'
+import TurfGrid from './TurfGrid'
 
-const Turfwar = () => {
+const Turfwar = (props: any) => {
   return (
-    <div>index</div>
+    <div>
+      <TurfGrid/>
+    </div>
   )
 }
 

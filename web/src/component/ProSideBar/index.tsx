@@ -2,7 +2,7 @@ import React from 'react'
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { AiOutlineUnlock, AiOutlineLink, AiOutlineHome } from 'react-icons/ai';
 import { HiBan } from 'react-icons/hi';
-import { BsCapslock } from 'react-icons/bs';
+import { BsCapslock, BsMap } from 'react-icons/bs';
 import { MdScore } from 'react-icons/md';
 import { BiCog } from 'react-icons/bi';
 import { RiSoundModuleLine } from 'react-icons/ri';
@@ -54,6 +54,9 @@ const ProSideBar = (props: any) => {
                     <MenuItem 
                         onClick={() => navigate('scores')}
                         icon={<MdScore />}>Scores</MenuItem>
+                    <MenuItem 
+                        onClick={() => navigate('turfwar')}
+                        icon={<BsMap />}>Turfwar</MenuItem>
                 </SubMenu>
             </Menu>
         </ProSidebar>
