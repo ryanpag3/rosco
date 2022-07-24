@@ -2,7 +2,7 @@
 title: Scoreboard
 description: 
 published: true
-date: 2022-07-21T16:49:28.174Z
+date: 2022-07-24T15:49:57.543Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:13:18.210Z
@@ -41,12 +41,15 @@ Issue `/scoreboard add-score` to assign a score to a scoreboards. Scores can be 
 | Argument | Description | Required |
 |----------|-------------|----------|
 | `name` | The name of the scoreboard you are adding to. | `true` |
-| `score-name` | The name of the score being added. | `true` |
+| `score-name` | The name of the score or scores being added. | `true` |
 
 ### Examples
 
 ``` bash
 /scoreboard add-score name: my-scoreboard score-name: score1
+
+# include multiple
+/scoreboard add-score name: my-scoreboard score-name: score1, score2, score3
 ```
 
 ![scoreboard-add-score-example.png](/scoreboard-add-score-example.png)
