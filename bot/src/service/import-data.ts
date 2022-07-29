@@ -29,7 +29,7 @@ export const importDataFromScoreBot = async (channelId: string, user: User, serv
                 }
             })
         } catch (e) {
-            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT) {
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT) {
                 logger.trace(e);
             } else {
                 logger.error(e);
@@ -65,7 +65,7 @@ export const importDataFromScoreBot = async (channelId: string, user: User, serv
                 })
             }
         } catch (e) {
-            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT) {
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT) {
                 logger.trace(e);
             } else {
                 logger.error(e);
@@ -85,7 +85,7 @@ export const importDataFromScoreBot = async (channelId: string, user: User, serv
                 }
             })
         } catch (e) {
-            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT) {
+            if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT) {
                 logger.trace(e);
             } else {
                 logger.error(e);
