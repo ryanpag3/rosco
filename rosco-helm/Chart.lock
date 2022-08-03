@@ -8,20 +8,11 @@ dependencies:
 - name: redis
   repository: https://charts.bitnami.com/bitnami
   version: 16.6.0
-- name: prometheus
-  repository: https://prometheus-community.github.io/helm-charts
-  version: 15.6.0
-- name: grafana
-  repository: https://grafana.github.io/helm-charts
-  version: 6.24.1
-- name: loki
-  repository: https://grafana.github.io/helm-charts
-  version: 2.10.2
 - name: descheduler
   repository: https://kubernetes-sigs.github.io/descheduler/
   version: 0.23.2
 - name: keel
   repository: https://charts.keel.sh
   version: 0.9.10
-digest: sha256:7339290a779ced6043856bc01b6c318019be5240eeffae58a86aaf9cef19692e
-generated: "2022-03-30T14:25:18.799294-07:00"
+digest: sha256:3ec444d3aeb0d111efadb32e303ef68dbde5df8e25ef253a62036669d5b5441b
+generated: "2022-08-03T07:30:51.865033-07:00"
