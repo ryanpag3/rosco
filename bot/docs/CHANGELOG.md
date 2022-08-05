@@ -1,3 +1,10 @@
+# [1.4.0-beta.7](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.6...v1.4.0-beta.7) (2022-08-05)
+
+
+### Features
+
+* users can now configure their default /score list amount per server ([937bd7d](https://github.com/ryanpag3/guac-bot/commit/937bd7d65159a5292cad60f9f00348f36e6c5a49))
+
 # [1.4.0-beta.6](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.5...v1.4.0-beta.6) (2022-07-24)
 
 
