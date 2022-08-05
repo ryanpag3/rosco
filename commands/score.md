@@ -2,7 +2,7 @@
 title: Score
 description: 
 published: true
-date: 2022-07-06T15:34:24.029Z
+date: 2022-08-05T17:52:56.256Z
 tags: command
 editor: markdown
 dateCreated: 2022-03-24T21:13:14.026Z
@@ -152,6 +152,7 @@ Issue `/score list` to list out the scores that have been created.
 | `filter` | Filter scores based on this pattern. | `false` |
 | `includeRaw` | Include the raw text output of the result.s | `false` |
 | `scoreboard` | Filter on a specific [scoreboard](/commands/scoreboard) | `false` |
+| `default-amount` | When this property is set, the command will be used to set the default amount of scores to list each time. | `false` |
 
 ### Examples
 
