@@ -221,6 +221,7 @@ model Server {
   currencyCount                Int      @default(0)
   timezone                     String   @default("America/Los_Angeles")
   botToBotMessagesEnabled      Boolean  @default(false)
+  scoreListAmount              Int      @default(10)
 
   // module toggle flags
   autoModBannedWordsEnabled    Boolean @default(false)

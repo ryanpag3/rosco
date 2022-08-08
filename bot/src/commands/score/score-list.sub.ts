@@ -3,6 +3,7 @@ import { MessageAttachment } from 'discord.js';
 import { Command } from '../../../types/command';
 import * as ScoreService from '../../service/score';
 import BotError from '../../util/bot-error';
+import prisma from '../../util/prisma';
 
 const ScoreList: Command = {
     id: '502ab15e-a961-497a-a5be-282ebcda4c5a',
@@ -12,18 +13,44 @@ const ScoreList: Command = {
     // this is manages in score.ts because it is a subcommand
     options: {},
     handler: async (interaction, user, server) => {
-        const amount = interaction.options.getInteger('amount') || 10;
+        let amount = interaction.options.getInteger('amount') || server.scoreListAmount;
         const page = interaction.options.getInteger('page') || 1;
         const filter = interaction.options.getString('filter');
         const includeRaw = interaction.options.getBoolean('include-raw') || false;
         const scoreboardName = interaction.options.getString('scoreboard') || undefined;
+        const defaultAmount = interaction.options.getInteger('default-amount');
+        const maxAmount = 20;
 
-        if (amount > 20) {
+        if (amount > maxAmount) {
             throw new BotError(`The maximum number of scores per page is 20.`);
         }
 
-        const { scores } = await ScoreService.listByPage(server, page, amount, filter, scoreboardName)
+        if ((defaultAmount !== null && defaultAmount > maxAmount) || amount > maxAmount) {
+            throw new BotError(`The maximum number of scores per page is 20.`);
+        }
 
+        if (defaultAmount !== null && defaultAmount !== amount) {
+            await prisma.server.update({
+                where: {
+                    id: server.id
+                },
+                data: {
+                    scoreListAmount: defaultAmount
+                }
+            });
+            amount = defaultAmount;
+            return interaction.reply({
+                embeds: [
+                    {
+                        title: `Default amount updated.`,
+                        description: `This server's default amount when listing scores is now ${amount}.`
+                    }
+                ]
+            });
+        }
+
+        const { scores } = await ScoreService.listByPage(server, page, amount, filter, scoreboardName)
+        
         const height = 35 * scores.length + 125;
         const width = 1000;
         const backgroundColor = '#dbdbdb';
@@ -31,7 +58,7 @@ const ScoreList: Command = {
         const stream = chartJsNodeCanvas.renderToStream({
             type: 'bar',
             data: {
-                labels: scores.map(s => `"${truncateWithEllipses(s.name, 15)}" | ${s.amount}`),
+                labels: scores.map(s => `${truncateWithEllipses(s.name, 15)} | ${s.amount}`),
                 datasets: [
                     {
                         data: scores.map(s => s.amount),
