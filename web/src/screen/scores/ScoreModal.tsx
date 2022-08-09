@@ -13,7 +13,7 @@ import randomColor from 'randomcolor';
 import * as ScoreApi from 'api/score';
 
 const ScoreModal = (props: any) => {
-  const { register, handleSubmit, watch, formState: { errors }, setValue} = useForm();
+  const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm();
   const [showColorPicker, setShowColorPicker] = useState(true);
   const rColor = randomColor();
   const color = watch("color");
@@ -27,17 +27,25 @@ const ScoreModal = (props: any) => {
     if (!amount) {
       setValue("amount", 0);
     }
-  }, [ color, amount ]);
+  }, [color, amount]);
 
   async function onSubmit(data: any) {
-    await ScoreApi.createScore(props.server.id, {
-      name: data.name,
-      description: data.description,
-      color: data.color,
-      amount: Number.parseInt(data.amount)
-    });
-
-    dismissWindow(data);
+    try {
+      await ScoreApi.createScore(props.server.id, {
+        name: data.name,
+        description: data.description,
+        color: data.color,
+        amount: Number.parseInt(data.amount)
+      });
+      dismissWindow(data);
+    } catch (e: any) {
+      if (e.response.status === 409){
+        alert('A score with that name already exists.');
+      } else {
+        alert('An internal error occured.');
+        dismissWindow();
+      }
+    }
   }
 
   async function onCancel(event: any) {
@@ -46,11 +54,11 @@ const ScoreModal = (props: any) => {
   }
 
   async function dismissWindow(data?: any) {
-    props.onModalDismissed(data ? { 
+    props.onModalDismissed(data ? {
       ...data,
       createdAt: new Date(),
-      updatedAt: new Date() 
-    }: undefined);
+      updatedAt: new Date()
+    } : undefined);
   }
 
   return (
@@ -62,31 +70,31 @@ const ScoreModal = (props: any) => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Column>
             <FormLabel>Name</FormLabel>
-            <FormInput 
+            <FormInput
               style={{ width: '25em' }}
-              {...register("name", { required: true })} 
-              />
-            { errors.name && <ErrorMessage>This is a required field.</ErrorMessage>}
+              {...register("name", { required: true })}
+            />
+            {errors.name && <ErrorMessage>This is a required field.</ErrorMessage>}
 
 
             <FormLabel>Description</FormLabel>
-            <FormInput 
+            <FormInput
               {...register("description")}
-              style={{ width: '25em' }}/>
-            
+              style={{ width: '25em' }} />
+
             <FormLabel>Amount</FormLabel>
-            <FormInput 
+            <FormInput
               type="number"
               {...register("amount", { required: true })}
               style={{ width: '10em' }}
               value={amount}
-              />
+            />
 
             <ColorContainer
             >
               <FormLabel>Color</FormLabel>
-              <FormInput            
-                onClick={() => { setShowColorPicker(!showColorPicker)}}
+              <FormInput
+                onClick={() => { setShowColorPicker(!showColorPicker) }}
                 {...register("color", {
                   required: true,
                   validate: {
@@ -99,22 +107,22 @@ const ScoreModal = (props: any) => {
                   cursor: 'pointer',
                   width: '7em'
                 }}
-                />
-                { showColorPicker && <ColorPicker
-                  style={{
-                    marginBottom: '1em'
-                  }}
-                  color={color}
-                  onChange={(c) => setValue("color", c as any)}
-                />}
-                {/* @ts-ignore */}
-                { (errors.color && errors.color.type === "isHexColor") && <ErrorMessage>A valid hex color is required.</ErrorMessage>}
+              />
+              {showColorPicker && <ColorPicker
+                style={{
+                  marginBottom: '1em'
+                }}
+                color={color}
+                onChange={(c) => setValue("color", c as any)}
+              />}
+              {/* @ts-ignore */}
+              {(errors.color && errors.color.type === "isHexColor") && <ErrorMessage>A valid hex color is required.</ErrorMessage>}
             </ColorContainer>
             <MenuRow>
-              <CancelInput type="submit" value="Cancel" onClick={onCancel}/>
-              <SubmitInput type="submit" value="Submit"/>
+              <CancelInput type="submit" value="Cancel" onClick={onCancel} />
+              <SubmitInput type="submit" value="Submit" />
             </MenuRow>
-          </Column> 
+          </Column>
         </Form>
       </StyledModal>
     </Container>

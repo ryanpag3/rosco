@@ -83,6 +83,6 @@ export const createScore = async (
     return axios.post(`/guild/${guildId}/score`, data, {
         headers: {
             'Content-Type': 'application/json'
-        }
+        } 
     });
 }

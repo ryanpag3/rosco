@@ -27,6 +27,8 @@ axios.interceptors.response.use(
             alert('An authentication error has occured. Navigating back to landing screen.');
             history.replace('/');
         }
+
+        throw error;
     });
 
 

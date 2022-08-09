@@ -1,9 +1,12 @@
 
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { RouteHandlerMethod } from 'fastify';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import randomColor from 'randomcolor';
 import * as ScoreService from '../../service/score';
 import logger from '../../util/logger';
 import prisma from '../../util/prisma';
+import PrismaErrorCode from '../../util/prisma-error-code';
 
 export const getScores: RouteHandlerMethod = async (request, reply) => {
     let {
@@ -114,9 +117,11 @@ export const createScore: RouteHandlerMethod = async (request, reply) => {
                 color
             }
         });
-        return reply.status(200).send();
+        return reply.status(StatusCodes.OK).send(ReasonPhrases.OK);
     } catch (e) {
         logger.error(e);
+        if ((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT)
+            return reply.status(StatusCodes.CONFLICT).send(ReasonPhrases.CONFLICT);
     }
 
     return reply.status(500).send();
