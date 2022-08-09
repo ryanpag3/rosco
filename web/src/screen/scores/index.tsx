@@ -14,7 +14,6 @@ import { dateComparator } from 'util/date';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
-import NewScoreModal from './NewScoreModal';
 
 const Scores = (props: any) => {
   const gridRef = useRef();
@@ -129,19 +128,16 @@ const Scores = (props: any) => {
               <span>Create a new score.</span>
           </ReactTooltip>
 
-          <NewScoreModal/>
-
-          {/* <ScoreModal
-            action="Create"
+          <ScoreModal
             server={props.server}
-            onModalDismissed={(score) => {
+            isOpen={showCreateModal}
+            onModalDismissed={(score: any) => {
               setShowCreateModal(false);
               if (score) {
                 setData([score, ...data]);
               }
             }}
-            isOpen={showCreateModal}
-          /> */}
+          />
 
           <DeleteConfirmationModal
             server={props.server}

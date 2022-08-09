@@ -3,8 +3,10 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import client from '../..';
 import logger from '../../util/logger';
 import prisma from '../../util/prisma';
+import * as ServerService from '../../service/server';
 import Cookies from './cookies';
 import * as jwt from './jwt';
+import { Server } from '@prisma/client';
 
 export const verifyJWT = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
@@ -40,11 +42,18 @@ export const verifyJWT = async (request: FastifyRequest, reply: FastifyReply) =>
             if (!member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
                 return reply.status(401).send();
             }
-            const server = await prisma.server.findUnique({
+
+            let server = await prisma.server.findUnique({
                 where: {
                     discordId: guild.id
-                }
+                },
+                rejectOnNotFound: false
             });
+
+            if (!server) {
+                // user is setting bot up from dashboard before inviting to server
+                server = await ServerService.initializeServer(guild) as Server;
+            }
 
             // @ts-ignore
             request.server = server;

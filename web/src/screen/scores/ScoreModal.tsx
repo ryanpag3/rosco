@@ -1,118 +1,121 @@
-import Button from 'component/Button'
 import Column from 'component/Column'
-import LabelledInput from 'component/LabelledInput'
 import Modal from 'component/Modal'
-import Row from 'component/Row'
-import React, { Fragment, useEffect, useState } from 'react'
-import { HexColorPicker } from 'react-colorful'
-import styled, { css } from 'styled-components'
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { useForm } from 'react-hook-form';
+import Input from 'component/Input';
+import { HexColorPicker } from 'react-colorful';
+// @ts-ignore
+import isHexcolor from 'is-hexcolor';
+import Row from 'component/Row';
+import Colors from 'util/colors';
+import randomColor from 'randomcolor';
 import * as ScoreApi from 'api/score';
 
-const ScoreModal = (props: {
-  action: "Create" | "Update";
-  server: any;
-  score?: any;
-  isOpen: boolean;
-  onModalDismissed: (score: any) => void;
-}) => {
-  const [score, setScore] = useState(props.score);
+const ScoreModal = (props: any) => {
+  const { register, handleSubmit, watch, formState: { errors }, setValue} = useForm();
+  const [showColorPicker, setShowColorPicker] = useState(true);
+  const rColor = randomColor();
+  const color = watch("color");
+  const amount = watch("amount", 0);
 
-  function cancel() {
-    props.onModalDismissed(undefined as any);
-    setScore(undefined); 
-  }
-
-  async function submit() {
-    if (props.action.toLowerCase() === "update") {
-      await ScoreApi.updateScore(props.server.id, props.score?.id, {
-        name: score.name,
-        description: score.description,
-        color: score.color,
-        amount: Number.parseInt(score.amount)
-      });
-    } else {
-      await ScoreApi.createScore(props.server.id, {
-        name: score.name,
-        description: score.description,
-        color: score.color,
-        amount: Number.parseInt(score.amount)
-      });
+  useEffect(() => {
+    if (!color) {
+      setValue("color", rColor);
     }
 
-    dismiss();
-  }
+    if (!amount) {
+      setValue("amount", 0);
+    }
+  }, [ color, amount ]);
 
-  function dismiss() {
-
-    props.onModalDismissed({
-      name: score.name,
-      description: score.description,
-      color: score.color,
-      amount: Number.parseInt(score.amount),
-      createdAt: score.createdAt || new Date(),
-      updatedAt: score.updatedAt || new Date()
+  async function onSubmit(data: any) {
+    await ScoreApi.createScore(props.server.id, {
+      name: data.name,
+      description: data.description,
+      color: data.color,
+      amount: Number.parseInt(data.amount)
     });
 
-    setScore(undefined);
+    dismissWindow(data);
+  }
+
+  async function onCancel(event: any) {
+    event.preventDefault();
+    dismissWindow();
+  }
+
+  async function dismissWindow(data?: any) {
+    props.onModalDismissed(data ? { 
+      ...data,
+      createdAt: new Date(),
+      updatedAt: new Date() 
+    }: undefined);
   }
 
   return (
     <Container>
       <StyledModal
         isOpen={props.isOpen}
-        onDismiss={props.onModalDismissed}
+        onDismiss={() => props.onModalDismissed()}
       >
-        <Header>{props.action} Score</Header>
-        <Content>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Column>
-            <StyledRow>
-              <LabelledInput
-                label="Name"
-                value={score?.name || props.score?.name}
-                labelStyle={LabelStyle}
-                inputStyle={NameInputStyle}
-                onChange={(value) => setScore({ ...props.score, ...score, ...{ name: value } })} />
-            </StyledRow>
-
-            <StyledRow>
-              <LabelledInput
-                label="Description"
-                value={score?.description || props.score?.description}
-                labelStyle={LabelStyle}
-                inputStyle={DescriptionInputStyle}
-                onChange={(value) => setScore({ ...props.score, ...score, ...{ description: value } })}
+            <FormLabel>Name</FormLabel>
+            <FormInput 
+              style={{ width: '25em' }}
+              {...register("name", { required: true })} 
               />
-            </StyledRow>
+            { errors.name && <ErrorMessage>This is a required field.</ErrorMessage>}
 
-            <StyledRow>
-              <LabelledInput
-                label="Amount"
-                value={score?.amount || props.score?.amount}
-                labelStyle={LabelStyle}
-                inputStyle={AmountInputStyle}
-                onChange={(value) => setScore({ ...props.score, ...score, ...{ amount: value } })}
+
+            <FormLabel>Description</FormLabel>
+            <FormInput 
+              {...register("description")}
+              style={{ width: '25em' }}/>
+            
+            <FormLabel>Amount</FormLabel>
+            <FormInput 
+              type="number"
+              {...register("amount", { required: true })}
+              style={{ width: '10em' }}
+              value={amount}
               />
-              <LabelledInput
-                label="Color"
-                value="" // unused
-                labelStyle={LabelStyle}
-                inputStyle={InputStyle}
-                inputOverride={<HexColorPicker
-                  color={score?.color || props.score?.color}
-                  onChange={(color) => setScore({ ...props.score, ...score, ...{ color } })}
+
+            <ColorContainer
+            >
+              <FormLabel>Color</FormLabel>
+              <FormInput            
+                onClick={() => { setShowColorPicker(!showColorPicker)}}
+                {...register("color", {
+                  required: true,
+                  validate: {
+                    isHexColor: v => isHexcolor(v)
+                  },
+                })}
+                onChange={(e: any) => setValue("color", e.target.value)}
+                value={color}
+                style={{
+                  cursor: 'pointer',
+                  width: '7em'
+                }}
+                />
+                { showColorPicker && <ColorPicker
+                  style={{
+                    marginBottom: '1em'
+                  }}
+                  color={color}
+                  onChange={(c) => setValue("color", c as any)}
                 />}
-              />
-            </StyledRow>
-          </Column>
-          <ButtonRow>
-            <CancelButton
-              onClick={cancel}
-            >Cancel</CancelButton>
-            <SubmitButton
-              onClick={submit}
-            >Submit</SubmitButton>
-          </ButtonRow>
-        </Content>
+                {/* @ts-ignore */}
+                { (errors.color && errors.color.type === "isHexColor") && <ErrorMessage>A valid hex color is required.</ErrorMessage>}
+            </ColorContainer>
+            <MenuRow>
+              <CancelInput type="submit" value="Cancel" onClick={onCancel}/>
+              <SubmitInput type="submit" value="Submit"/>
+            </MenuRow>
+          </Column> 
+        </Form>
       </StyledModal>
     </Container>
   )
@@ -122,64 +125,55 @@ const Container = styled(Column)`
 
 `;
 
-const StyledRow = styled(Row)`
-  margin-top: .5em;
+const StyledModal = styled(Modal)`
+  display: flex;
+  flex-direction: column;
+  max-width: 30em;
+`;
+
+const Form = styled.form`
+
+`;
+
+const FormLabel = styled.label`
+  margin-right: .5em;
+  font-size: 1em;
+  font-weight: bold;
+`;
+
+const FormInput = styled(Input)`
+  font-size: .85em;
   margin-bottom: .5em;
 `;
 
-const StyledModal = styled(Modal)`
-  width: 35em;
-`;
-
-const Content = styled(Column)`
-  align-items: center;
-`;
-
-const Header = styled.h1`
-  margin: 0;
-`;
-
-const LabelStyle = css`
-  margin-right: 3em;
-`;
-
-const InputStyle = css`
-  width: 10em;
-  height: 2.5em;
-`;
-
-const NameInputStyle = css`
-  ${InputStyle}
-  width: 15em;
-`;
-
-const DescriptionInputStyle = css`
-  ${InputStyle}
-  width: 30em;
-`;
-
-const AmountInputStyle = css`
-  ${InputStyle}
-`;
-
-const ButtonRow = styled(Row)`
-  margin-top: 2em;
-  margin-bottom: 1em;
+const MenuRow = styled(Row)`
   width: 100%;
   justify-content: space-evenly;
 `;
 
-const StyledButton = styled(Button)`
-  padding-left: 2em; 
-  padding-right: 2em;
+const SubmitInput = styled(FormInput)`
+  width: 10em;
+  padding: .6em;
+  margin: .5em;
+  font-weight: bold;
+  background-color: ${Colors.BUTTON_GREEN};
+  border: none;
+  cursor: pointer;
 `;
 
-const CancelButton = styled(StyledButton)`
-
+const CancelInput = styled(SubmitInput)`
+  background-color: #ffaaaa;  
 `;
 
-const SubmitButton = styled(StyledButton)`
-
+const ErrorMessage = styled.span`
+  color: #ffa2a2;
 `;
 
+const ColorContainer = styled(Column)`
+  margin-top: 1em;
+`;
+
+const ColorPicker = styled(HexColorPicker)`
+  margin-top: .55em;
+`;
 export default ScoreModal
