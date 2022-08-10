@@ -28,7 +28,10 @@ const ScreenTopBar = (props: {
             <Logo src={logo} />
             <ServerSelect />
             <PushToRight />
-            <UserTag>{props.me.username}</UserTag>
+            {
+                props.me ? <UserTag>{props?.me?.username}</UserTag> : <LoadingSpinner/>
+            }
+            
             <LogoutButton
                 onClick={logout}
             ><LogoutIcon />&nbsp;logout</LogoutButton>
@@ -66,6 +69,24 @@ const LogoutButton = styled(Button)`
     background: none;
     color: ${Colors.TEXT_LIGHT};
     margin-left: 1em;
+`;
+
+const LoadingSpinner = styled.div`
+    width: .75em;
+    height: .75em;
+    border: 10px solid #7b7b7b; /* Light grey */
+    border-top: 10px solid #383636; /* Black */
+    border-radius: 50%;
+    animation: spinner 3s linear infinite;
+    
+    @keyframes spinner {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 `;
 
 export default ScreenTopBar

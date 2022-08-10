@@ -2,19 +2,27 @@ import { getGuild } from 'api/guild';
 import ProSideBar from 'component/ProSideBar';
 import Row from 'component/Row';
 import ScreenTopBar from 'component/ScreenTopBar';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import LocalStorageKey from 'util/localstorage-key';
 import Screen from '../../component/Screen';
+import * as MeApi from 'api/me';
 
-const Dashboard = ({ me, server, setSelectedServer }: {
-  me: any;
+
+const Dashboard = ({ server, setSelectedServer }: {
   server: any;
   setSelectedServer: any;
 }) => {
   const params = useParams();
   const navigate = useNavigate();
+  const [me, setMe] = useState(undefined as any);
+
+  useEffect(() => {
+    if (me)
+      return;
+    getMe();
+  }, [me]);
 
   useEffect(() => {
     if (!params.serverId) {
@@ -40,6 +48,11 @@ const Dashboard = ({ me, server, setSelectedServer }: {
         window.location.href = "https://discord.com/oauth2/authorize?client_id=955851785346613248&scope=bot%20applications.commands&permissions=8&response_type=code&redirect_uri=https%3A%2F%2Froscobot.com";
     });
   }, [ server ]);
+
+  async function getMe() {
+    const data = await MeApi.getMe();
+    setMe(data);
+  }
 
   return (
     <StyledScreen>

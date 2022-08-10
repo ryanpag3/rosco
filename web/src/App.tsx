@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { Route, Routes, unstable_HistoryRouter as HistoryBrowser } from 'react-router-dom';
 import Dashboard from 'screen/dashboard';
 import LandingScreen from 'screen/landing/LandingScreen';
-import * as MeApi from 'api/me';
 import Cookies, { getCookie } from 'util/cookies';
 import { SelectedServerContext } from 'context/selected-server-context';
 import LocalStorageKey from 'util/localstorage-key';
@@ -25,28 +24,14 @@ const App = () => {
       server: server as any
     })
   });
-  const [me, setMe] = useState(undefined as any);
-
-  useEffect(() => {
-    if (me)
-      return;
-    getMe();
-  }, [me]);
 
   function getCachedSelectedServer() {
     const raw = localStorage.getItem(LocalStorageKey.SELECTED_SERVER);
     return raw ? JSON.parse(raw) : undefined;
   }
 
-  async function getMe() {
-    const data = await MeApi.getMe();
-    setMe(data);
-  }
-
   function authenticationFound() {
-    console.log(getCookie(Cookies.IS_AUTHENTICATED) === 'true');
-    console.log(me !== undefined);
-    return getCookie(Cookies.IS_AUTHENTICATED) === 'true' && me !== undefined;
+    return getCookie(Cookies.IS_AUTHENTICATED) === 'true';;
   }
 
   return (
@@ -65,12 +50,12 @@ const App = () => {
             <Route path="/dashboard">
               <Route
                 index
-                element={<Dashboard me={me}
+                element={<Dashboard
                   server={selectedServer.server}
                   setSelectedServer={selectedServer.setSelectedServer} />} />
               <Route
                 path=":serverId"
-                element={<Dashboard me={me}
+                element={<Dashboard
                   server={selectedServer.server}
                   setSelectedServer={selectedServer.setSelectedServer} />}>
                 {
