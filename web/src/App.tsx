@@ -44,6 +44,8 @@ const App = () => {
   }
 
   function authenticationFound() {
+    console.log(getCookie(Cookies.IS_AUTHENTICATED) === 'true');
+    console.log(me !== undefined);
     return getCookie(Cookies.IS_AUTHENTICATED) === 'true' && me !== undefined;
   }
 
@@ -54,43 +56,43 @@ const App = () => {
         <Routes>
           {/* LANDING PAGE */}
           <Route path="/">
-            <Route index element={<LandingScreen/>}/>
+            <Route index element={<LandingScreen />} />
           </Route>
 
           {/* DASHBOARD */}
           {
-          authenticationFound() && 
-          <Route path="/dashboard">
-            <Route
-              index
-              element={<Dashboard me={me}
-                                  server={selectedServer.server}
-                                  setSelectedServer={selectedServer.setSelectedServer}/>}/>
-            <Route
-              path=":serverId"
-              element={<Dashboard me={me}
-                                  server={selectedServer.server}
-                                  setSelectedServer={selectedServer.setSelectedServer}/>}>
-              {
-              selectedServer &&
-              <React.Fragment>
-                <Route path="home" element={<Home />}></Route>
-                <Route path="config" element={<Config />}></Route>
-                <Route path="permissions" element={<Permissions />} />
-                <Route path="auto-mod">
-                  <Route path="banned-words" element={<BannedWords />} />
-                  <Route path="link-detect" element={<LinkDetect />} />
-                  <Route path="capslock-detect" element={<CapslockDetect server={selectedServer.server} />} />
-                </Route>
-                <Route path="scores" element={<Scores server={selectedServer.server} />} />
-              </React.Fragment>
-              }
+            authenticationFound() &&
+            <Route path="/dashboard">
+              <Route
+                index
+                element={<Dashboard me={me}
+                  server={selectedServer.server}
+                  setSelectedServer={selectedServer.setSelectedServer} />} />
+              <Route
+                path=":serverId"
+                element={<Dashboard me={me}
+                  server={selectedServer.server}
+                  setSelectedServer={selectedServer.setSelectedServer} />}>
+                {
+                  selectedServer &&
+                  <React.Fragment>
+                    <Route path="home" element={<Home />}></Route>
+                    <Route path="config" element={<Config />}></Route>
+                    <Route path="permissions" element={<Permissions />} />
+                    <Route path="auto-mod">
+                      <Route path="banned-words" element={<BannedWords />} />
+                      <Route path="link-detect" element={<LinkDetect />} />
+                      <Route path="capslock-detect" element={<CapslockDetect server={selectedServer.server} />} />
+                    </Route>
+                    <Route path="scores" element={<Scores server={selectedServer.server} />} />
+                  </React.Fragment>
+                }
+              </Route>
             </Route>
-          </Route>
           }
 
           {/* 404 - NOT FOUND */}
-          <Route path="*" element={<NotFound/>}/>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </HistoryBrowser>
     </SelectedServerContext.Provider>
