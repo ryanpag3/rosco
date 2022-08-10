@@ -15,6 +15,7 @@ import LinkDetect from 'screen/link-detect';
 import CapslockDetect from 'screen/capslock-detect';
 import Scores from 'screen/scores';
 import history from 'util/history';
+import NotFound from 'screen/not-found';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -42,38 +43,54 @@ const App = () => {
     setMe(data);
   }
 
+  function authenticationFound() {
+    return getCookie(Cookies.IS_AUTHENTICATED) === 'true' && me !== undefined;
+  }
+
   return (
     // @ts-ignore
     <SelectedServerContext.Provider value={selectedServer}>
       <HistoryBrowser history={history}>
         <Routes>
-          <Route path="/" element={<LandingScreen />} />
+          {/* LANDING PAGE */}
+          <Route path="/">
+            <Route index element={<LandingScreen/>}/>
+          </Route>
+
+          {/* DASHBOARD */}
           {
-            getCookie(Cookies.IS_AUTHENTICATED) === 'true' && me !== undefined ?
+          authenticationFound() && 
+          <Route path="/dashboard">
+            <Route
+              index
+              element={<Dashboard me={me}
+                                  server={selectedServer.server}
+                                  setSelectedServer={selectedServer.setSelectedServer}/>}/>
+            <Route
+              path=":serverId"
+              element={<Dashboard me={me}
+                                  server={selectedServer.server}
+                                  setSelectedServer={selectedServer.setSelectedServer}/>}>
+              {
+              selectedServer &&
               <React.Fragment>
-                <Route path="/dashboard" element={<Dashboard me={me} 
-                    server={selectedServer.server} setSelectedServer={selectedServer.setSelectedServer}/>}/>
-                <Route path="/dashboard/:serverId" element={<Dashboard me={me} 
-                    server={selectedServer.server} setSelectedServer={selectedServer.setSelectedServer}/>}>
-                      {
-                        selectedServer.server ?
-                        <React.Fragment>
-                          <Route path="home" element={<Home/>}></Route>
-                          <Route path="config" element={<Config/>}></Route>
-                          <Route path="permissions" element={<Permissions/>}/>
-                          <Route path="auto-mod/banned-words" element={<BannedWords/>}/>
-                          <Route path="auto-mod/link-detect" element={<LinkDetect/>}/>
-                          <Route path="auto-mod/capslock-detect" element={<CapslockDetect server={selectedServer.server} />} />
-                          <Route path="scores" element={<Scores server={selectedServer.server}/>} />
-                        </React.Fragment>
-                        :
-                        null
-                      }
+                <Route path="home" element={<Home />}></Route>
+                <Route path="config" element={<Config />}></Route>
+                <Route path="permissions" element={<Permissions />} />
+                <Route path="auto-mod">
+                  <Route path="banned-words" element={<BannedWords />} />
+                  <Route path="link-detect" element={<LinkDetect />} />
+                  <Route path="capslock-detect" element={<CapslockDetect server={selectedServer.server} />} />
                 </Route>
+                <Route path="scores" element={<Scores server={selectedServer.server} />} />
               </React.Fragment>
-              :
-              null
+              }
+            </Route>
+          </Route>
           }
+
+          {/* 404 - NOT FOUND */}
+          <Route path="*" element={<NotFound/>}/>
         </Routes>
       </HistoryBrowser>
     </SelectedServerContext.Provider>
