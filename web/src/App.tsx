@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter, Route, Routes, useNavigate, unstable_HistoryRouter as HistoryBrowser } from 'react-router-dom';
+import { Route, Routes, unstable_HistoryRouter as HistoryBrowser } from 'react-router-dom';
 import Dashboard from 'screen/dashboard';
 import LandingScreen from 'screen/landing/LandingScreen';
 import * as MeApi from 'api/me';
