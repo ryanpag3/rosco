@@ -15,6 +15,7 @@ import CapslockDetect from 'screen/capslock-detect';
 import Scores from 'screen/scores';
 import history from 'util/history';
 import NotFound from 'screen/not-found';
+import InternalError from 'screen/internal-error';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -78,6 +79,9 @@ const App = () => {
 
           {/* 404 - NOT FOUND */}
           <Route path="*" element={<NotFound />} />
+
+          {/* 500 - INTERNAL SERVER ERROR */}
+          <Route path="/internal-error" element={<InternalError/>}/>
         </Routes>
       </HistoryBrowser>
     </SelectedServerContext.Provider>
