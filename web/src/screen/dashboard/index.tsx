@@ -59,7 +59,9 @@ const Dashboard = ({ server, setSelectedServer }: {
       <ScreenTopBar me={me} />
       <OutletContainer>
         {/* <NavSideBar/> */}
-        <ProSideBar/>
+        <ProSideBar
+          server={server}
+        />
         <StyledOutlet/>
       </OutletContainer>
     </StyledScreen>

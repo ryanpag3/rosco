@@ -9,6 +9,8 @@ import { RiSoundModuleLine } from 'react-icons/ri';
 
 import 'react-pro-sidebar/dist/css/styles.css';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import Column from 'component/Column';
 
 const ProSideBar = (props: any) => {
     const navigate = useNavigate();
@@ -16,48 +18,63 @@ const ProSideBar = (props: any) => {
     return (
         <ProSidebar style={{ zIndex: 0 }}>
             <Menu iconShape="square">
-                <MenuItem 
-                    onClick={() => navigate('home')}
-                    icon={<AiOutlineHome />}>Home</MenuItem>
-                <SubMenu
-                    title="Configuration"
-                    defaultOpen={true}
-                    icon={<BiCog />}
-                >
-                    <MenuItem 
-                        icon={<BiCog />}
-                        onClick={() => navigate('config')}
-                    >
-                        Main
-                    </MenuItem>
-                    <MenuItem 
-                        onClick={() => navigate('permissions')}
-                        icon={<AiOutlineUnlock />}
-                    >
-                            Permissions
-                    </MenuItem>
-                </SubMenu>
-                <SubMenu
-                    title="Modules"
-                    defaultOpen={true}
-                    icon={<RiSoundModuleLine />}
-                >
-                    <MenuItem 
-                        onClick={() => navigate('auto-mod/banned-words')}
-                        icon={<HiBan />}>Banned Words</MenuItem>
-                    <MenuItem 
-                        onClick={() => navigate('auto-mod/capslock-detect')}
-                        icon={<BsCapslock />}>Capslock Spam</MenuItem>
-                    <MenuItem 
-                        onClick={() => navigate('auto-mod/link-detect')}
-                        icon={<AiOutlineLink />}>Link Detection</MenuItem>
-                    <MenuItem 
-                        onClick={() => navigate('scores')}
-                        icon={<MdScore />}>Scores</MenuItem>
-                </SubMenu>
+                {
+                    props.server !== undefined ?
+                        <React.Fragment>
+                            <MenuItem
+                                onClick={() => navigate('home')}
+                                icon={<AiOutlineHome />}>Home</MenuItem>
+                            <SubMenu
+                                title="Configuration"
+                                defaultOpen={true}
+                                icon={<BiCog />}
+                            >
+                                <MenuItem
+                                    icon={<BiCog />}
+                                    onClick={() => navigate('config')}
+                                >
+                                    Main
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() => navigate('permissions')}
+                                    icon={<AiOutlineUnlock />}
+                                >
+                                    Permissions
+                                </MenuItem>
+                            </SubMenu>
+                            <SubMenu
+                                title="Modules"
+                                defaultOpen={true}
+                                icon={<RiSoundModuleLine />}
+                            >
+                                <MenuItem
+                                    onClick={() => navigate('auto-mod/banned-words')}
+                                    icon={<HiBan />}>Banned Words</MenuItem>
+                                <MenuItem
+                                    onClick={() => navigate('auto-mod/capslock-detect')}
+                                    icon={<BsCapslock />}>Capslock Spam</MenuItem>
+                                <MenuItem
+                                    onClick={() => navigate('auto-mod/link-detect')}
+                                    icon={<AiOutlineLink />}>Link Detection</MenuItem>
+                                <MenuItem
+                                    onClick={() => navigate('scores')}
+                                    icon={<MdScore />}>Scores</MenuItem>
+                            </SubMenu>
+                        </React.Fragment> 
+                        :
+                        <SelectServerContainer>
+                            <span>Select a server to get started.</span>
+                        </SelectServerContainer>
+                        
+                }
             </Menu>
         </ProSidebar>
     )
 }
+
+const SelectServerContainer = styled(Column)`
+    justify-content: center;
+    align-items: center;
+`;
 
 export default ProSideBar;
