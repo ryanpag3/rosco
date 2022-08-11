@@ -27,9 +27,11 @@ const Scores = (props: any) => {
       return;
 
     ScoreApi.listAll(props.server.id)
-      .then(({ data }) => {
-          setData(data);
-          setIsLoaded(true);
+      .then((scores) => {
+          if (scores) {
+            setData(scores?.data);
+            setIsLoaded(true);
+          }
       });
   });
 
