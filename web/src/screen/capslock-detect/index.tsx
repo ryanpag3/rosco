@@ -15,10 +15,10 @@ const CapslockDetect = (props: any) => {
   useEffect(() => {
     if (isInit)
       return;
-
+    
     AutoModApi.getCapslockSpamConfig(props.server.id)
       .then((d) => {
-        setLength(d.data.length);
+        setLength(d?.data.length);
         setIsInit(true);
       })
   })

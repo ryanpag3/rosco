@@ -16,7 +16,7 @@ const AllowedLinksInput = (props: any) => {
 
       AutoModApi.getLinkDetectData(props.server.id)
         .then((data) => {
-          setLinks(data.data.links.map((l: string) => {
+          setLinks(data?.data.links.map((l: string) => {
             return {
               label: l,
               value: l

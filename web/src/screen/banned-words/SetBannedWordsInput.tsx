@@ -18,7 +18,7 @@ const SetBannedWordsInput = (props: {
 
     AutoModApi.getBannedWordsData(props.server.id)
       .then((data) => {
-        setWords(data.data.words.map((w: string) => {
+        setWords(data?.data.words.map((w: string) => {
           return {
             label: w,
             value: w
