@@ -1,4 +1,5 @@
 import axios from 'util/axios';
+import history from 'util/history';
 
 export const list = async (
     guildId: string,
@@ -7,7 +8,8 @@ export const list = async (
     filter?: string,
     scoreboard?: string
 ) => {
-    return axios.get(`/guild/${guildId}/score`, {
+    try {
+    return await axios.get(`/guild/${guildId}/score`, {
         params: {
             take,
             skip,
@@ -15,6 +17,9 @@ export const list = async (
             scoreboard
         }
     });
+} catch (e) {
+    history.replace('/internal-error');
+}
 }
 
 export const listByPage = async (
@@ -24,7 +29,8 @@ export const listByPage = async (
     filter?: string, 
     scoreboard?: string
 ) => {
-   return axios.get(`/guild/${guildId}/score`, {
+    try {
+   return await axios.get(`/guild/${guildId}/score`, {
        params: {
            page,
            amount,
@@ -32,6 +38,9 @@ export const listByPage = async (
            scoreboard
        }
    });
+} catch (e) {
+    history.replace('/internal-error');
+}
 }
 
 export const listAll = async (
@@ -39,12 +48,16 @@ export const listAll = async (
     filter?: string,
     scoreboard?: string
 ) => {
-    return axios.get(`/guild/${guildId}/score/all`, {
+    try {
+    return await axios.get(`/guild/${guildId}/score/all`, {
         params: {
             filter,
             scoreboard
         }
     }); 
+} catch (e) {
+    history.replace('/internal-error');
+}
 }
 
 export const updateScore = async (
@@ -57,18 +70,26 @@ export const updateScore = async (
         amount?: number;   
     }
 ) => {
-    return axios.patch(`/guild/${guildId}/score/${scoreId}`, data, {
+    try {
+    return await axios.patch(`/guild/${guildId}/score/${scoreId}`, data, {
         headers: {
             'Content-Type': 'application/json'
         }
     });
+} catch (e) {
+    history.replace('/internal-error');
+}
 }
 
 export const deleteScore = async (
     guildId: string,
     scoreId: string
 ) => {
-    return axios.delete(`/guild/${guildId}/score/${scoreId}`);
+    try {
+    return await axios.delete(`/guild/${guildId}/score/${scoreId}`);
+} catch (e) {
+    history.replace('/internal-error');
+}
 } 
 
 export const createScore = async (
@@ -80,9 +101,13 @@ export const createScore = async (
         amount?: number;   
     }
 ) => {
-    return axios.post(`/guild/${guildId}/score`, data, {
+    try {
+    return await axios.post(`/guild/${guildId}/score`, data, {
         headers: {
             'Content-Type': 'application/json'
         } 
     });
+} catch (e) {
+    history.replace('/internal-error');
+}
 }
