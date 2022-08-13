@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { RouteHandlerMethod } from 'fastify';
+import { FastifyRequest, RouteHandlerMethod } from 'fastify';
 import { stringify } from 'querystring';
 import prisma from '../../util/prisma';
 import Cookies from '../util/cookies';
@@ -26,6 +26,12 @@ export const login: RouteHandlerMethod = async (request, reply) => {
 }
 
 export const callback: RouteHandlerMethod = async (request, reply) => {
+
+    // @ts-ignore
+    if (request?.query?.error) {
+        reply.redirect(process.env.LANDING_ADDRESS as string); 
+    }
+
     const { data } = await axios.post(
         "https://discordapp.com/api/v9/oauth2/token",
         stringify({

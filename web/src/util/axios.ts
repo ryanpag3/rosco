@@ -23,7 +23,7 @@ axios.interceptors.response.use(
      */
     function(error) {
         if (error.response.status === 401) {
-            localStorage.unset(LocalStorageKey.SELECTED_SERVER);
+            localStorage.removeItem(LocalStorageKey.SELECTED_SERVER);
             alert('An authentication error has occured. Navigating back to landing screen.');
             history.replace('/');
         }

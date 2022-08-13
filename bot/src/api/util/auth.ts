@@ -1,4 +1,4 @@
-import { Permissions } from 'discord.js';
+import { DiscordAPIError, Permissions } from 'discord.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import client from '../..';
 import logger from '../../util/logger';
@@ -71,7 +71,11 @@ export const verifyJWT = async (request: FastifyRequest, reply: FastifyReply) =>
                 path: '/'
             });
     } catch (e) {
-        logger.error(e);
+        if (e instanceof DiscordAPIError && e.httpStatus === 403) {
+            logger.debug(`User was authenticated but bot hasnt been invited yet.`);
+            return reply.code(403).send();
+        }
+        logger.error(`An error was thrown while authenticating JWT token.`, e);
         throw e;
     }
 }

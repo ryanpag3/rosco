@@ -8,6 +8,8 @@ import styled from 'styled-components';
 import LocalStorageKey from 'util/localstorage-key';
 import Screen from '../../component/Screen';
 import * as MeApi from 'api/me';
+import { AxiosError } from 'axios';
+import InviteUrl from 'util/invite-url';
 
 
 const Dashboard = ({ server, setSelectedServer }: {
@@ -40,12 +42,14 @@ const Dashboard = ({ server, setSelectedServer }: {
         setSelectedServer(s)
       })
       .catch((e) => {
-        if (!e.toString().includes(403))
-          return;
+        if ((e as AxiosError)?.response?.status !== 403)
+          return
+        
         setSelectedServer(undefined);
         navigate('/dashboard');
         localStorage.removeItem(LocalStorageKey.SELECTED_SERVER);
-        window.location.href = "https://discord.com/oauth2/authorize?client_id=955851785346613248&scope=bot%20applications.commands&permissions=8&response_type=code&redirect_uri=https%3A%2F%2Froscobot.com";
+        // TODO: standardize URLs
+        window.location.href = InviteUrl;
     });
   }, [ server ]);
 

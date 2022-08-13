@@ -5,6 +5,8 @@ import prisma from '../../util/prisma';
 import DiscordApi from '../util/discord-api';
 import COMMANDS from '../../recursive-commands';
 import client from '../..';
+import { AxiosError } from 'axios';
+import { DiscordAPIError } from 'discord.js';
 
 /**
  * Get guild metadata
@@ -30,8 +32,10 @@ export const getGuild: RouteHandlerMethod = async (request, reply) => {
             label: guildRes.name
         }));
     } catch (e) {
-        if ((e as any).message.includes('status code 403'))
+        if ((e as DiscordAPIError)?.httpStatus === 403) {
+            logger.info("????");
             return reply.status(403).send();
+        }
         logger.error(e);
         throw e;
     }

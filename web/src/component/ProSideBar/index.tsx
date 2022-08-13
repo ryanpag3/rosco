@@ -11,6 +11,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Column from 'component/Column';
+import Colors from 'util/colors';
 
 const ProSideBar = (props: any) => {
     const navigate = useNavigate();
@@ -75,6 +76,7 @@ const ProSideBar = (props: any) => {
 const SelectServerContainer = styled(Column)`
     justify-content: center;
     align-items: center;
+    color: ${Colors.TEXT_LIGHT};
 `;
 
 export default ProSideBar;
