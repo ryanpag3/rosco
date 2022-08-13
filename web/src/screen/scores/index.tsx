@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { AgGridReact } from 'ag-grid-react';
 import * as ScoreApi from 'api/score';
-import { CellClickedEvent, CellValueChangedEvent, ColDef } from 'ag-grid-community';
+import { CellClickedEvent, CellValueChangedEvent, ColDef, NewValueParams } from 'ag-grid-community';
 import Button from 'component/Button';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import Colors from 'util/colors';
@@ -71,8 +71,17 @@ const Scores = (props: any) => {
     { 
         field: 'amount', 
         headerName: 'Amount', 
-        editable: true, sortable: true, 
-        filter: 'agNumberColumnFilter'
+        editable: true, 
+        sortable: true, 
+        filter: 'agNumberColumnFilter',
+        cellRenderer: (params: any) => {
+          console.log(params);
+          if (isNaN(Number(params.data.amount))) {
+              return params.data.amount.replace(/[^0-9\.]+/g, 0);
+          } else {
+              return params.data.amount;
+          }
+        } 
     },
     { 
         field: 'name', 

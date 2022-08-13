@@ -48,7 +48,7 @@ const UpdatePermissionsModal = (props: {
         >
           <ModalContainer>
             <AllowedRolesTitle>Allowed Roles</AllowedRolesTitle>
-            <Description>Define the roles that will be allowed to use the selected command(s).</Description>
+            <Description>Define the roles that will be allowed to use the selected command(s). If removing all roles, just hit "Submit".</Description>
             <Select
               isMulti={true}
               placeholder="Select Roles"
