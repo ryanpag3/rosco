@@ -74,6 +74,20 @@ ingress:
       paths:
         - path: /?(.*)
           pathType: Prefix
+    - host: api.roscobot.com
+      service:
+        name: rosco-api
+        port: 80
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
+    - host: www.api.roscobot.com
+      service:
+        name: rosco-api
+        port: 80
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
     - host: wiki.roscobot.com
       service:
         name: rosco-helm-wiki
