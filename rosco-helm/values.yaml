@@ -21,6 +21,27 @@ bot:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
+api:
+  replicaCount: 3
+  image:
+    repository: docker.io/ryanpage/rosco
+    tag: latest
+    pullPolicy: Always
+  service:
+    name: rosco-api
+    type: ClusterIP
+    port: 3000
+  secretName: rosco
+  env:
+    - name: IS_API
+      value: "true"
+    - name: LOG_LEVEL
+      value: debug
+    - name: NODE_ENV
+      value: production
+    - name: REDIS_HOST
+      value: rosco-helm-redis-master
+
 web:
   replicaCount: 3
   image:
