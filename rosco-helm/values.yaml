@@ -124,6 +124,8 @@ ingress:
     - hosts:
       - www.roscobot.com
       - roscobot.com
+      - api.roscobot.com
+      - www.api.roscobot.com
       secretName: tls-secret-roscobot
 
 ingress-nginx:
