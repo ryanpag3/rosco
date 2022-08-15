@@ -55,7 +55,8 @@ const validateAutoMod = async (message: Message, user: User, server: Server) => 
             await onAutoModRuleBroken('link-detect', message, user.id, server.id);
         }
     } catch (e: any) {
-        if (e.message.toString().contains('An AutoMod rule'))
+        logger.error(e);
+        if (e.message.contains('An AutoMod rule'))
             return;
         logger.error(e);
     }

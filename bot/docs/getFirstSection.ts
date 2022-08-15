@@ -1,6 +1,7 @@
 import fs from 'fs';  
 import path from 'path';
 import removeMd from 'remove-markdown';
+import logger from '../src/util/logger';
 
 const content = fs.readFileSync(path.join(__dirname, './CHANGELOG.md'));
 
@@ -34,6 +35,6 @@ function removeLink(line: string) {
     })
 }
 
-console.log(output);
+logger.debug(output);
 
 

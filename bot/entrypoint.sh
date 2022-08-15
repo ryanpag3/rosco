@@ -2,4 +2,9 @@
 
 npx prisma migrate deploy
 
-node src/index.js
+
+if [ "$IS_API" == "true" ]; then
+  node src/api/index.js
+else
+  node src/index.js
+fi
