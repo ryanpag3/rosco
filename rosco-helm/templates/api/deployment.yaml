@@ -41,14 +41,14 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 3000
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 3000
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
           volumeMounts:
             - name: postgres-cert
               mountPath: /etc/rosco/ca-certificate.crt
