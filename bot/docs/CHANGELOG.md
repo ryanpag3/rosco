@@ -1,3 +1,12 @@
+# [1.4.0-beta.8](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.7...v1.4.0-beta.8) (2022-08-15)
+
+
+### Features
+
+* add ability to toggle AutoMod banned words module on or off ([718ebc1](https://github.com/ryanpag3/guac-bot/commit/718ebc18ac572d9bed042d1b437d3ff28579b265))
+* add initial REST API skeleton to bot project ([b9bcdc8](https://github.com/ryanpag3/guac-bot/commit/b9bcdc8ca393bf8b579101a7ea43290cb0661062))
+* add JWT support for API ([912e319](https://github.com/ryanpag3/guac-bot/commit/912e31973cd30b10b21c114e5de75d295f520da2))
+
 # [1.4.0-beta.7](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.6...v1.4.0-beta.7) (2022-08-05)
 
 
