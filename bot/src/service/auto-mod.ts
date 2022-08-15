@@ -181,21 +181,25 @@ const takeAction = async (message: Message, ruleUsers: AutoModRuleUser[]) => {
             logger.debug(`current violations not higher than or equal to rule violations.`)
             continue;
         }
-
+        
+        // always delete offending message
+        await message.delete();
+        
         switch(u.Rule.action) {
-            case 'delete':
-                return message.delete();
-            case 'warn':
-                return warnUser(
-                    message,
-                    u.User.discordId,
-                    u.Rule.module);
             case 'timeout':
                 return timeoutUser(
                     message, 
                     u.Rule.Server.discordId, 
                     u.User.discordId, 
                     u.Rule.duration);
+            case 'delete':
+                // if that was the only action needed, we're done here.
+                return;
+            case 'warn':
+                return warnUser(
+                    message,
+                    u.User.discordId,
+                    u.Rule.module);
             case 'kick':
                 return kickUser(
                     message, 

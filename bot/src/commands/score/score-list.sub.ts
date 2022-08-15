@@ -1,6 +1,7 @@
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas';
 import { MessageAttachment } from 'discord.js';
 import { Command } from '../../../types/command';
+import * as ScoreService from '../../service/score';
 import BotError from '../../util/bot-error';
 import prisma from '../../util/prisma';
 
@@ -19,6 +20,10 @@ const ScoreList: Command = {
         const scoreboardName = interaction.options.getString('scoreboard') || undefined;
         const defaultAmount = interaction.options.getInteger('default-amount');
         const maxAmount = 20;
+
+        if (amount > maxAmount) {
+            throw new BotError(`The maximum number of scores per page is 20.`);
+        }
 
         if ((defaultAmount !== null && defaultAmount > maxAmount) || amount > maxAmount) {
             throw new BotError(`The maximum number of scores per page is 20.`);
@@ -44,59 +49,8 @@ const ScoreList: Command = {
             });
         }
 
-        let scoreboard;
-        if (scoreboardName) {
-            scoreboard = await prisma.scoreboard.findUnique({
-                where: {
-                    name_serverId: {
-                        name: scoreboardName,
-                        serverId: server.id
-                    }
-                }
-            });
-        }
-
-
-        await prisma.score.findMany({
-            where: {
-                serverId: server?.id
-            },
-            include: {
-                ScoreboardScore: {
-                    include: {
-                        Score: true
-                    }
-                }
-            }
-        })
-
-        let ScoreboardScore;
-        if (scoreboard) {
-            ScoreboardScore = {
-                some: {
-                    scoreboardId: scoreboard?.id
-                }
-            };
-        }
-
-        const scores = await prisma.score.findMany({
-            include: {
-                ScoreboardScore: true
-            },
-            where: {
-                serverId: server?.id,
-                name: {
-                    contains: filter || undefined
-                },
-                ScoreboardScore
-            },
-            take: amount,
-            skip: amount * (page - 1),
-            orderBy: {
-                amount: 'desc'
-            }
-        });
-
+        const { scores } = await ScoreService.listByPage(server, page, amount, filter, scoreboardName)
+        
         const height = 35 * scores.length + 125;
         const width = 1000;
         const backgroundColor = '#dbdbdb';
@@ -141,7 +95,7 @@ const ScoreList: Command = {
                                 size: 16,
                                 weight: 'bold'
                             },
-                            callback: (value, index, values) => {
+                            callback: (value) => {
                                 return commarize(value as number, 1000);
                             }
                         }
@@ -150,7 +104,7 @@ const ScoreList: Command = {
                 plugins: {
                     title: {
                         display: true,
-                        text: scoreboard?.name || 'Scores',
+                        text: scoreboardName || 'Scores',
                         font: {
                             family: 'Roboto',
                             size: 24
