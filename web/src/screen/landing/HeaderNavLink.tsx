@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link as RRLink } from 'react-router-dom';
 import styled from 'styled-components';
+import Colors from 'util/colors';
 
 const HeaderNavLink = (props: {
     to: string;
@@ -12,17 +13,17 @@ const HeaderNavLink = (props: {
   )
 }
 
-const StyledText = styled.text`
+const StyledText = styled.span`
     text-transform: uppercase;
     font-size: .9em;
 
     :hover {
-      color: #c4c4c4;
+      color: ${Colors.TEXT_LIGHT_HOVER};
     }
 `;
 
 const Link = styled(RRLink)`
-    color: white;
+    color: ${Colors.TEXT_LIGHT};
     text-decoration: none;
     margin: 1em;
 `;

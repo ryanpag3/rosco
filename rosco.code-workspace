@@ -1,0 +1,20 @@
+{
+    "folders": [
+      {
+        "name": "bot",
+        "path": "bot"
+      },
+      {
+        "name": "api",
+        "path": "bot/src/api"
+      },
+      {
+        "name": "web",
+        "path": "web"
+      },
+      {
+        "name": "helm",
+        "path": "rosco-helm"
+      }
+    ]
+  }

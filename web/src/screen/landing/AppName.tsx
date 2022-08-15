@@ -38,7 +38,7 @@ const Name = styled.h1`
     margin-bottom: .1em;
 `;
 
-const Byline = styled.text`
+const Byline = styled.span`
     text-align: center;
     font-size: 2.25em;
     font-weight: regular;

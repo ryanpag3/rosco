@@ -21,7 +21,7 @@ const Container = styled(Column)`
     padding-bottom: 1em;
 `;
 
-const LearnMoreText = styled.text`
+const LearnMoreText = styled.span`
     font-size: 1.2em;
     margin-bottom: .5em;
 `;
