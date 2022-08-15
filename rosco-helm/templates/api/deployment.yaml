@@ -49,8 +49,16 @@ spec:
             httpGet:
               path: /
               port: http
+          volumeMounts:
+            - name: postgres-cert
+              mountPath: /etc/rosco/ca-certificate.crt
+              subPath: ca-certificate.crt
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+          - name: postgres-cert
+            configMap:
+              name: postgres-cert
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
