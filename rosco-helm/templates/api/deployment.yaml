@@ -44,11 +44,11 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: 3000
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: 3000
           volumeMounts:
             - name: postgres-cert
               mountPath: /etc/rosco/ca-certificate.crt
