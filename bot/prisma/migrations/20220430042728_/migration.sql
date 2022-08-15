@@ -6,7 +6,7 @@
 */
 -- AlterTable
 ALTER TABLE "Keyword" ADD COLUMN     "announceChannelId" TEXT,
-ADD COLUMN     "name" TEXT;
+ADD COLUMN     "name" TEXT NOT NULL DEFAULT gen_random_uuid();
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Keyword_name_key" ON "Keyword"("name");
