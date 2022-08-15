@@ -1,3 +1,10 @@
+# [1.4.0-beta.9](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.8...v1.4.0-beta.9) (2022-08-15)
+
+
+### Features
+
+* add web dashboard for managing some bot functions ([c6d788f](https://github.com/ryanpag3/guac-bot/commit/c6d788f26eb6432400de86241e163ff2cf7395f3))
+
 # [1.4.0-beta.8](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.7...v1.4.0-beta.8) (2022-08-15)
 
 
