@@ -37,6 +37,8 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Values.api.secretName }}
+          env:
+            {{- toYaml .Values.bot.env | nindent 10 }}
           ports:
             - name: http
               containerPort: 3000
