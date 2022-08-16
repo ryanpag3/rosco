@@ -1,3 +1,10 @@
+# [1.4.0-beta.10](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.9...v1.4.0-beta.10) (2022-08-16)
+
+
+### Bug Fixes
+
+* use proper API url in production ([cd3ab21](https://github.com/ryanpag3/guac-bot/commit/cd3ab21b9fcf60c68e3211c8db9c234e65f70a44))
+
 # [1.4.0-beta.9](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.8...v1.4.0-beta.9) (2022-08-15)
 
 
