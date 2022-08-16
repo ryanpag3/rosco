@@ -34,20 +34,33 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.api.secretName }}
+          env:
+            {{- toYaml .Values.api.env | nindent 10 }}
           ports:
             - name: http
               containerPort: 3000
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
+          volumeMounts:
+            - name: postgres-cert
+              mountPath: /etc/rosco/ca-certificate.crt
+              subPath: ca-certificate.crt
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+          - name: postgres-cert
+            configMap:
+              name: postgres-cert
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

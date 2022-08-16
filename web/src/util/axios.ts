@@ -1,10 +1,11 @@
 import Axios from 'axios';
 import { NavigateFunction, NavigateOptions } from 'react-router-dom';
+import ApiUrl from './api-url';
 import history from './history';
 import LocalStorageKey from './localstorage-key';
 
 const axios = Axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'https://api.roscobot.com',
+    baseURL: ApiUrl,
     withCredentials: true,
     headers: {
         'Access-Control-Allow-Origin': process.env.PUBLIC_URL
