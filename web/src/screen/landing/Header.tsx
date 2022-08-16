@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+import ApiUrl from 'util/api-url';
 import HeaderNavLink from './HeaderNavLink';
 
 const Header = () => {
@@ -15,7 +16,7 @@ const Header = () => {
             {/* <HeaderNavLink to="/status">Status</HeaderNavLink>
           <HeaderNavLink to="/roadmap">Roadmap</HeaderNavLink>*/}
           <HeaderNavLink to="/"
-            onClick={() => window.open((process.env.REACT_APP_API_URL) + '/login', '_self')}
+            onClick={() => window.open(ApiUrl + '/login', '_self')}
           >Login</HeaderNavLink> 
         </Container>
     )

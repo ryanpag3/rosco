@@ -65,14 +65,18 @@ ingress:
         name: rosco-api
         port: 80
       paths:
-        - path: /?(.*)
+        # - path: /?(.*)
+        #   pathType: Prefix
+        - path: /
           pathType: Prefix
     - host: www.api.roscobot.com
       service:
         name: rosco-api
         port: 80
       paths:
-        - path: /?(.*)
+        # - path: /?(.*)
+        #   pathType: Prefix
+        - path: /
           pathType: Prefix
     - host: roscobot.com
       service:
