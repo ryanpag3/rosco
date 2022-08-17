@@ -2,7 +2,6 @@
   "name": "web",
   "version": "1.0.0-beta",
   "private": true,
-  "homepage": "./",
   "dependencies": {
     "@carbon/icons-react": "^11.1.0",
     "@reach/dialog": "^0.17.0",
