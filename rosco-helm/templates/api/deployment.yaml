@@ -11,7 +11,7 @@ spec:
   replicas: {{ .Values.api.replicaCount }}
   selector:
     matchLabels:
-      {{- include "rosco-helm.selectorLabels" . | nindent 6 }}
+     name: {{ .Values.api.service.name }} 
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,7 +19,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "rosco-helm.selectorLabels" . | nindent 8 }}
+        name: {{ .Values.api.service.name }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

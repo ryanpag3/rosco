@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "rosco-helm.selectorLabels" . | nindent 4 }}
+    name: {{ .Values.bot.service.name }}
