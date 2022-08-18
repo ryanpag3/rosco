@@ -1,3 +1,10 @@
+# [1.4.0-beta.12](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.11...v1.4.0-beta.12) (2022-08-18)
+
+
+### Bug Fixes
+
+* set domain for cookie ([ba55bb9](https://github.com/ryanpag3/guac-bot/commit/ba55bb9638e982467236e83fe91db02e9a891f76))
+
 # [1.4.0-beta.11](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.10...v1.4.0-beta.11) (2022-08-18)
 
 
