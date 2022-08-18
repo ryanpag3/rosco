@@ -76,7 +76,9 @@ export const callback: RouteHandlerMethod = async (request, reply) => {
     const token = jwt.create({ discordId: user.id });
 
     reply
-        .setCookie(Cookies.IS_AUTHENTICATED, 'true')
+        .setCookie(Cookies.IS_AUTHENTICATED, 'true', {
+            domain: process.env.JWT_DOMAIN
+        })
         .setCookie(Cookies.JWT, token, {
             secure: true,
             httpOnly: true,
