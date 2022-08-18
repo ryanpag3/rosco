@@ -79,7 +79,8 @@ export const callback: RouteHandlerMethod = async (request, reply) => {
         .setCookie(Cookies.IS_AUTHENTICATED, 'true')
         .setCookie(Cookies.JWT, token, {
             secure: true,
-            httpOnly: true
+            httpOnly: true,
+            domain: process.env.JWT_DOMAIN
         })
         .redirect(process.env.WEB_APP_ADDRESS as string);
 }
