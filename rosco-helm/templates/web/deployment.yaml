@@ -13,7 +13,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "rosco-helm.selectorLabels" . | nindent 6 }}
+      name: {{ .Values.web.service.name }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,7 +21,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "rosco-helm.selectorLabels" . | nindent 8 }}
+        name: {{ .Values.web.service.name }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
