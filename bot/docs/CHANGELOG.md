@@ -1,3 +1,10 @@
+# [1.4.0-beta.14](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.13...v1.4.0-beta.14) (2022-08-19)
+
+
+### Bug Fixes
+
+* adjust hostname detection for cors ([bcaa8c1](https://github.com/ryanpag3/guac-bot/commit/bcaa8c19b2485c8a75737e14e6a37f540c7efd47))
+
 # [1.4.0-beta.13](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.12...v1.4.0-beta.13) (2022-08-19)
 
 
