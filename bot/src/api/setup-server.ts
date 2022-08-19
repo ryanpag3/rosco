@@ -28,17 +28,17 @@ export default async (fastify: FastifyInstance) => {
 
             logger.debug(`hostname: ${hostname}`);
 
-            if (hostname === 'localhost') {
+            if (hostname.includes('localhost')) {
                 cb(null, true);
                 return;
             }
 
-            if (hostname === 'discord') {
+            if (hostname.includes('discord')) {
                 cb(null, true);
                 return;
             }
 
-            if (hostname === 'roscobot') {
+            if (hostname.includes('roscobot')) {
                 cb(null, true);
                 return;
             }
