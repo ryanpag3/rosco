@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import logger from '../../util/logger';
 
 /**
  * Create a signed JWT token.
@@ -14,6 +15,7 @@ export const create = (payload: any): string => {
  * Validate the provided JWT token and 
  */
 export const validateJWT = (jwToken: string): any => {
+    logger.info(`current time: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`);
     return jwt.verify(jwToken, process.env.JWT_SECRET as string);
 }
 
