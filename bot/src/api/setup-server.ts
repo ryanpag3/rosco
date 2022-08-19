@@ -25,6 +25,9 @@ export default async (fastify: FastifyInstance) => {
                 return cb(null, false);
             
             const hostname = new URL(origin).hostname;
+
+            logger.debug(`hostname: ${hostname}`);
+
             if (hostname === 'localhost') {
                 cb(null, true);
                 return;
