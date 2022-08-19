@@ -1,3 +1,10 @@
+# [1.4.0-beta.13](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.12...v1.4.0-beta.13) (2022-08-19)
+
+
+### Bug Fixes
+
+* add logging to cors check ([af39929](https://github.com/ryanpag3/guac-bot/commit/af39929691fed7908ea4b3232e837b1b0be1514c))
+
 # [1.4.0-beta.12](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.11...v1.4.0-beta.12) (2022-08-18)
 
 
