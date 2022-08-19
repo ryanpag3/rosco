@@ -14,6 +14,9 @@ fastify.addHook('onResponse', async (request, reply) => {
     if (reply.statusCode !== 200) {
         reply.clearCookie(Cookies.IS_AUTHENTICATED).clearCookie(Cookies.JWT);
     }
+
+    reply.header("Access-Control-Allow-Origin", "*");
+    reply.header("Access-Control-Allow-Methods", "*");
     
     return reply;
 });
