@@ -26,7 +26,7 @@ export default async (fastify: FastifyInstance) => {
             
             const hostname = new URL(origin).hostname;
 
-            logger.debug(`hostname: ${hostname}`);
+            logger.trace(`cors hostname: ${hostname}`);
 
             if (hostname.includes('localhost')) {
                 cb(null, true);
@@ -60,7 +60,7 @@ export default async (fastify: FastifyInstance) => {
                 logger.debug(req.url);
                 return await oldHandler(req, res);
             } catch (e) {
-                logger.error(`Uncaught exception from handler: ${req.url}`, (e as any).message);
+                logger.error(`Uncaught exception from handler: ${req.url}`, e);
                 logger.trace(e);
                 await res.status(500).send();
                 const api = new DiscordApi(req.user);

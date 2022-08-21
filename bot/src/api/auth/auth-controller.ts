@@ -3,10 +3,11 @@ import { FastifyRequest, RouteHandlerMethod } from 'fastify';
 import { stringify } from 'querystring';
 import prisma from '../../util/prisma';
 import Cookies from '../util/cookies';
+import DiscordScopes from '../util/discord-scopes';
 import * as jwt from '../util/jwt';
 
 export const getLoginUrl = () => {
-    const scopes = ['identify', 'email', 'guilds', 'guilds.members.read'].join(' ');
+    const scopes = DiscordScopes.join(' ');
 
     const params = new URLSearchParams({
         response_type: 'code',
