@@ -2,9 +2,6 @@ dependencies:
 - name: ingress-nginx
   repository: https://kubernetes.github.io/ingress-nginx
   version: 4.0.18
-- name: wiki
-  repository: https://charts.js.wiki
-  version: 2.2.13
 - name: redis
   repository: https://charts.bitnami.com/bitnami
   version: 16.6.0
@@ -14,5 +11,5 @@ dependencies:
 - name: keel
   repository: https://charts.keel.sh
   version: 0.9.10
-digest: sha256:3ec444d3aeb0d111efadb32e303ef68dbde5df8e25ef253a62036669d5b5441b
-generated: "2022-08-03T07:30:51.865033-07:00"
+digest: sha256:bb7a07f1d99c6afe433f64c319e5652839fc14ac69ca4df8dda316db5ddba4a5
+generated: "2022-08-21T08:24:44.26671-07:00"

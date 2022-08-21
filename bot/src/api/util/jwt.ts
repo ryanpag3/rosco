@@ -15,7 +15,7 @@ export const create = (payload: any): string => {
  * Validate the provided JWT token and 
  */
 export const validateJWT = (jwToken: string): any => {
-    logger.info(`current time: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`);
+    logger.info(`current time: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()} ${new Date().getTimezoneOffset()}`);
     return jwt.verify(jwToken, process.env.JWT_SECRET as string);
 }
 
