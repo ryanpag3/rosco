@@ -64,14 +64,14 @@ ingress:
         name: rosco-web
         port: 80
       paths:
-        - path: /.*
+        - path: /
           pathType: Prefix
     - host: www.roscobot.com
       service:
         name: rosco-web
         port: 80
       paths:
-        - path: /.*
+        - path: /
           pathType: Prefix
     # - host: roscobot.com
     #   service:
@@ -87,20 +87,20 @@ ingress:
     #   paths:
     #     - path: /?(.*)
     #       pathType: Prefix
-    - host: wiki.roscobot.com
-      service:
-        name: rosco-helm-wiki
-        port: 80
-      paths:
-        - path: /
-          pathType: Prefix
-    - host: www.wiki.roscobot.com
-      service:
-        name: rosco-helm-wiki
-        port: 80
-      paths:
-        - path: /
-          pathType: Prefix
+    # - host: wiki.roscobot.com
+    #   service:
+    #     name: rosco-helm-wiki
+    #     port: 80
+    #   paths:
+    #     - path: /?(.*)
+    #       pathType: Prefix
+    # - host: www.wiki.roscobot.com
+    #   service:
+    #     name: rosco-helm-wiki
+    #     port: 80
+    #   paths:
+    #     - path: /?(.*)
+    #       pathType: Prefix
     - host: api.roscobot.com
       service:
         name: rosco-api
@@ -130,10 +130,10 @@ ingress:
           pathType: Prefix
       
   tls:
-    - hosts:
-      - www.wiki.roscobot.com
-      - wiki.roscobot.com
-      secretName: tls-secret-roscobot-wiki
+    # - hosts:
+    #   - www.wiki.roscobot.com
+    #   - wiki.roscobot.com
+    #   secretName: tls-secret-roscobot-wiki
     - hosts:
       - www.roscobot.com
       - roscobot.com
@@ -151,15 +151,15 @@ ingress-nginx:
         service.beta.kubernetes.io/do-loadbalancer-disable-lets-encrypt-dns-records: "false"
 
 wiki:
-  replicaCount: 2
-  volumeMounts:
-  - name: wikijs-config
-    mountPath: /wiki/config.yml
-    subPath: config.yml
-  volumes:
-  - name: wikijs-config
-    configMap:
-      name: wikijs-config
+  replicacount: 1
+  # volumeMounts:
+  # - name: wikijs-config
+  #   mountPath: /wiki/config.yml
+  #   subPath: config.yml
+  # volumes:
+  # - name: wikijs-config
+  #   configMap:
+  #     name: wikijs-config
   postgresql:
     enabled: false
     existingSecret: wikijs
