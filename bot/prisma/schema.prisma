@@ -1,7 +1,6 @@
-
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["extendedIndexes"]
+  previewFeatures = ["fullTextSearch"]
   binaryTargets   = ["native", "linux-musl"]
 }
 
@@ -109,6 +108,14 @@ model Keyword {
   announceChannelId String?
 }
 
+model MagicTheGatheringCard {
+  id         String   @id
+  name       String
+  setName    String
+  releasedAt DateTime
+  card       Json
+}
+
 model Permission {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -178,10 +185,11 @@ model Score {
   Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
   channelId   String?
   userId      String?
-  User        User?     @relation(references: [id], onDelete: Cascade, fields: [userId])
+  User        User?    @relation(references: [id], onDelete: Cascade, fields: [userId])
 
   Keyword         Keyword[]
   ScoreboardScore ScoreboardScore[]
+
   @@unique([name, serverId])
 }
 
@@ -198,6 +206,7 @@ model Scoreboard {
   User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
 
   ScoreboardScore ScoreboardScore[]
+
   @@unique([name, serverId])
 }
 
