@@ -39,7 +39,7 @@ export const setup = async () => {
             }
         });
 
-        for (const chunk of splitToChunks(mapped, 20)) {
+        for (const chunk of splitToChunks(mapped, 30)) {
             logger.debug(`inserting chunk`);
             const res = await prisma.magicTheGatheringCard.createMany({
                 data: chunk
