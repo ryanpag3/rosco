@@ -1,8 +1,8 @@
 ---
-title: mtcg
+title: Magic: The Gathering
 description: Commands related to Magic: The Gathering
 published: true
-date: 2022-08-22T22:44:29.568Z
+date: 2022-08-22T22:45:44.468Z
 tags: 
 editor: markdown
 dateCreated: 2022-08-22T22:44:29.568Z
