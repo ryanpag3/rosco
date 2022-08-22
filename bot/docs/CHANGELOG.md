@@ -1,3 +1,11 @@
+# [1.4.0-beta.18](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.17...v1.4.0-beta.18) (2022-08-22)
+
+
+### Bug Fixes
+
+* use smaller chunks ([fd3a499](https://github.com/ryanpag3/guac-bot/commit/fd3a4996b016a8c20e49f6a5c805c96c0afbe63c))
+* use smaller chunks ([aed5dda](https://github.com/ryanpag3/guac-bot/commit/aed5dda88eec6803a6f24cb570b084bffd67537d))
+
 # [1.4.0-beta.17](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.16...v1.4.0-beta.17) (2022-08-22)
 
 
