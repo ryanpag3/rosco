@@ -39,14 +39,25 @@ export const setup = async () => {
             }
         });
 
-        const res = await prisma.magicTheGatheringCard.createMany({
-            data: mapped
-        });
+        for (const chunk of splitToChunks(mapped, 10)) {
+            const res = await prisma.magicTheGatheringCard.createMany({
+                data: chunk
+            });
+
+            logger.info(`Inserted ${res.count} MTCG cards into the database.`);
+        }
 
         await redis.set(redisKey, DateTime.now().toISO());
 
-        logger.info(`Inserted ${res.count} MTCG cards into the database.`);
     } catch (e) {
         logger.error(`There was an error while setting up the MTCG card database.`, e);
     }
+}
+
+const splitToChunks = (array: any[], parts: number) => {
+    let result = [];
+    for (let i = parts; i > 0; i--) {
+        result.push(array.splice(0, Math.ceil(array.length / i)));
+    }
+    return result;
 }
