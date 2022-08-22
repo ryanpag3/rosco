@@ -1,3 +1,10 @@
+# [1.4.0-beta.15](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.14...v1.4.0-beta.15) (2022-08-22)
+
+
+### Features
+
+* enable sticky sessions ([6b82f4e](https://github.com/ryanpag3/guac-bot/commit/6b82f4e04f47a4cc119e6d15c522b82c1e8d3244))
+
 # [1.4.0-beta.14](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.13...v1.4.0-beta.14) (2022-08-19)
 
 
