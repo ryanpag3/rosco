@@ -34,6 +34,7 @@ const KeywordList: Command = {
                 word: {
                     contains: keyword
                 },
+                serverId: server?.id,
                 scoreId: score?.id
             },
             include: {
@@ -45,7 +46,7 @@ const KeywordList: Command = {
             embeds: [
                 {
                     title: `:newspaper: Keywords`,
-                    description: `Here are the keywords you asked for\n\n__**keyword** - **score**__\n${keywords.map((k) => `_"${k.word}"_ - ${k.Score?.name}`).join('\n')}`
+                    description: `Here are the keywords you asked for\n\n**name** - **keyword/phrase** - **score**\n-------------------\n${keywords.map((k) => `**${k.name}** - _"${k.word}"_ - ${k.Score?.name}`).join('\n')}`
                 }
             ]
         });

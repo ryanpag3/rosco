@@ -7,32 +7,37 @@ it('should delete the keyword', async () => {
         name: 'test',
         description: 'description',
         amount: 1
-    }, '1', '1', '1');
+    });
     
     await onCommandReceived(int);
 
+    const name = 'test';
     int = createTestInteraction('keyword', 'create', {
+        name,
         'score-name': 'test',
         keyword: 'iwinagainlewstherin'
-    }, '1', '1', '1');
+    });
 
     await onCommandReceived(int);
 
     let keywords = await prisma.keyword.findMany({
-        where: {}
+        where: {
+            name
+        }
     });
 
     expect(keywords.length).toBe(1);
 
     int = createTestInteraction('keyword', 'delete', {
-        'score-name': 'test',
-        keyword: 'iwinagainlewstherin'
-    }, '1', '1', '1');
+        name
+    });
 
     await onCommandReceived(int);
 
     keywords = await prisma.keyword.findMany({
-        where: {}
+        where: {
+            name
+        }
     });
 
     expect(keywords.length).toBe(0);
@@ -40,9 +45,8 @@ it('should delete the keyword', async () => {
 
 it('should thrown an error if the score does not exist', async () => {
     const int = createTestInteraction('keyword', 'delete', {
-        'score-name': 'test',
-        keyword: 'iwinagainlewstherin'
-    }, '1', '1', '1');
+        name: 'test'
+    });
 
     await expect(onCommandReceived(int)).rejects.toThrow();
 });

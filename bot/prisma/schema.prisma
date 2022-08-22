@@ -91,21 +91,22 @@ model CommandHistory {
 }
 
 model Keyword {
-  id        String        @id @default(uuid())
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  word      String
-  scoreId   String
-  Score     Score         @relation(fields: [scoreId], references: [id], onDelete: Cascade)
-  action    KeywordAction @default(UP)
-  amount    Int           @default(1)
-  serverId  String
-  Server    Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  channelId String?
-  userId    String?
-  User      User?         @relation(fields: [userId], references: [id])
-
-  @@unique([word, scoreId, serverId])
+  id                String        @id @default(uuid())
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  name              String        @unique @default(uuid())
+  word              String
+  scoreId           String
+  Score             Score         @relation(fields: [scoreId], references: [id], onDelete: Cascade)
+  action            KeywordAction @default(UP)
+  amount            Int           @default(1)
+  serverId          String
+  Server            Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  channelId         String?
+  userId            String?
+  User              User?         @relation(fields: [userId], references: [id])
+  roleId            String?
+  announceChannelId String?
 }
 
 model Permission {
@@ -175,13 +176,13 @@ model Score {
   amount      Int      @default(0)
   serverId    String
   Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  channelId   String
-  userId      String
-  User        User     @relation(references: [id], onDelete: Cascade, fields: [userId])
+  channelId   String?
+  userId      String?
+  User        User?     @relation(references: [id], onDelete: Cascade, fields: [userId])
 
   Keyword         Keyword[]
-  @@unique([name, serverId])
   ScoreboardScore ScoreboardScore[]
+  @@unique([name, serverId])
 }
 
 model Scoreboard {
@@ -219,6 +220,8 @@ model Server {
   currencyHistoryChannelActive Boolean? @default(true)
   currencyCount                Int      @default(0)
   timezone                     String   @default("America/Los_Angeles")
+  botToBotMessagesEnabled      Boolean  @default(false)
+  scoreListAmount              Int      @default(10)
 
   // module toggle flags
   autoModBannedWordsEnabled    Boolean @default(false)
@@ -251,6 +254,16 @@ model Server {
   AutoModRule              AutoModRule[]
   AllowedLink              AllowedLink[]
   ServerAutoModIgnoredRole ServerAutoModIgnoredRole[]
+  ServerManagerRole        ServerManagerRole[]
+}
+
+model ServerManagerRole {
+  id       String @id @default(uuid())
+  Server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId String
+  roleId   String
+
+  @@unique([serverId, roleId])
 }
 
 model ServerAutoModIgnoredRole {
@@ -309,6 +322,8 @@ model Timer {
 model User {
   id               String            @id @default(uuid())
   discordId        String            @unique @db.VarChar(32)
+  email            String?
+  refreshToken     String?
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   botCurrencyCount Int               @default(0)

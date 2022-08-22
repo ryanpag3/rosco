@@ -37,7 +37,7 @@ const FeatureCardRow = styled(Row)`
   flex-wrap: wrap;
 `;
 
-const AndMoreText = styled.text`
+const AndMoreText = styled.span`
   font-weight: lighter;
   letter-spacing: .25em;
   font-size: 2.5em;

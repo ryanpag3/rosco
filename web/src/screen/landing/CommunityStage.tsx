@@ -13,7 +13,7 @@ const CommunityStage = () => {
                     target="_blank"
                     rel="noopener noreferrer" >https://reddit.com/r/roscobot</Anchor></Li>
                 <Li>Our Discord server <Anchor
-                    href="https://discord.gg/FH5trS4TS9"
+                    href="https://discord.gg/Ax9ZsdawMb"
                     target="_blank"
                     rel="noopener noreferrer" >link</Anchor></Li>
                 <Li>Write a ticket on our <Anchor

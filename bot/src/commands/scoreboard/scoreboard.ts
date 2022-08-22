@@ -1,11 +1,15 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
+import { Application } from 'discord.js';
 import { Command } from '../../../types/command';
 import BotError from '../../util/bot-error';
+import ScoreboardDown from './down.sub';
+import ScoreboardList from './list.sub';
 import ScoreboardCreate from './scoreboard-create.sub';
 import ScoreboardDelete from './scoreboard-delete.sub';
 import ScoreboardScoreAdd from './scoreboard-score-add.sub';
 import ScoreboardScoreRemove from './scoreboard-score-remove.sub';
 import ScoreboardUpdate from './scoreboard-update.sub';
+import ScoreboardUp from './up.sub';
 
 const Scoreboard: Command = {
     id: `d60c799e-19e0-4d59-9145-7354027e8da4`,
@@ -73,6 +77,18 @@ const Scoreboard: Command = {
             ]
         },
         {
+            name: 'list',
+            description: 'List out the scoreboards in a server.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'page',
+                    description: 'The page of the list you want to see.',
+                    type: ApplicationCommandOptionType.Number
+                }
+            ]
+        },
+        {
             name: 'add-score',
             description: 'Add a score to a scoreboard.',
             type: ApplicationCommandOptionType.Subcommand,
@@ -109,6 +125,42 @@ const Scoreboard: Command = {
                     required: true
                 }
             ]
+        },
+        {
+            name: 'up',
+            description: 'Increase all scores in a scoreboard.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the scoreboard to increase.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'amount',
+                    description: 'The amount to increase.',
+                    type: ApplicationCommandOptionType.Number
+                }
+            ]
+        },
+        {
+            name: 'down',
+            description: 'Decrease all scores in a scoreboard.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the scoreboard to decrease.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'amount',
+                    description: 'The amount to decrease.',
+                    type: ApplicationCommandOptionType.Number
+                }
+            ]
         }
     ],
     handler: async (interaction, user, server) => {
@@ -120,10 +172,16 @@ const Scoreboard: Command = {
                 return ScoreboardDelete.handler(interaction, user, server);
             case 'update':
                 return ScoreboardUpdate.handler(interaction, user, server);
+            case 'list':
+                return ScoreboardList.handler(interaction, user, server);
             case 'add-score':
                 return ScoreboardScoreAdd.handler(interaction, user, server);
             case 'remove-score':
                 return ScoreboardScoreRemove.handler(interaction, user, server);
+            case 'up':
+                return ScoreboardUp.handler(interaction, user, server);
+            case 'down':
+                return ScoreboardDown.handler(interaction, user, server);
             default:
                 throw new BotError(`Invalid scoreboard subcommand issued.`);
         }

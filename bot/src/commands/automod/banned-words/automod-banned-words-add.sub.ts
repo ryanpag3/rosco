@@ -21,7 +21,7 @@ const BannedWordsAdd: Command = {
 
             await BannedWordCache.cacheRecord(r);
         } catch (e) {
-            if((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_COHSTRAINT)
+            if((e as PrismaClientKnownRequestError).code === PrismaErrorCode.UNIQUE_CONSTRAINT)
                 throw new BotError(`That word is already included in the banned word list.`);
             throw e;
         }

@@ -89,7 +89,7 @@ export function createTestInteraction(commandName: string,
             getString: (key: string) => options ? options[key] : null,
             getRole: (key: string) => options ? options[key] : null,
             // @ts-ignore
-            getInteger: (key: string) => Number.parseInt(options ? options[key] : undefined),
+            getInteger: (key: string) => options && options[key] ? Number.parseInt(options[key]) : null,
             getSubcommand: () => sName,
             getSubcommandGroup: () => sGroup,
             getBoolean: (key: string) => options ? options[key]?.toString() === 'true' : null,
@@ -107,7 +107,8 @@ export function createTestInteraction(commandName: string,
                 cache: {
                     find: (role: any) => {
                         return {
-                            id: '1'
+                            id: '1',
+                            toJSON: () => {}
                         }
                     }
                 }

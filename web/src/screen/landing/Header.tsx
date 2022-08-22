@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+import ApiUrl from 'util/api-url';
 import HeaderNavLink from './HeaderNavLink';
 
 const Header = () => {
@@ -10,11 +11,13 @@ const Header = () => {
                 onClick={() => window.open(process.env.REACT_APP_DOC_URL || 'https://wiki.roscobot.com')}
             >Documentation</HeaderNavLink>
             <HeaderNavLink to="/" rel="noopener noreferrer"
-                onClick={() => window.open("https://discord.gg/FH5trS4TS9", "_blank")}
+                onClick={() => window.open("https://discord.gg/Ax9ZsdawMb", "_blank")}
             >Support</HeaderNavLink>
             {/* <HeaderNavLink to="/status">Status</HeaderNavLink>
-          <HeaderNavLink to="/roadmap">Roadmap</HeaderNavLink>
-          <HeaderNavLink to="/login">Login</HeaderNavLink> */}
+          <HeaderNavLink to="/roadmap">Roadmap</HeaderNavLink>*/}
+          <HeaderNavLink to="/"
+            onClick={() => window.open(ApiUrl + '/login', '_self')}
+          >Login</HeaderNavLink> 
         </Container>
     )
 }

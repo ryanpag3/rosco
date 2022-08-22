@@ -153,6 +153,11 @@ const Score: Command = {
                     name: 'include-raw',
                     description: 'Includes a raw print out of the score data in the description.',
                     type: ApplicationCommandOptionType.Boolean
+                },
+                {
+                    name: 'default-amount',
+                    description: 'Update the default amount of scores returned.',
+                    type: ApplicationCommandOptionType.Integer
                 }
             ]
         }

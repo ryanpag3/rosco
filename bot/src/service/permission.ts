@@ -7,7 +7,7 @@ import prisma from '../util/prisma';
 export const userHasPermission = async (interaction: CommandInteraction, server: Server, user: User) => {
     try {
         // @ts-ignore
-        if (interaction.member.permissions.has('ADMINISTRATOR') && !process.env.DISABLE_ADMIN_BYPASS) {
+        if (interaction.member.permissions.has('ADMINISTRATOR') && process.env.DISABLE_ADMIN_BYPASS === true) {
             return true;
         }
 
@@ -28,7 +28,6 @@ export const userHasPermission = async (interaction: CommandInteraction, server:
         });
 
         if (permissions.length === 0) {
-            logger.debug('oh no');
             return true;
         }
 

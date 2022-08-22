@@ -12,8 +12,16 @@ import COMMANDS from '../recursive-commands';
 
 const onInteractionCreate = async (interaction: CommandInteraction): Promise<any> => {
     try {
-        if (!interaction.isButton() && !interaction.isCommand() )
+        logger.debug('interaction created.');
+
+
+        if (!interaction.isButton() && !interaction.isCommand() ) {
+            logger.debug('ignoring interaction created due to it not being a button or command.');
             return;
+        }
+
+        if (!interaction.guild || !interaction.channel)
+            throw new Error('Cannot process interaction without valid guild and channel.');
     
         const server = await ServerService.initializeServer(interaction.guild);
 
@@ -54,7 +62,7 @@ const onInteractionCreate = async (interaction: CommandInteraction): Promise<any
 
         logger.error(`An error occured while receiving interaction. Support ID: ${supportId}`, e);
 
-        const extraInfo = `\n\n_Need help?_\n - Run \`/help\` \n - [Join the support server](https://discord.gg/KwJUfbt5Wv)`;
+        const extraInfo = `\n\n_Need help?_\n - Run \`/help\` \n - [Join the support server](https://discord.gg/Ax9ZsdawMb)`;
 
         if (!(e instanceof BotError)) {
             interaction.reply({
@@ -85,7 +93,9 @@ const onInteractionCreate = async (interaction: CommandInteraction): Promise<any
 
 const onButtonPressed = async (interaction: ButtonInteraction, user: User, server: Server) => {
     // @ts-ignore
-    const command = interaction.message.interaction?.commandName;
+    const command = interaction.message.interaction?.commandName.split(' ')[0];
+
+    logger.debug(`on button pressed. ${command}`);
 
     switch(command) {
         case 'poll':
@@ -94,6 +104,8 @@ const onButtonPressed = async (interaction: ButtonInteraction, user: User, serve
 }
 
 const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, _server: Server) => {
+    logger.debug(`poll button pressed.`);
+    
     const pollOption = await prisma.pollOption.findUnique({
         where: {
             id: interaction.customId

@@ -8,7 +8,7 @@ const Features: {
     features: string[];
 }[] = [
     {
-        image: process.env.PUBLIC_URL + 'Rosco_Feature_Announcement 2.png',
+        image: process.env.PUBLIC_URL + 'feature-card-announcement.png',
         title: 'Announcements',
         description: 'Schedule messages to be announced later.',
         docUrl: docBaseUrl + '/en/commands/announce',
@@ -19,7 +19,7 @@ const Features: {
         ]
     },
     {
-        image: process.env.PUBLIC_URL + 'Rosco_Feature_AuoMod 4.png',
+        image: process.env.PUBLIC_URL + 'feature-card-automod.png',
         title: 'Auto Moderation',
         description: 'Let the bot do the boring stuff for you.',
         docUrl: '',
@@ -31,7 +31,7 @@ const Features: {
         ]
     },
     {
-        image: process.env.PUBLIC_URL + 'Rosco_Feature_Permissions.png',
+        image: process.env.PUBLIC_URL + 'feature-card-permission.png',
         title: 'Permissions',
         description: 'Set granular control over bot actions.',
         docUrl: docBaseUrl + '/en/commands/permission',
@@ -42,7 +42,7 @@ const Features: {
         ]
     },
     {
-        image: process.env.PUBLIC_URL + 'Rosco_Feature_Poll.png',
+        image: process.env.PUBLIC_URL + 'feature-card-polls.png',
         title: 'Polls',
         description: 'Create polls that your community votes on.',
         docUrl: docBaseUrl + '/en/commands/poll',
@@ -53,7 +53,7 @@ const Features: {
         ]
     },
     {
-        image: process.env.PUBLIC_URL + 'Rosco_Feature_Scores.png',
+        image: process.env.PUBLIC_URL + 'feature-card-scores.png',
         title: 'Scores',
         description: 'Create and track values of items over time.',
         docUrl: docBaseUrl + '/en/commands/score',
@@ -64,7 +64,7 @@ const Features: {
         ]
     },
     {
-        image: process.env.PUBLIC_URL + 'Rosco_Feature_Keywords.png',
+        image: process.env.PUBLIC_URL + 'feature-card-keyword.png',
         title: 'Keywords',
         description: 'Define a keyword or phrase and track it using a score.',
         docUrl: docBaseUrl + '/en/commands/keyword',
@@ -75,7 +75,7 @@ const Features: {
         ]
     },
     {
-        image: process.env.PUBLIC_URL + 'Rosco_Feature_Stopwatch.png',
+        image: process.env.PUBLIC_URL + 'feature-card-stopwatch.png',
         title: 'Stopwatch',
         description: 'Track the amount of time that passes.',
         docUrl: docBaseUrl + '/en/commands/stopwatch',
@@ -86,7 +86,7 @@ const Features: {
         ]
     },
     {
-        image: process.env.PUBLIC_URL + 'Rosco_Feature_Timer.png',
+        image: process.env.PUBLIC_URL + 'feature-card-timer.png',
         title: 'Timer',
         description: 'Count down a specific amount of time.',
         docUrl: docBaseUrl + '/en/commands/timer',
@@ -96,7 +96,7 @@ const Features: {
         ]
     },
     {
-        image: process.env.PUBLIC_URL + 'Rosco_Feature_Welcome.png',
+        image: process.env.PUBLIC_URL + 'feature-card-welcome.png',
         title: 'Welcome',
         description: 'Send a welcome message when a user joins your community.',
         docUrl: docBaseUrl + '/en/commands/welcome',
