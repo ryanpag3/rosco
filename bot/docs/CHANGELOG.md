@@ -1,3 +1,10 @@
+# [1.4.0-beta.17](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.16...v1.4.0-beta.17) (2022-08-22)
+
+
+### Bug Fixes
+
+* chunk out inserts for memory usage consideration ([41f135e](https://github.com/ryanpag3/guac-bot/commit/41f135e2d07f42b19e06a74b31090a2545f9bf7e))
+
 # [1.4.0-beta.16](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.15...v1.4.0-beta.16) (2022-08-22)
 
 
