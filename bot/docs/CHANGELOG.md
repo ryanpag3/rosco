@@ -1,3 +1,10 @@
+# [1.4.0-beta.16](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.15...v1.4.0-beta.16) (2022-08-22)
+
+
+### Features
+
+* [#212](https://github.com/ryanpag3/guac-bot/issues/212) add ability to search for magic cards ([de9cedf](https://github.com/ryanpag3/guac-bot/commit/de9cedf18a97c65dabae93f286e926e2cf1ea1b4))
+
 # [1.4.0-beta.15](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.14...v1.4.0-beta.15) (2022-08-22)
 
 
