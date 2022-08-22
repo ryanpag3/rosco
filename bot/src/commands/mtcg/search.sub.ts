@@ -25,8 +25,6 @@ const MtcgSearch: Command = {
             releasedAt: 'asc'
         } });
 
-        logger.info(cards);
-
         if (cards.length === 0) {
             return interaction.reply({
                 embeds: [
@@ -38,9 +36,6 @@ const MtcgSearch: Command = {
         }
 
         let [ { card } ]: any = cards;
-
-        
-        logger.info(card);
 
         return interaction.reply({
             embeds: [
