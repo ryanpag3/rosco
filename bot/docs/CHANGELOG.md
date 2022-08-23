@@ -1,3 +1,10 @@
+# [1.4.0-beta.20](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.19...v1.4.0-beta.20) (2022-08-23)
+
+
+### Bug Fixes
+
+* switch /mtcg to /mtg to make more sense ([8b5a7d2](https://github.com/ryanpag3/guac-bot/commit/8b5a7d2c3c20fbbc51b62ec017e1ca1072a53170))
+
 # [1.4.0-beta.19](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.18...v1.4.0-beta.19) (2022-08-23)
 
 
