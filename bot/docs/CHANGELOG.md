@@ -1,3 +1,10 @@
+# [1.4.0-beta.19](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.18...v1.4.0-beta.19) (2022-08-23)
+
+
+### Features
+
+* cut a new release ([95988a4](https://github.com/ryanpag3/guac-bot/commit/95988a4458d7c7c878dceef940f729a2a1f5597f))
+
 # [1.4.0-beta.18](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.17...v1.4.0-beta.18) (2022-08-22)
 
 
