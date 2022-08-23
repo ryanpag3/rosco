@@ -1,3 +1,10 @@
+# [1.4.0-beta.24](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.23...v1.4.0-beta.24) (2022-08-23)
+
+
+### Bug Fixes
+
+* fix internal server error getting thrown when searching for double sided card ([c11d6d9](https://github.com/ryanpag3/guac-bot/commit/c11d6d9ce6d2aad14ba19b427f11a49dd1110e71))
+
 # [1.4.0-beta.23](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.22...v1.4.0-beta.23) (2022-08-23)
 
 
