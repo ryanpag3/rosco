@@ -1,3 +1,32 @@
+# [1.4.0-beta.19](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.18...v1.4.0-beta.19) (2022-08-23)
+
+
+### Features
+
+* cut a new release ([95988a4](https://github.com/ryanpag3/guac-bot/commit/95988a4458d7c7c878dceef940f729a2a1f5597f))
+
+# [1.4.0-beta.18](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.17...v1.4.0-beta.18) (2022-08-22)
+
+
+### Bug Fixes
+
+* use smaller chunks ([fd3a499](https://github.com/ryanpag3/guac-bot/commit/fd3a4996b016a8c20e49f6a5c805c96c0afbe63c))
+* use smaller chunks ([aed5dda](https://github.com/ryanpag3/guac-bot/commit/aed5dda88eec6803a6f24cb570b084bffd67537d))
+
+# [1.4.0-beta.17](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.16...v1.4.0-beta.17) (2022-08-22)
+
+
+### Bug Fixes
+
+* chunk out inserts for memory usage consideration ([41f135e](https://github.com/ryanpag3/guac-bot/commit/41f135e2d07f42b19e06a74b31090a2545f9bf7e))
+
+# [1.4.0-beta.16](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.15...v1.4.0-beta.16) (2022-08-22)
+
+
+### Features
+
+* [#212](https://github.com/ryanpag3/guac-bot/issues/212) add ability to search for magic cards ([de9cedf](https://github.com/ryanpag3/guac-bot/commit/de9cedf18a97c65dabae93f286e926e2cf1ea1b4))
+
 # [1.4.0-beta.15](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.14...v1.4.0-beta.15) (2022-08-22)
 
 
