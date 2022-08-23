@@ -2,10 +2,10 @@
 title: Magic: The Gathering
 description: Commands related to Magic: The Gathering
 published: true
-date: 2022-08-22T22:45:44.468Z
+date: 2022-08-23T23:53:43.618Z
 tags: 
 editor: markdown
-dateCreated: 2022-08-22T22:44:29.568Z
+dateCreated: 2022-08-23T23:49:59.589Z
 ---
 
 ## `search` - Search for a Magic: The Gathering card.
