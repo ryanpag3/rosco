@@ -22,7 +22,7 @@ const MtcgSearch: Command = {
         }
 
         const cards = await prisma.magicTheGatheringCard.findMany({ where, orderBy: {
-            releasedAt: 'asc'
+            releasedAt: 'desc'
         } });
 
         if (cards.length === 0) {
