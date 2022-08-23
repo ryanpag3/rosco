@@ -1,3 +1,10 @@
+# [1.4.0-beta.22](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.21...v1.4.0-beta.22) (2022-08-23)
+
+
+### Features
+
+* [#141](https://github.com/ryanpag3/guac-bot/issues/141) add mobile user warning for web dashboard ([e8032be](https://github.com/ryanpag3/guac-bot/commit/e8032be2b01c195c28d7ee176ccc3efe6eb25d1a))
+
 # [1.4.0-beta.21](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.20...v1.4.0-beta.21) (2022-08-23)
 
 
