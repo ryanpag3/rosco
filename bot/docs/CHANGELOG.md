@@ -1,3 +1,10 @@
+# [1.4.0-beta.23](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.22...v1.4.0-beta.23) (2022-08-23)
+
+
+### Bug Fixes
+
+* remove accidental console.log call ([de964eb](https://github.com/ryanpag3/guac-bot/commit/de964eb124442eb669ae4932928bca174f123b76))
+
 # [1.4.0-beta.22](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.21...v1.4.0-beta.22) (2022-08-23)
 
 
