@@ -10,6 +10,7 @@ import Screen from '../../component/Screen';
 import * as MeApi from 'api/me';
 import { AxiosError } from 'axios';
 import InviteUrl from 'util/invite-url';
+import MobileWarning from './MobileWarning';
 
 
 const Dashboard = ({ server, setSelectedServer }: {
@@ -60,6 +61,7 @@ const Dashboard = ({ server, setSelectedServer }: {
 
   return (
     <StyledScreen>
+      <MobileWarning/>
       <ScreenTopBar me={me} />
       <OutletContainer>
         {/* <NavSideBar/> */}
