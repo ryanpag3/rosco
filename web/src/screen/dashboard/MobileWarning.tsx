@@ -1,7 +1,6 @@
 import Column from 'component/Column';
 import React, { useEffect, useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai';
-import { FaCross } from 'react-icons/fa';
 import styled from 'styled-components';
 import Colors from 'util/colors';
 

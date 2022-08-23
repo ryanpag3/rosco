@@ -37,19 +37,23 @@ const MtcgSearch: Command = {
 
         let [ { card } ]: any = cards;
 
+        logger.trace(card);
+
+        const faces = card.card_faces ? card.card_faces : [ card ];
+
         return interaction.reply({
-            embeds: [
-                {
-                    title: `${card.name} - ${card.mana_cost}`,
-                    description: card.oracle_text.replace('\n', '\n\n') + `\n\n${card.scryfall_uri}`,
+            embeds: faces.map((f: any) => {
+                return {
+                    title: `${f.name} - ${f.mana_cost}`,
+                    description: f.oracle_text.replace('\n', '\n\n') + `\n\n${card.scryfall_uri}`,
                     image: {
-                        url: card?.image_uris?.png
+                        url: f?.image_uris?.png
                     },
                     footer: {
                         text: 'Not what you are looking for? Try a more narrow search query.'
                     }
                 }
-            ]
+            })
         })
     }
 };
