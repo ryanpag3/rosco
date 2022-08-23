@@ -1,3 +1,10 @@
+# [1.4.0-beta.21](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.20...v1.4.0-beta.21) (2022-08-23)
+
+
+### Features
+
+* don't force user to login again if they have already authenticated this session ([7df2836](https://github.com/ryanpag3/guac-bot/commit/7df28364915d51210913054f834ba70fa32cee2f))
+
 # [1.4.0-beta.20](https://github.com/ryanpag3/guac-bot/compare/v1.4.0-beta.19...v1.4.0-beta.20) (2022-08-23)
 
 
