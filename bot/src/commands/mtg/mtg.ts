@@ -5,7 +5,7 @@ import MtcgSearch from './search.sub';
 
 const Mtcg: Command = {
     id: '7a5dbd27-a186-47e6-9e4b-77e3523a752c',
-    name: 'mtcg',
+    name: 'mtg',
     description: 'Search for Magic: The Gathering cards.',
     examples: ``,
     options: [

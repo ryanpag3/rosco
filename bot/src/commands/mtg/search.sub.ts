@@ -4,7 +4,7 @@ import prisma from '../../util/prisma';
 
 const MtcgSearch: Command = {
     id: '4194adab-034c-4350-b575-f45fb54f0758',
-    name: 'mtcg search',
+    name: 'mtg search',
     handler: async (interaction, user, server) => {
         const name = interaction.options.getString('name', true);
         const set = interaction.options.getString('set');
