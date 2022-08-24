@@ -57,3 +57,7 @@ If you want code coverage as well
 ```
 yarn jest
 ```
+
+### Docker
+
+Feel free to take a look at the [Dockerfile](Dockerfile) and [buildDocker.sh](./buildDocker.sh) files for information on how to build the bot docker container.
