@@ -45,3 +45,7 @@ yarn start
 ```
 
 It will be available at [http://localhost:8080](http://localhost:8080) if working correctly.
+
+### Docker
+
+Please refer to the project [Dockerfile](Dockerfile) for more information on building the docker image.
