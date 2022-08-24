@@ -22,3 +22,13 @@ docker-compose
 yarn
 node@16
 ```
+
+## Deployment Order
+
+It is recommended to take the following order when deploying each individual service.
+
+1. Bot
+1. API
+1. Web
+1. (Optional) Rosco Helm
+1. (Optional) Wiki Helm
