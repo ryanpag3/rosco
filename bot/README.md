@@ -61,3 +61,5 @@ yarn jest
 ### Docker
 
 Feel free to take a look at the [Dockerfile](Dockerfile) and [buildDocker.sh](./buildDocker.sh) files for information on how to build the bot docker container.
+
+If you are looking for information on using the docker containers, please refer to [https://hub.docker.com/repository/docker/ryanpage/rosco](https://hub.docker.com/repository/docker/ryanpage/rosco)
