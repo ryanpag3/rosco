@@ -11,3 +11,14 @@ This is the source code for Rosco, a multi-functional Discord bot. If you are lo
 - **[wikijs](./wikijs/README.md)**: Helm Chart for deploying the wiki site.
 
 For instructions on running each specific project, please refer to their individual `README.md` files.
+
+## Project Dependencies
+
+Please install the following if you are planning on developing on Rosco.
+
+```
+docker
+docker-compose
+yarn
+node@16
+```
