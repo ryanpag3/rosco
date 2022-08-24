@@ -1,8 +1,14 @@
-# Rosco - https//roscobot.com
+# Rosco - [https//roscobot.com](https://roscobot.com)
 
 This is the source code for Rosco, a multi-functional Discord bot. If you are looking for the documentation to *use* the bot, you are quite lost. Please head here instead: https://wiki.roscobot.com
 
 ## Project Structure
+
+- **[bot](./bot/README.md)**: The Discord Bot
+  - **[api](./bot/api/README.md)**: The API used by the `web` project. This module is an extension of `bot`.
+- **[web](./web/README.md)**: ReactJS Web App
+- **[rosco-helm](./rosco-helm/README.md)**: Helm Chart for the `bot` and `web` projects.
+- **[wikijs](./wikijs/README.md)**: Helm Chart for deploying the wiki site.
 
 ```
 - bot: The Discord Bot
