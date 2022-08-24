@@ -140,7 +140,7 @@ keel:
   
 
 serviceAccount:
-  # Specifies whether helm should create a service account or not.
+  # Specifies whether helm should create a service account or not. 
   create: true
   # Annotations to add to the service account
   annotations: {}
