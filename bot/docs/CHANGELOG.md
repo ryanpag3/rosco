@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/ryanpag3/rosco/compare/v1.5.0...v1.6.0) (2022-08-24)
+
+
+### Features
+
+* pull from release branch ([edc60db](https://github.com/ryanpag3/rosco/commit/edc60db5ac2cae5f770f3dc5eded646e49480e32))
+
 # [1.5.0](https://github.com/ryanpag3/rosco/compare/v1.4.0...v1.5.0) (2022-08-24)
 
 
