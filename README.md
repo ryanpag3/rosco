@@ -1,4 +1,4 @@
-# Rosco - [https//roscobot.com](https://roscobot.com)
+# Rosco, A Discord Bot - [https//roscobot.com](https://roscobot.com)
 
 This is the source code for Rosco, a multi-functional Discord bot. If you are looking for the documentation to *use* the bot, you are quite lost. Please head here instead: https://wiki.roscobot.com
 
