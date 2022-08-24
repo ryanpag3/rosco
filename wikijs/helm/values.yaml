@@ -2,6 +2,8 @@ replicacount: 2
 
 postgresql:
   enabled: true
+  postgresqlPassword: password
+  
   persistence:
     enabled: true
 

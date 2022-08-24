@@ -23,6 +23,8 @@ export const getLoginUrl = () => {
  * Initiate an oauth authorization code flow with Discord
  */
 export const login: RouteHandlerMethod = async (request, reply) => {
+    if (request.cookies[Cookies.IS_AUTHENTICATED] === 'true')
+        return reply.redirect(process.env.WEB_APP_ADDRESS as string);
     reply.redirect(getLoginUrl());
 }
 
