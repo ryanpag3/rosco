@@ -136,7 +136,7 @@ keel:
     create: false
   service:
     enabled: true
-  globPattern: "glob:beta-*"
+  globPattern: "glob:master-*"
   
 
 serviceAccount:
