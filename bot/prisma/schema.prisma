@@ -132,19 +132,20 @@ model Permission {
 }
 
 model Poll {
-  id         String       @id @default(uuid())
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  name       String
-  question   String
-  isOpen     Boolean      @default(true)
-  Server     Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
-  serverId   String
-  messageId  String
-  CreatedBy  User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
-  userId     String?
-  PollOption PollOption[]
-  PollVote   PollVote[]
+  id             String       @id @default(uuid())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  name           String
+  question       String
+  isOpen         Boolean      @default(true)
+  Server         Server       @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId       String
+  messageId      String
+  auditChannelId String?
+  CreatedBy      User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId         String?
+  PollOption     PollOption[]
+  PollVote       PollVote[]
 
   @@unique([name, serverId])
 }
