@@ -1,4 +1,4 @@
-import { ButtonInteraction, CommandInteraction } from 'discord.js';
+import { ButtonInteraction, CommandInteraction, TextChannel } from 'discord.js';
 import { v4 as uuidv4 } from 'uuid';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
@@ -143,7 +143,7 @@ const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, _
                 id: pollOption.Poll.PollVote[0].id
             }
         });
-    }     
+    }
 
     await prisma.pollVote.create({
         data: {
@@ -152,6 +152,18 @@ const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, _
             userId: user.id
         }
     });
+
+    if (pollOption.Poll.auditChannelId) {
+        logger.debug(`Sending audit event to ${pollOption.Poll.auditChannelId}`);
+        const channel = interaction.guild?.channels.cache.get(pollOption.Poll.auditChannelId) as TextChannel;
+        await channel.send({
+            embeds: [
+                {
+                    description: `${interaction.user.tag} voted **${pollOption.content}** on poll **${pollOption.Poll.name}**`
+                }
+            ]
+        });
+    }
     
     interaction.update({
         embeds: [{
