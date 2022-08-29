@@ -1,5 +1,7 @@
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Command } from '../../../types/command';
+import BotError from '../../util/bot-error';
+import PollAudit from './audit.sub';
 import PollClose from './poll-close.sub';
 import PollCreate from './poll-create.sub';
 import PollDelete from './poll-delete.sub';
@@ -78,6 +80,30 @@ const Poll: Command = {
                     name: 'option-10',
                     description: '-',
                     type: ApplicationCommandOptionType.String
+                }
+            ]
+        },
+        {
+            name: 'audit',
+            description: 'Print the votes of a poll to a channel.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'poll',
+                    description: 'The name of the poll to audit.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'channel',
+                    description: 'The channel to send poll vote logs.',
+                    type: ApplicationCommandOptionType.Channel,
+                    required: true
+                },
+                {
+                    name: 'enabled',
+                    description: 'Optionally, specify whether auditing is enabled/disabled for this channel and poll.',
+                    type: ApplicationCommandOptionType.Boolean
                 }
             ]
         },
@@ -167,6 +193,10 @@ const Poll: Command = {
                 return PollOpen.handler(interaction, user, server);
             case 'list':
                 return PollList.handler(interaction, user, server);
+            case 'audit':
+                return PollAudit.handler(interaction, user, server);
+            default:
+                throw new BotError('Invalid subcommand issued.');
         }
     }
 };

@@ -1,4 +1,4 @@
-import { ButtonInteraction, CommandInteraction } from 'discord.js';
+import { ButtonInteraction, CommandInteraction, TextChannel } from 'discord.js';
 import { v4 as uuidv4 } from 'uuid';
 import BotError from '../util/bot-error';
 import logger from '../util/logger';
@@ -12,20 +12,20 @@ import COMMANDS from '../recursive-commands';
 
 const onInteractionCreate = async (interaction: CommandInteraction): Promise<any> => {
     try {
-        logger.debug('interaction created.');
+        logger.trace('interaction created.');
 
 
-        if (!interaction.isButton() && !interaction.isCommand() ) {
+        if (!interaction.isButton() && !interaction.isCommand()) {
             logger.debug('ignoring interaction created due to it not being a button or command.');
             return;
         }
 
         if (!interaction.guild || !interaction.channel)
             throw new Error('Cannot process interaction without valid guild and channel.');
-    
+
         const server = await ServerService.initializeServer(interaction.guild);
 
-        const user = await UserService.initUser(interaction.member as any, server as Server); 
+        const user = await UserService.initUser(interaction.member as any, server as Server);
 
         if (interaction.isButton())
             return await onButtonPressed(interaction, user, server as Server);
@@ -95,17 +95,17 @@ const onButtonPressed = async (interaction: ButtonInteraction, user: User, serve
     // @ts-ignore
     const command = interaction.message.interaction?.commandName.split(' ')[0];
 
-    logger.debug(`on button pressed. ${command}`);
+    logger.trace(`on button pressed. ${command}`);
 
-    switch(command) {
+    switch (command) {
         case 'poll':
             return onPollButtonPressed(interaction, user, server);
     }
 }
 
 const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, _server: Server) => {
-    logger.debug(`poll button pressed.`);
-    
+    logger.trace(`poll button pressed.`);
+
     const pollOption = await prisma.pollOption.findUnique({
         where: {
             id: interaction.customId
@@ -134,8 +134,8 @@ const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, _
     if (!pollOption?.Poll || !pollOption?.Poll.isOpen)
         throw new BotError('The poll has been closed for voting.');
 
-    if (pollOption.Votes.length === 1)
-        throw new BotError('You have already voted this option in the poll.');
+    // if (pollOption.Votes.length === 1)
+    //     throw new BotError('You have already voted this option in the poll.');
 
     if (pollOption.Poll.PollVote[0]) {
         await prisma.pollVote.delete({
@@ -143,17 +143,28 @@ const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, _
                 id: pollOption.Poll.PollVote[0].id
             }
         });
-    }     
+    }
 
-    await prisma.pollVote.create({
-        data: {
-            pollId: pollOption?.pollId as string,
-            pollOptionId: pollOption?.id as string,
-            userId: user.id
-        }
-    });
-    
-    interaction.update({
+    const userAlreadyVotedOnOption = pollOption.Votes.length === 1;
+    if (userAlreadyVotedOnOption) {
+        // undo vote
+        await prisma.pollVote.delete({
+            where: {
+                id: pollOption.Votes[0].id
+            }
+        });
+    } else {
+        // create vote
+        await prisma.pollVote.create({
+            data: {
+                pollId: pollOption?.pollId as string,
+                pollOptionId: pollOption?.id as string,
+                userId: user.id
+            }
+        });
+    }
+
+    await interaction.update({
         embeds: [{
             title: interaction.message.embeds[0].title as string,
             fields: [
@@ -170,14 +181,19 @@ const onPollButtonPressed = async (interaction: ButtonInteraction, user: User, _
             ],
             footer: interaction.message.embeds[0].footer as any
         }]
-    })
-
-    interaction.reply({
-        embeds: [{
-            title: ':ballot_box_with_check: Your vote has been submitted.' 
-        }],
-        ephemeral: true
     });
+
+    if (pollOption.Poll.auditChannelId) {
+        logger.debug(`Sending audit event to ${pollOption.Poll.auditChannelId}`);
+        const channel = interaction.guild?.channels.cache.get(pollOption.Poll.auditChannelId) as TextChannel;
+        await channel.send({
+            embeds: [
+                {
+                    description: `${interaction.user.tag} voted **${pollOption.content}** on poll **${pollOption.Poll.name}**`
+                }
+            ]
+        });
+    }
 }
 
 const createPollOptionsUpdate = async (pollId: string) => {
