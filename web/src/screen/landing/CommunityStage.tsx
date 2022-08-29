@@ -17,7 +17,7 @@ const CommunityStage = () => {
                     target="_blank"
                     rel="noopener noreferrer" >link</Anchor></Li>
                 <Li>Write a ticket on our <Anchor
-                    href="https://github.com/RoscoBot/support/issues/new"
+                    href="https://github.com/ryanpag3/rosco/issues"
                     target="_blank"
                     rel="noopener noreferrer" >Github Repo</Anchor></Li>
             </Ul>
