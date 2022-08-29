@@ -8,7 +8,7 @@ const PollAudit: Command = {
     handler: async (interaction, user, server) => {
         const pollName = interaction.options.getString('poll', true);
         const channel = interaction.options.getChannel('channel', true);
-        const enabled = interaction.options.getBoolean('enabled') || true;
+        const enabled = interaction.options.getBoolean('enabled') == null ? true : interaction.options.getBoolean('enabled');
 
         const poll = await prisma.poll.findUnique({
             where: {
