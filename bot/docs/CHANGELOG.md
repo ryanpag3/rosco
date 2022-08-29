@@ -1,3 +1,15 @@
+# [1.7.0](https://github.com/ryanpag3/rosco/compare/v1.6.0...v1.7.0) (2022-08-29)
+
+
+### Bug Fixes
+
+* fix issue with error being thrown unnecessarily for votes. add abilityt o remove an existing vote ([1974e76](https://github.com/ryanpag3/rosco/commit/1974e76383230128a8259402ddc40d23f0082ee3))
+
+
+### Features
+
+* [#101](https://github.com/ryanpag3/rosco/issues/101) add ability to audit poll events ([4da72e2](https://github.com/ryanpag3/rosco/commit/4da72e2ed510089e0bf7769db2a8680d996b14b7))
+
 # [1.6.0](https://github.com/ryanpag3/rosco/compare/v1.5.0...v1.6.0) (2022-08-24)
 
 
