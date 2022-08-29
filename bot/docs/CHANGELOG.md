@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/ryanpag3/rosco/compare/v1.7.0...v1.7.1) (2022-08-29)
+
+
+### Bug Fixes
+
+* [#254](https://github.com/ryanpag3/rosco/issues/254) update github link to point to open source repo ([aab24c5](https://github.com/ryanpag3/rosco/commit/aab24c5af40b6b28f5685417813c220433e14a8d))
+
 # [1.7.0](https://github.com/ryanpag3/rosco/compare/v1.6.0...v1.7.0) (2022-08-29)
 
 
