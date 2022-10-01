@@ -16,6 +16,7 @@ import Scores from 'screen/scores';
 import history from 'util/history';
 import NotFound from 'screen/not-found';
 import InternalError from 'screen/internal-error';
+import PrivacyPolicy from 'screen/privacy-policy';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -43,6 +44,7 @@ const App = () => {
           {/* LANDING PAGE */}
           <Route path="/">
             <Route index element={<LandingScreen />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy/>}/>
           </Route>
 
           {/* DASHBOARD */}
