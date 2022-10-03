@@ -19,7 +19,6 @@ const client = new Client({
         Intents.FLAGS.GUILD_WEBHOOKS,
         Intents.FLAGS.GUILD_INVITES,
         Intents.FLAGS.GUILD_VOICE_STATES,
-        // Intents.FLAGS.GUILD_PRESENCES, // privileged
         Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
         Intents.FLAGS.GUILD_MESSAGE_TYPING,
         Intents.FLAGS.DIRECT_MESSAGES,
