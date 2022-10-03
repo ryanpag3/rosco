@@ -40,6 +40,7 @@
     "form-data": "^4.0.0",
     "http-status-codes": "^2.2.0",
     "ioredis": "^4.28.3",
+    "is-hexcolor": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "log4js": "^6.4.1",
     "luxon": "^2.3.0",

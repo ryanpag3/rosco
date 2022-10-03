@@ -329,6 +329,17 @@ model Timer {
   @@unique([name, serverId])
 }
 
+model TurfwarPlot {
+  id          String @id @default(uuid())
+  x           Int
+  y           Int
+  color       String
+  createdById String
+  CreatedBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@unique([x, y])
+}
+
 model User {
   id               String            @id @default(uuid())
   discordId        String            @unique @db.VarChar(32)
@@ -349,6 +360,7 @@ model User {
   Timer            Timer[]
   Announcement     Announcement[]
   AutoModRuleUser  AutoModRuleUser[]
+  TurfwarPlot      TurfwarPlot[]
 }
 
 model UserServer {
