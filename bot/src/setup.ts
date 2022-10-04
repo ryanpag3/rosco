@@ -17,6 +17,7 @@ import LinkCache from './service/link-cache';
 import KeywordCache from './service/keyword-cache';
 import BannedWordCache from './service/banned-word-cache';
 import * as Mtcg from './service/mtcg';
+import * as TurfwarGridBuilder from './service/turfwar-grid-builder';
 
 export default async function (client: Client) {
     try {
@@ -35,6 +36,8 @@ export default async function (client: Client) {
     await BannedWordCache.baselineFromDatabase();
 
     await LinkCache.baselineFromDatabase();
+
+    await TurfwarGridBuilder.startCronJob();
     
     // deploy slash commands
     await CommandDeployer.deploy();

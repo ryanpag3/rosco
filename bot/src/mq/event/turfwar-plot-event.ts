@@ -5,6 +5,7 @@ interface TurfwarPlotEvent {
         y: number;
     };
     color: string;
+    serverId: string;
 }
 
 export default TurfwarPlotEvent;

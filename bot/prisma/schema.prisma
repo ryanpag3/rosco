@@ -265,6 +265,7 @@ model Server {
   AllowedLink              AllowedLink[]
   ServerAutoModIgnoredRole ServerAutoModIgnoredRole[]
   ServerManagerRole        ServerManagerRole[]
+  TurfwarPlot              TurfwarPlot[]
 }
 
 model ServerManagerRole {
@@ -330,12 +331,16 @@ model Timer {
 }
 
 model TurfwarPlot {
-  id          String @id @default(uuid())
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   x           Int
   y           Int
   color       String
   createdById String
-  CreatedBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  CreatedBy   User     @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  serverId    String
+  Server      Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   @@unique([x, y])
 }

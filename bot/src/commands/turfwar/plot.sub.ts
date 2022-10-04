@@ -26,7 +26,8 @@ const TurfwarPlot: Command = {
         const job: TurfwarPlotEvent = {
             userId: user.id,            
             coords,
-            color
+            color,
+            serverId: server.id
         };
 
         turfwarPlotQueue.add(job);
