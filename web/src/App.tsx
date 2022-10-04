@@ -18,6 +18,7 @@ import NotFound from 'screen/not-found';
 import InternalError from 'screen/internal-error';
 import PrivacyPolicy from 'screen/privacy-policy';
 import TermsOfService from 'screen/terms-of-service';
+import Turfwar from 'screen/turf-war';
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState({
@@ -47,6 +48,7 @@ const App = () => {
             <Route index element={<LandingScreen />} />
             <Route path="privacy-policy" element={<PrivacyPolicy/>}/>
             <Route path="terms-of-service" element={<TermsOfService/>}/>
+            <Route path="turf-war" element={<Turfwar/>}/>
           </Route>
 
           {/* DASHBOARD */}
