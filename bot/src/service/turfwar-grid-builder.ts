@@ -5,6 +5,7 @@ import logger from '../util/logger';
 
 let job: CronJob|undefined;
 
+const DEFAULT_MAX_GRID_SIZE = 1000;
 const REDIS_KEY = 'rosco-turfwar-grid';
 
 export const startCronJob = async () => {
@@ -56,7 +57,7 @@ export const build = async () => {
     }
 }
 
-const getNormalizedDocument = async () => {
+export const getNormalizedDocument = async () => {
     let data = await redis.get(REDIS_KEY);
 
     if (!data) {
@@ -68,4 +69,8 @@ const getNormalizedDocument = async () => {
 
 const writeDocumentToRedis = async (data: any) => {
     return await redis.set(REDIS_KEY, JSON.stringify(data));
+}
+
+export const getMaxGridSize = () => {
+    return process.env.ROSCO_MAX_GRID_SIZE || DEFAULT_MAX_GRID_SIZE;
 }

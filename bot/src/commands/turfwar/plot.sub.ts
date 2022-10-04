@@ -4,15 +4,12 @@ import isHexColor from 'is-hexcolor';
 import { CacheType, CommandInteraction } from 'discord.js';
 import turfwarPlotQueue from '../../mq/queue/turfwar-plot-queue';
 import TurfwarPlotEvent from '../../mq/event/turfwar-plot-event';
+import { getMaxGridSize } from '../../service/turfwar-grid-builder';
 
 const TurfwarPlot: Command = {
     id: 'cd17a4c2-1fc5-4fc8-b009-8f7676fb2122',
     name: 'turfwar plot',
     handler: async (interaction, user, server) => {
-        // validate X and Y coordinates
-        // validate is valid hex color
-        // enqueue plot event 
-        // respond with confirmation to 
         const coords = getCoords(interaction);
         const color = interaction.options.getString('color', true);
 
@@ -62,7 +59,7 @@ function getCoords(interaction: CommandInteraction<CacheType>) {
 }
 
 function validateCoordinates(x: number, y: number) {
-    const maxSize = process.env.TURFWAR_MAX_SIZE || 1000;
+    const maxSize = getMaxGridSize();
 
     if (x < 0 || y < 0)
         throw new Error(`Coordinate cannot be less than 0`);
