@@ -6,7 +6,7 @@ it('should multiple the score count', async () => {
     let int = createTestInteraction('score', 'create', {
         name: 'test',
         description: 'description',
-        amount: 2
+        amount: 4
     });
     
     await onCommandReceived(int);
