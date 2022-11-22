@@ -5,6 +5,7 @@ import ScoreCreate from './score-create.sub';
 import ScoreDelete from './score-delete.sub';
 import ScoreDown from './score-down.sub';
 import ScoreList from './score-list.sub';
+import ScoreMultiply from './score-multiply.sub';
 import ScoreUp from './score-up.sub';
 import ScoreUpdate from './score-update.sub';
 
@@ -107,6 +108,25 @@ const Score: Command = {
             ]
         },
         {
+            name: 'multiply',
+            description: 'Multiply a score.',
+            type: ApplicationCommandOptionType.Subcommand,
+            options: [
+                {
+                    name: 'name',
+                    description: 'The name of the score you want to multiply.',
+                    type: ApplicationCommandOptionType.String,
+                    required: true
+                },
+                {
+                    name: 'multiplier',
+                    description: 'The amount you want to multiply by.',
+                    type: ApplicationCommandOptionType.Integer,
+                    required: true
+                }
+            ]
+        },
+        {
             name: 'down',
             description: 'Decrease score count.',
             type: ApplicationCommandOptionType.Subcommand,
@@ -177,6 +197,8 @@ const Score: Command = {
                 return ScoreDown.handler(interaction, user, server);
             case 'list':
                 return ScoreList.handler(interaction, user, server);
+            case 'multiply':
+                return ScoreMultiply.handler(interaction, user, server);
             default:
                 throw new BotError(`Invalid subcommand provided.`);
         }
