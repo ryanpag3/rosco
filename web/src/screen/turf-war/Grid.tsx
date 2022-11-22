@@ -33,18 +33,7 @@ const Grid = (props: any) => {
 
   return (
     <Container>
-      {
-        grid !== undefined && <FixedSizeGrid
-          columnCount={grid.maxGridSize}
-          columnWidth={1}
-          height={500}
-          rowCount={grid.maxGridSize}
-          rowHeight={1}
-          width={500}
-        >
-          {Cell}
-        </FixedSizeGrid>
-      }
+
     </Container>
   )
 }
