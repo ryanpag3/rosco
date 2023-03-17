@@ -42,7 +42,7 @@
     "ioredis": "^4.28.3",
     "jsonwebtoken": "^8.5.1",
     "log4js": "^6.4.1",
-    "luxon": "^2.3.0",
+    "luxon": "^2.5.2",
     "ow": "^0.28.1",
     "prisma": "^3.13.0",
     "random-int": "^3.0.0",
